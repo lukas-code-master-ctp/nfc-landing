@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style data-omelette-injected>html,body{background:transparent}</style><script data-omelette-injected>(()=>{var j=[];var x=false;var S=30000;var f=3000;document.addEventListener("DOMContentLoaded",()=>{const H=window.Babel;const G="om-src-id";if(H&&H.registerPlugin&&!(H.availablePlugins&&H.availablePlugins[G])){H.registerPlugin(G,({types:Y})=>({visitor:{JSXOpeningElement(U,Q){const J=U.node;if(J.name&&J.name.type==="JSXMemberExpression")return;for(let V=0;V<J.attributes.length;V++){const L=J.attributes[V];if(L.type==="JSXAttribute"&&L.name&&L.name.name==="data-om-id")return}const W=Q.file&&Q.file.opts&&Q.file.opts.filename||"?";const Z=J.loc&&J.loc.start;const z=`jsx:${W}:${J.start??0}:${Z?Z.line:0}:${Z?Z.column+1:0}`;J.attributes.push(Y.jsxAttribute(Y.jsxIdentifier("data-om-id"),Y.stringLiteral(z)))}}}))}const k="om-text-extract";let A=false;if(x&&H&&H.registerPlugin&&!(H.availablePlugins&&H.availablePlugins[k])){const Y=window.React;if(Y&&Y.useSyncExternalStore&&Y.createElement){A=true;const U={};const Q=new Set;let J=0;window.__omTextO=U;window.__omTextSet=(z)=>{for(const V in z){const L=z[V];if(L==null)delete U[V];else U[V]=L}J++;Q.forEach((V)=>V())};const W=(z)=>{Q.add(z);return()=>Q.delete(z)};const Z=()=>J;window.__OmT=function z(V){Y.useSyncExternalStore(W,Z,Z);return Y.createElement("span",{"data-om-text":V.i,className:"__om-t"},V.i in U?U[V.i]:V.children)};H.registerPlugin(k,({types:z})=>{const V={style:1,script:1,noscript:1,textarea:1,title:1,option:1,text:1,tspan:1,textPath:1};const L={placeholder:1,alt:1,title:1,label:1,"aria-label":1,"aria-description":1,"aria-placeholder":1};const _=($,C)=>z.logicalExpression("??",z.memberExpression(z.logicalExpression("||",z.memberExpression(z.identifier("window"),z.identifier("__omTextO")),z.objectExpression([])),z.stringLiteral($),true),C);const E=($)=>$.file&&$.file.opts&&$.file.opts.filename||"?";const B=($)=>$.file&&$.file.code||"";const b=($,C)=>{const X=(F)=>F&&F.start!=null&&F.end!=null&&(F.type==="StringLiteral"||F.type==="TemplateLiteral"&&F.expressions.length===0)?[F.start,F.end]:null;const N=X(C);if(N)return N;if(C&&C.type==="Identifier"){const F=$.scope.getBinding(C.name);if(F&&F.constant&&F.path.node.type==="VariableDeclarator"){return X(F.path.node.init)}}return null};const M=($,C,X)=>{const N=$.node;let F=false;const w=(K,q)=>{F=true;return z.jsxElement(z.jsxOpeningElement(z.jsxIdentifier("__OmT"),[z.jsxAttribute(z.jsxIdentifier("i"),z.stringLiteral(K))],false),z.jsxClosingElement(z.jsxIdentifier("__OmT")),[q],false)};const D=N.children.map((K)=>{if(K.type==="JSXText"){if(K.start==null||K.end==null)return K;const q=X.slice(K.start,K.end);const R=q.length-q.trimStart().length;const m=q.length-q.trimEnd().length;if(R+m>=q.length)return K;return w(`txt:${C}:${K.start+R}:${K.end-m}`,K)}if(K.type==="JSXExpressionContainer"){const q=b($,K.expression);if(q)return w(`str:${C}:${q[0]}:${q[1]}`,K)}return K});if(F)N.children=D};return{visitor:{JSXOpeningElement($,C){const X=$.node;const N=E(C);const F={};for(let w=0;w<X.attributes.length;w++){const D=X.attributes[w];if(D.type!=="JSXAttribute"||!D.name)continue;const K=D.name.name;if(!L[K])continue;if(!D.value||D.value.type!=="StringLiteral")continue;if(D.value.start==null||D.value.end==null)continue;const q=`txt:${N}:${D.value.start}:${D.value.end}`;F[K]=q;D.value=z.jsxExpressionContainer(_(q,z.stringLiteral(D.value.value)))}if(Object.keys(F).length){X.attributes.push(z.jsxAttribute(z.jsxIdentifier("data-om-text-attrs"),z.stringLiteral(JSON.stringify(F))))}},JSXElement($,C){const X=$.node.openingElement;const N=X&&X.name&&X.name.name;if(N==="__OmT")return;if(typeof N==="string"&&V[N])return;M($,E(C),B(C))},JSXFragment($,C){M($,E(C),B(C))}}}})}}const u=A?["transform-react-jsx-source",G,k]:["transform-react-jsx-source",G];document.querySelectorAll('script[type="text/babel"],script[type="text/jsx"]').forEach((Y,U)=>{const Q=Y.getAttribute("data-plugins")||"";const J=u.filter((W)=>Q.indexOf(W)<0);if(J.length){Y.setAttribute("data-plugins",Q?`${Q},${J.join(",")}`:J.join(","))}if(!Y.hasAttribute("data-filename")){Y.setAttribute("data-filename",Y.getAttribute("src")||`inline-${U}`)}})});var y=window.parent;if(y&&y!==window){const H=(Q,J)=>{try{y.postMessage({__omelette_log:true,type:Q,data:J},"*")}catch{}};["log","warn","error"].forEach((Q)=>{const J=console[Q];console[Q]=(...W)=>{const Z=W.map((z)=>{try{return typeof z==="object"?JSON.stringify(z):String(z)}catch{try{return String(z)}catch{return"[unstringifiable]"}}}).join(" ");H(Q,Z);J.apply(console,W)}});window.addEventListener("error",(Q)=>{const J=Q.target;if(J&&J!==window&&J.tagName){const W=J.src||J.href||"";H("resource_error",`${J.tagName} failed to load: ${W}`)}else{H("error",`${Q.message||"Unknown error"} at ${Q.filename||"?"}:${Q.lineno||0}:${Q.colno||0}`)}},true);window.addEventListener("unhandledrejection",(Q)=>{const J=Q.reason;const W=J instanceof Error?`${J.message} ${J.stack}`:String(J);H("error",`Unhandled rejection: ${W}`)});const G=()=>{try{y.postMessage({type:"omelette:height",height:document.documentElement.scrollHeight},"*")}catch{}};if(document.readyState==="complete")G();else window.addEventListener("load",G);if(window.ResizeObserver)new ResizeObserver(G).observe(document.documentElement);const k={};let A=0;window.claude={complete(Q){return new Promise((J,W)=>{if(!j.length){W(new Error("claude.complete: no parent origin"));return}const Z=`c${++A}`;const z=()=>setTimeout(()=>{delete k[Z];W(new Error(`claude.complete: no data for ${S/1000}s`))},S);const V=z();k[Z]={resolve:J,reject:W,text:"",t:V,arm:z};try{for(const L of j){y.postMessage({__om_api:true,id:Z,body:Q},L)}}catch(L){clearTimeout(V);delete k[Z];W(L)}})}};const u={};let Y=0;window.omelette={writeFile:(Q,J)=>new Promise((W,Z)=>{if(!j.length){W();return}const z=`f${++Y}`;const V=setTimeout(()=>{delete u[z];W()},f);u[z]={resolve:W,reject:Z,t:V};try{for(const L of j){y.postMessage({__om_file:true,id:z,op:"write",path:Q,content:J},L)}}catch{clearTimeout(V);delete u[z];W()}})};const U=(Q)=>{try{return JSON.stringify(Q)}catch{return JSON.stringify(String(Q))}};window.addEventListener("message",(Q)=>{if(j.indexOf(Q.origin)<0)return;if(Q.source!==y)return;const J=Q.data;if(!J)return;if(J.type==="omelette-preview-refresh"){if(typeof J.token!=="string"||!/^[0-9a-f.-]+(\.(rc|pr-[0-9]+))?(\.[0-9]+\.[0-9a-f]{16})?$/.test(J.token))return;const z=Math.max(1,Math.floor((J.expiresAt||0)-Date.now()/1000));document.cookie="__Host-omelette-preview="+J.token+"; Path=/; Secure; SameSite=None; Partitioned; Max-Age="+z;return}if(J.__om_file_r){const z=u[J.id];if(!z)return;clearTimeout(z.t);delete u[J.id];if(J.ok)z.resolve();else z.reject(new Error(J.error||"write failed"));return}if(J.__om_api_r){const z=k[J.id];if(!z)return;if(J.error!=null){clearTimeout(z.t);delete k[J.id];z.reject(new Error(J.error));return}if(J.chunk!=null){clearTimeout(z.t);z.t=z.arm();z.text+=J.chunk;return}if(J.done){clearTimeout(z.t);delete k[J.id];z.resolve(J.text!=null?J.text:z.text);return}return}if(!J.__om_eval)return;const W=J;const Z=(z)=>{Q.source.postMessage({...z,__om_eval_r:1,id:W.id},Q.origin)};try{const z=(0,eval)(W.code);if(z&&typeof z.then==="function"){z.then((V)=>Z({ok:1,v:U(V)}),(V)=>Z({ok:0,e:String(V)}))}else{Z({ok:1,v:U(z)})}}catch(z){Z({ok:0,e:String(z)})}})}})();
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/tokens/colors.css">
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/tokens/typography.css">
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/styles.css">
+<script src="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/_ds_bundle.js"></script>
+<style>
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--lienzo); color:var(--tinta); font-family:var(--font-sans); -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; }
+</style>
+</helmet>
+
+<div data-screen-label="TapCar Planes">
+
+<!-- ============ NAV ============ -->
+<header style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.82); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--linea);">
+  <div style="max-width:1140px; margin:0 auto; padding:13px 24px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+    <a href="TapCar Landing.dc.html" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
+      <svg width="34" height="34" viewBox="0 0 72 72" fill="none">
+        <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+        <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+        <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#fff"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#fff"/>
+        <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
+      </svg>
+      <span style="font-weight:700; letter-spacing:-0.03em; font-size:20px; color:var(--tinta);">Tap<span style="color:var(--azul);">Car</span></span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:30px;">
+      <a href="TapCar Landing.dc.html#como" style="text-decoration:none; font-size:14px; font-weight:500; color:var(--acero);" style-hover="color:var(--tinta)">Cómo funciona</a>
+      <a href="TapCar Landing.dc.html#beneficios" style="text-decoration:none; font-size:14px; font-weight:500; color:var(--acero);" style-hover="color:var(--tinta)">Beneficios</a>
+      <a href="#" style="text-decoration:none; font-size:14px; font-weight:600; color:var(--azul);">Planes</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a href="#" style="text-decoration:none; font-size:14px; font-weight:600; color:var(--azul); padding:8px 12px; border-radius:var(--radius-sm);" style-hover="background:var(--azul-soft)">Ingresar</a>
+      <x-import component-from-global-scope="TapCarDesignSystem_fff1e7.Button" hint-size="auto,40px" variant="primary" size="md">Crear cuenta</x-import>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HEADER ============ -->
+<section style="padding:72px 0 8px; text-align:center;">
+  <div style="max-width:680px; margin:0 auto; padding:0 24px;">
+    <span style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--azul);">Planes</span>
+    <h1 style="margin:12px 0 0; font-size:44px; line-height:1.08; letter-spacing:-0.03em; font-weight:700; text-wrap:balance;">Una tarifa simple: $2.900 por vehículo.</h1>
+    <p style="margin:16px 0 0; font-size:18px; line-height:1.55; color:var(--acero);">Sin tramos ni planes que elegir. Mueve el control según tu flota y mira tu precio al instante. Cambia o cancela cuando quieras.</p>
+  </div>
+</section>
+
+<!-- ============ PRICING CALCULATOR ============ -->
+<section style="padding:40px 0 24px;">
+  <div style="max-width:1140px; margin:0 auto; padding:0 24px; display:grid; grid-template-columns:1.08fr 0.92fr; gap:24px; align-items:stretch;">
+
+    <!-- CALCULADORA -->
+    <div style="display:flex; flex-direction:column; background:var(--superficie); border:1px solid var(--linea); border-radius:var(--radius-lg); box-shadow:var(--shadow-md); padding:36px;">
+      <span style="font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--azul);">Calcula tu plan</span>
+
+      <div style="margin:24px 0 0; display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
+        <span style="font-size:16px; color:var(--acero); line-height:1.4;">Vehículos a registrar</span>
+        <span style="display:inline-flex; align-items:baseline; gap:6px;"><span style="font-size:30px; font-weight:700; letter-spacing:-0.02em; color:var(--azul);">{{ count }}</span><span style="font-size:14px; color:var(--acero);">veh.</span></span>
+      </div>
+
+      <input type="range" min="1" max="100" value="{{ count }}" onChange="{{ onSlide }}" onInput="{{ onSlide }}" style="width:100%; accent-color:var(--azul); height:6px; margin:16px 0 6px; cursor:pointer;">
+      <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--acero);"><span>1</span><span>100+</span></div>
+
+      <div style="margin:28px 0; height:1px; background:var(--linea);"></div>
+
+      <span style="font-size:14px; color:var(--acero);">{{ countLabel }} × $2.900</span>
+      <div style="margin:8px 0 4px; display:flex; align-items:baseline; gap:7px;">
+        <span style="font-size:50px; font-weight:700; letter-spacing:-0.03em; line-height:1;">{{ total }}</span>
+        <span style="font-size:17px; color:var(--acero);">/mes</span>
+      </div>
+      <span style="font-size:13px; color:var(--acero); line-height:1.5;">Tarifa fija de $2.900 por vehículo al mes. Sin costos ocultos.</span>
+
+      <div style="flex:1; min-height:24px;"></div>
+      <div style="display:flex; gap:12px;">
+        <x-import component-from-global-scope="TapCarDesignSystem_fff1e7.Button" hint-size="auto,46px" variant="primary" size="lg">Crear cuenta</x-import>
+        <x-import component-from-global-scope="TapCarDesignSystem_fff1e7.Button" hint-size="auto,46px" variant="secondary" size="lg">Hablar con ventas</x-import>
+      </div>
+    </div>
+
+    <!-- INCLUIDO -->
+    <div style="display:flex; flex-direction:column; background:var(--azul-soft); border:1px solid var(--linea); border-radius:var(--radius-lg); padding:36px;">
+      <span style="font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--azul);">Todo incluido</span>
+      <p style="margin:8px 0 0; font-size:15px; line-height:1.5; color:var(--acero);">En cada vehículo, registres los que registres. Sin extras ni letra chica.</p>
+      <ul style="margin:24px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:14px;">
+        <li style="display:flex; gap:11px; font-size:15px; color:var(--tinta); line-height:1.45;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto; margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>Chip NFC incluido por cada vehículo</li>
+        <li style="display:flex; gap:11px; font-size:15px; color:var(--tinta); line-height:1.45;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto; margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>Ficha pública de solo lectura</li>
+        <li style="display:flex; gap:11px; font-size:15px; color:var(--tinta); line-height:1.45;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto; margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>Recordatorios de vencimiento por correo</li>
+        <li style="display:flex; gap:11px; font-size:15px; color:var(--tinta); line-height:1.45;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto; margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>Datos de empresa por ficha (RUT, razón social, giro)</li>
+        <li style="display:flex; gap:11px; font-size:15px; color:var(--tinta); line-height:1.45;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto; margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>Usuarios ilimitados en tu equipo</li>
+        <li style="display:flex; gap:11px; font-size:15px; color:var(--tinta); line-height:1.45;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto; margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>Soporte por correo y WhatsApp</li>
+        <li style="display:flex; gap:11px; font-size:15px; color:var(--tinta); line-height:1.45;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto; margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia — cancela cuando quieras</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ============ FAQ ============ -->
+<section style="background:var(--superficie); border-top:1px solid var(--linea); border-bottom:1px solid var(--linea); padding:80px 0; margin-top:48px;">
+  <div style="max-width:760px; margin:0 auto; padding:0 24px;">
+    <div style="text-align:center;">
+      <span style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--azul);">Preguntas frecuentes</span>
+      <h2 style="margin:12px 0 0; font-size:32px; line-height:1.15; letter-spacing:-0.025em; font-weight:700;">Sobre los planes</h2>
+    </div>
+    <div style="margin-top:40px; display:flex; flex-direction:column; gap:0;">
+      <div style="padding:22px 0; border-top:1px solid var(--linea);">
+        <h3 style="margin:0; font-size:17px; font-weight:600;">¿Hay un período de prueba?</h3>
+        <p style="margin:8px 0 0; font-size:15px; line-height:1.55; color:var(--acero);">Sí. Puedes probar TapCar 14 días con tu flota completa antes de elegir un plan. Al terminar la prueba eliges cómo seguir.</p>
+      </div>
+      <div style="padding:22px 0; border-top:1px solid var(--linea);">
+        <h3 style="margin:0; font-size:17px; font-weight:600;">¿Cómo se cobra?</h3>
+        <p style="margin:8px 0 0; font-size:15px; line-height:1.55; color:var(--acero);">Pagas una tarifa fija de $2.900 por vehículo al mes, vía transferencia o tarjeta. Tu total es simplemente $2.900 por la cantidad de vehículos que registres.</p>
+      </div>
+      <div style="padding:22px 0; border-top:1px solid var(--linea);">
+        <h3 style="margin:0; font-size:17px; font-weight:600;">¿Qué pasa si crece mi flota?</h3>
+        <p style="margin:8px 0 0; font-size:15px; line-height:1.55; color:var(--acero);">Cambias de plan cuando quieras y solo pagas la diferencia. Te enviamos los chips NFC de los vehículos nuevos.</p>
+      </div>
+      <div style="padding:22px 0; border-top:1px solid var(--linea); border-bottom:1px solid var(--linea);">
+        <h3 style="margin:0; font-size:17px; font-weight:600;">¿Puedo cancelar?</h3>
+        <p style="margin:8px 0 0; font-size:15px; line-height:1.55; color:var(--acero);">Sí, cuando quieras. No hay contratos de permanencia ni penalizaciones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section style="padding:88px 0; background:var(--azul);">
+  <div style="max-width:760px; margin:0 auto; padding:0 24px; text-align:center;">
+    <h2 style="margin:0; font-size:34px; line-height:1.12; letter-spacing:-0.025em; font-weight:700; color:#fff; text-wrap:balance;">Prueba TapCar con tu flota durante 14 días.</h2>
+    <p style="margin:16px 0 0; font-size:17px; line-height:1.55; color:#dbe4ff;">Registra tus vehículos y graba sus chips. Si te sirve, eliges tu plan. Si no, no pagas nada.</p>
+    <div style="display:flex; gap:12px; justify-content:center; margin-top:30px;">
+      <a href="#" style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--azul); font-size:16px; font-weight:600; padding:13px 22px; border-radius:var(--radius-sm); text-decoration:none; box-shadow:var(--shadow-md);" style-hover="background:var(--lienzo)">Crear cuenta
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" style="display:inline-flex; align-items:center; background:transparent; color:#fff; font-size:16px; font-weight:600; padding:13px 22px; border-radius:var(--radius-sm); text-decoration:none; border:1px solid rgba(255,255,255,0.4);" style-hover="background:rgba(255,255,255,0.1)">Hablar con ventas</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background:var(--superficie); border-top:1px solid var(--linea); padding:56px 0 32px;">
+  <div style="max-width:1140px; margin:0 auto; padding:0 24px;">
+    <div style="display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:32px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="30" height="30" viewBox="0 0 72 72" fill="none">
+            <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+            <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+            <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#fff"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#fff"/>
+            <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/>
+          </svg>
+          <span style="font-weight:700; letter-spacing:-0.03em; font-size:18px; color:var(--tinta);">Tap<span style="color:var(--azul);">Car</span></span>
+        </div>
+        <p style="margin:14px 0 0; font-size:14px; line-height:1.55; color:var(--acero); max-width:280px;">La documentación de tu flota, lista para la fiscalización en ruta.</p>
+      </div>
+      <div>
+        <p style="margin:0 0 14px; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--tinta);">Producto</p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="TapCar Landing.dc.html#como" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Cómo funciona</a>
+          <a href="TapCar Landing.dc.html#beneficios" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Beneficios</a>
+          <a href="#" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Planes</a>
+        </div>
+      </div>
+      <div>
+        <p style="margin:0 0 14px; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--tinta);">Empresa</p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="#" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Nosotros</a>
+          <a href="#" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Contacto</a>
+          <a href="#" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Soporte</a>
+        </div>
+      </div>
+      <div>
+        <p style="margin:0 0 14px; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--tinta);">Legal</p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="#" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Términos</a>
+          <a href="#" style="font-size:14px; color:var(--acero); text-decoration:none;" style-hover="color:var(--azul)">Privacidad</a>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:40px; padding-top:22px; border-top:1px solid var(--linea); display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <span style="font-size:13px; color:var(--acero);">© 2026 TapCar · tapcar.cl</span>
+      <span style="font-size:13px; color:var(--acero);">Hecho en Chile</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { count: 10 };
+  static RATE = 2900;
+
+  fmt(n) { return '$' + n.toLocaleString('es-CL'); }
+
+  renderVals() {
+    const count = this.state.count;
+    return {
+      count,
+      countLabel: count === 1 ? '1 vehículo' : count + ' vehículos',
+      total: this.fmt(count * Component.RATE),
+      onSlide: (e) => {
+        const v = parseInt(e.target.value, 10);
+        this.setState({ count: isNaN(v) ? 1 : v });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style data-omelette-injected>html,body{background:transparent}</style><script data-omelette-injected>(()=>{var j=[];var x=false;var S=30000;var f=3000;document.addEventListener("DOMContentLoaded",()=>{const H=window.Babel;const G="om-src-id";if(H&&H.registerPlugin&&!(H.availablePlugins&&H.availablePlugins[G])){H.registerPlugin(G,({types:Y})=>({visitor:{JSXOpeningElement(U,Q){const J=U.node;if(J.name&&J.name.type==="JSXMemberExpression")return;for(let V=0;V<J.attributes.length;V++){const L=J.attributes[V];if(L.type==="JSXAttribute"&&L.name&&L.name.name==="data-om-id")return}const W=Q.file&&Q.file.opts&&Q.file.opts.filename||"?";const Z=J.loc&&J.loc.start;const z=`jsx:${W}:${J.start??0}:${Z?Z.line:0}:${Z?Z.column+1:0}`;J.attributes.push(Y.jsxAttribute(Y.jsxIdentifier("data-om-id"),Y.stringLiteral(z)))}}}))}const k="om-text-extract";let A=false;if(x&&H&&H.registerPlugin&&!(H.availablePlugins&&H.availablePlugins[k])){const Y=window.React;if(Y&&Y.useSyncExternalStore&&Y.createElement){A=true;const U={};const Q=new Set;let J=0;window.__omTextO=U;window.__omTextSet=(z)=>{for(const V in z){const L=z[V];if(L==null)delete U[V];else U[V]=L}J++;Q.forEach((V)=>V())};const W=(z)=>{Q.add(z);return()=>Q.delete(z)};const Z=()=>J;window.__OmT=function z(V){Y.useSyncExternalStore(W,Z,Z);return Y.createElement("span",{"data-om-text":V.i,className:"__om-t"},V.i in U?U[V.i]:V.children)};H.registerPlugin(k,({types:z})=>{const V={style:1,script:1,noscript:1,textarea:1,title:1,option:1,text:1,tspan:1,textPath:1};const L={placeholder:1,alt:1,title:1,label:1,"aria-label":1,"aria-description":1,"aria-placeholder":1};const _=($,C)=>z.logicalExpression("??",z.memberExpression(z.logicalExpression("||",z.memberExpression(z.identifier("window"),z.identifier("__omTextO")),z.objectExpression([])),z.stringLiteral($),true),C);const E=($)=>$.file&&$.file.opts&&$.file.opts.filename||"?";const B=($)=>$.file&&$.file.code||"";const b=($,C)=>{const X=(F)=>F&&F.start!=null&&F.end!=null&&(F.type==="StringLiteral"||F.type==="TemplateLiteral"&&F.expressions.length===0)?[F.start,F.end]:null;const N=X(C);if(N)return N;if(C&&C.type==="Identifier"){const F=$.scope.getBinding(C.name);if(F&&F.constant&&F.path.node.type==="VariableDeclarator"){return X(F.path.node.init)}}return null};const M=($,C,X)=>{const N=$.node;let F=false;const w=(K,q)=>{F=true;return z.jsxElement(z.jsxOpeningElement(z.jsxIdentifier("__OmT"),[z.jsxAttribute(z.jsxIdentifier("i"),z.stringLiteral(K))],false),z.jsxClosingElement(z.jsxIdentifier("__OmT")),[q],false)};const D=N.children.map((K)=>{if(K.type==="JSXText"){if(K.start==null||K.end==null)return K;const q=X.slice(K.start,K.end);const R=q.length-q.trimStart().length;const m=q.length-q.trimEnd().length;if(R+m>=q.length)return K;return w(`txt:${C}:${K.start+R}:${K.end-m}`,K)}if(K.type==="JSXExpressionContainer"){const q=b($,K.expression);if(q)return w(`str:${C}:${q[0]}:${q[1]}`,K)}return K});if(F)N.children=D};return{visitor:{JSXOpeningElement($,C){const X=$.node;const N=E(C);const F={};for(let w=0;w<X.attributes.length;w++){const D=X.attributes[w];if(D.type!=="JSXAttribute"||!D.name)continue;const K=D.name.name;if(!L[K])continue;if(!D.value||D.value.type!=="StringLiteral")continue;if(D.value.start==null||D.value.end==null)continue;const q=`txt:${N}:${D.value.start}:${D.value.end}`;F[K]=q;D.value=z.jsxExpressionContainer(_(q,z.stringLiteral(D.value.value)))}if(Object.keys(F).length){X.attributes.push(z.jsxAttribute(z.jsxIdentifier("data-om-text-attrs"),z.stringLiteral(JSON.stringify(F))))}},JSXElement($,C){const X=$.node.openingElement;const N=X&&X.name&&X.name.name;if(N==="__OmT")return;if(typeof N==="string"&&V[N])return;M($,E(C),B(C))},JSXFragment($,C){M($,E(C),B(C))}}}})}}const u=A?["transform-react-jsx-source",G,k]:["transform-react-jsx-source",G];document.querySelectorAll('script[type="text/babel"],script[type="text/jsx"]').forEach((Y,U)=>{const Q=Y.getAttribute("data-plugins")||"";const J=u.filter((W)=>Q.indexOf(W)<0);if(J.length){Y.setAttribute("data-plugins",Q?`${Q},${J.join(",")}`:J.join(","))}if(!Y.hasAttribute("data-filename")){Y.setAttribute("data-filename",Y.getAttribute("src")||`inline-${U}`)}})});var y=window.parent;if(y&&y!==window){const H=(Q,J)=>{try{y.postMessage({__omelette_log:true,type:Q,data:J},"*")}catch{}};["log","warn","error"].forEach((Q)=>{const J=console[Q];console[Q]=(...W)=>{const Z=W.map((z)=>{try{return typeof z==="object"?JSON.stringify(z):String(z)}catch{try{return String(z)}catch{return"[unstringifiable]"}}}).join(" ");H(Q,Z);J.apply(console,W)}});window.addEventListener("error",(Q)=>{const J=Q.target;if(J&&J!==window&&J.tagName){const W=J.src||J.href||"";H("resource_error",`${J.tagName} failed to load: ${W}`)}else{H("error",`${Q.message||"Unknown error"} at ${Q.filename||"?"}:${Q.lineno||0}:${Q.colno||0}`)}},true);window.addEventListener("unhandledrejection",(Q)=>{const J=Q.reason;const W=J instanceof Error?`${J.message} ${J.stack}`:String(J);H("error",`Unhandled rejection: ${W}`)});const G=()=>{try{y.postMessage({type:"omelette:height",height:document.documentElement.scrollHeight},"*")}catch{}};if(document.readyState==="complete")G();else window.addEventListener("load",G);if(window.ResizeObserver)new ResizeObserver(G).observe(document.documentElement);const k={};let A=0;window.claude={complete(Q){return new Promise((J,W)=>{if(!j.length){W(new Error("claude.complete: no parent origin"));return}const Z=`c${++A}`;const z=()=>setTimeout(()=>{delete k[Z];W(new Error(`claude.complete: no data for ${S/1000}s`))},S);const V=z();k[Z]={resolve:J,reject:W,text:"",t:V,arm:z};try{for(const L of j){y.postMessage({__om_api:true,id:Z,body:Q},L)}}catch(L){clearTimeout(V);delete k[Z];W(L)}})}};const u={};let Y=0;window.omelette={writeFile:(Q,J)=>new Promise((W,Z)=>{if(!j.length){W();return}const z=`f${++Y}`;const V=setTimeout(()=>{delete u[z];W()},f);u[z]={resolve:W,reject:Z,t:V};try{for(const L of j){y.postMessage({__om_file:true,id:z,op:"write",path:Q,content:J},L)}}catch{clearTimeout(V);delete u[z];W()}})};const U=(Q)=>{try{return JSON.stringify(Q)}catch{return JSON.stringify(String(Q))}};window.addEventListener("message",(Q)=>{if(j.indexOf(Q.origin)<0)return;if(Q.source!==y)return;const J=Q.data;if(!J)return;if(J.type==="omelette-preview-refresh"){if(typeof J.token!=="string"||!/^[0-9a-f.-]+(\.(rc|pr-[0-9]+))?(\.[0-9]+\.[0-9a-f]{16})?$/.test(J.token))return;const z=Math.max(1,Math.floor((J.expiresAt||0)-Date.now()/1000));document.cookie="__Host-omelette-preview="+J.token+"; Path=/; Secure; SameSite=None; Partitioned; Max-Age="+z;return}if(J.__om_file_r){const z=u[J.id];if(!z)return;clearTimeout(z.t);delete u[J.id];if(J.ok)z.resolve();else z.reject(new Error(J.error||"write failed"));return}if(J.__om_api_r){const z=k[J.id];if(!z)return;if(J.error!=null){clearTimeout(z.t);delete k[J.id];z.reject(new Error(J.error));return}if(J.chunk!=null){clearTimeout(z.t);z.t=z.arm();z.text+=J.chunk;return}if(J.done){clearTimeout(z.t);delete k[J.id];z.resolve(J.text!=null?J.text:z.text);return}return}if(!J.__om_eval)return;const W=J;const Z=(z)=>{Q.source.postMessage({...z,__om_eval_r:1,id:W.id},Q.origin)};try{const z=(0,eval)(W.code);if(z&&typeof z.then==="function"){z.then((V)=>Z({ok:1,v:U(V)}),(V)=>Z({ok:0,e:String(V)}))}else{Z({ok:1,v:U(z)})}}catch(z){Z({ok:0,e:String(z)})}})}})();
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/tokens/colors.css">
+<link rel="stylesheet" href="_ds/tapcar-design-system-fff1e735-fe60-484e-8268-e71dc5a36bc8/tokens/typography.css">
+<meta name="design_doc_mode" content="canvas">
+<style>
+  body { background:#eef0f3; }
+  .frameLabel { font-family:'Geist',system-ui,sans-serif; font-size:13px; font-weight:600; color:#5b6573; letter-spacing:-0.01em; margin-bottom:12px; }
+  .card { background:#fff; border:1px solid #e3e6ea; border-radius:4px; box-shadow:0 1px 3px rgba(22,25,31,.08); }
+  .eyebrow { font-family:'Geist',system-ui,sans-serif; font-size:11px; font-weight:700; letter-spacing:.10em; text-transform:uppercase; color:#2952e6; }
+  .h { font-family:'Geist',system-ui,sans-serif; font-weight:700; letter-spacing:-0.02em; color:#16191f; }
+  .body { font-family:'Geist',system-ui,sans-serif; font-weight:400; color:#5b6573; line-height:1.5; }
+  .mono { font-family:'Geist Mono','Geist',monospace; }
+  .wm { font-family:'Geist',system-ui,sans-serif; font-weight:700; letter-spacing:-0.03em; }
+</style>
+</helmet>
+
+<!-- ============ DIRECTION A ============ -->
+<div style="position:absolute; left:0px; top:0px; width:440px;">
+  <div class="frameLabel" data-drags-parent="1">Dirección A — "Señal"</div>
+  <div class="card" style="padding:40px;">
+    <div class="eyebrow">Auto + onda NFC</div>
+    <div style="display:flex; align-items:center; justify-content:center; height:240px; background:#f6f7f9; border-radius:4px; margin:20px 0;">
+      <svg width="150" height="150" viewBox="0 0 72 72" fill="none" aria-label="TapCar">
+        <!-- broadcast waves -->
+        <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none">
+          <path d="M44 22 A 14 14 0 0 1 58 36"/>
+          <path d="M44 14 A 22 22 0 0 1 66 36"/>
+        </g>
+        <!-- car body -->
+        <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+        <!-- windows -->
+        <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#f6f7f9"/>
+        <path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#f6f7f9"/>
+        <!-- wheels -->
+        <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/>
+        <circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="h" style="font-size:18px; margin-bottom:8px;">El auto que transmite</div>
+    <div class="body" style="font-size:14px;">Silueta de vehículo emitiendo una onda NFC. Lectura literal e inmediata: "este auto comparte su documentación con un toque". Ideal como ícono de app.</div>
+  </div>
+</div>
+
+<!-- ============ DIRECTION B ============ -->
+<div style="position:absolute; left:520px; top:0px; width:440px;">
+  <div class="frameLabel" data-drags-parent="1">Dirección B — "Monograma T"</div>
+  <div class="card" style="padding:40px;">
+    <div class="eyebrow">La T que toca</div>
+    <div style="display:flex; align-items:center; justify-content:center; height:240px; background:#f6f7f9; border-radius:4px; margin:20px 0;">
+      <svg width="150" height="150" viewBox="0 0 72 72" fill="none" aria-label="TapCar">
+        <rect x="4" y="4" width="64" height="64" rx="19" fill="#2952e6"/>
+        <!-- T stem -->
+        <rect x="32" y="30" width="8" height="26" rx="4" fill="#fff"/>
+        <!-- T crossbar as nfc waves -->
+        <g stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none">
+          <path d="M22 30 A 14 14 0 0 1 50 30"/>
+        </g>
+        <path d="M28 30 A 8 8 0 0 1 44 30" stroke="#bcd0ff" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+    <div class="h" style="font-size:18px; margin-bottom:8px;">Monograma de toque</div>
+    <div class="body" style="font-size:14px;">La inicial "T" cuyo travesaño es la onda del tap. Abstracto, geométrico y escalable; vive perfecto dentro del chip azul, el motivo central del producto.</div>
+  </div>
+</div>
+
+<!-- ============ DIRECTION C ============ -->
+<div style="position:absolute; left:1040px; top:0px; width:440px;">
+  <div class="frameLabel" data-drags-parent="1">Dirección C — "Patente"</div>
+  <div class="card" style="padding:40px;">
+    <div class="eyebrow">Ficha + toque</div>
+    <div style="display:flex; align-items:center; justify-content:center; height:240px; background:#f6f7f9; border-radius:4px; margin:20px 0;">
+      <svg width="150" height="150" viewBox="0 0 72 72" fill="none" aria-label="TapCar">
+        <!-- plate / card -->
+        <rect x="10" y="22" width="42" height="28" rx="6" fill="#eaeefc" stroke="#2952e6" stroke-width="3"/>
+        <!-- mini car inside -->
+        <path d="M18 40 C18 37 19.5 36 21.5 36 L25 32.5 C26 31.5 27 31 28.5 31 L34 31 C35.5 31 36.5 31.5 37.5 33 L39.5 36 C42 36 43 37.5 43 40 L43 41 L18 41 Z" fill="#2952e6"/>
+        <circle cx="24" cy="41" r="3" fill="#16191f"/><circle cx="38" cy="41" r="3" fill="#16191f"/>
+        <!-- tap waves from corner -->
+        <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none">
+          <path d="M52 44 A 9 9 0 0 1 56 53"/>
+          <path d="M52 38 A 15 15 0 0 1 60 53"/>
+        </g>
+      </svg>
+    </div>
+    <div class="h" style="font-size:18px; margin-bottom:8px;">La ficha que se valida</div>
+    <div class="body" style="font-size:14px;">El vehículo dentro de su ficha/patente, emitiendo el toque NFC. Refuerza el corazón del producto: documentación lista para fiscalización.</div>
+  </div>
+</div>
+
+<!-- ============ FULL SYSTEM (recommended A) ============ -->
+<div style="position:absolute; left:0px; top:640px; width:1480px;">
+  <div class="frameLabel" data-drags-parent="1">Sistema completo — recomendado: Dirección A</div>
+  <div class="card" style="padding:48px;">
+    <div style="display:flex; gap:16px; align-items:baseline; margin-bottom:36px;">
+      <div class="eyebrow">Recomendación</div>
+      <div class="body" style="font-size:14px;">La Dirección A entrega la lectura más directa y el mejor ícono de app. Aquí, el sistema completo.</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+
+      <!-- isotipo -->
+      <div style="border:1px solid #e3e6ea; border-radius:12px; overflow:hidden;">
+        <div style="height:170px; display:flex; align-items:center; justify-content:center; background:#f6f7f9;">
+          <svg width="104" height="104" viewBox="0 0 72 72" fill="none">
+            <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+            <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+            <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#f6f7f9"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#f6f7f9"/>
+            <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
+          </svg>
+        </div>
+        <div style="padding:14px 16px;"><div class="h" style="font-size:13px;">Isotipo</div><div class="body" style="font-size:12px;">Marca sola</div></div>
+      </div>
+
+      <!-- horizontal -->
+      <div style="border:1px solid #e3e6ea; border-radius:12px; overflow:hidden;">
+        <div style="height:170px; display:flex; align-items:center; justify-content:center; background:#f6f7f9;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <svg width="58" height="58" viewBox="0 0 72 72" fill="none">
+              <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+              <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+              <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#f6f7f9"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#f6f7f9"/>
+              <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
+            </svg>
+            <span class="wm" style="font-size:28px; color:#16191f;">Tap<span style="color:#2952e6;">Car</span></span>
+          </div>
+        </div>
+        <div style="padding:14px 16px;"><div class="h" style="font-size:13px;">Horizontal</div><div class="body" style="font-size:12px;">Lockup principal</div></div>
+      </div>
+
+      <!-- stacked -->
+      <div style="border:1px solid #e3e6ea; border-radius:12px; overflow:hidden;">
+        <div style="height:170px; display:flex; align-items:center; justify-content:center; background:#f6f7f9;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+            <svg width="52" height="52" viewBox="0 0 72 72" fill="none">
+              <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+              <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+              <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#f6f7f9"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#f6f7f9"/>
+              <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
+            </svg>
+            <span class="wm" style="font-size:24px; color:#16191f;">Tap<span style="color:#2952e6;">Car</span></span>
+          </div>
+        </div>
+        <div style="padding:14px 16px;"><div class="h" style="font-size:13px;">Apilado</div><div class="body" style="font-size:12px;">Espacios compactos</div></div>
+      </div>
+
+      <!-- favicon -->
+      <div style="border:1px solid #e3e6ea; border-radius:12px; overflow:hidden;">
+        <div style="height:170px; display:flex; align-items:center; justify-content:center; gap:18px; background:#f6f7f9;">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+            <rect width="72" height="72" rx="18" fill="#2952e6"/>
+            <g stroke="#bcd0ff" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+            <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#fff"/>
+            <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#2952e6"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#2952e6"/>
+            <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
+          </svg>
+          <svg width="34" height="34" viewBox="0 0 72 72" fill="none">
+            <rect width="72" height="72" rx="18" fill="#2952e6"/>
+            <g stroke="#bcd0ff" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+            <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#fff"/>
+            <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#2952e6"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#2952e6"/>
+            <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/>
+          </svg>
+        </div>
+        <div style="padding:14px 16px;"><div class="h" style="font-size:13px;">Favicon / App icon</div><div class="body" style="font-size:12px;">Marca en chip azul</div></div>
+      </div>
+
+      <!-- on light -->
+      <div style="border:1px solid #e3e6ea; border-radius:12px; overflow:hidden;">
+        <div style="height:170px; display:flex; align-items:center; justify-content:center; background:#fff;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <svg width="50" height="50" viewBox="0 0 72 72" fill="none">
+              <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+              <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+              <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#fff"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#fff"/>
+              <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
+            </svg>
+            <span class="wm" style="font-size:25px; color:#16191f;">Tap<span style="color:#2952e6;">Car</span></span>
+          </div>
+        </div>
+        <div style="padding:14px 16px;"><div class="h" style="font-size:13px;">Fondo claro</div><div class="body" style="font-size:12px;">Sobre superficie / lienzo</div></div>
+      </div>
+
+      <!-- on dark -->
+      <div style="border:1px solid #e3e6ea; border-radius:12px; overflow:hidden;">
+        <div style="height:170px; display:flex; align-items:center; justify-content:center; background:#16191f;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <svg width="50" height="50" viewBox="0 0 72 72" fill="none">
+              <g stroke="#6f93ff" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
+              <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#6f93ff"/>
+              <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#16191f"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#16191f"/>
+              <circle cx="23" cy="54" r="6.5" fill="#fff"/><circle cx="23" cy="54" r="2.5" fill="#16191f"/><circle cx="48" cy="54" r="6.5" fill="#fff"/><circle cx="48" cy="54" r="2.5" fill="#16191f"/>
+            </svg>
+            <span class="wm" style="font-size:25px; color:#fff;">Tap<span style="color:#6f93ff;">Car</span></span>
+          </div>
+        </div>
+        <div style="padding:14px 16px;"><div class="h" style="font-size:13px;">Fondo oscuro</div><div class="body" style="font-size:12px;">Azul aclarado para contraste</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</x-dc>
+</body>
+</html>

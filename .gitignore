@@ -1,0 +1,7 @@
+# Configuración local del editor/preview
+.claude/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini

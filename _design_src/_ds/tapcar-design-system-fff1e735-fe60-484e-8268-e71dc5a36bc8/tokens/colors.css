@@ -1,0 +1,48 @@
+/* TapCar · Color tokens
+   Lifted verbatim from app/globals.css (@theme) in lukas-code-master-ctp/nfc.
+   Base palette uses the product's Spanish token names; semantic aliases sit on top. */
+
+:root {
+  /* ── Neutros · base de la interfaz ───────────────────────────── */
+  --tinta: #16191f;        /* texto principal / headers */
+  --acero: #5b6573;        /* texto secundario */
+  --linea: #e3e6ea;        /* bordes / divisores */
+  --lienzo: #f6f7f9;       /* fondo de la app */
+  --superficie: #ffffff;   /* cards / paneles */
+
+  /* ── Marca · acentos ─────────────────────────────────────────── */
+  --azul: #2952e6;         /* primario · CTAs · links */
+  --azul-press: #1e3dae;   /* hover · active del primario */
+  --azul-soft: #eaeefc;    /* relleno 10% para chips/íconos (azul/10 sobre blanco) */
+  --ambar: #f59e0b;        /* acento cálido */
+
+  /* ── Estados · vencimiento de documentos ─────────────────────── */
+  --vigente: #16a34a;
+  --por-vencer: #f59e0b;
+  --vencido: #dc2626;
+
+  /* Pares fondo/texto de los badges de estado (StatusBadge) */
+  --estado-vigente-bg: #e7f6ec;     --estado-vigente-fg: #15803d;
+  --estado-por-vencer-bg: #fdf1dc;  --estado-por-vencer-fg: #b45309;
+  --estado-vencido-bg: #fce7e7;     --estado-vencido-fg: #c81e1e;
+  --estado-neutro-bg: #eef0f3;      --estado-neutro-fg: #5b6573;
+
+  /* ── Aliases semánticos ──────────────────────────────────────── */
+  --text-strong: var(--tinta);
+  --text-muted: var(--acero);
+  --text-on-accent: #ffffff;
+  --text-link: var(--azul);
+
+  --surface-app: var(--lienzo);
+  --surface-card: var(--superficie);
+  --surface-accent-soft: var(--azul-soft);
+
+  --border-default: var(--linea);
+  --border-focus: var(--azul);
+
+  --accent: var(--azul);
+  --accent-press: var(--azul-press);
+
+  --ring-accent: rgba(41, 82, 230, 0.2);   /* focus ring · azul/20 */
+  --overlay-scrim: rgba(22, 25, 31, 0.45);
+}
