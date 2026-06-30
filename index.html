@@ -371,6 +371,28 @@ a { color: inherit; }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
+/* Planes — Toggle de facturación (mensual / anual) */
+.billing-toggle-wrap { display: flex; justify-content: center; margin-bottom: 28px; }
+.billing-toggle {
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
+}
+.billing-toggle__opt {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
+  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  transition: background-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+.billing-toggle__opt:hover { color: var(--tinta); }
+.billing-toggle__opt.is-active { background: var(--azul); color: #fff; }
+.billing-toggle__save {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
+  border-radius: var(--radius-pill); background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
+}
+.billing-toggle__opt.is-active .billing-toggle__save { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
 /* Planes — Calculadora */
 .pricing { padding: 40px 0 24px; }
 .pricing__grid {

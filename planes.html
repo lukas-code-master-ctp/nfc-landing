@@ -371,6 +371,28 @@ a { color: inherit; }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
+/* Planes — Toggle de facturación (mensual / anual) */
+.billing-toggle-wrap { display: flex; justify-content: center; margin-bottom: 28px; }
+.billing-toggle {
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
+}
+.billing-toggle__opt {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
+  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  transition: background-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+.billing-toggle__opt:hover { color: var(--tinta); }
+.billing-toggle__opt.is-active { background: var(--azul); color: #fff; }
+.billing-toggle__save {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
+  border-radius: var(--radius-pill); background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
+}
+.billing-toggle__opt.is-active .billing-toggle__save { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
 /* Planes — Calculadora */
 .pricing { padding: 40px 0 24px; }
 .pricing__grid {
@@ -496,6 +518,12 @@ a { color: inherit; }
 
   <!-- ============ CALCULADORA ============ -->
   <section class="pricing">
+    <div class="billing-toggle-wrap">
+      <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
+        <button type="button" class="billing-toggle__opt is-active" data-period="mensual">Mensual</button>
+        <button type="button" class="billing-toggle__opt" data-period="anual">Anual <span class="billing-toggle__save">−40%</span></button>
+      </div>
+    </div>
     <div class="pricing__grid">
 
       <!-- CALCULADORA -->
@@ -516,12 +544,12 @@ a { color: inherit; }
 
         <div class="calc__divider"></div>
 
-        <span class="calc__formula"><span data-count-label>10 vehículos</span> × $2.900</span>
+        <span class="calc__formula"><span data-count-label>10 vehículos</span> × $<span data-rate>2.900</span></span>
         <div class="calc__total-row">
           <span class="calc__total" data-total>$29.000</span>
           <span class="calc__total-period">/mes</span>
         </div>
-        <span class="calc__note">Tarifa fija de $2.900 por vehículo al mes. Sin costos ocultos.</span>
+        <span class="calc__note" data-note>Tarifa fija de $2.900 por vehículo al mes. Sin costos ocultos.</span>
 
         <div class="calc__spacer"></div>
         <div class="calc__actions">
@@ -641,19 +669,38 @@ a { color: inherit; }
   <script>
     // ── Calculadora de precio ──────────────────────────────────────
     (function () {
-      var RATE = 2900;
+      var RATES = { mensual: 2900, anual: 1740 }; // anual = -40% por vehículo/mes
+      var period = 'mensual';
       var slider = document.querySelector('[data-slider]');
       var countEl = document.querySelector('[data-count]');
       var labelEl = document.querySelector('[data-count-label]');
+      var rateEl = document.querySelector('[data-rate]');
       var totalEl = document.querySelector('[data-total]');
+      var noteEl = document.querySelector('[data-note]');
+      var opts = document.querySelectorAll('.billing-toggle__opt');
       function fmt(n) { return '$' + n.toLocaleString('es-CL'); }
       function render() {
         var count = parseInt(slider.value, 10);
         if (isNaN(count)) count = 1;
+        var rate = RATES[period];
         countEl.textContent = count;
         labelEl.textContent = count === 1 ? '1 vehículo' : count + ' vehículos';
-        totalEl.textContent = fmt(count * RATE);
+        rateEl.textContent = rate.toLocaleString('es-CL');
+        totalEl.textContent = fmt(count * rate);
+        if (period === 'anual') {
+          noteEl.textContent = 'Equivale a ' + fmt(rate) + ' por vehículo/mes, facturado anual ('
+            + fmt(count * rate * 12) + '/año). Ahorras 40%.';
+        } else {
+          noteEl.textContent = 'Tarifa fija de $2.900 por vehículo al mes. Sin costos ocultos.';
+        }
       }
+      opts.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          period = btn.getAttribute('data-period');
+          opts.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+          render();
+        });
+      });
       slider.addEventListener('input', render);
       slider.addEventListener('change', render);
       render();
