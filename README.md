@@ -9,14 +9,14 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 | Página | Archivo | Contenido |
 |---|---|---|
 | Home / Landing | [`index.html`](index.html) | Hero + preview de ficha NFC, "Cómo funciona", "Beneficios", showcase de la ficha, CTA |
-| Planes | [`planes.html`](planes.html) | Calculadora de precio con slider, "Todo incluido", preguntas frecuentes, CTA |
+| Planes | [`planes/index.html`](planes/index.html) | Calculadora de precio con slider, "Todo incluido", preguntas frecuentes, CTA |
 
 ## Estructura
 
 ```
 .
 ├── index.html      # Home / Landing (autónoma, CSS incrustado)
-├── planes.html     # Planes (autónoma, CSS incrustado)
+├── planes/index.html     # Planes (autónoma, CSS incrustado)
 ├── styles.css      # Design system compartido (fuente editable)
 └── _design_src/    # Archivos originales del diseño (referencia)
 ```
