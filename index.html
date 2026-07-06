@@ -468,6 +468,71 @@ a { color: inherit; }
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
 
 /* ===================================================================
+   Animaciones (home)
+   =================================================================== */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+@keyframes ping-nfc {
+  0%   { box-shadow: 0 0 0 0 rgba(41, 82, 230, 0.45); }
+  70%  { box-shadow: 0 0 0 14px rgba(41, 82, 230, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(41, 82, 230, 0); }
+}
+@keyframes wave-nfc {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
+/* Hero: entrada en cascada */
+.lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust {
+  animation: rise 0.7s var(--ease-standard) backwards;
+}
+.lp-hero__title   { animation-delay: 0.08s; }
+.lp-hero__lead    { animation-delay: 0.16s; }
+.lp-hero__actions { animation-delay: 0.24s; }
+.lp-hero__trust   { animation-delay: 0.32s; }
+
+/* Ficha del hero: entra, luego flota; el tag emite ondas NFC */
+.ficha-preview {
+  animation: rise 0.8s var(--ease-standard) 0.2s backwards,
+             float 7s ease-in-out 1.4s infinite;
+}
+.ficha-preview__tag { animation: ping-nfc 2.6s var(--ease-standard) 1.6s infinite; }
+.ficha-preview__tag svg path { animation: wave-nfc 2.6s ease-in-out 1.6s infinite; }
+.ficha-preview__tag svg path:last-child { animation-delay: 1.9s; }
+
+/* Reveal on scroll (se activa con .is-visible desde JS) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-standard), transform 0.6s var(--ease-standard);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Hover lift en cards de la home */
+.steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.steps-grid .card, .op-grid .card, .bn-grid .card {
+  transition: box-shadow var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-standard);
+}
+
+/* Accesibilidad: sin movimiento si el usuario lo pide */
+@media (prefers-reduced-motion: reduce) {
+  .lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
+  .ficha-preview, .ficha-preview__tag, .ficha-preview__tag svg path { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover { transform: none; }
+}
+
+/* ===================================================================
    Responsive
    =================================================================== */
 @media (max-width: 980px) {
@@ -542,7 +607,7 @@ a { color: inherit; }
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
           Operación de flota
         </div>
-        <h1 class="lp-hero__title">Tu flota a un Tap.</h1>
+        <h1 class="lp-hero__title">Tu flota a un <span style="color:var(--azul);">Tap</span>.</h1>
         <p class="lp-hero__lead">Opera tu flota completa con un toque: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
         <div class="lp-hero__actions">
           <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
@@ -915,6 +980,30 @@ a { color: inherit; }
       </div>
     </div>
   </footer>
+
+  <script>
+    // ── Reveal on scroll ───────────────────────────────────────────
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var els = document.querySelectorAll(
+        '.section__head, .bn-head, .steps-grid .step, .op-grid > .card, .bn-grid > .card, .fs-grid > div, .cta__inner'
+      );
+      els.forEach(function (el) { el.classList.add('reveal'); });
+      // Stagger: retraso según posición entre hermanos animados
+      els.forEach(function (el) {
+        var d = 0, n = el.previousElementSibling;
+        while (n) { if (n.classList.contains('reveal')) d++; n = n.previousElementSibling; }
+        el.style.transitionDelay = Math.min(d, 5) * 90 + 'ms';
+      });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
 
 </body>
 </html>
