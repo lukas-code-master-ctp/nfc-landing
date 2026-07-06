@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Planes · TapCar</title>
-  <meta name="description" content="Una tarifa simple: $2.900 por vehículo al mes. Sin tramos ni planes que elegir. Cambia o cancela cuando quieras.">
+  <meta name="description" content="$2.990 por vehículo al mes — menos que un café. Toda la operación de tu flota: documentos, uso con PIN, panel en vivo y fiscalización. Sin permanencia.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#2952e6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -373,28 +373,6 @@ a { color: inherit; }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
-/* Planes — Toggle de facturación (mensual / anual) */
-.billing-toggle-wrap { display: flex; justify-content: center; margin-bottom: 28px; }
-.billing-toggle {
-  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
-  background: var(--superficie); border: 1px solid var(--linea);
-  border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
-}
-.billing-toggle__opt {
-  display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
-  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
-  transition: background-color var(--duration-base) var(--ease-standard),
-              color var(--duration-base) var(--ease-standard);
-}
-.billing-toggle__opt:hover { color: var(--tinta); }
-.billing-toggle__opt.is-active { background: var(--azul); color: #fff; }
-.billing-toggle__save {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
-  border-radius: var(--radius-pill); background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
-}
-.billing-toggle__opt.is-active .billing-toggle__save { background: rgba(255, 255, 255, 0.22); color: #fff; }
-
 /* Planes — Calculadora */
 .pricing { padding: 40px 0 24px; }
 .pricing__grid {
@@ -445,9 +423,33 @@ a { color: inherit; }
 .faq__a { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
+   Landing — Un toque, toda la operación (bloque estrella)
+   =================================================================== */
+.op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
+.op-card__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.op-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+
+/* Landing — Ficha: pestañas del menú (Tomar/Entregar · Documentos · Información) */
+.fs-tabs { display: flex; gap: 6px; padding: 0 4px 14px; flex-wrap: wrap; }
+.fs-tab {
+  font-size: 13px; font-weight: 600; color: var(--acero);
+  padding: 6px 12px; border-radius: var(--radius-pill); background: transparent;
+}
+.fs-tab.is-active { background: var(--azul); color: #fff; }
+
+/* Planes — Analogía de precio ("menos que un café") */
+.calc__cafe {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  margin: 14px 0 0; padding: 8px 13px; border-radius: var(--radius-pill);
+  background: var(--azul-soft); color: var(--azul); font-size: 13px; font-weight: 600;
+}
+.calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* ===================================================================
    Responsive
    =================================================================== */
 @media (max-width: 980px) {
+  .op-grid { grid-template-columns: 1fr; }
   .lp-hero__grid { grid-template-columns: 1fr; gap: 40px; }
   .lp-hero__title { font-size: 40px; }
   .fs-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -498,13 +500,14 @@ a { color: inherit; }
       </a>
       <nav class="nav__links">
         <a href="index.html#como" class="nav__link">Cómo funciona</a>
+        <a href="index.html#operacion" class="nav__link">Operación</a>
         <a href="index.html#beneficios" class="nav__link">Beneficios</a>
         <a href="index.html#ficha" class="nav__link">La ficha NFC</a>
         <a href="planes.html" class="nav__link is-active">Planes</a>
       </nav>
       <div class="nav__actions">
-        <a href="#" class="nav__login">Ingresar</a>
-        <a href="#" class="btn btn--primary btn--md">Crear cuenta</a>
+        <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
+        <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta</a>
       </div>
     </div>
   </header>
@@ -513,19 +516,13 @@ a { color: inherit; }
   <section class="pl-hero">
     <div class="pl-hero__inner">
       <span class="eyebrow">Planes</span>
-      <h1 class="pl-hero__title">Una tarifa simple: $2.900 por vehículo.</h1>
-      <p class="pl-hero__lead">Sin tramos ni planes que elegir. Mueve el control según tu flota y mira tu precio al instante. Cambia o cancela cuando quieras.</p>
+      <h1 class="pl-hero__title">Menos que un café al mes por cada vehículo.</h1>
+      <p class="pl-hero__lead">$2.990 por vehículo al mes, con toda la operación incluida: documentos, uso con PIN, panel en vivo y fiscalización. Sin tramos, sin permanencia — cambia o cancela cuando quieras.</p>
     </div>
   </section>
 
   <!-- ============ CALCULADORA ============ -->
   <section class="pricing">
-    <div class="billing-toggle-wrap">
-      <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
-        <button type="button" class="billing-toggle__opt is-active" data-period="mensual">Mensual</button>
-        <button type="button" class="billing-toggle__opt" data-period="anual">Anual <span class="billing-toggle__save">−40%</span></button>
-      </div>
-    </div>
     <div class="pricing__grid">
 
       <!-- CALCULADORA -->
@@ -540,22 +537,26 @@ a { color: inherit; }
           </span>
         </div>
 
-        <input type="range" min="1" max="100" value="10" class="calc__slider" data-slider
+        <input type="range" min="1" max="100" value="10" step="1" class="calc__slider" data-slider
                aria-label="Cantidad de vehículos a registrar">
         <div class="calc__scale"><span>1</span><span>100+</span></div>
 
         <div class="calc__divider"></div>
 
-        <span class="calc__formula"><span data-count-label>10 vehículos</span> × $<span data-rate>2.900</span></span>
+        <span class="calc__formula"><span data-count-label>10 vehículos</span> × $2.990</span>
         <div class="calc__total-row">
-          <span class="calc__total" data-total>$29.000</span>
+          <span class="calc__total" data-total>$29.900</span>
           <span class="calc__total-period">/mes</span>
         </div>
-        <span class="calc__note" data-note>Tarifa fija de $2.900 por vehículo al mes. Sin costos ocultos.</span>
+        <span class="calc__cafe">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2M14 2v2M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1Z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2"/></svg>
+          $2.990 por vehículo — menos que un café al mes.
+        </span>
+        <p class="calc__fineprint">Chip NFC incluido desde 5 vehículos (solo pagas el envío). Con menos de 5, cada chip cuesta $1.000 + envío. Sin costos ocultos.</p>
 
         <div class="calc__spacer"></div>
         <div class="calc__actions">
-          <a href="#" class="btn btn--primary btn--lg">Crear cuenta</a>
+          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
           <a href="#" class="btn btn--secondary btn--lg">Hablar con ventas</a>
         </div>
       </div>
@@ -563,14 +564,15 @@ a { color: inherit; }
       <!-- INCLUIDO -->
       <div class="included">
         <span class="included__eyebrow">Todo incluido</span>
-        <p class="included__lead">En cada vehículo, registres los que registres. Sin extras ni letra chica.</p>
+        <p class="included__lead">Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.</p>
         <ul class="included__list">
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Chip NFC incluido por cada vehículo</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha pública de solo lectura</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Chip NFC incluido desde 5 vehículos (solo el envío)</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha pública de solo lectura para fiscalización</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bitácora de uso con PIN por conductor</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fotos de entrega con lectura por IA</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Panel de flota en vivo, alertas y reportes</li>
           <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Recordatorios de vencimiento por correo</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Datos de empresa por ficha (RUT, razón social, giro)</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Usuarios ilimitados en tu equipo</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Soporte por correo y WhatsApp</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Equipo con roles (hasta 5 miembros)</li>
           <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia — cancela cuando quieras</li>
         </ul>
       </div>
@@ -587,16 +589,24 @@ a { color: inherit; }
       </div>
       <div class="faq__list">
         <div class="faq__item">
-          <h3 class="faq__q">¿Hay un período de prueba?</h3>
-          <p class="faq__a">Sí. Puedes probar TapCar 14 días con tu flota completa antes de elegir un plan. Al terminar la prueba eliges cómo seguir.</p>
+          <h3 class="faq__q">¿Cuánto cuesta?</h3>
+          <p class="faq__a">$2.990 por vehículo al mes — menos que un café. Es una tarifa fija por vehículo, con toda la plataforma incluida y sin costos ocultos.</p>
         </div>
         <div class="faq__item">
-          <h3 class="faq__q">¿Cómo se cobra?</h3>
-          <p class="faq__a">Pagas una tarifa fija de $2.900 por vehículo al mes, vía transferencia o tarjeta. Tu total es simplemente $2.900 por la cantidad de vehículos que registres.</p>
+          <h3 class="faq__q">¿El chip NFC está incluido?</h3>
+          <p class="faq__a">Desde 5 vehículos, sí: solo pagas el envío. Con menos de 5 vehículos, cada chip cuesta $1.000 + envío.</p>
         </div>
         <div class="faq__item">
-          <h3 class="faq__q">¿Qué pasa si crece mi flota?</h3>
-          <p class="faq__a">Cambias de plan cuando quieras y solo pagas la diferencia. Te enviamos los chips NFC de los vehículos nuevos.</p>
+          <h3 class="faq__q">¿Cómo se paga?</h3>
+          <p class="faq__a">Por ahora coordinamos el cobro contigo de forma directa. La factura electrónica del SII llega en una próxima etapa.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Necesito instalar una app?</h3>
+          <p class="faq__a">No. Ni tú, ni tus conductores, ni quien fiscaliza. Todo se abre con un toque al chip NFC o desde el panel web.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Y si crece mi flota?</h3>
+          <p class="faq__a">Agregas vehículos cuando quieras; se suman a tu suscripción a $2.990 c/u. Te enviamos los chips de los vehículos nuevos.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Puedo cancelar?</h3>
@@ -609,10 +619,10 @@ a { color: inherit; }
   <!-- ============ CTA ============ -->
   <section class="cta">
     <div class="cta__inner">
-      <h2 class="cta__title">Prueba TapCar con tu flota durante 14 días.</h2>
-      <p class="cta__lead">Registra tus vehículos y graba sus chips. Si te sirve, eliges tu plan. Si no, no pagas nada.</p>
+      <h2 class="cta__title">Toda tu flota controlada por lo que cuesta un café.</h2>
+      <p class="cta__lead">$2.990 por vehículo al mes. Registra tus vehículos y conductores y empieza a operar con un Tap.</p>
       <div class="cta__actions">
-        <a href="#" class="cta__primary">Crear cuenta
+        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="#" class="cta__secondary">Hablar con ventas</a>
@@ -634,12 +644,13 @@ a { color: inherit; }
             </svg>
             <span class="footer__brand-name">Tap<span class="accent">Car</span></span>
           </div>
-          <p class="footer__tagline">La documentación de tu flota, lista para la fiscalización en ruta.</p>
+          <p class="footer__tagline">Tu flota a un Tap: documentos, uso y control, todo desde el mismo gesto.</p>
         </div>
         <div>
           <p class="footer__col-title">Producto</p>
           <div class="footer__links">
             <a href="index.html#como" class="footer__link">Cómo funciona</a>
+            <a href="index.html#operacion" class="footer__link">Operación</a>
             <a href="index.html#beneficios" class="footer__link">Beneficios</a>
             <a href="index.html#ficha" class="footer__link">La ficha NFC</a>
             <a href="planes.html" class="footer__link">Planes</a>
@@ -671,38 +682,19 @@ a { color: inherit; }
   <script>
     // ── Calculadora de precio ──────────────────────────────────────
     (function () {
-      var RATES = { mensual: 2900, anual: 1740 }; // anual = -40% por vehículo/mes
-      var period = 'mensual';
+      var RATE = 2990; // suscripción por vehículo al mes
       var slider = document.querySelector('[data-slider]');
       var countEl = document.querySelector('[data-count]');
       var labelEl = document.querySelector('[data-count-label]');
-      var rateEl = document.querySelector('[data-rate]');
       var totalEl = document.querySelector('[data-total]');
-      var noteEl = document.querySelector('[data-note]');
-      var opts = document.querySelectorAll('.billing-toggle__opt');
       function fmt(n) { return '$' + n.toLocaleString('es-CL'); }
       function render() {
         var count = parseInt(slider.value, 10);
         if (isNaN(count)) count = 1;
-        var rate = RATES[period];
         countEl.textContent = count;
         labelEl.textContent = count === 1 ? '1 vehículo' : count + ' vehículos';
-        rateEl.textContent = rate.toLocaleString('es-CL');
-        totalEl.textContent = fmt(count * rate);
-        if (period === 'anual') {
-          noteEl.textContent = 'Equivale a ' + fmt(rate) + ' por vehículo/mes, facturado anual ('
-            + fmt(count * rate * 12) + '/año). Ahorras 40%.';
-        } else {
-          noteEl.textContent = 'Tarifa fija de $2.900 por vehículo al mes. Sin costos ocultos.';
-        }
+        totalEl.textContent = fmt(count * RATE);
       }
-      opts.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          period = btn.getAttribute('data-period');
-          opts.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
-          render();
-        });
-      });
       slider.addEventListener('input', render);
       slider.addEventListener('change', render);
       render();

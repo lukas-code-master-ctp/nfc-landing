@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TapCar · La documentación de tu flota, lista para la fiscalización</title>
-  <meta name="description" content="TapCar guarda los papeles de cada vehículo y los abre con un toque. En ruta, el carabinero valida todo desde el chip NFC — sin trámites ni papeles sueltos.">
+  <title>TapCar · Tu flota a un Tap</title>
+  <meta name="description" content="Opera tu flota completa con un toque: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#2952e6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -373,28 +373,6 @@ a { color: inherit; }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
-/* Planes — Toggle de facturación (mensual / anual) */
-.billing-toggle-wrap { display: flex; justify-content: center; margin-bottom: 28px; }
-.billing-toggle {
-  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
-  background: var(--superficie); border: 1px solid var(--linea);
-  border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
-}
-.billing-toggle__opt {
-  display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
-  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
-  transition: background-color var(--duration-base) var(--ease-standard),
-              color var(--duration-base) var(--ease-standard);
-}
-.billing-toggle__opt:hover { color: var(--tinta); }
-.billing-toggle__opt.is-active { background: var(--azul); color: #fff; }
-.billing-toggle__save {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
-  border-radius: var(--radius-pill); background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
-}
-.billing-toggle__opt.is-active .billing-toggle__save { background: rgba(255, 255, 255, 0.22); color: #fff; }
-
 /* Planes — Calculadora */
 .pricing { padding: 40px 0 24px; }
 .pricing__grid {
@@ -445,9 +423,33 @@ a { color: inherit; }
 .faq__a { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
+   Landing — Un toque, toda la operación (bloque estrella)
+   =================================================================== */
+.op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
+.op-card__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.op-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+
+/* Landing — Ficha: pestañas del menú (Tomar/Entregar · Documentos · Información) */
+.fs-tabs { display: flex; gap: 6px; padding: 0 4px 14px; flex-wrap: wrap; }
+.fs-tab {
+  font-size: 13px; font-weight: 600; color: var(--acero);
+  padding: 6px 12px; border-radius: var(--radius-pill); background: transparent;
+}
+.fs-tab.is-active { background: var(--azul); color: #fff; }
+
+/* Planes — Analogía de precio ("menos que un café") */
+.calc__cafe {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  margin: 14px 0 0; padding: 8px 13px; border-radius: var(--radius-pill);
+  background: var(--azul-soft); color: var(--azul); font-size: 13px; font-weight: 600;
+}
+.calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* ===================================================================
    Responsive
    =================================================================== */
 @media (max-width: 980px) {
+  .op-grid { grid-template-columns: 1fr; }
   .lp-hero__grid { grid-template-columns: 1fr; gap: 40px; }
   .lp-hero__title { font-size: 40px; }
   .fs-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -498,13 +500,14 @@ a { color: inherit; }
       </a>
       <nav class="nav__links">
         <a href="#como" class="nav__link">Cómo funciona</a>
+        <a href="#operacion" class="nav__link">Operación</a>
         <a href="#beneficios" class="nav__link">Beneficios</a>
         <a href="#ficha" class="nav__link">La ficha NFC</a>
         <a href="planes.html" class="nav__link">Planes</a>
       </nav>
       <div class="nav__actions">
-        <a href="#" class="nav__login">Ingresar</a>
-        <a href="#" class="btn btn--primary btn--md">Crear cuenta</a>
+        <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
+        <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta</a>
       </div>
     </div>
   </header>
@@ -515,16 +518,16 @@ a { color: inherit; }
       <div>
         <div class="lp-hero__badge">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-          Documentación vehicular
+          Operación de flota
         </div>
-        <h1 class="lp-hero__title">La documentación de tu flota, lista para la fiscalización.</h1>
-        <p class="lp-hero__lead">TapCar guarda los papeles de cada vehículo y los abre con un toque. En ruta, el carabinero valida todo desde el chip NFC — sin trámites ni papeles sueltos.</p>
+        <h1 class="lp-hero__title">Tu flota a un Tap.</h1>
+        <p class="lp-hero__lead">Opera tu flota completa con un toque: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
         <div class="lp-hero__actions">
-          <a href="#" class="btn btn--primary btn--lg">Crear cuenta</a>
+          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
           <a href="planes.html" class="btn btn--secondary btn--lg">Ver planes</a>
         </div>
         <div class="lp-hero__trust">
-          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>14 días de prueba</span>
+          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin apps que instalar</span>
           <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Para flotas de cualquier tamaño</span>
         </div>
       </div>
@@ -597,7 +600,7 @@ a { color: inherit; }
       <div class="section__head">
         <span class="eyebrow">Cómo funciona</span>
         <h2 class="section__title">Tres pasos. Listo.</h2>
-        <p class="section__lead">Del registro al control en ruta, sin instalar nada en el teléfono de quien fiscaliza.</p>
+        <p class="section__lead">Del registro al control diario, sin instalar nada en el teléfono de tus conductores ni de quien fiscaliza.</p>
       </div>
       <div class="steps-grid">
 
@@ -605,10 +608,10 @@ a { color: inherit; }
           <div class="card card--p28 card--fill">
             <span class="step__num">01</span>
             <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </span>
-            <h3 class="step__title">Registra tus vehículos</h3>
-            <p class="step__text">Agrega patente, marca y modelo. Sube el Permiso de Circulación, la Revisión Técnica, el SOAP y lo que necesites.</p>
+            <h3 class="step__title">Registra vehículos y conductores</h3>
+            <p class="step__text">Agrega cada vehículo con sus documentos y datos. Suma a tus conductores con un PIN de 4 dígitos — sin cuentas ni apps. Puedes importarlos desde Excel.</p>
           </div>
         </div>
 
@@ -618,8 +621,8 @@ a { color: inherit; }
             <span class="icon-chip icon-chip--azul">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
             </span>
-            <h3 class="step__title">Graba el chip NFC</h3>
-            <p class="step__text">Cada vehículo recibe una URL única. Grábala en un chip NFC y pégalo en el parabrisas. Una vez y queda.</p>
+            <h3 class="step__title">Graba el chip NFC y pégalo al parabrisas</h3>
+            <p class="step__text">Cada vehículo recibe una URL única. Grábala en su chip NFC y pégalo una vez. Listo para siempre.</p>
           </div>
         </div>
 
@@ -627,10 +630,10 @@ a { color: inherit; }
           <div class="card card--p28 card--fill">
             <span class="step__num">03</span>
             <span class="icon-chip icon-chip--vigente">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </span>
-            <h3 class="step__title">Valida en ruta</h3>
-            <p class="step__text">Un toque abre la ficha pública de solo lectura. El carabinero confirma los vencimientos al instante.</p>
+            <h3 class="step__title">Un toque: fiscaliza, toma/entrega y controla</h3>
+            <p class="step__text">El mismo Tap valida documentos en ruta, registra quién toma y entrega el vehículo, y alimenta tu panel de flota en vivo.</p>
           </div>
         </div>
 
@@ -638,25 +641,65 @@ a { color: inherit; }
     </div>
   </section>
 
+  <!-- ============ UN TOQUE, TODA LA OPERACIÓN ============ -->
+  <section id="operacion" class="section">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">Un toque, toda la operación</span>
+        <h2 class="section__title">El mismo Tap hace mucho más que mostrar papeles.</h2>
+        <p class="section__lead">TapCar creció de una bóveda de documentos a una plataforma para operar tu flota completa. Todo parte del mismo gesto.</p>
+      </div>
+      <div class="op-grid">
+
+        <div class="card card--p28">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+          </span>
+          <h3 class="op-card__title">Custodia con PIN</h3>
+          <p class="op-card__text">Cada conductor toma el vehículo con un Tap y su PIN de 4 dígitos, y lo entrega al terminar. Queda registrado quién lo usó y cuándo — sin cuentas ni apps que instalar.</p>
+        </div>
+
+        <div class="card card--p28">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg>
+          </span>
+          <h3 class="op-card__title">Fotos de entrega leídas por IA</h3>
+          <p class="op-card__text">Al entregar, el conductor sube 2 fotos (tablero y cabina) y puede reportar daños. La IA rellena solo el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic.</p>
+        </div>
+
+        <div class="card card--p28">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          </span>
+          <h3 class="op-card__title">Panel de flota en vivo</h3>
+          <p class="op-card__text">Ve qué vehículo está disponible y cuál está en uso, y por quién, en este momento. Una bandeja de alertas te avisa cuando hay un daño reportado o un uso sin entrega formal.</p>
+        </div>
+
+        <div class="card card--p28">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+          </span>
+          <h3 class="op-card__title">Reportes de responsabilidad</h3>
+          <p class="op-card__text">Responsabilidad por conductor (usos, daños, entregas pendientes) y bitácora de flota filtrable por conductor, vehículo y fecha.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ============ BENEFICIOS ============ -->
-  <section id="beneficios" class="section">
+  <section id="beneficios" class="section section--surface">
     <div class="container">
       <div class="bn-head">
         <span class="eyebrow">Por qué TapCar</span>
-        <h2 class="section__title">Todo en regla, sin perseguir papeles.</h2>
+        <h2 class="section__title">Todo en regla y bajo control, sin perseguir papeles.</h2>
       </div>
       <div class="bn-grid">
 
         <div class="card card--p24">
           <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
           <h3 class="bn-card__title">Recordatorios de vencimiento</h3>
-          <p class="bn-card__text">Te avisamos por correo antes de que venza cada documento. Renuevas a tiempo, sin multas.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <h3 class="bn-card__title">Ficha pública de solo lectura</h3>
-          <p class="bn-card__text">Quien la abre solo ve. Nadie edita ni accede a tu cuenta. La información justa para fiscalizar.</p>
+          <p class="bn-card__text">Correos brandeados antes de que venza cada documento, con botón para renovar. Nunca más una multa por olvido.</p>
         </div>
 
         <div class="card card--p24">
@@ -671,9 +714,33 @@ a { color: inherit; }
         </div>
 
         <div class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12.5-9.17 4.16a2 2 0 0 1-1.66 0L2 12.5"/><path d="m22 17.5-9.17 4.16a2 2 0 0 1-1.66 0L2 17.5"/></svg></span>
-          <h3 class="bn-card__title">Toda la flota en un panel</h3>
-          <p class="bn-card__text">Cada vehículo con su estado. Filtra por patente y ve al instante qué necesita atención.</p>
+          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <h3 class="bn-card__title">Ficha pública de solo lectura</h3>
+          <p class="bn-card__text">Quien la abre solo ve. Sin login ni acceso a tu cuenta. La información justa para fiscalizar en ruta.</p>
+        </div>
+
+        <div class="card card--p24">
+          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <h3 class="bn-card__title">Control de uso por conductor</h3>
+          <p class="bn-card__text">Sabes quién tiene cada vehículo y quién lo usó antes. Responsabilidad clara, sin planillas a mano.</p>
+        </div>
+
+        <div class="card card--p24">
+          <span class="icon-chip icon-chip--por_vencer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M22 8c0-2.3-.8-4.3-2-6"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></span>
+          <h3 class="bn-card__title">Alertas de daño</h3>
+          <p class="bn-card__text">Si un conductor reporta un daño en la entrega, te llega a la bandeja de alertas del panel al instante.</p>
+        </div>
+
+        <div class="card card--p24">
+          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>
+          <h3 class="bn-card__title">Reportes y bitácora</h3>
+          <p class="bn-card__text">Responsabilidad por conductor y bitácora de flota filtrable por conductor, vehículo y fecha.</p>
+        </div>
+
+        <div class="card card--p24">
+          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3 class="bn-card__title">Equipo con roles</h3>
+          <p class="bn-card__text">Administrador, Editor y Visor comparten la flota según su rol. Invitaciones por correo, hasta 5 miembros por empresa.</p>
         </div>
 
         <div class="card card--p24">
@@ -683,34 +750,34 @@ a { color: inherit; }
         </div>
 
         <div class="card card--p24">
-          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg></span>
-          <h3 class="bn-card__title">Acceso con un toque</h3>
-          <p class="bn-card__text">Sin apps que instalar. El chip NFC abre la ficha en cualquier teléfono, en segundos.</p>
+          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.34 19a10 10 0 1 1 17.32 0"/><path d="m12 14 4-4"/></svg></span>
+          <h3 class="bn-card__title">Datos útiles del vehículo</h3>
+          <p class="bn-card__text">Combustible, presión y medida de neumáticos, transmisión, aceite y notas. Quien maneja lo abre con el mismo Tap.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============ FICHA SHOWCASE ============ -->
-  <section id="ficha" class="section section--surface">
+  <!-- ============ LA FICHA NFC ============ -->
+  <section id="ficha" class="section">
     <div class="fs-grid">
       <div>
         <span class="eyebrow">La ficha NFC</span>
-        <h2 class="fs-title">Lo que ve el carabinero al acercar el teléfono.</h2>
-        <p class="fs-lead">Una página sobria, sin login, con la documentación del vehículo y su estado de vigencia. Lo necesario para validar en ruta — nada más.</p>
+        <h2 class="fs-title">Una ficha, un menú, todo con el mismo toque.</h2>
+        <p class="fs-lead">La página que se abre con el Tap ya no es solo documentos: ahora tiene un menú para tomar o entregar el vehículo, ver la documentación y consultar la información del auto. Para fiscalizar, el carabinero mira la pestaña de documentos y su estado — sin login, sin instalar nada.</p>
         <ul class="fs-list">
           <li class="fs-list__item">
             <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Patente, marca y modelo</strong> <span class="muted">— para confirmar que la ficha corresponde al vehículo.</span></span>
+            <span class="fs-list__text"><strong>Tomar / Entregar</strong> <span class="muted">— el conductor registra el uso con su PIN, con fotos y reporte de daños.</span></span>
           </li>
           <li class="fs-list__item">
             <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Cada documento con su vencimiento</strong> <span class="muted">— Permiso de Circulación, Revisión Técnica, SOAP y Certificado de Gases.</span></span>
+            <span class="fs-list__text"><strong>Documentos con su vencimiento</strong> <span class="muted">— Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón.</span></span>
           </li>
           <li class="fs-list__item">
             <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Estado a la vista</strong> <span class="muted">— el color indica si está al día o requiere renovación.</span></span>
+            <span class="fs-list__text"><strong>Información del vehículo</strong> <span class="muted">— combustible, neumáticos, transmisión y más, para quien lo conduce.</span></span>
           </li>
         </ul>
       </div>
@@ -720,6 +787,11 @@ a { color: inherit; }
           <span class="fs-panel__url">tapcar.cl/v/8f3a2c9b</span>
           <span class="fs-panel__readonly"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Solo lectura</span>
         </div>
+        <div class="fs-tabs">
+          <span class="fs-tab">Tomar / Entregar</span>
+          <span class="fs-tab is-active">Documentos</span>
+          <span class="fs-tab">Información</span>
+        </div>
         <div class="fs-panel__body">
           <a href="#" class="vehicle-card">
             <span class="icon-chip">
@@ -727,7 +799,7 @@ a { color: inherit; }
             </span>
             <span class="vehicle-card__body">
               <p class="vehicle-card__title">Mercedes-Benz Sprinter · RT LB 09</p>
-              <p class="vehicle-card__meta">Documentación · 4 archivos</p>
+              <p class="vehicle-card__meta">Documentación · 5 archivos</p>
             </span>
             <span class="badge badge--por_vencer">Documentos por vencer</span>
           </a>
@@ -748,15 +820,8 @@ a { color: inherit; }
             </li>
             <li class="doc-row">
               <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">SOAP</p><p class="doc-row__vence">Vence el 31 mar 2027</p></div>
-                <span class="badge badge--al_dia">Vigente</span>
-              </div>
-              <div class="doc-row__foot"><a href="#" class="doc-row__action">Ver archivo</a></div>
-            </li>
-            <li class="doc-row">
-              <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">Certificado de Gases</p><p class="doc-row__vence">Vence el 02 jul 2026</p></div>
-                <span class="badge badge--al_dia">Vigente</span>
+                <div style="min-width:0;"><p class="doc-row__label">Padrón</p><p class="doc-row__vence">Sin vencimiento</p></div>
+                <span class="badge badge--neutro">Sin vencimiento</span>
               </div>
               <div class="doc-row__foot"><a href="#" class="doc-row__action">Ver archivo</a></div>
             </li>
@@ -769,13 +834,13 @@ a { color: inherit; }
   <!-- ============ CTA ============ -->
   <section class="cta cta--lg">
     <div class="cta__inner">
-      <h2 class="cta__title">Empieza a ordenar la documentación de tu flota.</h2>
-      <p class="cta__lead">Crea tu cuenta y registra tu primer vehículo en minutos. Sin instalaciones — elige el plan de tu flota.</p>
+      <h2 class="cta__title">Empieza a operar tu flota con un Tap.</h2>
+      <p class="cta__lead">Registra tus vehículos y conductores, graba los chips y controla todo desde un panel. Sin apps que instalar — elige el plan de tu flota.</p>
       <div class="cta__actions">
-        <a href="planes.html" class="cta__primary">Ver planes
+        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#" class="cta__secondary">Hablar con ventas</a>
+        <a href="planes.html" class="cta__secondary">Ver planes</a>
       </div>
     </div>
   </section>
@@ -794,12 +859,13 @@ a { color: inherit; }
             </svg>
             <span class="footer__brand-name">Tap<span class="accent">Car</span></span>
           </div>
-          <p class="footer__tagline">La documentación de tu flota, lista para la fiscalización en ruta.</p>
+          <p class="footer__tagline">Tu flota a un Tap: documentos, uso y control, todo desde el mismo gesto.</p>
         </div>
         <div>
           <p class="footer__col-title">Producto</p>
           <div class="footer__links">
             <a href="#como" class="footer__link">Cómo funciona</a>
+            <a href="#operacion" class="footer__link">Operación</a>
             <a href="#beneficios" class="footer__link">Beneficios</a>
             <a href="#ficha" class="footer__link">La ficha NFC</a>
             <a href="planes.html" class="footer__link">Planes</a>
