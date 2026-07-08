@@ -479,9 +479,9 @@ a { color: inherit; }
   50%      { transform: translateY(-9px); }
 }
 @keyframes ping-nfc {
-  0%   { box-shadow: 0 0 0 0 rgba(41, 82, 230, 0.45); }
-  70%  { box-shadow: 0 0 0 14px rgba(41, 82, 230, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(41, 82, 230, 0); }
+  0%   { transform: scale(1);    opacity: 0.55; }
+  70%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
 }
 @keyframes wave-nfc {
   0%, 100% { opacity: 0.35; }
@@ -497,12 +497,23 @@ a { color: inherit; }
 .lp-hero__actions { animation-delay: 0.24s; }
 .lp-hero__trust   { animation-delay: 0.32s; }
 
-/* Ficha del hero: entra, luego flota; el tag emite ondas NFC */
+/* Ficha del hero: entra, luego flota; el tag emite ondas NFC.
+   Solo transform/opacity (GPU) — nada de box-shadow animado. */
 .ficha-preview {
   animation: rise 0.8s var(--ease-standard) 0.2s backwards,
              float 7s ease-in-out 1.4s infinite;
+  will-change: transform;
 }
-.ficha-preview__tag { animation: ping-nfc 2.6s var(--ease-standard) 1.6s infinite; }
+.ficha-preview__tag::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--azul);
+  animation: ping-nfc 2.6s var(--ease-standard) 1.6s infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
 .ficha-preview__tag svg path { animation: wave-nfc 2.6s ease-in-out 1.6s infinite; }
 .ficha-preview__tag svg path:last-child { animation-delay: 1.9s; }
 
@@ -527,7 +538,8 @@ a { color: inherit; }
 /* Accesibilidad: sin movimiento si el usuario lo pide */
 @media (prefers-reduced-motion: reduce) {
   .lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
-  .ficha-preview, .ficha-preview__tag, .ficha-preview__tag svg path { animation: none; }
+  .ficha-preview, .ficha-preview__tag::before, .ficha-preview__tag svg path { animation: none; }
+  .ficha-preview__tag::before { content: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover { transform: none; }
 }
