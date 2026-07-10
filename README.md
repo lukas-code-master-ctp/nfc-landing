@@ -10,6 +10,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 |---|---|---|
 | Home / Landing | [`index.html`](index.html) | Hero + preview de ficha NFC, "Cómo funciona", "Beneficios", showcase de la ficha, CTA |
 | Planes | [`planes/index.html`](planes/index.html) | Calculadora de precio con slider, "Todo incluido", preguntas frecuentes, CTA |
+| ¿Es legal? | [`legal/index.html`](legal/index.html) | Legalidad de los documentos digitales en Chile (Ley 19.799, Contraloría), referencias y disclaimer |
 
 ## Estructura
 
@@ -17,6 +18,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 .
 ├── index.html      # Home / Landing (autónoma, CSS incrustado)
 ├── planes/index.html     # Planes (autónoma, CSS incrustado)
+├── legal/index.html      # ¿Es legal? (autónoma, CSS incrustado)
 ├── styles.css      # Design system compartido (fuente editable)
 └── _design_src/    # Archivos originales del diseño (referencia)
 ```

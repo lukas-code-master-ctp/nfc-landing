@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TapCar · Tu flota a un Tap</title>
-  <meta name="description" content="Opera tu flota completa con un toque: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.">
+  <title>¿Es legal? · TapCar</title>
+  <meta name="description" content="¿Es legal mostrar tus documentos vehiculares con TapCar? La ley chilena respalda los documentos digitales legibles y de fuentes oficiales. Aquí te explicamos en qué se apoya.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="theme-color" content="#2952e6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -612,12 +612,12 @@ a { color: inherit; }
 }
   </style>
 </head>
-<body id="top">
+<body>
 
   <!-- ============ NAV ============ -->
   <header class="nav">
     <div class="nav__inner">
-      <a href="#top" class="brand">
+      <a href="/" class="brand">
         <svg width="34" height="34" viewBox="0 0 72 72" fill="none" aria-hidden="true">
           <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
           <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
@@ -627,10 +627,10 @@ a { color: inherit; }
         <span class="brand__name">Tap<span class="accent">Car</span></span>
       </a>
       <nav class="nav__links">
-        <a href="#como" class="nav__link">Cómo funciona</a>
-        <a href="#beneficios" class="nav__link">Beneficios</a>
-        <a href="#ficha" class="nav__link">La ficha NFC</a>
-        <a href="/legal/" class="nav__link">¿Es legal?</a>
+        <a href="/#como" class="nav__link">Cómo funciona</a>
+        <a href="/#beneficios" class="nav__link">Beneficios</a>
+        <a href="/#ficha" class="nav__link">La ficha NFC</a>
+        <a href="/legal/" class="nav__link is-active">¿Es legal?</a>
         <a href="/planes/" class="nav__link">Planes</a>
       </nav>
       <div class="nav__actions">
@@ -641,329 +641,101 @@ a { color: inherit; }
   </header>
 
   <!-- ============ HERO ============ -->
-  <section class="lp-hero">
-    <div class="lp-hero__grid">
-      <div>
-        <div class="lp-hero__badge">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-          Operación de flota
-        </div>
-        <h1 class="lp-hero__title">Tu flota a un <span style="color:var(--azul);">Tap</span>.</h1>
-        <p class="lp-hero__lead">Opera tu flota completa con un toque: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
-        <div class="lp-hero__actions">
-          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
-          <a href="/planes/" class="btn btn--secondary btn--lg">Ver planes</a>
-        </div>
-        <div class="lp-hero__trust">
-          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin apps que instalar</span>
-          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Para flotas de cualquier tamaño</span>
-        </div>
-      </div>
+  <section class="pl-hero">
+    <div class="pl-hero__inner">
+      <span class="eyebrow">Legalidad</span>
+      <h1 class="pl-hero__title">¿Es legal mostrar tus documentos con TapCar?</h1>
+      <p class="pl-hero__lead">Sí — con matices que conviene conocer. La ley chilena respalda el uso de documentos digitales siempre que sean legibles y provengan de fuentes oficiales. Aquí te explicamos en qué se apoya.</p>
+    </div>
+  </section>
 
-      <!-- ficha preview -->
-      <div class="ficha-preview">
-        <div class="ficha-preview__tag">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6f93ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-          Abierto con un toque
-        </div>
-        <div class="ficha-card">
-          <div class="ficha-card__head">
-            <span class="ficha-card__head-label">Ficha pública</span>
-            <span class="ficha-card__readonly"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Solo lectura</span>
-          </div>
-          <div class="ficha-card__body">
-            <!-- VehicleCard -->
-            <div class="vehicle-card">
-              <span class="icon-chip">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
-              </span>
-              <span class="vehicle-card__body">
-                <p class="vehicle-card__title">Toyota Hilux · GJ KP 47</p>
-                <p class="vehicle-card__meta">Documentación · 4 archivos</p>
-              </span>
-              <span class="badge badge--al_dia">Al día</span>
-            </div>
-            <span class="ficha-card__section">Documentación</span>
-            <ul class="ficha-card__docs">
-              <li class="doc-row">
-                <div class="doc-row__top">
-                  <div style="min-width:0;">
-                    <p class="doc-row__label">Permiso de Circulación</p>
-                    <p class="doc-row__vence">Vence el 31 mar 2027</p>
-                  </div>
-                  <span class="badge badge--al_dia">Vigente</span>
-                </div>
-                <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-              </li>
-              <li class="doc-row">
-                <div class="doc-row__top">
-                  <div style="min-width:0;">
-                    <p class="doc-row__label">Revisión Técnica</p>
-                    <p class="doc-row__vence">Vence el 15 ago 2026</p>
-                  </div>
-                  <span class="badge badge--por_vencer">Por vencer</span>
-                </div>
-                <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-              </li>
-              <li class="doc-row">
-                <div class="doc-row__top">
-                  <div style="min-width:0;">
-                    <p class="doc-row__label">SOAP</p>
-                    <p class="doc-row__vence">Vence el 31 mar 2027</p>
-                  </div>
-                  <span class="badge badge--al_dia">Vigente</span>
-                </div>
-                <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-              </li>
-            </ul>
-          </div>
-        </div>
+  <!-- ============ RESPUESTA CORTA ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="legal-answer">
+        <span class="legal-answer__tag">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+          Respuesta corta
+        </span>
+        <p class="legal-answer__title">Sí, es válido como respaldo digital.</p>
+        <p class="legal-answer__text">Puedes mostrar tus documentos desde la ficha NFC de TapCar en una fiscalización, siempre que sean oficiales y legibles. No reemplazan al original físico, pero sirven como respaldo válido y seguro.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ CÓMO FUNCIONA ============ -->
-  <section id="como" class="section section--surface">
+  <!-- ============ LO QUE CONVIENE SABER ============ -->
+  <section class="section section--surface">
     <div class="container">
       <div class="section__head">
-        <span class="eyebrow">Cómo funciona</span>
-        <h2 class="section__title">Tres pasos. Listo.</h2>
-        <p class="section__lead">Del registro al control diario, sin instalar nada en el teléfono de tus conductores ni de quien fiscaliza.</p>
-      </div>
-      <div class="steps-grid">
-
-        <div class="step">
-          <div class="card card--p28 card--fill">
-            <span class="step__num">01</span>
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </span>
-            <h3 class="step__title">Registra vehículos y conductores</h3>
-            <p class="step__text">Agrega cada vehículo con sus documentos y datos. Suma a tus conductores con un PIN de 4 dígitos — sin cuentas ni apps. Puedes importarlos desde Excel.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="card card--p28 card--fill">
-            <span class="step__num">02</span>
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-            </span>
-            <h3 class="step__title">Graba el chip NFC y pégalo al parabrisas</h3>
-            <p class="step__text">Cada vehículo recibe una URL única. Grábala en su chip NFC y pégalo una vez. Listo para siempre.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="card card--p28 card--fill">
-            <span class="step__num">03</span>
-            <span class="icon-chip icon-chip--vigente">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            </span>
-            <h3 class="step__title">Un toque: fiscaliza, toma/entrega y controla</h3>
-            <p class="step__text">El mismo Tap valida documentos en ruta, registra quién toma y entrega el vehículo, y alimenta tu panel de flota en vivo.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ UN TOQUE, TODA LA OPERACIÓN ============ -->
-  <section id="operacion" class="section">
-    <div class="container">
-      <div class="section__head">
-        <span class="eyebrow">Un toque, toda la operación</span>
-        <h2 class="section__title">El mismo Tap hace mucho más que mostrar papeles.</h2>
-        <p class="section__lead">TapCar creció de una bóveda de documentos a una plataforma para operar tu flota completa. Todo parte del mismo gesto.</p>
+        <span class="eyebrow">Lo que conviene saber</span>
+        <h2 class="section__title">Tres puntos claros sobre los documentos digitales.</h2>
       </div>
       <div class="op-grid">
 
         <div class="card card--p28">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg>
           </span>
-          <h3 class="op-card__title">Custodia con PIN</h3>
-          <p class="op-card__text">Cada conductor toma el vehículo con un Tap y su PIN de 4 dígitos, y lo entrega al terminar. Queda registrado quién lo usó y cuándo — sin cuentas ni apps que instalar.</p>
+          <h3 class="op-card__title">Respaldo válido, no reemplazo</h3>
+          <p class="op-card__text">Los documentos digitales no reemplazan al original físico, pero sí sirven como respaldo válido y seguro para mostrar en fiscalización, siempre que el documento sea oficial y legible.</p>
         </div>
 
         <div class="card card--p28">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg>
           </span>
-          <h3 class="op-card__title">Fotos de entrega leídas por IA</h3>
-          <p class="op-card__text">Al entregar, el conductor sube 2 fotos (tablero y cabina) y puede reportar daños. La IA rellena solo el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic.</p>
+          <h3 class="op-card__title">Fuentes oficiales y legibles</h3>
+          <p class="op-card__text">La validez depende de que los documentos provengan de fuentes oficiales y se vean claros. En TapCar los muestras tal como los subiste, legibles y con su estado de vigencia a la vista.</p>
         </div>
 
         <div class="card card--p28">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
           </span>
-          <h3 class="op-card__title">Panel de flota en vivo</h3>
-          <p class="op-card__text">Ve qué vehículo está disponible y cuál está en uso, y por quién, en este momento. Una bandeja de alertas te avisa cuando hay un daño reportado o un uso sin entrega formal.</p>
-        </div>
-
-        <div class="card card--p28">
-          <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
-          </span>
-          <h3 class="op-card__title">Reportes de responsabilidad</h3>
-          <p class="op-card__text">Responsabilidad por conductor (usos, daños, entregas pendientes) y bitácora de flota filtrable por conductor, vehículo y fecha.</p>
+          <h3 class="op-card__title">Ficha de solo lectura</h3>
+          <p class="op-card__text">La ficha pública se abre con un toque y es de solo lectura: quien fiscaliza ve la información, no la edita ni accede a tu cuenta. Transparente y sin margen a manipulación.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============ BENEFICIOS ============ -->
-  <section id="beneficios" class="section section--surface">
+  <!-- ============ REFERENCIAS ============ -->
+  <section class="section">
     <div class="container">
-      <div class="bn-head">
-        <span class="eyebrow">Por qué TapCar</span>
-        <h2 class="section__title">Todo en regla y bajo control, sin perseguir papeles.</h2>
+      <div class="section__head">
+        <span class="eyebrow">Referencias oficiales</span>
+        <h2 class="section__title">En qué se apoya la validez digital.</h2>
       </div>
-      <div class="bn-grid">
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
-          <h3 class="bn-card__title">Recordatorios de vencimiento</h3>
-          <p class="bn-card__text">Correos brandeados antes de que venza cada documento, con botón para renovar. Nunca más una multa por olvido.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--por_vencer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg></span>
-          <h3 class="bn-card__title">Estados claros</h3>
-          <p class="bn-card__text">Vigente, Por vencer o Vencido. El color habla por ti, de un vistazo.</p>
-          <div class="bn-badges">
-            <span class="badge badge--al_dia">Vigente</span>
-            <span class="badge badge--por_vencer">Por vencer</span>
-            <span class="badge badge--vencido">Vencido</span>
+      <ul class="legal-refs">
+        <li class="legal-ref">
+          <span class="icon-chip icon-chip--azul" style="width:38px;height:38px;">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+          </span>
+          <div>
+            <p class="legal-ref__title">Ley N° 19.799 — Documentos Electrónicos y Firma Electrónica</p>
+            <p class="legal-ref__meta">Da validez legal a los documentos electrónicos y a la firma electrónica en Chile.</p>
           </div>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <h3 class="bn-card__title">Ficha pública de solo lectura</h3>
-          <p class="bn-card__text">Quien la abre solo ve. Sin login ni acceso a tu cuenta. La información justa para fiscalizar en ruta.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-          <h3 class="bn-card__title">Control de uso por conductor</h3>
-          <p class="bn-card__text">Sabes quién tiene cada vehículo y quién lo usó antes. Responsabilidad clara, sin planillas a mano.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--por_vencer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M22 8c0-2.3-.8-4.3-2-6"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></span>
-          <h3 class="bn-card__title">Alertas de daño</h3>
-          <p class="bn-card__text">Si un conductor reporta un daño en la entrega, te llega a la bandeja de alertas del panel al instante.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>
-          <h3 class="bn-card__title">Reportes y bitácora</h3>
-          <p class="bn-card__text">Responsabilidad por conductor y bitácora de flota filtrable por conductor, vehículo y fecha.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg></span>
-          <h3 class="bn-card__title">Equipo con roles</h3>
-          <p class="bn-card__text">Administrador, Editor y Visor comparten la flota según su rol. Invitaciones por correo, hasta 5 miembros por empresa.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4"/></svg></span>
-          <h3 class="bn-card__title">Datos de la empresa</h3>
-          <p class="bn-card__text">RUT, razón social y giro asociados a cada ficha. Tu flota, ordenada como corresponde.</p>
-        </div>
-
-        <div class="card card--p24">
-          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.34 19a10 10 0 1 1 17.32 0"/><path d="m12 14 4-4"/></svg></span>
-          <h3 class="bn-card__title">Datos útiles del vehículo</h3>
-          <p class="bn-card__text">Combustible, presión y medida de neumáticos, transmisión, aceite y notas. Quien maneja lo abre con el mismo Tap.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ LA FICHA NFC ============ -->
-  <section id="ficha" class="section">
-    <div class="fs-grid">
-      <div>
-        <span class="eyebrow">La ficha NFC</span>
-        <h2 class="fs-title">Una ficha, un menú, todo con el mismo toque.</h2>
-        <p class="fs-lead">La página que se abre con el Tap ya no es solo documentos: ahora tiene un menú para tomar o entregar el vehículo, ver la documentación y consultar la información del auto. Para fiscalizar, el carabinero mira la pestaña de documentos y su estado — sin login, sin instalar nada.</p>
-        <ul class="fs-list">
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Tomar / Entregar</strong> <span class="muted">— el conductor registra el uso con su PIN, con fotos y reporte de daños.</span></span>
-          </li>
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Documentos con su vencimiento</strong> <span class="muted">— Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón.</span></span>
-          </li>
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Información del vehículo</strong> <span class="muted">— combustible, neumáticos, transmisión y más, para quien lo conduce.</span></span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="fs-panel">
-        <div class="fs-panel__head">
-          <span class="fs-panel__url">tapcar.cl/v/8f3a2c9b</span>
-          <span class="fs-panel__readonly"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Solo lectura</span>
-        </div>
-        <div class="fs-tabs">
-          <span class="fs-tab">Tomar / Entregar</span>
-          <span class="fs-tab is-active">Documentos</span>
-          <span class="fs-tab">Información</span>
-        </div>
-        <div class="fs-panel__body">
-          <div class="vehicle-card">
-            <span class="icon-chip">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
-            </span>
-            <span class="vehicle-card__body">
-              <p class="vehicle-card__title">Mercedes-Benz Sprinter · RT LB 09</p>
-              <p class="vehicle-card__meta">Documentación · 5 archivos</p>
-            </span>
-            <span class="badge badge--por_vencer">Documentos por vencer</span>
+        </li>
+        <li class="legal-ref">
+          <span class="icon-chip icon-chip--azul" style="width:38px;height:38px;">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+          </span>
+          <div>
+            <p class="legal-ref__title">Contraloría General de la República — Oficio N° E71389/2021</p>
+            <p class="legal-ref__meta">Señala que los permisos de circulación y certificados electrónicos emitidos conforme a la Ley N° 19.799 tienen la misma validez que los de papel, y pueden almacenarse y exhibirse en formato digital mediante dispositivos electrónicos.</p>
           </div>
-          <ul class="fs-panel__docs">
-            <li class="doc-row">
-              <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">Permiso de Circulación</p><p class="doc-row__vence">Vence el 31 mar 2027</p></div>
-                <span class="badge badge--al_dia">Vigente</span>
-              </div>
-              <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-            </li>
-            <li class="doc-row">
-              <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">Revisión Técnica</p><p class="doc-row__vence">Vence el 02 jul 2026</p></div>
-                <span class="badge badge--por_vencer">Por vencer</span>
-              </div>
-              <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-            </li>
-            <li class="doc-row">
-              <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">Padrón</p><p class="doc-row__vence">Sin vencimiento</p></div>
-                <span class="badge badge--neutro">Sin vencimiento</span>
-              </div>
-              <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-            </li>
-          </ul>
-        </div>
-      </div>
+        </li>
+      </ul>
+      <p class="legal-disclaimer">Esta información es referencial y no constituye asesoría legal. Los documentos digitales son un respaldo; te recomendamos portar también los originales cuando la normativa vigente lo exija.</p>
     </div>
   </section>
 
   <!-- ============ CTA ============ -->
-  <section class="cta cta--lg">
+  <section class="cta">
     <div class="cta__inner">
-      <h2 class="cta__title">Empieza a operar tu flota con un Tap.</h2>
-      <p class="cta__lead">Registra tus vehículos y conductores, graba los chips y controla todo desde un panel. Sin apps que instalar — elige el plan de tu flota.</p>
+      <h2 class="cta__title">Ten tus documentos siempre a un Tap.</h2>
+      <p class="cta__lead">Registra tu flota y muestra la documentación al día, legible y de solo lectura, cuando la necesites.</p>
       <div class="cta__actions">
         <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -992,9 +764,9 @@ a { color: inherit; }
         <div>
           <p class="footer__col-title">Producto</p>
           <div class="footer__links">
-            <a href="#como" class="footer__link">Cómo funciona</a>
-            <a href="#beneficios" class="footer__link">Beneficios</a>
-            <a href="#ficha" class="footer__link">La ficha NFC</a>
+            <a href="/#como" class="footer__link">Cómo funciona</a>
+            <a href="/#beneficios" class="footer__link">Beneficios</a>
+            <a href="/#ficha" class="footer__link">La ficha NFC</a>
             <a href="/legal/" class="footer__link">¿Es legal?</a>
             <a href="/planes/" class="footer__link">Planes</a>
           </div>
@@ -1021,30 +793,6 @@ a { color: inherit; }
       </div>
     </div>
   </footer>
-
-  <script>
-    // ── Reveal on scroll ───────────────────────────────────────────
-    (function () {
-      if (!('IntersectionObserver' in window)) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var els = document.querySelectorAll(
-        '.section__head, .bn-head, .steps-grid .step, .op-grid > .card, .bn-grid > .card, .fs-grid > div, .cta__inner'
-      );
-      els.forEach(function (el) { el.classList.add('reveal'); });
-      // Stagger: retraso según posición entre hermanos animados
-      els.forEach(function (el) {
-        var d = 0, n = el.previousElementSibling;
-        while (n) { if (n.classList.contains('reveal')) d++; n = n.previousElementSibling; }
-        el.style.transitionDelay = Math.min(d, 5) * 90 + 'ms';
-      });
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-      els.forEach(function (el) { io.observe(el); });
-    })();
-  </script>
 
 </body>
 </html>
