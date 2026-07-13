@@ -490,6 +490,11 @@ a { color: inherit; }
 }
 .legal-ref__title { margin: 0; font-size: 15px; font-weight: 600; color: var(--tinta); }
 .legal-ref__meta { margin: 4px 0 0; font-size: 13px; line-height: 1.55; color: var(--acero); }
+.legal-ref__link {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 10px;
+  font-size: 13px; font-weight: 600; color: var(--azul); text-decoration: none;
+}
+.legal-ref__link:hover { text-decoration: underline; }
 .legal-disclaimer {
   max-width: 760px; margin: 28px auto 0; padding: 16px 20px;
   border: 1px dashed var(--linea); border-radius: var(--radius-md);
@@ -715,6 +720,9 @@ a { color: inherit; }
           <div>
             <p class="legal-ref__title">Ley N° 19.799 — Documentos Electrónicos y Firma Electrónica</p>
             <p class="legal-ref__meta">Da validez legal a los documentos electrónicos y a la firma electrónica en Chile.</p>
+            <a href="https://www.bcn.cl/leychile/navegar?idNorma=196640" target="_blank" rel="noopener" class="legal-ref__link">Ver en Ley Chile (BCN)
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </a>
           </div>
         </li>
         <li class="legal-ref">
@@ -724,6 +732,9 @@ a { color: inherit; }
           <div>
             <p class="legal-ref__title">Contraloría General de la República — Oficio N° E71389/2021</p>
             <p class="legal-ref__meta">Señala que los permisos de circulación y certificados electrónicos emitidos conforme a la Ley N° 19.799 tienen la misma validez que los de papel, y pueden almacenarse y exhibirse en formato digital mediante dispositivos electrónicos.</p>
+            <a href="https://www.contraloria.cl/pdfbuscador/dictamenes/E71389N21/html" target="_blank" rel="noopener" class="legal-ref__link">Ver dictamen en Contraloría
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </a>
           </div>
         </li>
       </ul>
