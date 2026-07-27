@@ -667,7 +667,7 @@ a { color: inherit; }
     <div class="billing-toggle-wrap">
       <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
         <button type="button" class="billing-toggle__opt is-active" data-period="mensual">Mensual</button>
-        <button type="button" class="billing-toggle__opt" data-period="anual">Anual <span class="billing-toggle__save">−40%</span></button>
+        <button type="button" class="billing-toggle__opt" data-period="anual">Anual <span class="billing-toggle__save">−35%</span></button>
       </div>
     </div>
     <div class="pricing__grid">
@@ -829,7 +829,7 @@ a { color: inherit; }
   <script>
     // ── Calculadora de precio ──────────────────────────────────────
     (function () {
-      var RATES = { mensual: 2990, anual: 1794 }; // anual = -40% por vehículo/mes
+      var RATES = { mensual: 2990, anual: 1944 }; // anual = -35% por vehículo/mes
       var period = 'mensual';
       var slider = document.querySelector('[data-slider]');
       var countEl = document.querySelector('[data-count]');
@@ -850,7 +850,7 @@ a { color: inherit; }
         rateEl.textContent = rate.toLocaleString('es-CL');
         totalEl.textContent = fmt(count * rate);
         if (period === 'anual') {
-          cafeEl.textContent = fmt(rate) + ' por vehículo al mes — 40% de descuento.';
+          cafeEl.textContent = fmt(rate) + ' por vehículo al mes — 35% de descuento.';
           fineEl.textContent = 'Facturado una vez al año (' + fmt(count * rate * 12) + '). ' + CHIP;
         } else {
           cafeEl.textContent = fmt(rate) + ' por vehículo — menos que un café al mes.';
