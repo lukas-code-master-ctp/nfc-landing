@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Planes · TapCar</title>
-  <meta name="description" content="$2.990 por vehículo al mes — menos que un café. Toda la operación de tu flota: documentos, uso con PIN, panel en vivo y fiscalización. Sin permanencia.">
+  <title>¿Cómo funciona? · TapCar</title>
+  <meta name="description" content="El paso a paso de TapCar: registra vehículos y conductores, graba el chip NFC y opera tu flota con un toque. Sin apps que instalar.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="theme-color" content="#2952e6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -707,9 +707,9 @@ a { color: inherit; }
       </a>
       <nav class="nav__links">
         <a href="/" class="nav__link">Inicio</a>
-        <a href="/como-funciona/" class="nav__link">¿Cómo funciona?</a>
+        <a href="/como-funciona/" class="nav__link is-active">¿Cómo funciona?</a>
         <a href="/legal/" class="nav__link">¿Es legal?</a>
-        <a href="/planes/" class="nav__link is-active">Planes</a>
+        <a href="/planes/" class="nav__link">Planes</a>
       </nav>
       <div class="nav__actions">
         <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
@@ -721,72 +721,158 @@ a { color: inherit; }
   <!-- ============ HERO ============ -->
   <section class="pl-hero">
     <div class="pl-hero__inner">
-      <span class="eyebrow">Planes</span>
-      <h1 class="pl-hero__title">Menos que un café al mes por cada vehículo.</h1>
-      <p class="pl-hero__lead">$2.990 por vehículo al mes, con toda la operación incluida: documentos, uso con PIN, panel en vivo y fiscalización. Sin tramos, sin permanencia — cambia o cancela cuando quieras.</p>
+      <span class="eyebrow">Cómo funciona</span>
+      <h1 class="pl-hero__title">De cero a operar tu flota con un Tap.</h1>
+      <p class="pl-hero__lead">Cuatro pasos para dejar todo listo — una sola vez. Desde ahí, la operación completa pasa por el mismo gesto: acercar el teléfono al chip.</p>
     </div>
   </section>
 
-  <!-- ============ CALCULADORA ============ -->
-  <section class="pricing">
-    <div class="billing-toggle-wrap">
-      <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
-        <button type="button" class="billing-toggle__opt is-active" data-period="mensual">Mensual</button>
-        <button type="button" class="billing-toggle__opt" data-period="anual">Anual <span class="billing-toggle__save">−35%</span></button>
-      </div>
-    </div>
-    <div class="pricing__grid">
+  <!-- ============ PASO A PASO ============ -->
+  <section class="section">
+    <div class="container">
 
-      <!-- CALCULADORA -->
-      <div class="calc">
-        <span class="calc__eyebrow">Calcula tu plan</span>
-
-        <div class="calc__row">
-          <span class="calc__row-label">Vehículos a registrar</span>
-          <span class="calc__count-wrap">
-            <span class="calc__count" data-count>10</span>
-            <span class="calc__count-unit">veh.</span>
+      <!-- FASE 1 -->
+      <div class="hw-phase">
+        <div class="hw-phase__head">
+          <span class="hw-phase__tag">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            Puesta en marcha
           </span>
+          <span class="hw-phase__rule"></span>
         </div>
+        <p class="hw-phase__note">Lo haces una sola vez, desde el panel web. No necesitas instalar nada — ni tú ni tu equipo.</p>
 
-        <input type="range" min="1" max="100" value="10" step="1" class="calc__slider" data-slider
-               aria-label="Cantidad de vehículos a registrar">
-        <div class="calc__scale"><span>1</span><span>100+</span></div>
+        <ol class="hw-steps">
 
-        <div class="calc__divider"></div>
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">01</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">Crea tu cuenta y carga tus vehículos</h3>
+              <p class="hw-step__text">Registra cada vehículo con su patente, marca y modelo, junto con los datos de tu empresa (RUT, razón social y giro). Si ya tienes la flota en una planilla, la importas desde Excel en vez de cargarla a mano.</p>
+              <div class="hw-step__chips">
+                <span class="hw-chip">Importar desde Excel</span>
+                <span class="hw-chip">Datos de la empresa</span>
+              </div>
+            </div>
+          </li>
 
-        <span class="calc__formula"><span data-count-label>10 vehículos</span> × $<span data-rate>2.990</span></span>
-        <div class="calc__total-row">
-          <span class="calc__total" data-total>$29.900</span>
-          <span class="calc__total-period">/mes</span>
-        </div>
-        <span class="calc__cafe">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2M14 2v2M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1Z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2"/></svg>
-          <span data-cafe>$2.990 por vehículo — menos que un café al mes.</span>
-        </span>
-        <p class="calc__fineprint" data-fineprint>Chip NFC incluido desde 5 vehículos (solo el envío). Con menos de 5, cada chip cuesta $1.000 + envío. Sin costos ocultos.</p>
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">02</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">Sube los documentos de cada vehículo</h3>
+              <p class="hw-step__text">Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo y su fecha de vencimiento. TapCar calcula solo el estado de cada documento y lo mantiene a la vista.</p>
+              <div class="hw-step__chips">
+                <span class="badge badge--al_dia">Vigente</span>
+                <span class="badge badge--por_vencer">Por vencer</span>
+                <span class="badge badge--vencido">Vencido</span>
+              </div>
+            </div>
+          </li>
 
-        <div class="calc__spacer"></div>
-        <div class="calc__actions">
-          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
-          <a href="#" class="btn btn--secondary btn--lg">Hablar con ventas</a>
-        </div>
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">03</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">Suma a tus conductores con un PIN</h3>
+              <p class="hw-step__text">Cada conductor queda registrado con un PIN de 4 dígitos que tú le asignas. No crean cuenta, no descargan nada y no tienen que recordar una contraseña. Puedes cambiar el PIN o desactivar a un conductor cuando quieras.</p>
+              <div class="hw-step__chips">
+                <span class="hw-chip">PIN de 4 dígitos</span>
+                <span class="hw-chip">Sin cuentas ni apps</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">04</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">Graba el chip NFC y pégalo al parabrisas</h3>
+              <p class="hw-step__text">Cada vehículo tiene una URL única y permanente. La grabas en su chip NFC, lo pegas una vez en el parabrisas y queda listo para siempre. El chip viene incluido desde 5 vehículos — solo pagas el envío.</p>
+              <div class="hw-step__chips">
+                <span class="hw-chip">Una URL por vehículo</span>
+                <span class="hw-chip">Se pega una sola vez</span>
+              </div>
+            </div>
+          </li>
+
+        </ol>
       </div>
 
-      <!-- INCLUIDO -->
-      <div class="included">
-        <span class="included__eyebrow">Todo incluido</span>
-        <p class="included__lead">Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.</p>
-        <ul class="included__list">
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Chip NFC incluido desde 5 vehículos (solo el envío)</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha pública de solo lectura para fiscalización</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bitácora de uso con PIN por conductor</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fotos de entrega con lectura por IA</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Panel de flota en vivo, alertas y reportes</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Recordatorios de vencimiento por correo</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Equipo con roles (hasta 5 miembros)</li>
-          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia — cancela cuando quieras</li>
-        </ul>
+      <!-- FASE 2 -->
+      <div class="hw-phase">
+        <div class="hw-phase__head">
+          <span class="hw-phase__tag">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
+            El día a día
+          </span>
+          <span class="hw-phase__rule"></span>
+        </div>
+        <p class="hw-phase__note">Desde acá todo parte del mismo gesto. La misma ficha resuelve tres cosas distintas según quién la abra: el conductor, quien fiscaliza y tú.</p>
+
+        <ol class="hw-steps">
+
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">05</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">El conductor toma el vehículo con un Tap</h3>
+              <p class="hw-step__text">Acerca el teléfono al chip, elige «Tomar», ingresa su PIN y el vehículo queda a su nombre. Toma unos segundos y desde ese momento queda registrado quién lo está usando.</p>
+              <div class="hw-step__chips">
+                <span class="hw-chip">Tap + PIN</span>
+                <span class="hw-chip">Queda en custodia</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">06</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">Al terminar, lo entrega con dos fotos</h3>
+              <p class="hw-step__text">Otro Tap, elige «Entregar» y sube dos fotos: el tablero y la cabina. La IA lee el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic. Si hay un golpe o una falla, el conductor lo reporta ahí mismo.</p>
+              <div class="hw-step__chips">
+                <span class="hw-chip">Lectura por IA</span>
+                <span class="hw-chip">Reporte de daños</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">07</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">En la calle, la fiscalización es un Tap</h3>
+              <p class="hw-step__text">Quien fiscaliza acerca su teléfono y se abre la ficha pública: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno. Es de solo lectura — no hay login, no se edita nada y no se accede a tu cuenta.</p>
+              <div class="hw-step__chips">
+                <span class="hw-chip">Solo lectura</span>
+                <span class="hw-chip">Sin login</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="hw-step">
+            <div class="hw-step__rail"><span class="hw-step__num">08</span><span class="hw-step__line"></span></div>
+            <div class="hw-step__body">
+              <h3 class="hw-step__title">Tú controlas todo desde el panel</h3>
+              <p class="hw-step__text">Ves qué vehículo está disponible y cuál está en uso, y por quién, en este momento. Las alertas te avisan de daños reportados o usos sin entrega formal, la bitácora te deja filtrar por conductor, vehículo y fecha, y los recordatorios llegan por correo antes de cada vencimiento.</p>
+              <div class="hw-step__chips">
+                <span class="hw-chip">Panel en vivo</span>
+                <span class="hw-chip">Alertas</span>
+                <span class="hw-chip">Bitácora y reportes</span>
+              </div>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+
+      <!-- Nota legal -->
+      <div class="hw-aside">
+        <span class="icon-chip icon-chip--azul">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <div>
+          <h3 class="hw-aside__title">¿Y mostrar los documentos en digital es válido?</h3>
+          <p class="hw-aside__text">Sí, como respaldo: la ley chilena reconoce los documentos electrónicos siempre que sean oficiales y legibles. Te explicamos en qué se apoya y qué conviene tener en cuenta.</p>
+          <a href="/legal/" class="hw-aside__link">Ver la respuesta completa
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
       </div>
 
     </div>
@@ -797,33 +883,55 @@ a { color: inherit; }
     <div class="faq__inner">
       <div class="faq__head">
         <span class="eyebrow">Preguntas frecuentes</span>
-        <h2 class="faq__title">Sobre los planes</h2>
+        <h2 class="faq__title">Lo que suelen preguntarnos.</h2>
       </div>
       <div class="faq__list">
+
         <div class="faq__item">
-          <h3 class="faq__q">¿Cuánto cuesta?</h3>
-          <p class="faq__a">$2.990 por vehículo al mes — menos que un café. Es una tarifa fija por vehículo, con toda la plataforma incluida y sin costos ocultos.</p>
+          <h3 class="faq__q">¿Hay que instalar alguna app?</h3>
+          <p class="faq__a">No. Ni tú, ni tus conductores, ni quien fiscaliza. El chip abre una página web en el navegador del teléfono — eso es todo.</p>
         </div>
+
         <div class="faq__item">
-          <h3 class="faq__q">¿El chip NFC está incluido?</h3>
-          <p class="faq__a">Desde 5 vehículos, sí: solo pagas el envío. Con menos de 5 vehículos, cada chip cuesta $1.000 + envío.</p>
+          <h3 class="faq__q">¿Qué pasa si el teléfono no lee NFC?</h3>
+          <p class="faq__a">Cada vehículo tiene una URL única y permanente, así que la ficha se abre igual desde el enlace. El Tap es el atajo, no el requisito.</p>
         </div>
+
         <div class="faq__item">
-          <h3 class="faq__q">¿Cómo se paga?</h3>
-          <p class="faq__a">Por ahora coordinamos el cobro contigo de forma directa. La factura electrónica del SII llega en una próxima etapa.</p>
+          <h3 class="faq__q">¿Qué ve exactamente quien fiscaliza?</h3>
+          <p class="faq__a">La ficha pública de solo lectura: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno. No ve tu panel, no puede editar nada ni entrar a tu cuenta.</p>
         </div>
+
         <div class="faq__item">
-          <h3 class="faq__q">¿Necesito instalar una app?</h3>
-          <p class="faq__a">No. Ni tú, ni tus conductores, ni quien fiscaliza. Todo se abre con un toque al chip NFC o desde el panel web.</p>
+          <h3 class="faq__q">¿Mis conductores necesitan una cuenta?</h3>
+          <p class="faq__a">No. Se identifican con un PIN de 4 dígitos que tú les asignas. Puedes cambiarlo o desactivar a un conductor en cualquier momento.</p>
         </div>
+
         <div class="faq__item">
-          <h3 class="faq__q">¿Y si crece mi flota?</h3>
-          <p class="faq__a">Agregas vehículos cuando quieras; se suman a tu suscripción a $2.990 c/u. Te enviamos los chips de los vehículos nuevos.</p>
+          <h3 class="faq__q">¿Qué documentos puedo cargar?</h3>
+          <p class="faq__a">Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo adjunto y su fecha de vencimiento.</p>
         </div>
+
         <div class="faq__item">
-          <h3 class="faq__q">¿Puedo cancelar?</h3>
-          <p class="faq__a">Sí, cuando quieras. No hay contratos de permanencia ni penalizaciones.</p>
+          <h3 class="faq__q">¿Cómo me entero de que algo está por vencer?</h3>
+          <p class="faq__a">Cada documento muestra su estado —Vigente, Por vencer o Vencido— y te llega un correo de recordatorio antes del vencimiento, con un botón para renovar.</p>
         </div>
+
+        <div class="faq__item">
+          <h3 class="faq__q">¿Y si un conductor no entrega el vehículo?</h3>
+          <p class="faq__a">Queda registrado como un uso sin entrega formal y aparece en la bandeja de alertas del panel, junto con los daños reportados.</p>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__q">¿Cuánto demora dejar la flota lista?</h3>
+          <p class="faq__a">Depende del tamaño. Cargar los vehículos desde Excel y subir los documentos toma una tarde en una flota mediana; grabar y pegar cada chip, un par de minutos por vehículo.</p>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__q">¿Puede entrar más de una persona al panel?</h3>
+          <p class="faq__a">Sí. Invitas por correo hasta 5 miembros por empresa, con rol de Administrador, Editor o Visor según lo que necesite cada uno.</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -831,13 +939,13 @@ a { color: inherit; }
   <!-- ============ CTA ============ -->
   <section class="cta">
     <div class="cta__inner">
-      <h2 class="cta__title">Toda tu flota controlada por lo que cuesta un café.</h2>
-      <p class="cta__lead">$2.990 por vehículo al mes. Registra tus vehículos y conductores y empieza a operar con un Tap.</p>
+      <h2 class="cta__title">Cuatro pasos y tu flota queda a un Tap.</h2>
+      <p class="cta__lead">Registra tus vehículos y conductores, graba los chips y controla todo desde un panel. Sin apps que instalar.</p>
       <div class="cta__actions">
         <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#" class="cta__secondary">Hablar con ventas</a>
+        <a href="/planes/" class="cta__secondary">Ver planes</a>
       </div>
     </div>
   </section>
@@ -891,46 +999,23 @@ a { color: inherit; }
   </footer>
 
   <script>
-    // ── Calculadora de precio ──────────────────────────────────────
+    // ── Reveal on scroll ───────────────────────────────────────────
     (function () {
-      var RATES = { mensual: 2990, anual: 1944 }; // anual = -35% por vehículo/mes
-      var period = 'mensual';
-      var slider = document.querySelector('[data-slider]');
-      var countEl = document.querySelector('[data-count]');
-      var labelEl = document.querySelector('[data-count-label]');
-      var rateEl = document.querySelector('[data-rate]');
-      var totalEl = document.querySelector('[data-total]');
-      var cafeEl = document.querySelector('[data-cafe]');
-      var fineEl = document.querySelector('[data-fineprint]');
-      var opts = document.querySelectorAll('.billing-toggle__opt');
-      var CHIP = 'Chip NFC incluido desde 5 vehículos (solo el envío). Con menos de 5, cada chip cuesta $1.000 + envío.';
-      function fmt(n) { return '$' + n.toLocaleString('es-CL'); }
-      function render() {
-        var count = parseInt(slider.value, 10);
-        if (isNaN(count)) count = 1;
-        var rate = RATES[period];
-        countEl.textContent = count;
-        labelEl.textContent = count === 1 ? '1 vehículo' : count + ' vehículos';
-        rateEl.textContent = rate.toLocaleString('es-CL');
-        totalEl.textContent = fmt(count * rate);
-        if (period === 'anual') {
-          cafeEl.textContent = fmt(rate) + ' por vehículo al mes — 35% de descuento.';
-          fineEl.textContent = 'Facturado una vez al año (' + fmt(count * rate * 12) + '). ' + CHIP;
-        } else {
-          cafeEl.textContent = fmt(rate) + ' por vehículo — menos que un café al mes.';
-          fineEl.textContent = CHIP + ' Sin costos ocultos.';
-        }
-      }
-      opts.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          period = btn.getAttribute('data-period');
-          opts.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
-          render();
-        });
+      if (!('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var els = document.querySelectorAll('.hw-phase__head, .hw-phase__note, .hw-step, .hw-aside, .faq__head, .cta__inner');
+      els.forEach(function (el) { el.classList.add('reveal'); });
+      els.forEach(function (el) {
+        var d = 0, n = el.previousElementSibling;
+        while (n) { if (n.classList.contains('reveal')) d++; n = n.previousElementSibling; }
+        el.style.transitionDelay = Math.min(d, 4) * 80 + 'ms';
       });
-      slider.addEventListener('input', render);
-      slider.addEventListener('change', render);
-      render();
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { io.observe(el); });
     })();
   </script>
 

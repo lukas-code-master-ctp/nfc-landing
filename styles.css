@@ -497,6 +497,67 @@ a { color: inherit; }
 }
 
 /* ===================================================================
+   Página Cómo funciona (paso a paso)
+   =================================================================== */
+.hw-phase { max-width: 820px; margin: 0 auto; }
+.hw-phase + .hw-phase { margin-top: 60px; }
+.hw-phase__head { display: flex; align-items: center; gap: 14px; }
+.hw-phase__tag {
+  display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+  background: var(--azul-soft); color: var(--azul); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 13px; border-radius: var(--radius-pill);
+}
+.hw-phase__rule { flex: 1; height: 1px; background: var(--linea); }
+.hw-phase__note { margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+
+.hw-steps { margin: 26px 0 0; padding: 0; list-style: none; }
+.hw-step { display: flex; gap: 20px; }
+.hw-step__rail { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; }
+.hw-step__num {
+  flex: 0 0 auto; width: 38px; height: 38px; border-radius: var(--radius-pill);
+  background: var(--azul); color: #fff; box-shadow: var(--shadow-sm);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; letter-spacing: -0.01em;
+}
+.hw-step__line { flex: 1; width: 2px; background: var(--linea); margin: 8px 0; border-radius: 1px; }
+.hw-step:last-child .hw-step__line { display: none; }
+.hw-step__body {
+  flex: 1; min-width: 0; margin-bottom: 18px; padding: 22px 24px;
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+}
+.hw-step:last-child .hw-step__body { margin-bottom: 0; }
+.hw-step__title { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.hw-step__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+.hw-step__chips { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.hw-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-pill);
+  padding: 5px 11px; font-size: 12px; font-weight: 600; color: var(--acero);
+}
+.hw-chip svg { flex: 0 0 auto; }
+.hw-aside {
+  max-width: 820px; margin: 56px auto 0; display: flex; gap: 18px; align-items: flex-start;
+  background: var(--azul-soft); border: 1px solid var(--linea);
+  border-radius: var(--radius-lg); padding: 24px 26px;
+}
+.hw-aside__title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.hw-aside__text { margin: 7px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+.hw-aside__link {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 12px;
+  font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
+}
+.hw-aside__link:hover { text-decoration: underline; }
+
+/* Enlace "ver el paso a paso" bajo los pasos de la home */
+.steps-more { margin-top: 28px; text-align: center; }
+.steps-more__link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 15px; font-weight: 600; color: var(--azul); text-decoration: none;
+}
+.steps-more__link:hover { text-decoration: underline; }
+
+/* ===================================================================
    Animaciones (home)
    =================================================================== */
 @keyframes rise {
@@ -607,6 +668,11 @@ a { color: inherit; }
   .calc__actions .btn { width: 100%; }
   .cta__actions { flex-direction: column; }
   .cta__title, .cta--lg .cta__title { font-size: 28px; }
+  .hw-step { gap: 14px; }
+  .hw-step__num { width: 32px; height: 32px; font-size: 13px; }
+  .hw-step__body { padding: 18px 20px; }
+  .hw-step__title { font-size: 17px; }
+  .hw-aside { flex-direction: column; gap: 14px; padding: 22px; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__bar { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
