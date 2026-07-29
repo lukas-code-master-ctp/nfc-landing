@@ -374,7 +374,20 @@ a { color: inherit; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
 /* Planes — Toggle de facturación (mensual / anual) */
-.billing-toggle-wrap { display: flex; justify-content: center; margin-bottom: 28px; }
+.billing-toggle-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 28px; }
+
+/* Anotación manuscrita que apunta al toggle anual */
+.billing-note {
+  position: absolute; top: 50%; left: calc(50% + 118px);
+  transform: translateY(-52%);
+  display: flex; align-items: flex-start; gap: 2px; pointer-events: none;
+}
+.billing-note__arrow { flex: 0 0 auto; width: 58px; height: 40px; color: var(--tinta); }
+.billing-note__text {
+  margin-top: 9px; max-width: 150px;
+  font-family: 'Caveat', 'Geist', cursive; font-size: 23px; font-weight: 700;
+  line-height: 1.05; color: var(--azul);
+}
 .billing-toggle {
   display: inline-flex; align-items: center; gap: 4px; padding: 5px;
   background: var(--superficie); border: 1px solid var(--linea);
@@ -409,11 +422,47 @@ a { color: inherit; }
 .calc__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--azul); }
 .calc__row { margin: 24px 0 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
 .calc__row-label { font-size: 16px; color: var(--acero); line-height: 1.4; }
-.calc__count-wrap { display: inline-flex; align-items: baseline; gap: 6px; }
-.calc__count { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: var(--azul); }
-.calc__count-unit { font-size: 14px; color: var(--acero); }
-.calc__slider { width: 100%; accent-color: var(--azul); height: 6px; margin: 16px 0 6px; cursor: pointer; }
-.calc__scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--acero); }
+
+/* Planes — Slider con burbuja pegada al pulgar.
+   El relleno del riel y la posición de la burbuja los calcula el JS
+   (--pct y --arrow) porque no hay forma de hacerlo solo con CSS. */
+.calc__slider-wrap { position: relative; margin-top: 46px; }
+.calc__bubble {
+  position: absolute; top: -38px; transform: translateX(-50%); white-space: nowrap;
+  background: var(--azul); color: #fff; font-size: 13px; font-weight: 700;
+  padding: 6px 12px; border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md); pointer-events: none;
+}
+.calc__bubble::after {
+  content: ''; position: absolute; bottom: -4px; left: var(--arrow, 50%); margin-left: -4px;
+  width: 8px; height: 8px; background: var(--azul); transform: rotate(45deg); border-radius: 1px;
+}
+.calc__slider {
+  -webkit-appearance: none; appearance: none; display: block;
+  width: 100%; height: 22px; margin: 0; background: transparent; cursor: pointer;
+}
+.calc__slider:focus { outline: none; }
+.calc__slider::-webkit-slider-runnable-track {
+  height: 8px; border-radius: var(--radius-pill);
+  background: linear-gradient(to right, var(--azul) var(--pct, 10%), #e8eaee var(--pct, 10%));
+}
+.calc__slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px; margin-top: -7px; border-radius: 50%;
+  background: var(--azul); border: 4px solid #fff;
+  box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.calc__slider:hover::-webkit-slider-thumb { transform: scale(1.1); }
+.calc__slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--azul-soft), var(--shadow-md); }
+.calc__slider::-moz-range-track { height: 8px; border-radius: var(--radius-pill); background: #e8eaee; }
+.calc__slider::-moz-range-progress { height: 8px; border-radius: var(--radius-pill); background: var(--azul); }
+.calc__slider::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--azul); border: 4px solid #fff;
+  box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
+}
+.calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(--azul-soft), var(--shadow-md); }
+.calc__scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--acero); margin-top: 10px; }
 .calc__divider { margin: 28px 0; height: 1px; background: var(--linea); }
 .calc__formula { font-size: 14px; color: var(--acero); }
 .calc__total-row { margin: 8px 0 4px; display: flex; align-items: baseline; gap: 7px; }
@@ -422,6 +471,32 @@ a { color: inherit; }
 .calc__note { font-size: 13px; color: var(--acero); line-height: 1.5; }
 .calc__spacer { flex: 1; min-height: 24px; }
 .calc__actions { display: flex; gap: 12px; }
+
+/* Planes — Empujón al plan anual (solo visible en mensual) */
+.calc__nudge {
+  display: flex; align-items: flex-start; gap: 12px; margin: 20px 0 0;
+  padding: 15px 17px; border-radius: var(--radius-md);
+  border: 1px dashed #c3cff2; background: rgba(234, 238, 252, 0.55);
+}
+.calc__nudge[hidden] { display: none; }
+.calc__nudge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
+.calc__nudge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
+.calc__nudge__text strong { color: var(--tinta); font-weight: 600; }
+.calc__nudge__btn {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--azul);
+}
+.calc__nudge__btn:hover { text-decoration: underline; }
+
+/* Planes — Garantías bajo la calculadora */
+.calc__trust {
+  margin: 0 0 20px; padding: 18px 0 0; list-style: none;
+  border-top: 1px solid var(--linea);
+  display: flex; flex-wrap: wrap; gap: 10px 20px;
+}
+.calc__trust li { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--acero); }
+.calc__trust svg { flex: 0 0 auto; }
 
 .included {
   display: flex; flex-direction: column; background: var(--azul-soft);
@@ -432,6 +507,26 @@ a { color: inherit; }
 .included__list { margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .included__item { display: flex; gap: 11px; font-size: 15px; color: var(--tinta); line-height: 1.45; }
 .included__check { flex: 0 0 auto; margin-top: 1px; }
+
+/* Planes — "Todo incluido" separado por audiencia */
+.included__group { margin-top: 26px; }
+.included__group + .included__group { padding-top: 24px; border-top: 1px solid rgba(41, 82, 230, 0.16); }
+.included__group-title {
+  margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--acero);
+}
+.included__group .included__list { margin-top: 16px; }
+
+/* Planes — Ahorro del plan anual */
+.calc__save {
+  display: flex; align-items: flex-start; gap: 12px; margin: 16px 0 0;
+  padding: 15px 17px; border-radius: var(--radius-md);
+  background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
+}
+.calc__save[hidden], .calc__cafe[hidden] { display: none; }
+.calc__save__icon { flex: 0 0 auto; margin-top: 3px; }
+.calc__save__amount { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.calc__save__note { display: block; margin-top: 5px; font-size: 13px; font-weight: 500; line-height: 1.5; opacity: 0.82; }
 
 /* Planes — FAQ */
 .faq { background: var(--superficie); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); padding: 80px 0; margin-top: 48px; }
@@ -562,6 +657,24 @@ a { color: inherit; }
 }
 .hw-aside__link:hover { text-decoration: underline; }
 
+/* ===================================================================
+   Landing — ¿Para quién es? (personal / flota)
+   =================================================================== */
+.aud { padding: 24px 0 76px; }
+.aud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+.aud-card { display: flex; flex-direction: column; }
+.aud-card__title { margin: 16px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.aud-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+.aud-card__list { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.aud-card__item { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--tinta); }
+.aud-card__check { flex: 0 0 auto; margin-top: 2px; }
+.aud-card__foot { margin-top: auto; padding-top: 20px; }
+.aud-card__link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
+}
+.aud-card__link:hover { text-decoration: underline; }
+
 /* Enlace "ver el paso a paso" bajo los pasos de la home */
 .steps-more { margin-top: 28px; text-align: center; }
 .steps-more__link {
@@ -629,11 +742,11 @@ a { color: inherit; }
 .reveal.is-visible { opacity: 1; transform: none; }
 
 /* Hover lift en cards de la home */
-.steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover {
+.steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover, .aud-grid .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
 }
-.steps-grid .card, .op-grid .card, .bn-grid .card {
+.steps-grid .card, .op-grid .card, .bn-grid .card, .aud-grid .card {
   transition: box-shadow var(--duration-base) var(--ease-standard),
               transform var(--duration-base) var(--ease-standard);
 }
@@ -652,6 +765,7 @@ a { color: inherit; }
    =================================================================== */
 @media (max-width: 980px) {
   .op-grid { grid-template-columns: 1fr; }
+  .aud-grid { grid-template-columns: 1fr; }
   .lp-hero__grid { grid-template-columns: 1fr; gap: 40px; }
   .lp-hero__title { font-size: 40px; }
   .fs-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -661,6 +775,15 @@ a { color: inherit; }
 @media (max-width: 860px) {
   .pricing__grid { grid-template-columns: 1fr; }
   .pl-hero__title { font-size: 36px; }
+  /* La anotación no cabe al lado del toggle: pasa a ir debajo, con la
+     flecha reflejada para que siga apuntando al botón anual. */
+  .billing-toggle-wrap { flex-direction: column; align-items: center; gap: 6px; }
+  .billing-note {
+    position: static; transform: none; align-items: center; gap: 8px;
+    padding-left: 60px;
+  }
+  .billing-note__arrow { width: 46px; height: 32px; transform: scaleY(-1) rotate(4deg); }
+  .billing-note__text { margin-top: 0; max-width: none; font-size: 21px; }
   .footer__grid { grid-template-columns: 1fr 1fr; gap: 28px; }
   .footer__brand-col { grid-column: 1 / -1; }
 }
@@ -677,6 +800,7 @@ a { color: inherit; }
   .pl-hero__title { font-size: 30px; }
   .calc, .included { padding: 24px; }
   .calc__total { font-size: 42px; }
+  .calc__save__amount { font-size: 20px; }
   .calc__actions { flex-direction: column; }
   .calc__actions .btn { width: 100%; }
   .cta__actions { flex-direction: column; }
@@ -734,7 +858,7 @@ a { color: inherit; }
         </div>
         <div class="lp-hero__trust">
           <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin apps que instalar</span>
-          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Para flotas de cualquier tamaño</span>
+          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Desde un auto hasta una flota completa</span>
         </div>
       </div>
 
@@ -800,6 +924,56 @@ a { color: inherit; }
     </div>
   </section>
 
+  <!-- ============ ¿PARA QUIÉN ES? ============ -->
+  <section id="para-quien" class="section aud">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">¿Para quién es?</span>
+        <h2 class="section__title">Da lo mismo si son dos autos o cincuenta.</h2>
+        <p class="section__lead">TapCar se cobra por vehículo, así que sirve igual para los autos de tu casa que para la flota de tu empresa. Cambia lo que usas de la plataforma, no el producto.</p>
+      </div>
+      <div class="aud-grid">
+
+        <div class="card card--p28 aud-card">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+          </span>
+          <h3 class="aud-card__title">Tu auto, o los de tu familia</h3>
+          <p class="aud-card__text">No necesitas una empresa para usar TapCar. Registra uno o varios vehículos y ten su documentación al día, a un toque.</p>
+          <ul class="aud-card__list">
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Permiso de Circulación, Revisión Técnica, SOAP y más, siempre contigo</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un toque y muestras todo en la fiscalización</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de cada vencimiento</li>
+          </ul>
+          <div class="aud-card__foot">
+            <a href="/planes/" class="aud-card__link">Ver el precio por vehículo
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card card--p28 aud-card">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+          <h3 class="aud-card__title">La flota de tu empresa</h3>
+          <p class="aud-card__text">Cuando hay conductores de por medio, el mismo Tap además controla quién usa cada vehículo y en qué estado lo entrega.</p>
+          <ul class="aud-card__list">
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cada conductor se identifica con su PIN, sin apps ni cuentas</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fotos de entrega y reporte de daños</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Panel, alertas y reportes por conductor</li>
+          </ul>
+          <div class="aud-card__foot">
+            <a href="/como-funciona/" class="aud-card__link">Ver el paso a paso
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CÓMO FUNCIONA ============ -->
   <section id="como" class="section section--surface">
     <div class="container">
@@ -839,7 +1013,7 @@ a { color: inherit; }
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </span>
             <h3 class="step__title">Un toque: fiscaliza, toma/entrega y controla</h3>
-            <p class="step__text">El mismo Tap valida documentos en ruta, registra quién toma y entrega el vehículo, y alimenta tu panel de flota en vivo.</p>
+            <p class="step__text">El mismo Tap valida documentos en ruta, registra quién toma y entrega el vehículo, y mantiene tu panel al día.</p>
           </div>
         </div>
 
@@ -882,7 +1056,7 @@ a { color: inherit; }
           <span class="icon-chip icon-chip--azul">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
           </span>
-          <h3 class="op-card__title">Panel de flota en vivo</h3>
+          <h3 class="op-card__title">Panel con el estado de tu flota</h3>
           <p class="op-card__text">Ve qué vehículo está disponible y cuál está en uso, y por quién, en este momento. Una bandeja de alertas te avisa cuando hay un daño reportado o un uso sin entrega formal.</p>
         </div>
 
@@ -1046,7 +1220,7 @@ a { color: inherit; }
   <section class="cta cta--lg">
     <div class="cta__inner">
       <h2 class="cta__title">Empieza a operar tu flota con un Tap.</h2>
-      <p class="cta__lead">Registra tus vehículos y conductores, graba los chips y controla todo desde un panel. Sin apps que instalar — elige el plan de tu flota.</p>
+      <p class="cta__lead">Registra tus vehículos y conductores, graba los chips y controla todo desde un panel. Sin apps que instalar — pagas solo por los vehículos que registres.</p>
       <div class="cta__actions">
         <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1110,7 +1284,7 @@ a { color: inherit; }
       if (!('IntersectionObserver' in window)) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       var els = document.querySelectorAll(
-        '.section__head, .bn-head, .steps-grid .step, .op-grid > .card, .bn-grid > .card, .fs-grid > div, .cta__inner'
+        '.section__head, .bn-head, .steps-grid .step, .aud-grid > .card, .op-grid > .card, .bn-grid > .card, .fs-grid > div, .cta__inner'
       );
       els.forEach(function (el) { el.classList.add('reveal'); });
       // Stagger: retraso según posición entre hermanos animados
