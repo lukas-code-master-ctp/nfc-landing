@@ -210,6 +210,42 @@ a { color: inherit; }
 }
 .nav__login:hover { background: var(--azul-soft); }
 
+/* Menú móvil — el botón y el panel solo existen bajo 860px */
+.nav__burger {
+  display: none; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; margin-right: -10px;
+  background: transparent; border: 0; border-radius: var(--radius-sm);
+  cursor: pointer; color: var(--tinta);
+}
+.nav__burger:hover { background: var(--lienzo); }
+.nav__burger-box { position: relative; display: block; width: 20px; height: 14px; }
+.nav__burger-bar {
+  position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px;
+  background: currentColor;
+  transition: transform var(--duration-base) var(--ease-standard),
+              opacity var(--duration-base) var(--ease-standard);
+}
+.nav__burger-bar:nth-child(1) { top: 0; }
+.nav__burger-bar:nth-child(2) { top: 6px; }
+.nav__burger-bar:nth-child(3) { top: 12px; }
+.nav__burger[aria-expanded="true"] .nav__burger-bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav__burger[aria-expanded="true"] .nav__burger-bar:nth-child(2) { opacity: 0; }
+.nav__burger[aria-expanded="true"] .nav__burger-bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.nav__panel {
+  display: none; border-top: 1px solid var(--linea);
+  background: var(--superficie); padding: 12px 24px 20px;
+}
+.nav__panel[hidden] { display: none; }
+.nav__panel-link {
+  display: block; padding: 13px 0; text-decoration: none;
+  font-size: 16px; font-weight: 500; color: var(--tinta);
+  border-bottom: 1px solid var(--linea);
+}
+.nav__panel-link.is-active { color: var(--azul); font-weight: 600; }
+.nav__panel-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.nav__panel-actions .btn { width: 100%; }
+
 /* ===================================================================
    Secciones compartidas (encabezado, CTA, footer)
    =================================================================== */
@@ -764,54 +800,101 @@ a { color: inherit; }
    Responsive
    =================================================================== */
 @media (max-width: 980px) {
-  .op-grid { grid-template-columns: 1fr; }
-  .aud-grid { grid-template-columns: 1fr; }
-  .lp-hero__grid { grid-template-columns: 1fr; gap: 40px; }
+  /* minmax(0,1fr) y no 1fr: si no, las fichas con texto que no envuelve
+     (patentes, documentos) estiran la columna y aparece scroll lateral. */
+  .op-grid { grid-template-columns: minmax(0, 1fr); }
+  .aud-grid { grid-template-columns: minmax(0, 1fr); }
+  .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .lp-hero__title { font-size: 40px; }
-  .fs-grid { grid-template-columns: 1fr; gap: 40px; }
-  .steps-grid { grid-template-columns: 1fr; }
-  .bn-grid { grid-template-columns: 1fr 1fr; }
+  .fs-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .steps-grid { grid-template-columns: minmax(0, 1fr); }
+  .bn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 860px) {
-  .pricing__grid { grid-template-columns: 1fr; }
+  .pricing__grid { grid-template-columns: minmax(0, 1fr); }
   .pl-hero__title { font-size: 36px; }
+  /* Bajo este ancho la navegación pasa al panel desplegable. */
+  .nav__links, .nav__actions { display: none; }
+  .nav__burger { display: inline-flex; }
+  .nav__panel.is-open { display: block; }
   /* La anotación no cabe al lado del toggle: pasa a ir debajo, con la
      flecha reflejada para que siga apuntando al botón anual. */
   .billing-toggle-wrap { flex-direction: column; align-items: center; gap: 6px; }
   .billing-note {
     position: static; transform: none; align-items: center; gap: 8px;
-    padding-left: 60px;
+    flex-direction: row-reverse;
   }
-  .billing-note__arrow { width: 46px; height: 32px; transform: scaleY(-1) rotate(4deg); }
+  /* Girada 180°, la flecha queda a la derecha del texto y apunta hacia
+     arriba, al badge del botón anual. */
+  .billing-note__arrow { width: 44px; height: 30px; transform: rotate(180deg); }
   .billing-note__text { margin-top: 0; max-width: none; font-size: 21px; }
   .footer__grid { grid-template-columns: 1fr 1fr; gap: 28px; }
   .footer__brand-col { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
-  .nav__links { display: none; }
-  .lp-hero { padding: 48px 0 56px; }
+  /* Hero */
+  .lp-hero { padding: 40px 0 48px; }
   .lp-hero__title { font-size: 32px; }
-  .lp-hero__actions { flex-direction: column; }
+  .lp-hero__lead { margin-top: 16px; font-size: 17px; }
+  .lp-hero__actions { flex-direction: column; margin-top: 24px; }
   .lp-hero__actions .btn { width: 100%; }
   .lp-hero__trust { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .section { padding: 56px 0; }
-  .bn-grid { grid-template-columns: 1fr; }
-  .pl-hero { padding: 48px 0 8px; }
+
+  /* Secciones: mismo aire para todas, no solo para .section */
+  .section { padding: 52px 0; }
+  .section__title, .fs-title { font-size: 27px; }
+  .section__lead, .fs-lead { margin-top: 12px; font-size: 16px; }
+  .steps-grid { margin-top: 30px; }
+  .op-grid, .bn-grid { grid-template-columns: minmax(0, 1fr); margin-top: 28px; }
+  .aud { padding: 8px 0 48px; }
+  .aud-grid { margin-top: 28px; }
+  .steps-more { margin-top: 22px; }
+  .fs-list { margin-top: 20px; }
+  .card--p28 { padding: 22px; }
+
+  /* CTA y FAQ tenían el padding de escritorio */
+  .cta, .cta--lg { padding: 56px 0; }
+  .cta__actions { flex-direction: column; margin-top: 24px; }
+  .cta__title, .cta--lg .cta__title { font-size: 26px; }
+  .cta__lead { margin-top: 12px; font-size: 16px; }
+  .faq { padding: 52px 0; margin-top: 32px; }
+  .faq__title { font-size: 26px; }
+  .faq__list { margin-top: 26px; }
+  .faq__item { padding: 18px 0; }
+
+  /* Planes */
+  .pl-hero { padding: 40px 0 8px; }
   .pl-hero__title { font-size: 30px; }
+  .pl-hero__lead { margin-top: 12px; font-size: 16px; }
+  .pricing { padding: 32px 0 16px; }
   .calc, .included { padding: 24px; }
   .calc__total { font-size: 42px; }
   .calc__save__amount { font-size: 20px; }
   .calc__actions { flex-direction: column; }
   .calc__actions .btn { width: 100%; }
-  .cta__actions { flex-direction: column; }
-  .cta__title, .cta--lg .cta__title { font-size: 28px; }
+  .billing-note__text { font-size: 19px; }
+
+  /* Cómo funciona */
   .hw-step { gap: 14px; }
   .hw-step__num { width: 32px; height: 32px; font-size: 13px; }
   .hw-step__body { padding: 18px 20px; }
   .hw-step__title { font-size: 17px; }
-  .hw-aside { flex-direction: column; gap: 14px; padding: 22px; }
-  .footer__grid { grid-template-columns: 1fr 1fr; }
-  .footer__bar { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .hw-phase + .hw-phase { margin-top: 40px; }
+  .hw-aside { flex-direction: column; gap: 14px; padding: 22px; margin-top: 36px; }
+
+  /* Legal */
+  .legal-answer { padding: 24px 22px; }
+  .legal-answer__title { font-size: 22px; }
+  .legal-answer__text { font-size: 15px; }
+  .legal-points { margin-top: 28px; gap: 12px; }
+  .legal-point { flex-direction: column; gap: 14px; padding: 22px; }
+  .legal-refs { margin-top: 28px; }
+  .legal-disclaimer { margin-top: 20px; }
+
+  /* Footer */
+  .footer { padding: 44px 0 28px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer__bar { margin-top: 28px; flex-direction: column; align-items: flex-start; gap: 8px; }
 }
   </style>
 </head>
@@ -838,6 +921,19 @@ a { color: inherit; }
       <div class="nav__actions">
         <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
         <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta</a>
+      </div>
+      <button type="button" class="nav__burger" data-burger aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
+        <span class="nav__burger-box"><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span></span>
+      </button>
+    </div>
+    <div class="nav__panel" id="menu-movil" data-menu>
+      <a href="/" class="nav__panel-link" data-nav="/">Inicio</a>
+      <a href="/como-funciona/" class="nav__panel-link" data-nav="/como-funciona/">¿Cómo funciona?</a>
+      <a href="/legal/" class="nav__panel-link" data-nav="/legal/">¿Es legal?</a>
+      <a href="/planes/" class="nav__panel-link" data-nav="/planes/">Planes</a>
+      <div class="nav__panel-actions">
+        <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Ingresar</a>
+        <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
       </div>
     </div>
   </header>
@@ -1006,6 +1102,41 @@ a { color: inherit; }
       </div>
     </div>
   </footer>
+
+  <script>
+    // ── Menú móvil ─────────────────────────────────────────────────
+    (function () {
+      var burger = document.querySelector('[data-burger]');
+      var menu = document.querySelector('[data-menu]');
+      if (!burger || !menu) return;
+
+      var actual = location.pathname.replace(/index\.html$/, '');
+      [].forEach.call(menu.querySelectorAll('[data-nav]'), function (a) {
+        if (a.getAttribute('data-nav') === actual) a.classList.add('is-active');
+      });
+
+      function cerrar() {
+        menu.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.setAttribute('aria-label', 'Abrir menú');
+      }
+      burger.addEventListener('click', function () {
+        var abierto = menu.classList.toggle('is-open');
+        burger.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+        burger.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') cerrar();
+      });
+      document.addEventListener('click', function (e) {
+        if (!menu.classList.contains('is-open')) return;
+        if (!menu.contains(e.target) && !burger.contains(e.target)) cerrar();
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 860) cerrar();
+      });
+    })();
+  </script>
 
 </body>
 </html>
