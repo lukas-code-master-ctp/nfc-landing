@@ -59,6 +59,17 @@
 
 /* ── Reset ─────────────────────────────────────────────────────── */
 * { box-sizing: border-box; }
+html {
+  /* Chrome en Android agranda el texto por su cuenta ("font boosting") y
+     eso ensancha bloques hasta sacar una franja de scroll lateral. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+html, body {
+  /* Red de seguridad: nada que se salga debe generar scroll horizontal.
+     'clip' y no 'hidden' porque hidden rompe el nav sticky. */
+  overflow-x: clip;
+}
 body {
   margin: 0;
   background: var(--lienzo);
