@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TapCar · Tu flota a un Tap</title>
-  <meta name="description" content="Opera tu flota completa con un toque: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.">
+  <meta name="description" content="Tu flota, tu auto o tu moto a un Tap: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="theme-color" content="#2952e6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -337,6 +337,25 @@ a { color: inherit; }
 .lp-hero__title {
   margin: 20px 0 0; font-size: 50px; line-height: 1.06; letter-spacing: -0.03em;
   font-weight: 700; color: var(--tinta); text-wrap: balance;
+}
+
+/* Palabra rotatoria del hero ("Tu flota/auto/moto a un Tap").
+   El ancho lo anima el JS midiendo la palabra siguiente; el overflow
+   oculto recorta la palabra saliente mientras sube. */
+.rotor {
+  display: inline-block; overflow: hidden; white-space: nowrap;
+  vertical-align: bottom;
+  transition: width 0.35s var(--ease-standard);
+}
+.rotor__word {
+  display: inline-block;
+  transition: transform 0.38s var(--ease-standard), opacity 0.38s var(--ease-standard);
+}
+.rotor__word.is-out { transform: translateY(-105%); opacity: 0; }
+.rotor__word.is-prep { transition: none; transform: translateY(105%); opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .rotor { transition: none; }
+  .rotor__word { transition: none; }
 }
 .lp-hero__lead { margin: 22px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); max-width: 480px; }
 .lp-hero__actions { display: flex; gap: 12px; margin-top: 30px; }
@@ -722,6 +741,24 @@ a { color: inherit; }
 }
 .aud-card__link:hover { text-decoration: underline; }
 
+/* ===================================================================
+   Llavero NFC (foto del producto)
+   =================================================================== */
+.llavero { display: block; filter: drop-shadow(0 10px 18px rgba(22, 25, 31, 0.16)); }
+
+/* Home — paso 02: foto centrada bajo el texto de la card */
+.step__llavero { height: 108px; width: auto; margin: 18px auto 0; }
+
+/* Cómo funciona — paso 04: texto a la izquierda, foto a la derecha */
+.hw-step__cols { display: flex; align-items: center; gap: 20px; }
+.hw-step__cols > div { min-width: 0; flex: 1; }
+.llavero--paso { width: 92px; height: auto; flex: 0 0 auto; }
+
+/* Planes — esquina del panel "Todo incluido" */
+.included { position: relative; }
+.llavero--included { position: absolute; top: 26px; right: 30px; width: 76px; height: auto; transform: rotate(8deg); }
+.included--con-llavero .included__lead { padding-right: 92px; }
+
 /* Enlace "ver el paso a paso" bajo los pasos de la home */
 .steps-more { margin-top: 28px; text-align: center; }
 .steps-more__link {
@@ -885,6 +922,13 @@ a { color: inherit; }
   .calc__actions .btn { width: 100%; }
   .billing-note__text { font-size: 19px; }
 
+  /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
+  .step__llavero { height: 90px; }
+  .hw-step__cols { flex-direction: column; align-items: stretch; gap: 14px; }
+  .llavero--paso { width: 84px; align-self: center; }
+  .llavero--included { width: 58px; top: 20px; right: 20px; }
+  .included--con-llavero .included__lead { padding-right: 66px; }
+
   /* Cómo funciona */
   .hw-step { gap: 14px; }
   .hw-step__num { width: 32px; height: 32px; font-size: 13px; }
@@ -955,10 +999,10 @@ a { color: inherit; }
       <div>
         <div class="lp-hero__badge">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-          Operación de flota
+          Para autos, motos y flotas
         </div>
-        <h1 class="lp-hero__title">Tu flota a un <span style="color:var(--azul);">Tap</span>.</h1>
-        <p class="lp-hero__lead">Opera tu flota completa con un toque: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
+        <h1 class="lp-hero__title" aria-label="Tu flota a un Tap."><span aria-hidden="true">Tu <span class="rotor" data-rotor><span class="rotor__word">flota</span></span> a un <span style="color:var(--azul);">Tap</span>.</span></h1>
+        <p class="lp-hero__lead">Opera todos tus vehículos con un toque: documentos, quién usa cada uno y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
         <div class="lp-hero__actions">
           <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
           <a href="/planes/" class="btn btn--secondary btn--lg">Ver planes</a>
@@ -1108,8 +1152,9 @@ a { color: inherit; }
             <span class="icon-chip icon-chip--azul">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
             </span>
-            <h3 class="step__title">Graba el chip NFC y pégalo al parabrisas</h3>
-            <p class="step__text">Cada vehículo recibe una URL única. Grábala en su chip NFC y pégalo una vez. Listo para siempre.</p>
+            <h3 class="step__title">Graba el chip NFC del vehículo</h3>
+            <p class="step__text">Cada vehículo recibe una URL única. Grábala en su chip NFC —pegado al parabrisas o de llavero— una sola vez. Listo para siempre.</p>
+            <img src="/assets/chip-llavero.webp" class="llavero step__llavero" alt="Llavero con el chip NFC de TapCar" loading="lazy" width="345" height="400">
           </div>
         </div>
 
@@ -1386,6 +1431,47 @@ a { color: inherit; }
   </footer>
 
   <script>
+    // ── Rotor del hero: "Tu flota/auto/moto a un Tap" ──────────────
+    (function () {
+      var rotor = document.querySelector('[data-rotor]');
+      if (!rotor) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var PALABRAS = ['flota', 'auto', 'moto', 'camioneta'];
+      var ESPERA = 2600, SALIDA = 380;
+      var word = rotor.querySelector('.rotor__word');
+      var i = 0;
+
+      function ancho(texto) {
+        var m = word.cloneNode();
+        m.textContent = texto;
+        m.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;transition:none;';
+        rotor.appendChild(m);
+        var w = m.offsetWidth;
+        rotor.removeChild(m);
+        return w;
+      }
+
+      function fijarAncho() { rotor.style.width = ancho(word.textContent) + 'px'; }
+      // El ancho inicial se fija cuando la fuente ya cargó; si no, queda corto.
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fijarAncho);
+      else fijarAncho();
+      window.addEventListener('resize', fijarAncho);
+
+      setInterval(function () {
+        i = (i + 1) % PALABRAS.length;
+        var siguiente = PALABRAS[i];
+        rotor.style.width = ancho(siguiente) + 'px';
+        word.classList.add('is-out');
+        setTimeout(function () {
+          word.textContent = siguiente;
+          word.classList.add('is-prep');   // la deja abajo, sin transición
+          word.classList.remove('is-out');
+          void word.offsetWidth;           // reflow: aplica is-prep antes de animar
+          word.classList.remove('is-prep');
+        }, SALIDA);
+      }, ESPERA);
+    })();
+
     // ── Reveal on scroll ───────────────────────────────────────────
     (function () {
       if (!('IntersectionObserver' in window)) return;
