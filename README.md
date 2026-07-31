@@ -61,7 +61,7 @@ Sírvela en vez de abrir el archivo si vas a probar la navegación: los enlaces 
 
 Cada página lleva su script incrustado al final del `<body>`:
 
-- **Menú móvil** (las 4 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio.
+- **Menú móvil** (las 4 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta" solo vive dentro del panel.
 - **Rotor del hero** (home) — la palabra de "Tu _flota_ a un Tap." rota entre flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
 - **Reveal on scroll** (home y ¿Cómo funciona?) — `IntersectionObserver` con retraso escalonado.
 - **Calculadora** (planes) — precio por vehículo, ahorro anual en pesos, burbuja del slider y empujón al plan anual.

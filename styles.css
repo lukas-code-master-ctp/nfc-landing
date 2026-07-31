@@ -848,8 +848,19 @@ a { color: inherit; }
 @media (max-width: 860px) {
   .pricing__grid { grid-template-columns: minmax(0, 1fr); }
   .pl-hero__title { font-size: 36px; }
-  /* Bajo este ancho la navegación pasa al panel desplegable. */
-  .nav__links, .nav__actions { display: none; }
+  /* Bajo este ancho la navegación pasa al panel desplegable, pero
+     "Ingresar" se queda a la vista: es la acción que más se repite. */
+  .nav__inner { gap: 10px; }
+  .nav__links { display: none; }
+  .nav__actions { margin-left: auto; }
+  /* "Crear cuenta" vive en el panel y en el hero; en la barra sobra. */
+  .nav__actions .btn { display: none; }
+  .nav__login {
+    /* 12px de padding lo dejan en 44px de alto: mismo objetivo táctil
+       que la hamburguesa y misma altura visual. */
+    padding: 12px 16px; border: 1px solid var(--linea);
+    border-radius: var(--radius-pill);
+  }
   .nav__burger { display: inline-flex; }
   .nav__panel.is-open { display: block; }
   /* La anotación no cabe al lado del toggle: pasa a ir debajo, con la
