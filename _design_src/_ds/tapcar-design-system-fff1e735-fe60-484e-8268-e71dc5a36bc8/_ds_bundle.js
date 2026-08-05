@@ -677,12 +677,21 @@ function NfcLinkPanel({
     width: "16",
     height: "16",
     "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement("path", {
-    d: "M6 8a6 6 0 0 1 12 0c0 4-3 5-3 9"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "3.5",
+    y: "3",
+    width: "9.5",
+    height: "18",
+    rx: "2.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "6.5",
+    y1: "18.4",
+    x2: "10",
+    y2: "18.4"
   }), /*#__PURE__*/React.createElement("path", {
-    d: "M9 17c0-2 3-3 3-7a3 3 0 0 0-6 0"
+    d: "M16.5 9.5a5 5 0 0 1 0 5"
   }), /*#__PURE__*/React.createElement("path", {
-    d: "M12 21v-1"
+    d: "M19.2 7.3a9 9 0 0 1 0 9.4"
   })), /*#__PURE__*/React.createElement("h3", {
     style: {
       margin: 0,
@@ -867,12 +876,21 @@ const CarIcon = p => Ic(/*#__PURE__*/React.createElement(React.Fragment, null, /
   cy: "17",
   r: "2"
 })), p);
-const NfcIcon = p => Ic(/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("path", {
-  d: "M6 8a6 6 0 0 1 12 0c0 4-3 5-3 9"
+const NfcIcon = p => Ic(/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("rect", {
+  x: "3.5",
+  y: "3",
+  width: "9.5",
+  height: "18",
+  rx: "2.2"
+}), /*#__PURE__*/React.createElement("line", {
+  x1: "6.5",
+  y1: "18.4",
+  x2: "10",
+  y2: "18.4"
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M9 17c0-2 3-3 3-7a3 3 0 0 0-6 0"
+  d: "M16.5 9.5a5 5 0 0 1 0 5"
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M12 21v-1"
+  d: "M19.2 7.3a9 9 0 0 1 0 9.4"
 })), p);
 const PlusIcon = p => Ic(/*#__PURE__*/React.createElement("path", {
   d: "M12 5v14M5 12h14"
