@@ -353,6 +353,13 @@ a { color: inherit; }
 }
 .rotor__word.is-out { transform: translateY(-105%); opacity: 0; }
 .rotor__word.is-prep { transition: none; transform: translateY(105%); opacity: 0; }
+
+/* Quiebre fijo del titular, solo en pantallas angostas.
+   Bajo ~420px "camioneta" no cabe junto a "a un Tap.": el h1 pasa de una
+   línea a dos y todo el hero (y lo que sigue) baja y sube en cada rotación.
+   Con el salto forzado el titular mide siempre dos líneas, dé igual la
+   palabra que esté puesta. */
+.lp-hero__nl { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .rotor { transition: none; }
   .rotor__word { transition: none; }
@@ -361,6 +368,24 @@ a { color: inherit; }
 .lp-hero__actions { display: flex; gap: 12px; margin-top: 30px; }
 .lp-hero__trust { display: flex; align-items: center; gap: 20px; margin-top: 24px; font-size: 13px; color: var(--acero); }
 .lp-trust { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Conteo de vehículos (prueba social del hero).
+   Colgado de una hairline que corta al ancho del lead: separa el dato de
+   los checks sin agregar una caja más a una columna que ya tiene cinco
+   bloques. El número es la única pieza grande, así que se lee solo. */
+.hero-conteo {
+  display: flex; align-items: baseline; gap: 9px;
+  max-width: 480px; margin-top: 26px; padding-top: 22px;
+  border-top: 1px solid var(--linea);
+}
+.hero-conteo__num {
+  font-size: 27px; font-weight: 700; line-height: 1;
+  letter-spacing: -0.025em; color: var(--azul);
+  /* Cifras de ancho fijo: sin esto el texto de al lado se corre en cada
+     paso de la animación. */
+  font-variant-numeric: tabular-nums;
+}
+.hero-conteo__txt { font-size: 14px; line-height: 1.45; color: var(--acero); }
 
 /* Ficha preview (hero card) */
 .ficha-preview { position: relative; }
@@ -789,13 +814,15 @@ a { color: inherit; }
 }
 
 /* Hero: entrada en cascada */
-.lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust {
+.lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
+.hero-conteo {
   animation: rise 0.7s var(--ease-standard) backwards;
 }
 .lp-hero__title   { animation-delay: 0.08s; }
 .lp-hero__lead    { animation-delay: 0.16s; }
 .lp-hero__actions { animation-delay: 0.24s; }
 .lp-hero__trust   { animation-delay: 0.32s; }
+.hero-conteo      { animation-delay: 0.40s; }
 
 /* Ficha del hero: entra, luego flota; el tag emite ondas NFC.
    Solo transform/opacity (GPU) — nada de box-shadow animado. */
@@ -838,6 +865,7 @@ a { color: inherit; }
 /* Accesibilidad: sin movimiento si el usuario lo pide */
 @media (prefers-reduced-motion: reduce) {
   .lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
+  .hero-conteo,
   .ficha-preview, .ficha-preview__tag::before, .ficha-preview__tag svg path { animation: none; }
   .ficha-preview__tag::before { content: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
@@ -894,10 +922,15 @@ a { color: inherit; }
   /* Hero */
   .lp-hero { padding: 40px 0 48px; }
   .lp-hero__title { font-size: 32px; }
+  .lp-hero__nl { display: inline; }
   .lp-hero__lead { margin-top: 16px; font-size: 17px; }
   .lp-hero__actions { flex-direction: column; margin-top: 24px; }
   .lp-hero__actions .btn { width: 100%; }
   .lp-hero__trust { flex-direction: column; align-items: flex-start; gap: 10px; }
+  /* El número sube a su propia línea: al lado del texto no cabe sin
+     partirlo en dos renglones desalineados. */
+  .hero-conteo { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 22px; padding-top: 20px; }
+  .hero-conteo__num { font-size: 30px; }
 
   /* Secciones: mismo aire para todas, no solo para .section */
   .section { padding: 52px 0; }
@@ -1011,7 +1044,7 @@ a { color: inherit; }
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
           Para autos, motos y flotas
         </div>
-        <h1 class="lp-hero__title" aria-label="Tu flota a un Tap."><span aria-hidden="true">Tu <span class="rotor" data-rotor><span class="rotor__word">flota</span></span> a un <span style="color:var(--azul);">Tap</span>.</span></h1>
+        <h1 class="lp-hero__title" aria-label="Tu flota a un Tap."><span aria-hidden="true">Tu <span class="rotor" data-rotor><span class="rotor__word">flota</span></span><br class="lp-hero__nl"> a un <span style="color:var(--azul);">Tap</span>.</span></h1>
         <p class="lp-hero__lead">Opera todos tus vehículos con un toque: documentos, quién usa cada uno y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
         <div class="lp-hero__actions">
           <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
@@ -1021,6 +1054,16 @@ a { color: inherit; }
           <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin apps que instalar</span>
           <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Desde un auto hasta una flota completa</span>
         </div>
+
+        <!-- Conteo de vehículos. Para actualizarlo, cambia la cifra en
+             data-valor y en el texto del span (las dos, porque sin JS se
+             muestra el texto tal cual). data-prefijo es lo que va pegado
+             delante del número; el punto de miles lo pone el script solo
+             al pasar de 999. -->
+        <p class="hero-conteo">
+          <span class="hero-conteo__num" data-conteo data-valor="100" data-prefijo="+">+100</span>
+          <span class="hero-conteo__txt">vehículos ya operan con un Tap</span>
+        </p>
       </div>
 
       <!-- ficha preview -->
@@ -1502,6 +1545,41 @@ a { color: inherit; }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
       els.forEach(function (el) { io.observe(el); });
+    })();
+
+    // ── Contador de vehículos ──────────────────────────────────────
+    // Cuenta desde 0 hasta data-valor la primera vez que la franja entra
+    // en pantalla. El número ya está escrito en el HTML, así que sin JS
+    // (o sin IntersectionObserver) se ve igual, solo que sin animación.
+    (function () {
+      var el = document.querySelector('[data-conteo]');
+      if (!el) return;
+      var destino = parseInt(el.getAttribute('data-valor'), 10);
+      if (!destino || destino < 0) return;
+      var prefijo = el.getAttribute('data-prefijo') || '';
+
+      function escribir(n) { el.textContent = prefijo + n.toLocaleString('es-CL'); }
+
+      if (!('IntersectionObserver' in window) ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        escribir(destino);
+        return;
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        var inicio = null, dura = 1100;
+        function paso(t) {
+          if (inicio === null) inicio = t;
+          var p = Math.min((t - inicio) / dura, 1);
+          // easeOutCubic: arranca rápido y frena al final.
+          escribir(Math.round(destino * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(paso);
+        }
+        requestAnimationFrame(paso);
+      }, { threshold: 0.5 });
+      io.observe(el);
     })();
   </script>
 

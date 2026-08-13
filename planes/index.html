@@ -353,6 +353,13 @@ a { color: inherit; }
 }
 .rotor__word.is-out { transform: translateY(-105%); opacity: 0; }
 .rotor__word.is-prep { transition: none; transform: translateY(105%); opacity: 0; }
+
+/* Quiebre fijo del titular, solo en pantallas angostas.
+   Bajo ~420px "camioneta" no cabe junto a "a un Tap.": el h1 pasa de una
+   línea a dos y todo el hero (y lo que sigue) baja y sube en cada rotación.
+   Con el salto forzado el titular mide siempre dos líneas, dé igual la
+   palabra que esté puesta. */
+.lp-hero__nl { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .rotor { transition: none; }
   .rotor__word { transition: none; }
@@ -361,6 +368,24 @@ a { color: inherit; }
 .lp-hero__actions { display: flex; gap: 12px; margin-top: 30px; }
 .lp-hero__trust { display: flex; align-items: center; gap: 20px; margin-top: 24px; font-size: 13px; color: var(--acero); }
 .lp-trust { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Conteo de vehículos (prueba social del hero).
+   Colgado de una hairline que corta al ancho del lead: separa el dato de
+   los checks sin agregar una caja más a una columna que ya tiene cinco
+   bloques. El número es la única pieza grande, así que se lee solo. */
+.hero-conteo {
+  display: flex; align-items: baseline; gap: 9px;
+  max-width: 480px; margin-top: 26px; padding-top: 22px;
+  border-top: 1px solid var(--linea);
+}
+.hero-conteo__num {
+  font-size: 27px; font-weight: 700; line-height: 1;
+  letter-spacing: -0.025em; color: var(--azul);
+  /* Cifras de ancho fijo: sin esto el texto de al lado se corre en cada
+     paso de la animación. */
+  font-variant-numeric: tabular-nums;
+}
+.hero-conteo__txt { font-size: 14px; line-height: 1.45; color: var(--acero); }
 
 /* Ficha preview (hero card) */
 .ficha-preview { position: relative; }
@@ -789,13 +814,15 @@ a { color: inherit; }
 }
 
 /* Hero: entrada en cascada */
-.lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust {
+.lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
+.hero-conteo {
   animation: rise 0.7s var(--ease-standard) backwards;
 }
 .lp-hero__title   { animation-delay: 0.08s; }
 .lp-hero__lead    { animation-delay: 0.16s; }
 .lp-hero__actions { animation-delay: 0.24s; }
 .lp-hero__trust   { animation-delay: 0.32s; }
+.hero-conteo      { animation-delay: 0.40s; }
 
 /* Ficha del hero: entra, luego flota; el tag emite ondas NFC.
    Solo transform/opacity (GPU) — nada de box-shadow animado. */
@@ -838,6 +865,7 @@ a { color: inherit; }
 /* Accesibilidad: sin movimiento si el usuario lo pide */
 @media (prefers-reduced-motion: reduce) {
   .lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
+  .hero-conteo,
   .ficha-preview, .ficha-preview__tag::before, .ficha-preview__tag svg path { animation: none; }
   .ficha-preview__tag::before { content: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
@@ -894,10 +922,15 @@ a { color: inherit; }
   /* Hero */
   .lp-hero { padding: 40px 0 48px; }
   .lp-hero__title { font-size: 32px; }
+  .lp-hero__nl { display: inline; }
   .lp-hero__lead { margin-top: 16px; font-size: 17px; }
   .lp-hero__actions { flex-direction: column; margin-top: 24px; }
   .lp-hero__actions .btn { width: 100%; }
   .lp-hero__trust { flex-direction: column; align-items: flex-start; gap: 10px; }
+  /* El número sube a su propia línea: al lado del texto no cabe sin
+     partirlo en dos renglones desalineados. */
+  .hero-conteo { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 22px; padding-top: 20px; }
+  .hero-conteo__num { font-size: 30px; }
 
   /* Secciones: mismo aire para todas, no solo para .section */
   .section { padding: 52px 0; }
