@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Fuentes de diseño y bundle del design system: viven en el repo pero no
+# son parte del sitio publicado.
+Disallow: /_design_src/
+
+Sitemap: https://tapcar.cl/sitemap.xml

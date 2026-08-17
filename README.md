@@ -24,10 +24,16 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── planes/index.html
 ├── legal/index.html
 ├── styles.css              # Design system compartido (fuente editable)
-├── assets/                 # Imágenes publicadas (llavero NFC en PNG y WebP)
+├── assets/                 # Imágenes publicadas
+│   ├── chip-llavero.webp   # Foto del llavero NFC
+│   └── og-tapcar.png       # Tarjeta 1200×630 al compartir el link
 ├── favicon.svg
+├── robots.txt              # Bloquea /_design_src/, apunta al sitemap
+├── sitemap.xml
 └── _design_src/            # Archivos originales del diseño y fotos sin procesar
 ```
+
+`_design_src/` está versionado pero **no es parte del sitio**: si lo publicas tal cual, esas rutas quedan accesibles. Por eso `robots.txt` las excluye.
 
 ## CSS: fuente única e incrustada
 
@@ -73,10 +79,23 @@ Cada página lleva su script incrustado al final del `<body>`:
 - `html` lleva `text-size-adjust: 100%` y `overflow-x: clip` (no `hidden`, que rompe el nav sticky) como red de seguridad contra el desborde horizontal en móviles reales.
 - El titular del hero lleva un `<br class="lp-hero__nl">` que solo existe bajo 560px. Sin él, la palabra más larga del rotor ("camioneta") no cabe junto a "a un Tap." en pantallas angostas: el `h1` pasa de una línea a dos y todo el hero baja y sube en cada rotación. Con el salto forzado el titular mide siempre dos líneas. Si agregas palabras al rotor, ninguna debería ser tan larga que parta también la primera línea.
 
+### Metadatos
+
+Cada página lleva su bloque de `canonical` + Open Graph + Twitter Card, con **URLs absolutas a `https://tapcar.cl`**. `og:image` no admite rutas relativas, así que si cambia el dominio hay que actualizar los cuatro bloques a mano.
+
+La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada con Pillow usando Segoe UI, no Geist —las fuentes de marca no están instaladas localmente—, así que la tipografía no es exacta. Sirve, pero es candidata a rehacerse con las fuentes reales.
+
+## Pendientes conocidos
+
+- **`Nosotros`, `Términos` y `Privacidad` del footer siguen en `href="#"`** en las cuatro páginas: 12 links muertos. Necesitan páginas reales, y las dos legales no son opcionales cobrando suscripciones y guardando documentos de vehículos.
+- **El paso 01 de `/como-funciona/` pide RUT, razón social y giro**, mientras la home promete que "no necesitas una empresa para usar TapCar". Una de las dos está mal; depende de si la app exige esos campos a una cuenta personal.
+- Las fechas de vencimiento de las fichas de ejemplo **son ilustrativas a propósito**, no tienen que cuadrar con la fecha real.
+
 ## Datos de producto que la copy asume
 
 - El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos; solo se paga el envío. **Pendiente:** reflejarlo en el flujo de compra de `app.tapcar.cl`.
 - Las **alertas del panel son fijas**, no configurables por el usuario.
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
 - El **plan anual tiene 35% de descuento**: $1.944 por vehículo al mes frente a $2.990.
+- El correo de contacto es **contacto@tapcar.cl** (footer de las 4 páginas y los dos CTA secundarios de Planes).
 - El hero declara **+100 vehículos operando**. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.

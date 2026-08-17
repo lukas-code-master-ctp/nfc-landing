@@ -186,6 +186,19 @@ a { color: inherit; }
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--linea);
 }
+/* Salto al contenido: invisible hasta que se llega con Tab. Sin él, quien
+   navega por teclado tiene que recorrer el nav completo en cada página. */
+.skip-link {
+  /* fixed y no absolute: así aparece a la vista aunque la página esté
+     scrolleada, y por encima del nav sticky (z-index 50). */
+  position: fixed; left: 12px; top: -60px; z-index: 100;
+  background: var(--azul); color: #fff; text-decoration: none;
+  font-size: 14px; font-weight: 600; padding: 10px 16px;
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
+  transition: top var(--duration-base) var(--ease-standard);
+}
+.skip-link:focus { top: 12px; }
+
 .nav__inner {
   max-width: 1140px; margin: 0 auto; padding: 13px 24px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
@@ -688,7 +701,10 @@ a { color: inherit; }
 .hw-phase { max-width: 820px; margin: 0 auto; }
 .hw-phase + .hw-phase { margin-top: 60px; }
 .hw-phase__head { display: flex; align-items: center; gap: 14px; }
+/* Es un h2 (encabezado de fase), no solo un chip: el margin por defecto
+   del h2 lo descuadraría dentro del flex de .hw-phase__head. */
 .hw-phase__tag {
+  margin: 0;
   display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
   background: var(--azul-soft); color: var(--azul); font-size: 12px; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 13px; border-radius: var(--radius-pill);

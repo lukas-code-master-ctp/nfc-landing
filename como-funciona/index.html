@@ -4,7 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>¿Cómo funciona? · TapCar</title>
-  <meta name="description" content="El paso a paso de TapCar: registra vehículos y conductores, graba el chip NFC y opera tu flota con un toque. Sin apps que instalar.">
+  <meta name="description" content="El paso a paso de TapCar: registra tus vehículos, graba el chip NFC y opera todo con un toque. Sin apps que instalar.">
+  <link rel="canonical" href="https://tapcar.cl/como-funciona/">
+
+  <!-- Tarjeta al compartir (WhatsApp, LinkedIn, X). La imagen es absoluta
+       a propósito: las rutas relativas no funcionan en og:image. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TapCar">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:url" content="https://tapcar.cl/como-funciona/">
+  <meta property="og:title" content="¿Cómo funciona? · TapCar">
+  <meta property="og:description" content="El paso a paso de TapCar: registra tus vehículos, graba el chip NFC y opera todo con un toque. Sin apps que instalar.">
+  <meta property="og:image" content="https://tapcar.cl/assets/og-tapcar.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TapCar — tus vehículos a un Tap">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="¿Cómo funciona? · TapCar">
+  <meta name="twitter:description" content="El paso a paso de TapCar: registra tus vehículos, graba el chip NFC y opera todo con un toque. Sin apps que instalar.">
+  <meta name="twitter:image" content="https://tapcar.cl/assets/og-tapcar.png">
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="theme-color" content="#2952e6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -199,6 +218,19 @@ a { color: inherit; }
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--linea);
 }
+/* Salto al contenido: invisible hasta que se llega con Tab. Sin él, quien
+   navega por teclado tiene que recorrer el nav completo en cada página. */
+.skip-link {
+  /* fixed y no absolute: así aparece a la vista aunque la página esté
+     scrolleada, y por encima del nav sticky (z-index 50). */
+  position: fixed; left: 12px; top: -60px; z-index: 100;
+  background: var(--azul); color: #fff; text-decoration: none;
+  font-size: 14px; font-weight: 600; padding: 10px 16px;
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
+  transition: top var(--duration-base) var(--ease-standard);
+}
+.skip-link:focus { top: 12px; }
+
 .nav__inner {
   max-width: 1140px; margin: 0 auto; padding: 13px 24px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
@@ -701,7 +733,10 @@ a { color: inherit; }
 .hw-phase { max-width: 820px; margin: 0 auto; }
 .hw-phase + .hw-phase { margin-top: 60px; }
 .hw-phase__head { display: flex; align-items: center; gap: 14px; }
+/* Es un h2 (encabezado de fase), no solo un chip: el margin por defecto
+   del h2 lo descuadraría dentro del flex de .hw-phase__head. */
 .hw-phase__tag {
+  margin: 0;
   display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
   background: var(--azul-soft); color: var(--azul); font-size: 12px; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 13px; border-radius: var(--radius-pill);
@@ -999,6 +1034,8 @@ a { color: inherit; }
 </head>
 <body>
 
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
   <!-- ============ NAV ============ -->
   <header class="nav">
     <div class="nav__inner">
@@ -1036,11 +1073,13 @@ a { color: inherit; }
     </div>
   </header>
 
+  <main id="contenido">
+
   <!-- ============ HERO ============ -->
   <section class="pl-hero">
     <div class="pl-hero__inner">
       <span class="eyebrow">Cómo funciona</span>
-      <h1 class="pl-hero__title">De cero a operar tu flota con un Tap.</h1>
+      <h1 class="pl-hero__title">De cero a operar tus vehículos con un Tap.</h1>
       <p class="pl-hero__lead">Cuatro pasos para dejar todo listo — una sola vez. Desde ahí, la operación completa pasa por el mismo gesto: acercar el teléfono al chip.</p>
     </div>
   </section>
@@ -1052,10 +1091,10 @@ a { color: inherit; }
       <!-- FASE 1 -->
       <div class="hw-phase">
         <div class="hw-phase__head">
-          <span class="hw-phase__tag">
+          <h2 class="hw-phase__tag">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
             Puesta en marcha
-          </span>
+          </h2>
           <span class="hw-phase__rule"></span>
         </div>
         <p class="hw-phase__note">Lo haces una sola vez, desde el panel web. No necesitas instalar nada — ni tú ni tu equipo.</p>
@@ -1122,10 +1161,10 @@ a { color: inherit; }
       <!-- FASE 2 -->
       <div class="hw-phase">
         <div class="hw-phase__head">
-          <span class="hw-phase__tag">
+          <h2 class="hw-phase__tag">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
             El día a día
-          </span>
+          </h2>
           <span class="hw-phase__rule"></span>
         </div>
         <p class="hw-phase__note">Desde acá todo parte del mismo gesto. La misma ficha resuelve tres cosas distintas según quién la abra: el conductor, quien fiscaliza y tú.</p>
@@ -1262,8 +1301,8 @@ a { color: inherit; }
   <!-- ============ CTA ============ -->
   <section class="cta">
     <div class="cta__inner">
-      <h2 class="cta__title">Cuatro pasos y tu flota queda a un Tap.</h2>
-      <p class="cta__lead">Registra tus vehículos y conductores, graba los chips y controla todo desde un panel. Sin apps que instalar.</p>
+      <h2 class="cta__title">Cuatro pasos y tus vehículos quedan a un Tap.</h2>
+      <p class="cta__lead">Registra tus vehículos, graba los chips y controla todo desde un panel. Sin apps que instalar.</p>
       <div class="cta__actions">
         <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1274,6 +1313,8 @@ a { color: inherit; }
   </section>
 
   <!-- ============ FOOTER ============ -->
+  </main>
+
   <footer class="footer">
     <div class="container">
       <div class="footer__grid">
@@ -1287,7 +1328,7 @@ a { color: inherit; }
             </svg>
             <span class="footer__brand-name">Tap<span class="accent">Car</span></span>
           </div>
-          <p class="footer__tagline">Tu flota a un Tap: documentos, uso y control, todo desde el mismo gesto.</p>
+          <p class="footer__tagline">Tus vehículos a un Tap: documentos, uso y control, todo desde el mismo gesto.</p>
         </div>
         <div>
           <p class="footer__col-title">Producto</p>
@@ -1302,8 +1343,8 @@ a { color: inherit; }
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
             <a href="#" class="footer__link">Nosotros</a>
-            <a href="#" class="footer__link">Contacto</a>
-            <a href="#" class="footer__link">Soporte</a>
+            <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
+            <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
           </div>
         </div>
         <div>
