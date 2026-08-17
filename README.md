@@ -89,7 +89,7 @@ La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada co
 
 ## Pendientes conocidos
 
-- **`/terminos/` tiene un dato sin completar:** la razón social, el RUT y el domicilio de la empresa, marcados en ámbar en la sección 1. Hay que llenarlos antes de publicar.
+- **`/terminos/` no declara domicilio.** La sociedad ya está identificada (IMPULSE AI SpA, RUT 78.479.762-7) pero falta la dirección; en un documento legal conviene tenerla.
 - **El documento no pasó por revisión legal.** Está escrito en lenguaje simple y describe el servicio tal como funciona, pero conviene que un abogado lo revise.
 - Las fechas de vencimiento de las fichas de ejemplo **son ilustrativas a propósito**, no tienen que cuadrar con la fecha real.
 
@@ -100,5 +100,6 @@ La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada co
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
 - El **plan anual tiene 35% de descuento**: $1.944 por vehículo al mes frente a $2.990.
 - Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
+- La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7** (sección 1 de `/terminos/` y el pie de las 5 páginas).
 - El correo de contacto es **contacto@tapcar.cl** (footer de las 5 páginas, los dos CTA secundarios de Planes y el CTA de Términos).
 - El hero declara **+100 vehículos operando**. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
