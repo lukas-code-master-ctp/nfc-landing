@@ -13,6 +13,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 | Home / Landing | [`index.html`](index.html) | Hero con rotor de palabra, "¿Para quién es?", "Cómo funciona", "Un toque, toda la operación", beneficios, showcase de la ficha, CTA |
 | ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08) + FAQ de 9 preguntas |
 | Planes | [`planes/index.html`](planes/index.html) | Calculadora con slider, toggle mensual/anual con el ahorro en pesos, "Todo incluido" por audiencia, FAQ, CTA |
+| Términos y Condiciones | [`terminos/index.html`](terminos/index.html) | Términos del servicio con la política de privacidad incluida. Enlazada solo desde el footer, no desde el nav |
 | ¿Es legal? | [`legal/index.html`](legal/index.html) | Legalidad de los documentos digitales en Chile (Ley 19.799, Contraloría), referencias y disclaimer |
 
 ## Estructura
@@ -23,6 +24,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── como-funciona/index.html
 ├── planes/index.html
 ├── legal/index.html
+├── terminos/index.html
 ├── styles.css              # Design system compartido (fuente editable)
 ├── assets/                 # Imágenes publicadas
 │   ├── chip-llavero.webp   # Foto del llavero NFC
@@ -39,10 +41,10 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 
 `styles.css` es **la fuente editable**. El mismo CSS va incrustado dentro del `<style>` de cada `.html` para que las páginas funcionen de forma autónoma (abrir con doble clic, sin servidor).
 
-Tras editar `styles.css` hay que volver a incrustarlo en las cuatro páginas:
+Tras editar `styles.css` hay que volver a incrustarlo en las cinco páginas:
 
 ```bash
-python -c "import io; css=io.open('styles.css',encoding='utf-8').read().rstrip(); [io.open(f,'w',encoding='utf-8',newline='').write(h[:h.index('<style>')+7]+'\n'+css+'\n'+h[h.index('  </style>'):]) for f in ['index.html','planes/index.html','legal/index.html','como-funciona/index.html'] for h in [io.open(f,encoding='utf-8').read()]]"
+python -c "import io; css=io.open('styles.css',encoding='utf-8').read().rstrip(); [io.open(f,'w',encoding='utf-8',newline='').write(h[:h.index('<style>')+7]+'\n'+css+'\n'+h[h.index('  </style>'):]) for f in ['index.html','planes/index.html','legal/index.html','como-funciona/index.html','terminos/index.html'] for h in [io.open(f,encoding='utf-8').read()]]"
 ```
 
 Editar el `<style>` de un `.html` a mano hace que ese cambio se pierda en la siguiente sincronización.
@@ -67,7 +69,7 @@ Sírvela en vez de abrir el archivo si vas a probar la navegación: los enlaces 
 
 Cada página lleva su script incrustado al final del `<body>`:
 
-- **Menú móvil** (las 4 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta" solo vive dentro del panel.
+- **Menú móvil** (las 5 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta" solo vive dentro del panel.
 - **Rotor del hero** (home) — la palabra de "Tu _flota_ a un Tap." rota entre flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
 - **Reveal on scroll** (home y ¿Cómo funciona?) — `IntersectionObserver` con retraso escalonado.
 - **Contador del hero** (home) — el número de vehículos cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
@@ -81,14 +83,14 @@ Cada página lleva su script incrustado al final del `<body>`:
 
 ### Metadatos
 
-Cada página lleva su bloque de `canonical` + Open Graph + Twitter Card, con **URLs absolutas a `https://tapcar.cl`**. `og:image` no admite rutas relativas, así que si cambia el dominio hay que actualizar los cuatro bloques a mano.
+Cada página lleva su bloque de `canonical` + Open Graph + Twitter Card, con **URLs absolutas a `https://tapcar.cl`**. `og:image` no admite rutas relativas, así que si cambia el dominio hay que actualizar los cinco bloques a mano.
 
 La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada con Pillow usando Segoe UI, no Geist —las fuentes de marca no están instaladas localmente—, así que la tipografía no es exacta. Sirve, pero es candidata a rehacerse con las fuentes reales.
 
 ## Pendientes conocidos
 
-- **`Nosotros`, `Términos` y `Privacidad` del footer siguen en `href="#"`** en las cuatro páginas: 12 links muertos. Necesitan páginas reales, y las dos legales no son opcionales cobrando suscripciones y guardando documentos de vehículos.
-- **El paso 01 de `/como-funciona/` pide RUT, razón social y giro**, mientras la home promete que "no necesitas una empresa para usar TapCar". Una de las dos está mal; depende de si la app exige esos campos a una cuenta personal.
+- **`/terminos/` tiene un dato sin completar:** la razón social, el RUT y el domicilio de la empresa, marcados en ámbar en la sección 1. Hay que llenarlos antes de publicar.
+- **El documento no pasó por revisión legal.** Está escrito en lenguaje simple y describe el servicio tal como funciona, pero conviene que un abogado lo revise.
 - Las fechas de vencimiento de las fichas de ejemplo **son ilustrativas a propósito**, no tienen que cuadrar con la fecha real.
 
 ## Datos de producto que la copy asume
@@ -97,5 +99,6 @@ La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada co
 - Las **alertas del panel son fijas**, no configurables por el usuario.
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
 - El **plan anual tiene 35% de descuento**: $1.944 por vehículo al mes frente a $2.990.
-- El correo de contacto es **contacto@tapcar.cl** (footer de las 4 páginas y los dos CTA secundarios de Planes).
+- Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
+- El correo de contacto es **contacto@tapcar.cl** (footer de las 5 páginas, los dos CTA secundarios de Planes y el CTA de Términos).
 - El hero declara **+100 vehículos operando**. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.

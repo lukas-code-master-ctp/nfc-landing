@@ -802,6 +802,49 @@ a { color: inherit; }
 .aud-card__link:hover { text-decoration: underline; }
 
 /* ===================================================================
+   Documento legal (Términos y Condiciones)
+   =================================================================== */
+.doc { max-width: 760px; margin: 0 auto; }
+.doc__meta {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  padding-bottom: 22px; border-bottom: 1px solid var(--linea);
+  font-size: 14px; color: var(--acero);
+}
+.doc__toc {
+  margin: 28px 0 0; padding: 20px 22px;
+  background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-lg);
+}
+.doc__toc-title {
+  margin: 0 0 12px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--acero);
+}
+.doc__toc-list {
+  margin: 0; padding-left: 20px;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 20px;
+  font-size: 14px; color: var(--acero);
+}
+.doc__toc-list a { color: var(--azul); text-decoration: none; }
+.doc__toc-list a:hover { text-decoration: underline; }
+
+/* scroll-margin: si no, el nav sticky tapa el título al saltar desde el índice */
+.doc__sec { margin-top: 42px; scroll-margin-top: 88px; }
+.doc__sec-title { margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.015em; }
+.doc__sec p { margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: var(--acero); }
+.doc__sec ul { margin: 12px 0 0; padding-left: 22px; }
+.doc__sec li { margin-top: 7px; font-size: 16px; line-height: 1.6; color: var(--acero); }
+.doc__sec strong { color: var(--tinta); font-weight: 600; }
+.doc__sec a { color: var(--azul); }
+.doc__pendiente {
+  display: inline-block; background: var(--estado-por-vencer-bg); color: var(--estado-por-vencer-fg);
+  font-weight: 600; padding: 1px 7px; border-radius: var(--radius-sm);
+}
+.doc__aviso {
+  margin-top: 44px; padding: 20px 22px;
+  background: var(--azul-soft); border-radius: var(--radius-lg);
+  font-size: 15px; line-height: 1.6; color: var(--tinta);
+}
+
+/* ===================================================================
    Llavero NFC (foto del producto)
    =================================================================== */
 .llavero { display: block; filter: drop-shadow(0 10px 18px rgba(22, 25, 31, 0.16)); }
@@ -966,6 +1009,9 @@ a { color: inherit; }
      partirlo en dos renglones desalineados. */
   .hero-conteo { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 22px; padding-top: 20px; }
   .hero-conteo__num { font-size: 30px; }
+  /* Índice del documento legal: a dos columnas los títulos se parten */
+  .doc__toc-list { grid-template-columns: minmax(0, 1fr); }
+  .doc__sec-title { font-size: 19px; }
 
   /* Secciones: mismo aire para todas, no solo para .section */
   .section { padding: 52px 0; }
@@ -1504,7 +1550,6 @@ a { color: inherit; }
         <div>
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
-            <a href="#" class="footer__link">Nosotros</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
           </div>
@@ -1512,8 +1557,7 @@ a { color: inherit; }
         <div>
           <p class="footer__col-title">Legal</p>
           <div class="footer__links">
-            <a href="#" class="footer__link">Términos</a>
-            <a href="#" class="footer__link">Privacidad</a>
+            <a href="/terminos/" class="footer__link">Términos y Condiciones</a>
           </div>
         </div>
       </div>
