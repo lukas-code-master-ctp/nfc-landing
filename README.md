@@ -98,7 +98,7 @@ La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada co
 - El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos; solo se paga el envío. **Pendiente:** reflejarlo en el flujo de compra de `app.tapcar.cl`.
 - Las **alertas del panel son fijas**, no configurables por el usuario.
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
-- El **plan anual tiene 35% de descuento**: $1.944 por vehículo al mes frente a $2.990.
+- El plan mensual son **$2.500 por vehículo al mes**; el **anual, $20.000 por vehículo al año** (equivale a $1.667 al mes, un **33% menos**). La calculadora saca todo el dinero de esas dos cifras y nunca del mensual redondeado, porque 12 × $1.667 da $20.004, no $20.000.
 - Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
 - La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7** (sección 1 de `/terminos/` y el pie de las 5 páginas).
 - El correo de contacto es **contacto@tapcar.cl** (footer de las 5 páginas, los dos CTA secundarios de Planes y el CTA de Términos).
