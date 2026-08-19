@@ -102,4 +102,4 @@ La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada co
 - Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
 - La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7** (sección 1 de `/terminos/` y el pie de las 5 páginas).
 - El correo de contacto es **contacto@tapcar.cl** (footer de las 5 páginas, los dos CTA secundarios de Planes y el CTA de Términos).
-- El hero declara **+100 vehículos operando**. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
+- El hero declara **+500 vehículos operando**. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
