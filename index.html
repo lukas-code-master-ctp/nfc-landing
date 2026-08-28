@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TapCar · Tus vehículos a un Tap</title>
-  <meta name="description" content="Tu flota, tu auto o tu moto a un Tap: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.">
+  <title>Documentos del auto y control de flota, a un toque | TapCar</title>
+  <meta name="description" content="Ten al día el Permiso de Circulación, la Revisión Técnica y el SOAP de cada vehículo, y muéstralos en una fiscalización con un toque al chip NFC.">
   <link rel="canonical" href="https://tapcar.cl/">
 
   <!-- Tarjeta al compartir (WhatsApp, LinkedIn, X). La imagen es absoluta
@@ -13,15 +13,15 @@
   <meta property="og:site_name" content="TapCar">
   <meta property="og:locale" content="es_CL">
   <meta property="og:url" content="https://tapcar.cl/">
-  <meta property="og:title" content="TapCar · Tus vehículos a un Tap">
-  <meta property="og:description" content="Tu flota, tu auto o tu moto a un Tap: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.">
+  <meta property="og:title" content="Documentos del auto y control de flota, a un toque | TapCar">
+  <meta property="og:description" content="Ten al día el Permiso de Circulación, la Revisión Técnica y el SOAP de cada vehículo, y muéstralos en una fiscalización con un toque al chip NFC.">
   <meta property="og:image" content="https://tapcar.cl/assets/og-tapcar.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="TapCar — tus vehículos a un Tap">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TapCar · Tus vehículos a un Tap">
-  <meta name="twitter:description" content="Tu flota, tu auto o tu moto a un Tap: documentos, quién usa cada vehículo y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.">
+  <meta name="twitter:title" content="Documentos del auto y control de flota, a un toque | TapCar">
+  <meta name="twitter:description" content="Ten al día el Permiso de Circulación, la Revisión Técnica y el SOAP de cada vehículo, y muéstralos en una fiscalización con un toque al chip NFC.">
   <meta name="twitter:image" content="https://tapcar.cl/assets/og-tapcar.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -1073,6 +1073,158 @@ a { color: inherit; }
   .footer__bar { margin-top: 28px; flex-direction: column; align-items: flex-start; gap: 8px; }
 }
   </style>
+  <script type="application/ld+json" data-schema>
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://tapcar.cl/#organizacion",
+      "name": "TapCar",
+      "legalName": "IMPULSE AI SpA",
+      "taxID": "78.479.762-7",
+      "url": "https://tapcar.cl/",
+      "email": "contacto@tapcar.cl",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tapcar.cl/assets/og-tapcar.png",
+        "width": 1200,
+        "height": 630
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Chile"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contacto@tapcar.cl",
+        "contactType": "customer support",
+        "availableLanguage": [
+          "Spanish"
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://tapcar.cl/#sitio",
+      "url": "https://tapcar.cl/",
+      "name": "TapCar",
+      "inLanguage": "es-CL",
+      "publisher": {
+        "@id": "https://tapcar.cl/#organizacion"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tapcar.cl/#pagina",
+      "url": "https://tapcar.cl/",
+      "name": "Tu flota a un Tap .",
+      "description": "Ten al día el Permiso de Circulación, la Revisión Técnica y el SOAP de cada vehículo, y muéstralos en una fiscalización con un toque al chip NFC.",
+      "inLanguage": "es-CL",
+      "isPartOf": {
+        "@id": "https://tapcar.cl/#sitio"
+      },
+      "about": {
+        "@id": "https://tapcar.cl/#producto"
+      },
+      "breadcrumb": {
+        "@id": "https://tapcar.cl/#migas"
+      },
+      "publisher": {
+        "@id": "https://tapcar.cl/#organizacion"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://tapcar.cl/#migas",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://tapcar.cl/"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://tapcar.cl/#producto",
+      "name": "TapCar",
+      "url": "https://tapcar.cl/",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Gestión de documentación vehicular",
+      "operatingSystem": "Navegador web (sin instalación)",
+      "inLanguage": "es-CL",
+      "description": "Plataforma chilena para tener la documentación de tus vehículos al día y mostrarla en una fiscalización con un toque a un chip NFC. Guarda Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón con su fecha de vencimiento, avisa por correo antes de que venzan, y registra con un PIN quién usa cada vehículo y en qué estado lo entrega.",
+      "featureList": [
+        "Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido",
+        "Ficha pública de solo lectura que se abre con un chip NFC, sin instalar aplicaciones",
+        "Recordatorios por correo antes de cada vencimiento",
+        "Registro de uso por conductor con PIN de 4 dígitos, sin cuentas",
+        "Fotos de entrega con lectura automática de kilometraje, combustible y limpieza",
+        "Panel con el estado de la flota, alertas de daño y bitácora filtrable",
+        "Datos del vehículo: combustible, neumáticos, transmisión y aceite"
+      ],
+      "provider": {
+        "@id": "https://tapcar.cl/#organizacion"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "CLP",
+        "lowPrice": "20000",
+        "highPrice": "30000",
+        "offerCount": 2,
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Plan mensual",
+            "description": "$2.500 por vehículo al mes, sin permanencia.",
+            "price": "2500",
+            "priceCurrency": "CLP",
+            "availability": "https://schema.org/InStock",
+            "url": "https://tapcar.cl/planes/",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "2500",
+              "priceCurrency": "CLP",
+              "unitText": "vehículo",
+              "billingIncrement": 1,
+              "billingDuration": 1,
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitCode": "MON"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Plan anual",
+            "description": "$20.000 por vehículo al año, un 33% menos que pagando mes a mes.",
+            "price": "20000",
+            "priceCurrency": "CLP",
+            "availability": "https://schema.org/InStock",
+            "url": "https://tapcar.cl/planes/",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "20000",
+              "priceCurrency": "CLP",
+              "unitText": "vehículo",
+              "billingIncrement": 1,
+              "billingDuration": 1,
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitCode": "ANN"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body id="top">
 

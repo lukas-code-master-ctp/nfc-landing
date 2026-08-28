@@ -32,6 +32,8 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── favicon.svg
 ├── robots.txt              # Bloquea /_design_src/, apunta al sitemap
 ├── sitemap.xml
+├── llms.txt                # Resumen del sitio para motores generativos
+├── tools/schema.py         # Regenera el JSON-LD desde el contenido visible
 └── _design_src/            # Archivos originales del diseño y fotos sin procesar
 ```
 
@@ -86,6 +88,22 @@ Cada página lleva su script incrustado al final del `<body>`:
 Cada página lleva su bloque de `canonical` + Open Graph + Twitter Card, con **URLs absolutas a `https://tapcar.cl`**. `og:image` no admite rutas relativas, así que si cambia el dominio hay que actualizar los cinco bloques a mano.
 
 La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada con Pillow usando Segoe UI, no Geist —las fuentes de marca no están instaladas localmente—, así que la tipografía no es exacta. Sirve, pero es candidata a rehacerse con las fuentes reales.
+
+### Schema.org (JSON-LD)
+
+Cada página lleva un bloque `<script type="application/ld+json" data-schema>` con `Organization`, `WebSite`, `WebPage` y `BreadcrumbList`; la home y Planes suman `SoftwareApplication` con los dos precios, ¿Cómo funciona? suma `HowTo` (8 pasos) y `FAQPage` (9 preguntas), Planes suma `FAQPage` (6) y ¿Es legal? un `FAQPage` de 1.
+
+**No se edita a mano.** Lo genera [`tools/schema.py`](tools/schema.py), que lee las preguntas y los pasos del propio HTML:
+
+```bash
+python tools/schema.py
+```
+
+Es idempotente: borra el bloque anterior y escribe uno nuevo. **Hay que volver a correrlo cada vez que cambien el FAQ, los pasos de ¿Cómo funciona?, los precios, los títulos o las descriptions**, o el marcado empieza a prometer cosas que la página ya no dice —que es exactamente lo que Google penaliza—.
+
+### llms.txt
+
+[`llms.txt`](llms.txt) resume el sitio para motores generativos (ChatGPT, Perplexity, Google AI Overviews): qué resuelve TapCar, **qué no es** —no es GPS, no emite documentos, no reemplaza los originales—, los precios, la base legal y cómo citar la marca. Es el archivo que evita que un modelo describa mal el producto. Hay que actualizarlo cuando cambien los precios o el alcance.
 
 ## Pendientes conocidos
 

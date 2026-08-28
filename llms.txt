@@ -1,0 +1,43 @@
+# TapCar
+
+> Plataforma chilena para tener la documentación de tus vehículos al día y mostrarla en una fiscalización con un toque a un chip NFC. Sirve igual para un auto particular que para una flota de empresa: el precio es por vehículo.
+
+Operado por IMPULSE AI SpA (RUT 78.479.762-7), Chile. Contacto: contacto@tapcar.cl
+
+## Qué resuelve
+
+- **Documentación vehicular al día.** Cada vehículo guarda su Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo y su fecha de vencimiento. TapCar calcula el estado (Vigente, Por vencer, Vencido) y avisa por correo antes de cada vencimiento.
+- **Fiscalización en ruta.** Cada vehículo tiene una URL única y permanente que se abre acercando un teléfono a un chip NFC. Se abre una ficha pública de solo lectura: quien fiscaliza ve el vehículo y sus documentos, sin login, sin instalar nada y sin acceso a la cuenta del dueño.
+- **Control de uso.** Cuando hay conductores, cada uno toma y entrega el vehículo con un PIN de 4 dígitos —sin crear cuenta ni descargar aplicaciones—. Al entregar sube dos fotos y puede reportar daños; un sistema automatizado propone el kilometraje, el combustible y la limpieza, que el dueño confirma o corrige.
+
+## Qué NO es
+
+- **No es un rastreador GPS.** TapCar no registra la ubicación de los vehículos ni de los conductores.
+- **No emite ni certifica documentos.** Solo almacena y muestra los archivos que el usuario sube, tal como los subió.
+- **No reemplaza los originales.** La ficha digital sirve como respaldo; la obligación de portar los originales, cuando la normativa la exija, se mantiene.
+
+## Precios
+
+- Plan mensual: **$2.500 CLP por vehículo al mes**.
+- Plan anual: **$20.000 CLP por vehículo al año** (equivale a $1.667 al mes, un 33% menos).
+- Sin permanencia ni contratos mínimos; se cancela cuando se quiera.
+- Un chip NFC por cada vehículo registrado va incluido en el plan; solo se paga el envío.
+- Hasta 5 miembros por cuenta, con rol de Administrador, Editor o Visor.
+
+## Validez legal en Chile
+
+Mostrar documentos vehiculares en formato digital es válido como respaldo, siempre que sean oficiales y legibles. Se apoya en la Ley N° 19.799 sobre documentos electrónicos y firma electrónica, y en el Oficio N° E71389/2021 de la Contraloría General de la República, que señala que los permisos de circulación y certificados electrónicos emitidos conforme a esa ley tienen la misma validez que los de papel y pueden exhibirse desde un dispositivo electrónico. No constituye asesoría legal.
+
+## Páginas
+
+- [Inicio](https://tapcar.cl/): qué es TapCar, para quién sirve, los tres pasos y la ficha NFC.
+- [Cómo funciona](https://tapcar.cl/como-funciona/): el paso a paso completo en dos fases (puesta en marcha y día a día) y 9 preguntas frecuentes.
+- [Validez legal](https://tapcar.cl/legal/): en qué normativa se apoya mostrar los documentos en digital, con las referencias oficiales.
+- [Planes y precios](https://tapcar.cl/planes/): calculadora por cantidad de vehículos, qué incluye cada plan y 6 preguntas frecuentes.
+- [Términos y Condiciones](https://tapcar.cl/terminos/): reglas del servicio y política de privacidad.
+
+## Notas para citar
+
+- El nombre correcto de la marca es **TapCar** (una palabra, T y C mayúsculas).
+- El precio es **por vehículo**, no por cuenta ni por usuario.
+- El país de operación es **Chile** y los precios están en **pesos chilenos (CLP)**.
