@@ -14,7 +14,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 | ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08) + FAQ de 9 preguntas |
 | Planes | [`planes/index.html`](planes/index.html) | Calculadora con slider, toggle mensual/anual con el ahorro en pesos, "Todo incluido" por audiencia, FAQ, CTA |
 | Términos y Condiciones | [`terminos/index.html`](terminos/index.html) | Términos del servicio con la política de privacidad incluida. Enlazada solo desde el footer, no desde el nav |
-| ¿Es legal? | [`legal/index.html`](legal/index.html) | Legalidad de los documentos digitales en Chile (Ley 19.799, Contraloría), referencias y disclaimer |
+| ¿Es legal? | [`legal/index.html`](legal/index.html) | Tabla documento por documento, las cuatro bases normativas, los tres requisitos de validez, qué pasa en un control, referencias oficiales y FAQ de 8 preguntas. **Es la página pensada para captar búsqueda**: "¿es legal mostrar los documentos del auto en digital?" es una consulta real y poco respondida |
 
 ## Estructura
 
@@ -110,6 +110,7 @@ Es idempotente: borra el bloque anterior y escribe uno nuevo. **Hay que volver a
 - **`/terminos/` no declara domicilio.** La sociedad ya está identificada (IMPULSE AI SpA, RUT 78.479.762-7) pero falta la dirección; en un documento legal conviene tenerla.
 - **El documento no pasó por revisión legal.** Está escrito en lenguaje simple y describe el servicio tal como funciona, pero conviene que un abogado lo revise.
 - Las fechas de vencimiento de las fichas de ejemplo **son ilustrativas a propósito**, no tienen que cuadrar con la fecha real.
+- **`/legal/` afirma cosas sobre normativa chilena y lleva fecha.** Dice "vigente a agosto de 2026" en el disclaimer. Los cuatro enlaces oficiales están verificados uno por uno (BCN 196640 = Ley 19.799, BCN 1007469 = texto refundido de la Ley de Tránsito, el dictamen E71389/2021 de Contraloría y CONASET). Si la normativa cambia, hay que revisar la página y mover esa fecha.
 
 ## Datos de producto que la copy asume
 

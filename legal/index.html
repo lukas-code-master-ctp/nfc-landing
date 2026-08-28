@@ -709,6 +709,25 @@ a { color: inherit; }
 }
 .legal-point .op-card__title { margin-top: 0; }
 
+/* Tabla de documentos de la pagina de legalidad.
+   El wrapper lleva overflow-x: auto porque las dos primeras columnas no
+   envuelven (nombres propios de documentos) y en movil se saldrian. */
+.legal-tabla-wrap { max-width: 760px; margin: 36px auto 0; overflow-x: auto; }
+.legal-tabla { width: 100%; border-collapse: collapse; font-size: 15px; }
+.legal-tabla th, .legal-tabla td {
+  text-align: left; padding: 13px 14px; vertical-align: top;
+  border-bottom: 1px solid var(--linea);
+}
+.legal-tabla th {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--acero);
+}
+.legal-tabla td:first-child { font-weight: 600; color: var(--tinta); white-space: nowrap; }
+.legal-tabla td:nth-child(2) { white-space: nowrap; }
+.legal-tabla td:last-child { color: var(--acero); line-height: 1.5; }
+.legal-si { color: var(--vigente); font-weight: 600; }
+.legal-ojo { color: var(--estado-por-vencer-fg); font-weight: 600; }
+
 .legal-refs { max-width: 760px; margin: 40px auto 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .legal-ref {
   display: flex; gap: 14px; align-items: flex-start; background: var(--superficie);
@@ -1118,7 +1137,7 @@ a { color: inherit; }
       "@type": "WebPage",
       "@id": "https://tapcar.cl/legal/#pagina",
       "url": "https://tapcar.cl/legal/",
-      "name": "¿Es legal mostrar tus documentos con TapCar?",
+      "name": "¿Es legal mostrar los documentos del auto en digital?",
       "description": "Sí, como respaldo: la ley chilena reconoce los documentos electrónicos oficiales y legibles. En qué se apoya —Ley 19.799 y el dictamen de Contraloría—.",
       "inLanguage": "es-CL",
       "isPartOf": {
@@ -1158,10 +1177,66 @@ a { color: inherit; }
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "¿Es legal mostrar tus documentos con TapCar?",
+          "name": "¿Puedo mostrar el permiso de circulación en el celular?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, es válido como respaldo digital. Puedes mostrar tus documentos desde la ficha NFC de TapCar en una fiscalización, siempre que sean oficiales y legibles. No reemplazan al original físico, pero sirven como respaldo válido y seguro."
+            "text": "Sí. El Ministerio de Transportes ha confirmado que el permiso de circulación se puede portar en formato electrónico. Los que se compran en línea traen además un código QR con la firma que acredita su vigencia, que Carabineros puede verificar contra la base de la Subdere."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Y la revisión técnica y el SOAP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "También. Los tres documentos que te piden en un control —permiso de circulación, revisión técnica y SOAP— se pueden portar tanto en papel como en formato electrónico."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Necesito llevar igual los originales impresos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No es una exigencia legal para estos documentos, pero sí una precaución razonable: si te quedas sin batería o sin señal, no puedes mostrar nada. Conviene un respaldo impreso en la guantera, sobre todo en viajes largos o zonas rurales."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Sirve una foto del documento?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Como recordatorio de la fecha, sí; como documento, es débil. Lo que conviene guardar es el archivo oficial que emitió la municipalidad, la planta de revisión técnica o la aseguradora, con su folio o código de verificación. Si alguien cuestiona una foto, no hay forma de comprobarla."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué pasa si el carabinero no acepta el formato digital?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Muestra el código de verificación o el QR del documento, que es lo que permite contrastarlo con la base oficial en el momento. Si aun así se cursa un parte, el documento electrónico vigente sirve como respaldo para reclamarlo después ante el juzgado de policía local."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿La licencia de conducir también puede ir en digital?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, pero por una vía distinta: Chile tiene una licencia de conducir digital oficial, que se obtiene al sacar o renovar la licencia en la municipalidad y vive en su propia aplicación con un QR encriptado. No es un archivo que puedas subir a otra plataforma, así que TapCar no la guarda."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué dice exactamente la Ley 19.799?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Es la ley de 2002 sobre documentos electrónicos, firma electrónica y servicios de certificación. Reconoce que un documento electrónico es válido y produce los mismos efectos que uno en soporte de papel. No habla de vehículos: es la base general sobre la que después se apoyan los pronunciamientos que sí lo hacen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Quien abre mi ficha NFC puede ver algo más de mi cuenta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. La ficha pública es de solo lectura: muestra el vehículo, sus documentos y el estado de cada uno. No hay login, no se edita nada y no da acceso a tu cuenta ni al resto de tus vehículos."
           }
         }
       ]
@@ -1216,9 +1291,9 @@ a { color: inherit; }
   <!-- ============ HERO ============ -->
   <section class="pl-hero">
     <div class="pl-hero__inner">
-      <span class="eyebrow">Legalidad</span>
-      <h1 class="pl-hero__title">¿Es legal mostrar tus documentos con TapCar?</h1>
-      <p class="pl-hero__lead">Sí — con matices que conviene conocer. La ley chilena respalda el uso de documentos digitales siempre que sean legibles y provengan de fuentes oficiales. Aquí te explicamos en qué se apoya.</p>
+      <span class="eyebrow">Validez legal</span>
+      <h1 class="pl-hero__title">¿Es legal mostrar los documentos del auto en digital?</h1>
+      <p class="pl-hero__lead">Sí. En Chile los documentos del vehículo se pueden portar en formato físico o electrónico, y la ley reconoce hace más de veinte años los documentos digitales. Acá está en qué se apoya, qué se acepta y qué conviene tener en cuenta.</p>
     </div>
   </section>
 
@@ -1230,51 +1305,200 @@ a { color: inherit; }
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
           Respuesta corta
         </span>
-        <p class="legal-answer__title">Sí, es válido como respaldo digital.</p>
-        <p class="legal-answer__text">Puedes mostrar tus documentos desde la ficha NFC de TapCar en una fiscalización, siempre que sean oficiales y legibles. No reemplazan al original físico, pero sirven como respaldo válido y seguro.</p>
+        <p class="legal-answer__title">Sí, y no necesitas llevarlos impresos.</p>
+        <p class="legal-answer__text">La Ley de Tránsito obliga a <strong>portar</strong> el permiso de circulación, el SOAP y la revisión técnica, pero no exige que sean de papel. El Ministerio de Transportes ha confirmado que se aceptan en formato electrónico. Lo que importa es que el documento sea el oficial y se vea legible.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ LO QUE CONVIENE SABER ============ -->
+  <!-- ============ QUÉ DOCUMENTOS ============ -->
   <section class="section section--surface">
     <div class="container">
       <div class="section__head">
-        <span class="eyebrow">Lo que conviene saber</span>
-        <h2 class="section__title">Tres puntos claros sobre los documentos digitales.</h2>
+        <span class="eyebrow">Documento por documento</span>
+        <h2 class="section__title">Qué puedes mostrar desde el celular.</h2>
+        <p class="section__lead">Los tres documentos que te piden en un control caben en digital. La licencia de conducir es el caso aparte.</p>
+      </div>
+      <div class="legal-tabla-wrap">
+        <table class="legal-tabla">
+          <thead>
+            <tr><th scope="col">Documento</th><th scope="col">¿En digital?</th><th scope="col">A tener en cuenta</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Permiso de Circulación</td>
+              <td><span class="legal-si">Sí</span></td>
+              <td>El que se compra en línea trae un código QR con la firma que acredita su vigencia, verificable contra la base de la Subdere.</td>
+            </tr>
+            <tr>
+              <td>Revisión Técnica</td>
+              <td><span class="legal-si">Sí</span></td>
+              <td>El certificado que entrega la planta, tal como te lo dieron.</td>
+            </tr>
+            <tr>
+              <td>SOAP</td>
+              <td><span class="legal-si">Sí</span></td>
+              <td>Casi todas las aseguradoras lo emiten ya en electrónico, con su folio.</td>
+            </tr>
+            <tr>
+              <td>Certificado de Gases</td>
+              <td><span class="legal-si">Sí</span></td>
+              <td>Va junto con la revisión técnica y sigue la misma lógica.</td>
+            </tr>
+            <tr>
+              <td>Padrón</td>
+              <td><span class="legal-si">Sí</span></td>
+              <td>El certificado de inscripción del Registro de Vehículos Motorizados. No se pide en todos los controles, pero conviene tenerlo.</td>
+            </tr>
+            <tr>
+              <td>Licencia de conducir</td>
+              <td><span class="legal-ojo">Caso aparte</span></td>
+              <td>Tiene su propia versión digital oficial, que se obtiene al sacar o renovar la licencia en la municipalidad. No es un archivo que puedas subir a ningún lado: <strong>TapCar no la guarda</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EN QUÉ SE APOYA ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">En qué se apoya</span>
+        <h2 class="section__title">Cuatro piezas que se suman.</h2>
+        <p class="section__lead">Ninguna dice por sí sola "puedes mostrar el permiso en el celular". Juntas, sí.</p>
       </div>
       <div class="legal-points">
-
         <div class="legal-point">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
           </span>
           <div>
-            <h3 class="op-card__title">Respaldo válido, no reemplazo</h3>
-            <p class="op-card__text">Los documentos digitales no reemplazan al original físico, pero sí sirven como respaldo válido y seguro para mostrar en fiscalización, siempre que el documento sea oficial y legible.</p>
+            <p class="op-card__title">La obligación es portar, no imprimir</p>
+            <p class="op-card__text">La Ley N° 18.290 de Tránsito exige que el conductor lleve consigo el permiso de circulación vigente, el certificado del seguro obligatorio y el de revisión técnica, y que los entregue cuando la autoridad los pida. Habla de portarlos y exhibirlos; no impone un soporte de papel.</p>
           </div>
         </div>
-
         <div class="legal-point">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
           </span>
           <div>
-            <h3 class="op-card__title">Fuentes oficiales y legibles</h3>
-            <p class="op-card__text">La validez depende de que los documentos provengan de fuentes oficiales y se vean claros. En TapCar los muestras tal como los subiste, legibles y con su estado de vigencia a la vista.</p>
+            <p class="op-card__title">Un documento electrónico vale igual</p>
+            <p class="op-card__text">La Ley N° 19.799, de 2002, le dio validez legal a los documentos electrónicos y a la firma electrónica en Chile. Es la base que permite que un certificado emitido en digital tenga el mismo efecto que uno en papel.</p>
           </div>
         </div>
-
         <div class="legal-point">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>
           </span>
           <div>
-            <h3 class="op-card__title">Ficha de solo lectura</h3>
-            <p class="op-card__text">La ficha pública se abre con un toque y es de solo lectura: quien fiscaliza ve la información, no la edita ni accede a tu cuenta. Transparente y sin margen a manipulación.</p>
+            <p class="op-card__title">Contraloría lo dijo para los permisos</p>
+            <p class="op-card__text">El Oficio N° E71389 de 2021 de la Contraloría General de la República señala que los permisos de circulación y certificados electrónicos emitidos conforme a la Ley N° 19.799 tienen la misma validez que los de papel, y que pueden almacenarse y exhibirse en formato digital desde un dispositivo electrónico.</p>
           </div>
         </div>
+        <div class="legal-point">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
+          </span>
+          <div>
+            <p class="op-card__title">Y el Estado ya opera así</p>
+            <p class="op-card__text">Los permisos de circulación comprados en línea traen un código QR y un código de verificación, y Carabineros puede contrastarlos con la base de datos de la Subdere. La licencia de conducir digital funciona con la misma lógica. El formato electrónico no es una excepción que haya que argumentar: es cómo el propio Estado emite estos documentos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ============ QUÉ LO HACE VÁLIDO ============ -->
+  <section class="section section--surface">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">Los tres requisitos</span>
+        <h2 class="section__title">Qué hace que te lo acepten.</h2>
+        <p class="section__lead">La discusión no es papel contra pantalla. Es si el documento que muestras es el bueno.</p>
+      </div>
+      <div class="legal-points">
+        <div class="legal-point">
+          <span class="icon-chip icon-chip--vigente">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <div>
+            <p class="op-card__title">Que sea el oficial</p>
+            <p class="op-card__text">El archivo que emitió la municipalidad, la planta de revisión técnica o la aseguradora, con su folio o su código de verificación. Una foto del papel sirve para recordar la fecha, pero no es el documento: si te lo cuestionan, no hay cómo comprobarlo.</p>
+          </div>
+        </div>
+        <div class="legal-point">
+          <span class="icon-chip icon-chip--vigente">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          <div>
+            <p class="op-card__title">Que se lea</p>
+            <p class="op-card__text">Completo y nítido, sin recortes ni zonas borrosas. Un PDF se lee bien en cualquier pantalla; una captura de pantalla apretada, no siempre.</p>
+          </div>
+        </div>
+        <div class="legal-point">
+          <span class="icon-chip icon-chip--vigente">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+          </span>
+          <div>
+            <p class="op-card__title">Que esté vigente</p>
+            <p class="op-card__text">Ninguna discusión de formato salva un documento vencido. Es, con diferencia, la causa más común de que un control termine en parte.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EN LA PRÁCTICA ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">En la calle</span>
+        <h2 class="section__title">Qué pasa en un control, de verdad.</h2>
+      </div>
+      <div class="legal-points">
+        <div class="legal-point">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </span>
+          <div>
+            <p class="op-card__title">Te van a mirar la vigencia primero</p>
+            <p class="op-card__text">Lo que se revisa es la fecha y el estado, no el soporte. Por eso TapCar muestra cada documento con su vencimiento y su estado a la vista: Vigente, Por vencer o Vencido.</p>
+          </div>
+        </div>
+        <div class="legal-point">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M2 12h20"/></svg>
+          </span>
+          <div>
+            <p class="op-card__title">Si te lo cuestionan, hay cómo verificarlo</p>
+            <p class="op-card__text">El permiso de circulación electrónico trae un código QR y un código alfanumérico que se contrastan con la base de la Subdere. Si alguien duda del documento, ese código lo resuelve en el momento.</p>
+          </div>
+        </div>
+        <div class="legal-point">
+          <span class="icon-chip icon-chip--por_vencer">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+          </span>
+          <div>
+            <p class="op-card__title">El riesgo real es el teléfono, no la ley</p>
+            <p class="op-card__text">Sin batería o sin señal, no muestras nada. Por eso conviene un respaldo impreso en la guantera, sobre todo en viajes largos o en zonas rurales. La ficha de TapCar se abre desde su enlace aunque el teléfono no lea NFC, pero igual necesita el teléfono encendido.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUÉ HACE TAPCAR ============ -->
+  <section class="section section--surface">
+    <div class="container">
+      <div class="legal-answer">
+        <span class="legal-answer__tag">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16v-4M12 8h.01"/><circle cx="12" cy="12" r="10"/></svg>
+          Para ser claros
+        </span>
+        <p class="legal-answer__title">TapCar no emite ni valida ningún documento.</p>
+        <p class="legal-answer__text">Guarda y muestra los archivos que tú subes, tal como los subiste, con la fecha de vencimiento que tú registras. No los certifica, no los reemplaza y no habla con ningún organismo. Lo que aporta es que estén todos juntos, ordenados, con su estado a la vista y accesibles con un toque — sin que quien fiscaliza tenga que instalar nada ni entrar a tu cuenta. La responsabilidad de que los documentos sean auténticos y estén vigentes sigue siendo tuya.</p>
       </div>
     </div>
   </section>
@@ -1284,35 +1508,95 @@ a { color: inherit; }
     <div class="container">
       <div class="section__head">
         <span class="eyebrow">Referencias oficiales</span>
-        <h2 class="section__title">En qué se apoya la validez digital.</h2>
+        <h2 class="section__title">Las fuentes, para que las leas tú.</h2>
       </div>
       <ul class="legal-refs">
         <li class="legal-ref">
-          <span class="icon-chip icon-chip--azul" style="width:38px;height:38px;">
-            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
           </span>
           <div>
             <p class="legal-ref__title">Ley N° 19.799 — Documentos Electrónicos y Firma Electrónica</p>
-            <p class="legal-ref__meta">Da validez legal a los documentos electrónicos y a la firma electrónica en Chile.</p>
-            <a href="https://www.bcn.cl/leychile/navegar?idNorma=196640" target="_blank" rel="noopener" class="legal-ref__link">Ver en Ley Chile (BCN)
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-            </a>
+            <p class="legal-ref__meta">Da validez legal a los documentos electrónicos y a la firma electrónica en Chile. Es la base de todo lo demás.</p>
+            <a class="legal-ref__link" href="https://www.bcn.cl/leychile/navegar?idNorma=196640" target="_blank" rel="noopener">Ver en Ley Chile (BCN)</a>
           </div>
         </li>
         <li class="legal-ref">
-          <span class="icon-chip icon-chip--azul" style="width:38px;height:38px;">
-            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>
           </span>
           <div>
             <p class="legal-ref__title">Contraloría General de la República — Oficio N° E71389/2021</p>
             <p class="legal-ref__meta">Señala que los permisos de circulación y certificados electrónicos emitidos conforme a la Ley N° 19.799 tienen la misma validez que los de papel, y pueden almacenarse y exhibirse en formato digital mediante dispositivos electrónicos.</p>
-            <a href="https://www.contraloria.cl/pdfbuscador/dictamenes/E71389N21/html" target="_blank" rel="noopener" class="legal-ref__link">Ver dictamen en Contraloría
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-            </a>
+            <a class="legal-ref__link" href="https://www.contraloria.cl/pdfbuscador/dictamenes/E71389N21/html" target="_blank" rel="noopener">Ver dictamen en Contraloría</a>
+          </div>
+        </li>
+        <li class="legal-ref">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </span>
+          <div>
+            <p class="legal-ref__title">Ley N° 18.290 — Ley de Tránsito</p>
+            <p class="legal-ref__meta">Establece qué documentos debe portar y entregar el conductor cuando la autoridad se los requiere, y las sanciones por circular sin ellos vigentes. El texto vigente es el refundido por el DFL N° 1 de 2007.</p>
+            <a class="legal-ref__link" href="https://www.bcn.cl/leychile/navegar?idNorma=1007469" target="_blank" rel="noopener">Ver texto refundido en Ley Chile (BCN)</a>
+          </div>
+        </li>
+        <li class="legal-ref">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
+          </span>
+          <div>
+            <p class="legal-ref__title">CONASET — Licencia de conducir digital</p>
+            <p class="legal-ref__meta">El sitio oficial de la licencia digital, que es un documento aparte de los del vehículo y que TapCar no administra.</p>
+            <a class="legal-ref__link" href="https://licenciadigital.conaset.cl/" target="_blank" rel="noopener">Ver en CONASET</a>
           </div>
         </li>
       </ul>
-      <p class="legal-disclaimer">Esta información es referencial y no constituye asesoría legal. Los documentos digitales son un respaldo; te recomendamos portar también los originales cuando la normativa vigente lo exija.</p>
+      <p class="legal-disclaimer">Esta información es referencial y no constituye asesoría legal. Describe el marco general vigente a agosto de 2026; la normativa puede cambiar. Ante una duda concreta, consulta la fuente oficial o a un abogado.</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="faq">
+    <div class="faq__inner">
+      <div class="faq__head">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2 class="faq__title">Lo que más nos preguntan.</h2>
+      </div>
+      <div class="faq__list">
+        <div class="faq__item">
+          <h3 class="faq__q">¿Puedo mostrar el permiso de circulación en el celular?</h3>
+          <p class="faq__a">Sí. El Ministerio de Transportes ha confirmado que el permiso de circulación se puede portar en formato electrónico. Los que se compran en línea traen además un código QR con la firma que acredita su vigencia, que Carabineros puede verificar contra la base de la Subdere.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Y la revisión técnica y el SOAP?</h3>
+          <p class="faq__a">También. Los tres documentos que te piden en un control —permiso de circulación, revisión técnica y SOAP— se pueden portar tanto en papel como en formato electrónico.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Necesito llevar igual los originales impresos?</h3>
+          <p class="faq__a">No es una exigencia legal para estos documentos, pero sí una precaución razonable: si te quedas sin batería o sin señal, no puedes mostrar nada. Conviene un respaldo impreso en la guantera, sobre todo en viajes largos o zonas rurales.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Sirve una foto del documento?</h3>
+          <p class="faq__a">Como recordatorio de la fecha, sí; como documento, es débil. Lo que conviene guardar es el archivo oficial que emitió la municipalidad, la planta de revisión técnica o la aseguradora, con su folio o código de verificación. Si alguien cuestiona una foto, no hay forma de comprobarla.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Qué pasa si el carabinero no acepta el formato digital?</h3>
+          <p class="faq__a">Muestra el código de verificación o el QR del documento, que es lo que permite contrastarlo con la base oficial en el momento. Si aun así se cursa un parte, el documento electrónico vigente sirve como respaldo para reclamarlo después ante el juzgado de policía local.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿La licencia de conducir también puede ir en digital?</h3>
+          <p class="faq__a">Sí, pero por una vía distinta: Chile tiene una licencia de conducir digital oficial, que se obtiene al sacar o renovar la licencia en la municipalidad y vive en su propia aplicación con un QR encriptado. No es un archivo que puedas subir a otra plataforma, así que TapCar no la guarda.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Qué dice exactamente la Ley 19.799?</h3>
+          <p class="faq__a">Es la ley de 2002 sobre documentos electrónicos, firma electrónica y servicios de certificación. Reconoce que un documento electrónico es válido y produce los mismos efectos que uno en soporte de papel. No habla de vehículos: es la base general sobre la que después se apoyan los pronunciamientos que sí lo hacen.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Quien abre mi ficha NFC puede ver algo más de mi cuenta?</h3>
+          <p class="faq__a">No. La ficha pública es de solo lectura: muestra el vehículo, sus documentos y el estado de cada uno. No hay login, no se edita nada y no da acceso a tu cuenta ni al resto de tus vehículos.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1330,7 +1614,6 @@ a { color: inherit; }
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
   </main>
 
   <footer class="footer">

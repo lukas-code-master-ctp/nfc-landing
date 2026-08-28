@@ -677,6 +677,25 @@ a { color: inherit; }
 }
 .legal-point .op-card__title { margin-top: 0; }
 
+/* Tabla de documentos de la pagina de legalidad.
+   El wrapper lleva overflow-x: auto porque las dos primeras columnas no
+   envuelven (nombres propios de documentos) y en movil se saldrian. */
+.legal-tabla-wrap { max-width: 760px; margin: 36px auto 0; overflow-x: auto; }
+.legal-tabla { width: 100%; border-collapse: collapse; font-size: 15px; }
+.legal-tabla th, .legal-tabla td {
+  text-align: left; padding: 13px 14px; vertical-align: top;
+  border-bottom: 1px solid var(--linea);
+}
+.legal-tabla th {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--acero);
+}
+.legal-tabla td:first-child { font-weight: 600; color: var(--tinta); white-space: nowrap; }
+.legal-tabla td:nth-child(2) { white-space: nowrap; }
+.legal-tabla td:last-child { color: var(--acero); line-height: 1.5; }
+.legal-si { color: var(--vigente); font-weight: 600; }
+.legal-ojo { color: var(--estado-por-vencer-fg); font-weight: 600; }
+
 .legal-refs { max-width: 760px; margin: 40px auto 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .legal-ref {
   display: flex; gap: 14px; align-items: flex-start; background: var(--superficie);
