@@ -1463,10 +1463,15 @@ a { color: inherit; }
     })();
   </script>
 
-  <!-- Vercel Web Analytics. En un sitio estatico sin bundler no sirve el
-       paquete npm @vercel/analytics: no hay donde importarlo. Vercel sirve
-       este script desde el propio dominio cuando Analytics esta activado
-       en el proyecto; mientras no lo este, responde 404 y no pasa nada. -->
+  <!-- Vercel Web Analytics, variante "html" de la documentacion: sin paquete
+       npm, porque en un sitio estatico sin bundler no hay donde importarlo.
+       La cola window.va recoge los eventos disparados antes de que el script
+       cargue (va con defer); sin ella se pierden.
+       Solo mide con Web Analytics activado en el proyecto de Vercel; mientras
+       no lo este, el script responde 404 y falla en silencio. -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

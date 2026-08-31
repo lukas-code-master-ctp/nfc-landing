@@ -103,11 +103,16 @@ Es idempotente: borra el bloque anterior y escribe uno nuevo. **Hay que volver a
 
 ### Analítica
 
-Las 5 páginas cargan `<script defer src="/_vercel/insights/script.js">` al final del `<body>`. El sitio está alojado en **Vercel**, que sirve ese script desde el propio dominio.
+El sitio está alojado en **Vercel**. Las 5 páginas llevan al final del `<body>` la variante **`html`** de la [documentación de Web Analytics](https://vercel.com/docs/analytics/quickstart): la cola `window.va` y el `<script defer>`.
 
-**No se usa el paquete npm `@vercel/analytics`**: está pensado para apps con bundler (Next, React, Vue, Svelte) y acá no hay dónde importarlo — el sitio es HTML estático sin build. Instalarlo crearía `package.json` y `node_modules` para un paquete que el navegador nunca cargaría.
+**No se instala el paquete npm `@vercel/analytics`.** La guía de Vercel tiene un selector de framework; el `import { Analytics } from '@vercel/analytics/next'` que se ve por defecto corresponde al selector `nextjs`. En el selector `html` el paso de instalación aparece vacío: no hay npm. Acá no habría dónde importarlo — el sitio es HTML estático sin bundler — e instalarlo dejaría `package.json` y `node_modules` para un paquete que el navegador nunca cargaría.
 
-El script **solo funciona con Web Analytics activado** en el proyecto de Vercel (pestaña Analytics del dashboard). Mientras no lo esté, responde 404 y falla en silencio, sin afectar la página.
+La cola `window.va` no es opcional: el script va con `defer`, así que cualquier evento disparado antes de que cargue se perdería sin ella.
+
+Dos condiciones para que mida:
+
+1. **Web Analytics activado** en el proyecto de Vercel (sidebar → Analytics → Enable). Mientras no lo esté, el script responde 404 y falla en silencio.
+2. Al activarlo, Vercel puede entregar una **ruta única** (`/<unique-path>/script.js`) además de `/_vercel/insights/script.js`. La ruta única resiste mejor a los bloqueadores de anuncios; si el dashboard te da una, cambiar el `src` es una línea en cada página.
 
 ### llms.txt
 
