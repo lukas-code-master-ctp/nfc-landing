@@ -1870,5 +1870,10 @@ a { color: inherit; }
     })();
   </script>
 
+  <!-- Vercel Web Analytics. En un sitio estatico sin bundler no sirve el
+       paquete npm @vercel/analytics: no hay donde importarlo. Vercel sirve
+       este script desde el propio dominio cuando Analytics esta activado
+       en el proyecto; mientras no lo este, responde 404 y no pasa nada. -->
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

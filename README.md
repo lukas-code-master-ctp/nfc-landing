@@ -101,6 +101,14 @@ python tools/schema.py
 
 Es idempotente: borra el bloque anterior y escribe uno nuevo. **Hay que volver a correrlo cada vez que cambien el FAQ, los pasos de ¿Cómo funciona?, los precios, los títulos o las descriptions**, o el marcado empieza a prometer cosas que la página ya no dice —que es exactamente lo que Google penaliza—.
 
+### Analítica
+
+Las 5 páginas cargan `<script defer src="/_vercel/insights/script.js">` al final del `<body>`. El sitio está alojado en **Vercel**, que sirve ese script desde el propio dominio.
+
+**No se usa el paquete npm `@vercel/analytics`**: está pensado para apps con bundler (Next, React, Vue, Svelte) y acá no hay dónde importarlo — el sitio es HTML estático sin build. Instalarlo crearía `package.json` y `node_modules` para un paquete que el navegador nunca cargaría.
+
+El script **solo funciona con Web Analytics activado** en el proyecto de Vercel (pestaña Analytics del dashboard). Mientras no lo esté, responde 404 y falla en silencio, sin afectar la página.
+
 ### llms.txt
 
 [`llms.txt`](llms.txt) resume el sitio para motores generativos (ChatGPT, Perplexity, Google AI Overviews): qué resuelve TapCar, **qué no es** —no es GPS, no emite documentos, no reemplaza los originales—, los precios, la base legal y cómo citar la marca. Es el archivo que evita que un modelo describa mal el producto. Hay que actualizarlo cuando cambien los precios o el alcance.
