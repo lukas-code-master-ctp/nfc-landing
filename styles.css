@@ -308,7 +308,16 @@ a { color: inherit; }
 /* Pertenencia a la matriz. Va bajo el tagline, en la columna de marca:
    es una declaracion de marca, no la linea legal de copyright. */
 .footer__matriz { margin: 16px 0 0; font-size: 13px; color: var(--acero); }
-.footer__matriz strong { font-weight: 600; color: var(--tinta); }
+.footer__matriz-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none; color: var(--acero);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+.footer__matriz-link:hover { color: var(--tinta); }
+.footer__matriz-link strong { font-weight: 600; color: var(--tinta); }
+/* El simbolo va en el naranjo de Impulse: es la marca de otra empresa y no
+   corresponde recolorearla al azul de TapCar. A 15px no compite con nada. */
+.footer__matriz-logo { width: 15px; height: 15px; flex: 0 0 auto; }
 
 .footer__col-title {
   margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;

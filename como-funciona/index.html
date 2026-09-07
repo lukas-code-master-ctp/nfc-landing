@@ -340,7 +340,16 @@ a { color: inherit; }
 /* Pertenencia a la matriz. Va bajo el tagline, en la columna de marca:
    es una declaracion de marca, no la linea legal de copyright. */
 .footer__matriz { margin: 16px 0 0; font-size: 13px; color: var(--acero); }
-.footer__matriz strong { font-weight: 600; color: var(--tinta); }
+.footer__matriz-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none; color: var(--acero);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+.footer__matriz-link:hover { color: var(--tinta); }
+.footer__matriz-link strong { font-weight: 600; color: var(--tinta); }
+/* El simbolo va en el naranjo de Impulse: es la marca de otra empresa y no
+   corresponde recolorearla al azul de TapCar. A 15px no compite con nada. */
+.footer__matriz-logo { width: 15px; height: 15px; flex: 0 0 auto; }
 
 .footer__col-title {
   margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
@@ -1612,7 +1621,7 @@ a { color: inherit; }
             <span class="footer__brand-name">Tap<span class="accent">Car</span></span>
           </div>
           <p class="footer__tagline">Tus vehículos a un Tap: documentos, uso y control, todo desde el mismo gesto.</p>
-          <p class="footer__matriz">Una empresa de <strong>Impulse AI</strong></p>
+          <p class="footer__matriz">Una empresa de <a class="footer__matriz-link" href="https://www.impulseai.cl/" target="_blank" rel="noopener"><svg class="footer__matriz-logo" viewBox="0 0 100 100" aria-hidden="true"><g transform="translate(11.4, 10)" fill="none" stroke="#FF4D1F" stroke-linecap="round"><line x1="9.3" y1="62.2" x2="13.2" y2="47.7" stroke-width="9" opacity="0.24"/><line x1="26.7" y1="66.8" x2="33.9" y2="39.7" stroke-width="11" opacity="0.5"/><line x1="46" y1="72" x2="57" y2="31" stroke-width="13"/><circle cx="61.4" cy="14.6" r="6.5" fill="#FF4D1F" stroke="none"/></g></svg><strong>Impulse AI</strong></a></p>
         </div>
         <div>
           <p class="footer__col-title">Producto</p>
