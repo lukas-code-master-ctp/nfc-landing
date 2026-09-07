@@ -133,7 +133,7 @@ Dos condiciones para que mida:
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
 - El plan mensual son **$2.500 por vehículo al mes**; el **anual, $20.000 por vehículo al año** (equivale a $1.667 al mes, un **33% menos**). La calculadora saca todo el dinero de esas dos cifras y nunca del mensual redondeado, porque 12 × $1.667 da $20.004, no $20.000.
 - Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
-- La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7** (sección 1 de `/terminos/` y el pie de las 5 páginas).
+- La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7**. Se identifica en la sección 1 de `/terminos/` y en el `legalName` del schema; el pie lleva `© 2026 TapCar` y la pertenencia la comunica el lockup de Impulse AI, para no repetir la matriz dos veces en el mismo footer.
 - TapCar es **una empresa de Impulse AI**. El footer lleva el lockup oficial (`assets/impulse-ai.svg`, versión *color*) enlazado a `https://www.impulseai.cl/`. No se recolorea: es la marca de otra empresa.
 - El correo de contacto es **contacto@tapcar.cl** (footer de las 5 páginas, los dos CTA secundarios de Planes y el CTA de Términos).
 - El hero declara **+500 vehículos operando**. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
