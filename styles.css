@@ -324,7 +324,9 @@ a { color: inherit; }
 /* Lockup oficial de Impulse, sin recolorear: es la marca de otra empresa.
    La palabra viene en #121212, casi igual al --tinta de TapCar, asi que el
    naranjo queda solo como acento en el simbolo. */
-.footer__matriz-logo { display: block; height: 20px; width: auto; }
+/* 24px y no menos: es un lockup con palabra, y bajo eso el nombre deja de
+   leerse. El archivo es 3x (349x72) para pantallas densas. */
+.footer__matriz-logo { display: block; height: 24px; width: auto; }
 
 .footer__col-title {
   margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
