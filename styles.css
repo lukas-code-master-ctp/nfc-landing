@@ -307,17 +307,24 @@ a { color: inherit; }
 .footer__tagline { margin: 14px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); max-width: 280px; }
 /* Pertenencia a la matriz. Va bajo el tagline, en la columna de marca:
    es una declaracion de marca, no la linea legal de copyright. */
-.footer__matriz { margin: 16px 0 0; font-size: 13px; color: var(--acero); }
+/* Flex y no texto en linea: alineado por baseline el lockup queda 5px mas
+   alto que el texto, porque la caja del enlace apoya su borde inferior en
+   la linea base. Centrado quedan a la misma altura optica. */
+.footer__matriz {
+  margin: 16px 0 0; font-size: 13px; color: var(--acero);
+  display: flex; align-items: center; flex-wrap: wrap; gap: 7px;
+}
 .footer__matriz-link {
   display: inline-flex; align-items: center; gap: 6px;
   text-decoration: none; color: var(--acero);
   transition: color var(--duration-base) var(--ease-standard);
 }
-.footer__matriz-link:hover { color: var(--tinta); }
-.footer__matriz-link strong { font-weight: 600; color: var(--tinta); }
-/* El simbolo va en el naranjo de Impulse: es la marca de otra empresa y no
-   corresponde recolorearla al azul de TapCar. A 15px no compite con nada. */
-.footer__matriz-logo { width: 15px; height: 15px; flex: 0 0 auto; }
+.footer__matriz-link { opacity: 1; transition: opacity var(--duration-base) var(--ease-standard); }
+.footer__matriz-link:hover { opacity: 0.7; }
+/* Lockup oficial de Impulse, sin recolorear: es la marca de otra empresa.
+   La palabra viene en #121212, casi igual al --tinta de TapCar, asi que el
+   naranjo queda solo como acento en el simbolo. */
+.footer__matriz-logo { display: block; height: 20px; width: auto; }
 
 .footer__col-title {
   margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
