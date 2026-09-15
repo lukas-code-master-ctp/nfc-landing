@@ -519,6 +519,30 @@ a { color: inherit; }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
+/* Planes — Selector de plan (uso particular / flotas).
+   Mismo lenguaje visual que el toggle de facturación de abajo: los dos son
+   controles del mismo precio y tienen que leerse como una familia. */
+.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+.plan-pills {
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
+}
+.plan-pills__opt {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
+  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  transition: background-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+.plan-pills__opt:hover { color: var(--tinta); }
+.plan-pills__opt.is-active { background: var(--azul); color: #fff; }
+.plan-pills__hint {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
+  border-radius: var(--radius-pill); background: var(--azul-soft); color: var(--azul);
+}
+.plan-pills__opt.is-active .plan-pills__hint { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
 /* Planes — Toggle de facturación (mensual / anual) */
 .billing-toggle-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 28px; }
 
@@ -707,6 +731,53 @@ a { color: inherit; }
   background: var(--azul-soft); color: var(--azul); font-size: 13px; font-weight: 600;
 }
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* Planes — Piezas de la calculadora de dos planes.
+   .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
+   por eso hay que apagarlo a mano. Los divs que siguen son block y no lo
+   necesitarían, pero se declaran igual para que nadie los "arregle" después
+   poniéndoles un display y los rompa en silencio. */
+.calc[hidden], .calc__control[hidden], .calc__precio[hidden],
+.calc__contacto[hidden], .calc__bridge[hidden], .included__group[hidden] { display: none; }
+
+/* Flotas apila dos sliders: vehículos y cuentas de conductor. */
+.calc__control + .calc__control { margin-top: 30px; }
+
+/* Flotas desglosa el precio en líneas con subtotal a la derecha. */
+.calc__lineas { display: flex; flex-direction: column; gap: 8px; }
+.calc__linea {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  font-size: 14px; color: var(--acero);
+}
+.calc__linea[hidden] { display: none; }
+.calc__linea__monto {
+  font-family: var(--font-mono); font-size: 13px; color: var(--tinta); white-space: nowrap;
+}
+
+/* Particular — puente hacia Flotas cuando el slider llega al tope. */
+.calc__bridge {
+  display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 0;
+  padding: 14px 16px; border-radius: var(--radius-md); background: var(--azul-soft);
+}
+.calc__bridge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
+.calc__bridge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
+.calc__bridge__text strong { color: var(--tinta); font-weight: 600; }
+.calc__bridge__btn {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 5px; padding: 0;
+  border: 0; background: transparent; cursor: pointer; font-family: var(--font-sans);
+  font-size: 14px; font-weight: 600; color: var(--azul);
+}
+.calc__bridge__btn:hover { text-decoration: underline; }
+
+/* Flotas — tramo "Más de 100": reemplaza el precio por un llamado a contacto. */
+.calc__contacto {
+  margin: 8px 0 0; padding: 20px 22px; border-radius: var(--radius-md); background: var(--azul-soft);
+}
+.calc__contacto__title { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.calc__contacto__text { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
+.calc__contacto__mail {
+  display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--azul);
+}
 
 /* ===================================================================
    Página Legal (¿Es legal?)
@@ -1084,6 +1155,12 @@ a { color: inherit; }
   .calc__actions { flex-direction: column; }
   .calc__actions .btn { width: 100%; }
   .billing-note__text { font-size: 19px; }
+  /* Bajo 560px las pills ocupan el ancho y el hint "desde 10" estorba. */
+  .plan-pills { width: 100%; }
+  .plan-pills__opt { flex: 1; justify-content: center; padding: 9px 12px; }
+  .plan-pills__hint { display: none; }
+  .calc__control + .calc__control { margin-top: 26px; }
+  .calc__linea { font-size: 13px; }
 
   /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
   .step__llavero { height: 90px; }
@@ -1382,10 +1459,16 @@ a { color: inherit; }
 
   <!-- ============ CALCULADORA ============ -->
   <section class="pricing">
+    <div class="plan-pills-wrap">
+      <div class="plan-pills" role="group" aria-label="Tipo de plan">
+        <button type="button" class="plan-pills__opt is-active" data-plan="particular" aria-pressed="true">Uso particular</button>
+        <button type="button" class="plan-pills__opt" data-plan="flota" aria-pressed="false">Flotas <span class="plan-pills__hint">desde 10</span></button>
+      </div>
+    </div>
     <div class="billing-toggle-wrap">
       <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
-        <button type="button" class="billing-toggle__opt is-active" data-period="mensual">Mensual</button>
-        <button type="button" class="billing-toggle__opt" data-period="anual">Anual <span class="billing-toggle__save">−33%</span></button>
+        <button type="button" class="billing-toggle__opt is-active" data-period="mensual" aria-pressed="true">Mensual</button>
+        <button type="button" class="billing-toggle__opt" data-period="anual" aria-pressed="false">Anual <span class="billing-toggle__save">−27%</span></button>
       </div>
       <span class="billing-note">
         <svg class="billing-note__arrow" viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1398,26 +1481,27 @@ a { color: inherit; }
     </div>
     <div class="pricing__grid">
 
-      <!-- CALCULADORA -->
-      <div class="calc">
+      <!-- CALCULADORA — USO PARTICULAR -->
+      <div class="calc" data-calc="particular">
         <span class="calc__eyebrow">Calcula tu plan</span>
 
-        <div class="calc__row">
-          <span class="calc__row-label">Vehículos a registrar</span>
+        <div class="calc__control">
+          <div class="calc__row">
+            <span class="calc__row-label">Vehículos a registrar</span>
+          </div>
+          <div class="calc__slider-wrap">
+            <span class="calc__bubble" data-bubble>3 vehículos</span>
+            <input type="range" min="1" max="10" value="3" step="1" class="calc__slider" data-slider
+                   aria-label="Cantidad de vehículos a registrar">
+          </div>
+          <div class="calc__scale"><span>1</span><span>10</span></div>
         </div>
-
-        <div class="calc__slider-wrap">
-          <span class="calc__bubble" data-bubble>10 vehículos</span>
-          <input type="range" min="1" max="100" value="10" step="1" class="calc__slider" data-slider
-                 aria-label="Cantidad de vehículos a registrar">
-        </div>
-        <div class="calc__scale"><span>1</span><span>100+</span></div>
 
         <div class="calc__divider"></div>
 
-        <span class="calc__formula"><span data-count-label>10 vehículos</span> × $<span data-rate>2.500</span></span>
+        <span class="calc__formula"><span data-count>3 vehículos</span> × $<span data-rate>2.500</span></span>
         <div class="calc__total-row">
-          <span class="calc__total" data-total>$25.000</span>
+          <span class="calc__total" data-total>$7.500</span>
           <span class="calc__total-period">/mes</span>
         </div>
         <span class="calc__cafe" data-cafe-wrap>
@@ -1427,8 +1511,8 @@ a { color: inherit; }
         <div class="calc__save" data-save hidden>
           <svg class="calc__save__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
           <span>
-            <span class="calc__save__amount" data-save-amount>Ahorras $100.000 al año</span>
-            <span class="calc__save__note" data-save-note>$1.667 por vehículo al mes — 33% menos que pagando mes a mes.</span>
+            <span class="calc__save__amount" data-save-amount>Ahorras $24.000 al año</span>
+            <span class="calc__save__note" data-save-note>$1.833 por vehículo al mes — 27% menos que pagando mes a mes.</span>
           </span>
         </div>
         <p class="calc__fineprint" data-fineprint>Un chip NFC por vehículo, incluido — solo pagas el envío. Sin costos ocultos.</p>
@@ -1436,9 +1520,20 @@ a { color: inherit; }
         <div class="calc__nudge" data-nudge>
           <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
           <span>
-            <span class="calc__nudge__text">Con el plan anual este mismo plan te queda en <strong data-nudge-total>$16.667</strong> al mes.</span>
+            <span class="calc__nudge__text">Con el plan anual este mismo plan te queda en <strong data-nudge-total>$5.500</strong> al mes.</span>
             <button type="button" class="calc__nudge__btn" data-nudge-btn>
-              Cambiar a anual y ahorrar <span data-nudge-amount>$100.000</span> al año
+              Cambiar a anual y ahorrar <span data-nudge-amount>$24.000</span> al año
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </span>
+        </div>
+
+        <div class="calc__bridge" data-bridge hidden>
+          <svg class="calc__bridge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1-4h12l1 4h2"/><path d="M6 13 7.5 8h9L18 13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+          <span>
+            <span class="calc__bridge__text">¿Más de 10 vehículos? Tu plan es <strong>Flotas</strong>, con tarifa por vehículo y cuentas para tus conductores.</span>
+            <button type="button" class="calc__bridge__btn" data-bridge-btn>
+              Ver el plan Flotas
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </span>
@@ -1456,11 +1551,95 @@ a { color: inherit; }
         </div>
       </div>
 
+      <!-- CALCULADORA — FLOTAS -->
+      <div class="calc" data-calc="flota" hidden>
+        <span class="calc__eyebrow">Calcula tu flota</span>
+
+        <div class="calc__control">
+          <div class="calc__row">
+            <span class="calc__row-label">Vehículos de la flota</span>
+          </div>
+          <div class="calc__slider-wrap">
+            <span class="calc__bubble" data-bubble="veh">25 vehículos</span>
+            <input type="range" min="10" max="101" value="25" step="1" class="calc__slider" data-slider="veh"
+                   aria-label="Cantidad de vehículos de la flota">
+          </div>
+          <div class="calc__scale"><span>10</span><span>100+</span></div>
+        </div>
+
+        <div class="calc__control" data-control-cuentas>
+          <div class="calc__row">
+            <span class="calc__row-label">Cuentas de conductor</span>
+          </div>
+          <div class="calc__slider-wrap">
+            <span class="calc__bubble" data-bubble="cuentas">10 cuentas</span>
+            <input type="range" min="0" max="25" value="10" step="1" class="calc__slider" data-slider="cuentas"
+                   aria-label="Cantidad de cuentas de conductor">
+          </div>
+          <div class="calc__scale"><span>0</span><span data-scale-max>25</span></div>
+        </div>
+
+        <div class="calc__divider"></div>
+
+        <div data-precio>
+          <div class="calc__lineas">
+            <div class="calc__linea" data-linea-veh>
+              <span data-linea-label>25 vehículos × UF 0,057</span>
+              <span class="calc__linea__monto" data-linea-monto>UF 1,425</span>
+            </div>
+            <div class="calc__linea" data-linea-cuentas>
+              <span data-linea-label>10 cuentas de conductor × UF 0,12</span>
+              <span class="calc__linea__monto" data-linea-monto>UF 1,2</span>
+            </div>
+          </div>
+          <div class="calc__total-row">
+            <span class="calc__total" data-total>UF 2,625</span>
+            <span class="calc__total-period" data-total-period>/mes</span>
+          </div>
+          <div class="calc__save" data-save hidden>
+            <svg class="calc__save__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
+            <span>
+              <span class="calc__save__amount" data-save-amount>Ahorras UF 8,5 al año</span>
+              <span class="calc__save__note" data-save-note>27% menos que pagando mes a mes. Equivale a UF 1,917 al mes.</span>
+            </span>
+          </div>
+          <p class="calc__fineprint" data-fineprint>Valores en UF, no incluyen IVA. Un chip NFC por vehículo, incluido — solo pagas el envío. Sin costos ocultos.</p>
+
+          <div class="calc__nudge" data-nudge>
+            <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
+            <span>
+              <span class="calc__nudge__text">Con el plan anual esta misma flota te queda en <strong data-nudge-total>UF 23</strong> al año.</span>
+              <button type="button" class="calc__nudge__btn" data-nudge-btn>
+                Cambiar a anual y ahorrar <span data-nudge-amount>UF 8,5</span> al año
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="calc__contacto" data-contacto hidden>
+          <p class="calc__contacto__title">Más de 100 vehículos</p>
+          <p class="calc__contacto__text">Contáctanos para revisar tu solicitud y armarte una propuesta a la medida de tu operación.</p>
+          <a href="mailto:contacto@tapcar.cl" class="calc__contacto__mail">contacto@tapcar.cl</a>
+        </div>
+
+        <div class="calc__spacer"></div>
+        <ul class="calc__trust">
+          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia</li>
+          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>La asignación de conductor va incluida</li>
+          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sumas y quitas vehículos cuando quieras</li>
+        </ul>
+        <div class="calc__actions">
+          <a href="mailto:contacto@tapcar.cl" class="btn btn--primary btn--lg">Hablemos de tu flota</a>
+          <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta</a>
+        </div>
+      </div>
+
       <!-- INCLUIDO -->
       <div class="included included--con-llavero">
         <img src="/assets/chip-llavero.webp" class="llavero llavero--included" alt="Llavero con el chip NFC de TapCar" loading="lazy" width="345" height="400">
         <span class="included__eyebrow">Todo incluido</span>
-        <p class="included__lead">Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.</p>
+        <p class="included__lead" data-included-lead>Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.</p>
 
         <div class="included__group">
           <p class="included__group-title">Para cualquier vehículo</p>
@@ -1480,6 +1659,15 @@ a { color: inherit; }
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Al entregar el vehículo, 2 fotos y la IA anota kilometraje, bencina y limpieza</li>
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Panel con el estado de tu flota: qué vehículo está disponible y quién lo tiene</li>
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Invita a tu equipo (hasta 5 personas) como Administrador, Editor o Visor</li>
+          </ul>
+        </div>
+
+        <div class="included__group" data-grupo="flota" hidden>
+          <p class="included__group-title">Conductor fijo</p>
+          <ul class="included__list">
+            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La asignación va incluida.</strong> El vehículo tiene un conductor titular: al abrir la ficha desde el chip aparece él prellenado en vez de la lista completa y, si lo configuras así, sin pedir PIN. "Soy otro conductor" sigue estando — es un atajo, no un candado.</span></li>
+            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La cuenta cuesta UF 0,12 al mes.</strong> Ese conductor entra con su propio usuario y ve solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento. No ve la flota ni a sus compañeros, y no ocupa lugar en el tope de 5 personas del equipo.</span></li>
+            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Se cobra la cuenta, no la asignación</li>
           </ul>
         </div>
       </div>
