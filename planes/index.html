@@ -1581,7 +1581,7 @@ a { color: inherit; }
 
         <div class="calc__divider"></div>
 
-        <div data-precio>
+        <div class="calc__precio" data-precio>
           <div class="calc__lineas">
             <div class="calc__linea" data-linea-veh>
               <span data-linea-label>25 vehículos × UF 0,057</span>
@@ -1777,88 +1777,204 @@ a { color: inherit; }
   <script>
     // ── Calculadora de precio ──────────────────────────────────────
     (function () {
-      // El plan mensual se cotiza por mes y el anual por año. Todo el dinero
-      // sale de estas dos cifras: el equivalente mensual del anual se muestra
-      // redondeado, pero nunca se usa para calcular, porque 12 × $1.667 no da
-      // los $20.000 reales.
-      var PRECIO = { mes: 2500, anio: 20000 };
-      var ANUAL_MES = Math.round(PRECIO.anio / 12);                        // 1.667
-      var DESCUENTO = Math.round((1 - PRECIO.anio / (PRECIO.mes * 12)) * 100); // 33
-      var period = 'mensual';
-      var slider = document.querySelector('[data-slider]');
-      var bubbleEl = document.querySelector('[data-bubble]');
-      var labelEl = document.querySelector('[data-count-label]');
-      var rateEl = document.querySelector('[data-rate]');
-      var totalEl = document.querySelector('[data-total]');
-      var cafeEl = document.querySelector('[data-cafe]');
-      var cafeWrap = document.querySelector('[data-cafe-wrap]');
-      var saveEl = document.querySelector('[data-save]');
-      var saveAmountEl = document.querySelector('[data-save-amount]');
-      var saveNoteEl = document.querySelector('[data-save-note]');
-      var fineEl = document.querySelector('[data-fineprint]');
-      var nudgeEl = document.querySelector('[data-nudge]');
-      var nudgeTotalEl = document.querySelector('[data-nudge-total]');
-      var nudgeAmountEl = document.querySelector('[data-nudge-amount]');
-      var opts = document.querySelectorAll('.billing-toggle__opt');
+      // Las cifras ancla son la mensual y la anual, y todo el dinero sale de
+      // ahí. El equivalente mensual del plan anual se muestra pero nunca se usa
+      // para calcular: 12 × $1.833 da $21.996, no los $22.000 reales.
+      //
+      // Particular va en pesos con IVA incluido; Flotas en UF más IVA. Los
+      // precios mensuales de Flotas son la tarifa lista y los anuales son el
+      // precio ya con el descuento aplicado.
+      var PLANES = {
+        particular: { veh: { mes: 2500, anio: 22000 }, min: 1, max: 10 },
+        flota: {
+          veh: { mes: 0.057, anio: 0.5 },
+          cuenta: { mes: 0.12, anio: 1.05 },
+          min: 10, max: 100
+        }
+      };
+      // El descuento se calcula, no se escribe a mano. Las tres tarifas dan 27.
+      function descuento(t) { return Math.round((1 - t.anio / (t.mes * 12)) * 100); }
+      var DESCUENTO = descuento(PLANES.particular.veh);
+
       var CHIP = 'Un chip NFC por vehículo, incluido — solo pagas el envío.';
-      function fmt(n) { return '$' + n.toLocaleString('es-CL'); }
+      var IVA = 'Valores en UF, no incluyen IVA.';
+
+      function clp(n) { return '$' + Math.round(n).toLocaleString('es-CL'); }
+      // Las tarifas en UF tienen hasta tres decimales (UF 0,057) y los totales
+      // arrastran ruido del punto flotante: 10 × 1,05 da 10.500000000000002.
+      // El formateador redondea, así que no hace falta limpiarlo antes.
+      function uf(n) {
+        return 'UF ' + n.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 3 });
+      }
+      function veh(n) { return n === 1 ? '1 vehículo' : n + ' vehículos'; }
+      function ctas(n) { return n === 1 ? '1 cuenta de conductor' : n + ' cuentas de conductor'; }
+
+      var plan = 'particular';
+      var period = 'mensual';
+
+      var cardP = document.querySelector('[data-calc="particular"]');
+      var cardF = document.querySelector('[data-calc="flota"]');
+      var grupoFlota = document.querySelector('[data-grupo="flota"]');
+      var leadIncluido = document.querySelector('[data-included-lead]');
+      var LEAD = {
+        particular: 'Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.',
+        flota: 'Tarifa por vehículo con toda la plataforma incluida. Lo único aparte son las cuentas de conductor, y solo si las quieres.'
+      };
+      function P(sel) { return cardP.querySelector(sel); }
+      function F(sel) { return cardF.querySelector(sel); }
+
       // Pinta el relleno del riel y deja la burbuja sobre el pulgar. La burbuja
       // se topa contra los bordes del riel; la flecha sigue apuntando al pulgar.
-      function placeBubble(count) {
+      // Recibe el slider porque Flotas tiene dos.
+      function placeBubble(slider, bubble) {
         var min = parseInt(slider.min, 10), max = parseInt(slider.max, 10);
-        var p = (count - min) / (max - min);
+        var p = max === min ? 0 : (parseInt(slider.value, 10) - min) / (max - min);
         slider.style.setProperty('--pct', (p * 100) + '%');
         var track = slider.getBoundingClientRect().width;
         var thumb = 22;
         if (!track) return;
         var x = thumb / 2 + p * (track - thumb);
-        var half = bubbleEl.offsetWidth / 2;
+        var half = bubble.offsetWidth / 2;
         var left = Math.min(Math.max(x, half), track - half);
-        bubbleEl.style.left = left + 'px';
-        bubbleEl.style.setProperty('--arrow', (x - left + half) + 'px');
+        bubble.style.left = left + 'px';
+        bubble.style.setProperty('--arrow', (x - left + half) + 'px');
       }
-      function render() {
-        var count = parseInt(slider.value, 10);
-        if (isNaN(count)) count = 1;
+
+      function renderParticular() {
+        var cfg = PLANES.particular, t = cfg.veh;
+        var s = P('[data-slider]');
+        var n = parseInt(s.value, 10) || cfg.min;
         var anual = period === 'anual';
-        var rate = anual ? ANUAL_MES : PRECIO.mes;
-        bubbleEl.textContent = count === 1 ? '1 vehículo' : count + ' vehículos';
-        placeBubble(count);
-        labelEl.textContent = count === 1 ? '1 vehículo' : count + ' vehículos';
-        rateEl.textContent = rate.toLocaleString('es-CL');
-        // El mensual del plan anual se deriva del total del año, no de
-        // multiplicar la cifra redondeada.
-        var porMes = anual ? Math.round(count * PRECIO.anio / 12) : count * PRECIO.mes;
-        totalEl.textContent = fmt(porMes);
-        // Ahorro = lo que costaría un año en plan mensual, menos el plan anual.
-        var ahorro = count * (PRECIO.mes * 12 - PRECIO.anio);
-        cafeWrap.hidden = anual;
-        saveEl.hidden = !anual;
-        nudgeEl.hidden = anual;
-        nudgeTotalEl.textContent = fmt(Math.round(count * PRECIO.anio / 12));
-        nudgeAmountEl.textContent = fmt(ahorro);
+        var tarifa = anual ? Math.round(t.anio / 12) : t.mes;
+        var porMes = anual ? Math.round(n * t.anio / 12) : n * t.mes;
+        var ahorro = n * (t.mes * 12 - t.anio);
+
+        P('[data-bubble]').textContent = veh(n);
+        placeBubble(s, P('[data-bubble]'));
+        P('[data-count]').textContent = veh(n);
+        P('[data-rate]').textContent = tarifa.toLocaleString('es-CL');
+        P('[data-total]').textContent = clp(porMes);
+
+        P('[data-cafe-wrap]').hidden = anual;
+        P('[data-save]').hidden = !anual;
+        P('[data-nudge]').hidden = anual;
+        // El puente a Flotas aparece recién en el tope del slider.
+        P('[data-bridge]').hidden = n < cfg.max;
+
         if (anual) {
-          saveAmountEl.textContent = 'Ahorras ' + fmt(ahorro) + ' al año';
-          saveNoteEl.textContent = fmt(rate) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
-          fineEl.textContent = 'Facturado una vez al año (' + fmt(count * PRECIO.anio) + '). ' + CHIP;
+          P('[data-save-amount]').textContent = 'Ahorras ' + clp(ahorro) + ' al año';
+          P('[data-save-note]').textContent = clp(tarifa) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
+          P('[data-fineprint]').textContent = 'Facturado una vez al año (' + clp(n * t.anio) + '). ' + CHIP;
         } else {
-          cafeEl.textContent = fmt(rate) + ' por vehículo — menos que un café al mes.';
-          fineEl.textContent = CHIP + ' Sin costos ocultos.';
+          P('[data-cafe]').textContent = clp(tarifa) + ' por vehículo — menos que un café al mes.';
+          P('[data-fineprint]').textContent = CHIP + ' Sin costos ocultos.';
+          P('[data-nudge-total]').textContent = clp(Math.round(n * t.anio / 12));
+          P('[data-nudge-amount]').textContent = clp(ahorro);
         }
       }
-      opts.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          period = btn.getAttribute('data-period');
-          opts.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
-          render();
+
+      function renderFlota() {
+        var cfg = PLANES.flota;
+        var sv = F('[data-slider="veh"]');
+        var sc = F('[data-slider="cuentas"]');
+        // El slider llega a max+1: esa posición extra es el centinela del tramo
+        // "Más de 100", no 101 vehículos.
+        var raw = parseInt(sv.value, 10) || cfg.min;
+        var sobre = raw > cfg.max;
+        var n = sobre ? cfg.max : raw;
+        var anual = period === 'anual';
+
+        F('[data-bubble="veh"]').textContent = sobre ? 'Más de 100 vehículos' : veh(n);
+        placeBubble(sv, F('[data-bubble="veh"]'));
+
+        F('[data-contacto]').hidden = !sobre;
+        F('[data-precio]').hidden = sobre;
+        F('[data-control-cuentas]').hidden = sobre;
+        if (sobre) return;
+
+        // Un conductor fijo es el titular de un vehículo, así que no puede
+        // haber más cuentas que vehículos: al bajar la flota, las cuentas
+        // sobrantes se recortan solas.
+        sc.max = n;
+        if (parseInt(sc.value, 10) > n) sc.value = n;
+        var c = parseInt(sc.value, 10) || 0;
+        F('[data-bubble="cuentas"]').textContent = c === 1 ? '1 cuenta' : c + ' cuentas';
+        placeBubble(sc, F('[data-bubble="cuentas"]'));
+        F('[data-scale-max]').textContent = n;
+
+        var tv = anual ? cfg.veh.anio : cfg.veh.mes;
+        var tc = anual ? cfg.cuenta.anio : cfg.cuenta.mes;
+        var total = n * tv + c * tc;
+        var lista = (n * cfg.veh.mes + c * cfg.cuenta.mes) * 12;
+        var ahorro = lista - (n * cfg.veh.anio + c * cfg.cuenta.anio);
+
+        var lv = F('[data-linea-veh]');
+        lv.querySelector('[data-linea-label]').textContent = veh(n) + ' × ' + uf(tv);
+        lv.querySelector('[data-linea-monto]').textContent = uf(n * tv);
+        var lc = F('[data-linea-cuentas]');
+        lc.hidden = c === 0;
+        lc.querySelector('[data-linea-label]').textContent = ctas(c) + ' × ' + uf(tc);
+        lc.querySelector('[data-linea-monto]').textContent = uf(c * tc);
+
+        F('[data-total]').textContent = uf(total);
+        // A diferencia de Particular, el número grande de Flotas sigue el
+        // periodo de facturación: es un contrato en UF, no un cargo mensual.
+        F('[data-total-period]').textContent = anual ? '/año' : '/mes';
+
+        F('[data-save]').hidden = !anual;
+        F('[data-nudge]').hidden = anual;
+
+        if (anual) {
+          F('[data-save-amount]').textContent = 'Ahorras ' + uf(ahorro) + ' al año';
+          F('[data-save-note]').textContent = DESCUENTO + '% menos que pagando mes a mes. Equivale a ' + uf(total / 12) + ' al mes.';
+          F('[data-fineprint]').textContent = 'Facturado una vez al año. ' + IVA + ' ' + CHIP;
+        } else {
+          F('[data-fineprint]').textContent = IVA + ' ' + CHIP + ' Sin costos ocultos.';
+          F('[data-nudge-total]').textContent = uf(n * cfg.veh.anio + c * cfg.cuenta.anio);
+          F('[data-nudge-amount]').textContent = uf(ahorro);
+        }
+      }
+
+      function render() {
+        // Mostrar la tarjeta antes de medir: placeBubble usa el ancho del riel,
+        // y un elemento con hidden mide 0.
+        cardP.hidden = plan !== 'particular';
+        cardF.hidden = plan !== 'flota';
+        grupoFlota.hidden = plan !== 'flota';
+        leadIncluido.textContent = LEAD[plan];
+        if (plan === 'particular') renderParticular(); else renderFlota();
+      }
+
+      function grupo(sel, attr, set) {
+        var btns = document.querySelectorAll(sel);
+        btns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            set(btn.getAttribute(attr));
+            btns.forEach(function (b) {
+              b.classList.toggle('is-active', b === btn);
+              b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+            });
+            render();
+          });
+        });
+      }
+      // Plan y periodo son independientes: cambiar de pill conserva el periodo.
+      grupo('.plan-pills__opt', 'data-plan', function (v) { plan = v; });
+      grupo('.billing-toggle__opt', 'data-period', function (v) { period = v; });
+
+      [].forEach.call(document.querySelectorAll('.calc__slider'), function (s) {
+        s.addEventListener('input', render);
+        s.addEventListener('change', render);
+      });
+      P('[data-bridge-btn]').addEventListener('click', function () {
+        document.querySelector('.plan-pills__opt[data-plan="flota"]').click();
+      });
+      [].forEach.call(document.querySelectorAll('[data-nudge-btn]'), function (b) {
+        b.addEventListener('click', function () {
+          document.querySelector('.billing-toggle__opt[data-period="anual"]').click();
         });
       });
-      document.querySelector('[data-nudge-btn]').addEventListener('click', function () {
-        var anual = document.querySelector('.billing-toggle__opt[data-period="anual"]');
-        if (anual) anual.click();
-      });
-      slider.addEventListener('input', render);
-      slider.addEventListener('change', render);
+
       window.addEventListener('resize', render);
       render();
     })();
