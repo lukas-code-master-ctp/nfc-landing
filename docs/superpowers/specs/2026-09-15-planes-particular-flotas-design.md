@@ -265,24 +265,38 @@ ambos sliders llaman a `render()`.
 
 ### Metadatos y datos estructurados
 
+**El bloque JSON-LD no se edita a mano.** Lo genera `tools/schema.py`, que lee
+las preguntas del FAQ y la `meta description` del propio HTML y tiene las
+ofertas de precio escritas en el script. El flujo es: editar el HTML y el
+script, después correr `python tools/schema.py`, que reescribe el bloque
+`script[data-schema]` de las cinco páginas.
+
 Arrastran los $20.000 / 33% viejos y hay que actualizarlos:
 
-- `planes/index.html`: `<title>`, `meta description`, `og:title`,
-  `og:description`, `twitter:title`, `twitter:description`, el `WebPage`
-  description del JSON-LD, las dos `Offer` de precio y las respuestas del
-  `FAQPage`.
-- `planes/index.html`: se suman al `AggregateOffer` las ofertas de Flota
-  (vehículo y cuenta de conductor), en UF. El `priceCurrency` de esas ofertas
-  es `CLF`, el código ISO 4217 de la Unidad de Fomento.
-- `index.html` (landing): las mismas dos `Offer` de Particular.
+- `planes/index.html`, a mano: `<title>`, `meta description`, `og:title`,
+  `og:description`, `twitter:title`, `twitter:description` y las respuestas del
+  FAQ visible. La `description` del `WebPage` y el `FAQPage` del JSON-LD salen
+  solos de ahí al correr el script.
+- `tools/schema.py`, bloque `offers`: los precios de Particular y las dos
+  ofertas nuevas de Flota (vehículo y cuenta de conductor), en UF. El
+  `priceCurrency` de esas dos es `CLF`, el código ISO 4217 de la Unidad de
+  Fomento. `lowPrice` / `highPrice` / `offerCount` del `AggregateOffer` se
+  ajustan en consecuencia.
+- El `AggregateOffer` mezcla CLP y CLF, y `priceCurrency` es uno solo. Se deja
+  en `CLP` con `lowPrice` / `highPrice` en pesos (el rango de Particular) y cada
+  `Offer` de Flota lleva su propio `priceCurrency: CLF`. Es lo más cerca de la
+  verdad que permite el vocabulario.
+- `index.html` (landing) comparte el mismo `SoftwareApplication`, así que se
+  actualiza sola con el script.
 - `llms.txt`: líneas 21–22.
 - `README.md`: la nota de la línea 134.
 
 ## Verificación
 
-1. Las cinco páginas siguen con el mismo bloque `<style>` idéntico a
-   `styles.css` (`diff` de las líneas 33–1116).
-2. El JSON-LD de las dos páginas parsea como JSON válido.
+1. Las cinco páginas siguen con el bloque `<style>` idéntico a `styles.css`
+   (`diff` del bloque contra el archivo).
+2. `python tools/schema.py` corre sin error y el JSON-LD de las cinco páginas
+   parsea como JSON válido.
 3. En el navegador, sobre `/planes`:
    - Las cuatro combinaciones de plan × periodo muestran la tarifa correcta.
    - Particular: slider tope 10, el puente a Flotas aparece en 10 y el botón
