@@ -18,8 +18,8 @@ Operado por IMPULSE AI SpA (RUT 78.479.762-7), Chile. Contacto: contacto@tapcar.
 
 ## Precios
 
-- Plan mensual: **$2.500 CLP por vehículo al mes**.
-- Plan anual: **$20.000 CLP por vehículo al año** (equivale a $1.667 al mes, un 33% menos).
+- Uso particular (1 a 10 vehículos): **$2.500 CLP por vehículo al mes**, o **$22.000 CLP por vehículo al año** (equivale a $1.833 al mes, un 27% menos). IVA incluido.
+- Flotas (desde 10 vehículos): **UF 0,5 por vehículo al año**, más **UF 0,12 al mes por cada conductor con cuenta propia**. Valores más IVA. Sobre 100 vehículos, se cotiza caso a caso.
 - Sin permanencia ni contratos mínimos; se cancela cuando se quiera.
 - Un chip NFC por cada vehículo registrado va incluido en el plan; solo se paga el envío.
 - Hasta 5 miembros por cuenta, con rol de Administrador, Editor o Visor.
