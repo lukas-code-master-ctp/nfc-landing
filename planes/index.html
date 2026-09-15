@@ -1500,7 +1500,7 @@ a { color: inherit; }
           "name": "¿El chip NFC está incluido?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí. Va un chip por cada vehículo que registres, incluido en tu plan — solo pagas el envío. Da lo mismo si tienes uno o cincuenta."
+            "text": "Sí, y da lo mismo cuántos vehículos tengas: va un chip por cada uno, sin costo. Lo único que se paga es el despacho — $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100, con IVA incluido. Se cobra en cada envío, así que si más adelante sumas vehículos y te mandamos sus chips, ese despacho se cobra aparte. Sobre 100 vehículos el envío entra en la cotización."
           }
         },
         {
@@ -1651,7 +1651,7 @@ a { color: inherit; }
             <span class="calc__save__note" data-save-note>$1.833 por vehículo al mes — 27% menos que pagando mes a mes.</span>
           </span>
         </div>
-        <p class="calc__fineprint" data-fineprint>Un chip NFC por vehículo, incluido — solo pagas el envío. Sin costos ocultos.</p>
+        <p class="calc__fineprint" data-fineprint>Un chip NFC por vehículo, incluido. El envío de los 3 chips cuesta $5.000 con IVA incluido, y se cobra en cada despacho. Sin costos ocultos.</p>
 
         <div class="calc__nudge" data-nudge>
           <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
@@ -1739,7 +1739,7 @@ a { color: inherit; }
               <span class="calc__save__note" data-save-note>27% menos que pagando mes a mes. Equivale a UF 1,917 al mes.</span>
             </span>
           </div>
-          <p class="calc__fineprint" data-fineprint>Valores en UF, no incluyen IVA. Un chip NFC por vehículo, incluido — solo pagas el envío. Sin costos ocultos.</p>
+          <p class="calc__fineprint" data-fineprint>Valores en UF, no incluyen IVA. Un chip NFC por vehículo, incluido. El envío de los 25 chips cuesta $5.000 con IVA incluido, y se cobra en cada despacho. Sin costos ocultos.</p>
 
           <div class="calc__nudge" data-nudge>
             <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
@@ -1828,7 +1828,7 @@ a { color: inherit; }
         <div class="included__group">
           <p class="included__group-title">Para cualquier vehículo</p>
           <ul class="included__list">
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un chip NFC por vehículo, incluido — solo pagas el envío</li>
+            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un chip NFC por vehículo, incluido — el chip no se cobra, solo el despacho, desde $2.000</li>
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tus documentos listos para mostrar en fiscalización — solo lectura</li>
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de que venza cada documento</li>
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Datos del vehículo a mano: combustible, neumáticos, transmisión y más</li>
@@ -1836,7 +1836,7 @@ a { color: inherit; }
           </ul>
         </div>
 
-        <div class="included__group">
+        <div class="included__group" data-grupo="flota" hidden>
           <p class="included__group-title">Si tienes conductores o equipo</p>
           <ul class="included__list">
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Registro de quién usa cada vehículo, con PIN por conductor</li>
@@ -1885,7 +1885,7 @@ a { color: inherit; }
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿El chip NFC está incluido?</h3>
-          <p class="faq__a">Sí. Va un chip por cada vehículo que registres, incluido en tu plan — solo pagas el envío. Da lo mismo si tienes uno o cincuenta.</p>
+          <p class="faq__a">Sí, y da lo mismo cuántos vehículos tengas: va un chip por cada uno, sin costo. Lo único que se paga es el despacho — $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100, con IVA incluido. Se cobra en cada envío, así que si más adelante sumas vehículos y te mandamos sus chips, ese despacho se cobra aparte. Sobre 100 vehículos el envío entra en la cotización.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo se paga?</h3>
@@ -1992,8 +1992,24 @@ a { color: inherit; }
       function descuento(t) { return Math.round((1 - t.anio / (t.mes * 12)) * 100); }
       var DESCUENTO = descuento(PLANES.particular.veh);
 
-      var CHIP = 'Un chip NFC por vehículo, incluido — solo pagas el envío.';
       var IVA = 'Valores en UF, no incluyen IVA.';
+
+      // El chip va incluido siempre; lo unico que se paga es el despacho, y se
+      // cobra cada vez que se envian chips, no una sola vez. Los tramos de
+      // envio son su propio eje y no calzan con los del plan: el visitante
+      // nunca los ve, solo ve la cifra que le toca.
+      function envio(chips) {
+        if (chips <= 2) return 2000;
+        if (chips <= 50) return 5000;
+        return 10000;
+      }
+      // En Flotas esta frase convive con precios en UF mas IVA, asi que el
+      // "IVA incluido" del envio tiene que ir dicho, no supuesto.
+      function chip(n) {
+        return 'Un chip NFC por vehículo, incluido. El envío de ' +
+          (n === 1 ? 'tu chip' : 'los ' + n + ' chips') + ' cuesta ' +
+          clp(envio(n)) + ' con IVA incluido, y se cobra en cada despacho.';
+      }
 
       function clp(n) { return '$' + Math.round(n).toLocaleString('es-CL'); }
       // Las tarifas en UF tienen hasta tres decimales (UF 0,057) y los totales
@@ -2010,7 +2026,7 @@ a { color: inherit; }
 
       var cardP = document.querySelector('[data-calc="particular"]');
       var cardF = document.querySelector('[data-calc="flota"]');
-      var grupoFlota = document.querySelector('[data-grupo="flota"]');
+      var gruposFlota = document.querySelectorAll('[data-grupo="flota"]');
       var leadIncluido = document.querySelector('[data-included-lead]');
       var LEAD = {
         particular: 'Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.',
@@ -2060,10 +2076,10 @@ a { color: inherit; }
         if (anual) {
           P('[data-save-amount]').textContent = 'Ahorras ' + clp(ahorro) + ' al año';
           P('[data-save-note]').textContent = clp(tarifa) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
-          P('[data-fineprint]').textContent = 'Facturado una vez al año (' + clp(n * t.anio) + '). ' + CHIP;
+          P('[data-fineprint]').textContent = 'Facturado una vez al año (' + clp(n * t.anio) + '). ' + chip(n);
         } else {
           P('[data-cafe]').textContent = clp(tarifa) + ' por vehículo — menos que un café al mes.';
-          P('[data-fineprint]').textContent = CHIP + ' Sin costos ocultos.';
+          P('[data-fineprint]').textContent = chip(n) + ' Sin costos ocultos.';
           P('[data-nudge-total]').textContent = clp(Math.round(n * t.anio / 12));
           P('[data-nudge-amount]').textContent = clp(ahorro);
         }
@@ -2123,9 +2139,9 @@ a { color: inherit; }
         if (anual) {
           F('[data-save-amount]').textContent = 'Ahorras ' + uf(ahorro) + ' al año';
           F('[data-save-note]').textContent = DESCUENTO + '% menos que pagando mes a mes. Equivale a ' + uf(total / 12) + ' al mes.';
-          F('[data-fineprint]').textContent = 'Facturado una vez al año. ' + IVA + ' ' + CHIP;
+          F('[data-fineprint]').textContent = 'Facturado una vez al año. ' + IVA + ' ' + chip(n);
         } else {
-          F('[data-fineprint]').textContent = IVA + ' ' + CHIP + ' Sin costos ocultos.';
+          F('[data-fineprint]').textContent = IVA + ' ' + chip(n) + ' Sin costos ocultos.';
           F('[data-nudge-total]').textContent = uf(n * cfg.veh.anio + c * cfg.cuenta.anio);
           F('[data-nudge-amount]').textContent = uf(ahorro);
         }
@@ -2136,7 +2152,7 @@ a { color: inherit; }
         // y un elemento con hidden mide 0.
         cardP.hidden = plan !== 'particular';
         cardF.hidden = plan !== 'flota';
-        grupoFlota.hidden = plan !== 'flota';
+        [].forEach.call(gruposFlota, function (g) { g.hidden = plan !== 'flota'; });
         leadIncluido.textContent = LEAD[plan];
         if (plan === 'particular') renderParticular(); else renderFlota();
       }

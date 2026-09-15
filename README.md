@@ -174,7 +174,7 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 
 ## Datos de producto que la copy asume
 
-- El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos; solo se paga el envío. **Pendiente:** reflejarlo en el flujo de compra de `app.tapcar.cl`.
+- El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos: el chip no se cobra, solo el despacho, y se cobra **en cada envío**, no una sola vez. Tramos con IVA incluido: **$2.000 hasta 2 chips, $5.000 de 3 a 50, $10.000 de 51 a 100**; sobre 100 se cotiza. La letra chica de la calculadora muestra la cifra que corresponde a la cantidad elegida, en vez de una tabla. **Pendiente:** reflejarlo en el flujo de compra de `app.tapcar.cl`, que todavía cobra el modelo viejo ($1.000 por chip bajo 5 vehículos).
 - Las **alertas del panel son fijas**, no configurables por el usuario.
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
 - Hay dos sistemas de precio, seleccionables con pills. **Uso particular** (1 a 10 vehículos) son **$2.500 por vehículo al mes** o **$22.000 al año**, IVA incluido. **Flotas** (desde el vehículo 11) cobran por vehículo **UF 0,057 al mes** o **UF 0,5 al año**, más cada cuenta de conductor a **UF 0,12 al mes** o **UF 1,05 al año**; esos valores van más IVA. Las tres tarifas dan **−27%** en anual. La calculadora saca todo el dinero de las cifras mensual y anual, nunca del equivalente mensual redondeado: 12 × $1.833 da $21.996, no $22.000. Sobre 100 vehículos la página deja de cotizar y manda a contacto.
