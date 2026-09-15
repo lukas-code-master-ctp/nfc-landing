@@ -327,12 +327,18 @@ def main():
             {'@context': 'https://schema.org', '@graph': grafo},
             ensure_ascii=False, indent=2,
         )
-        bloque = ('  <script type="application/ld+json" data-schema>\n'
-                  + cuerpo + '\n  </script>\n')
+        # Git en Windows deja el archivo con CRLF. La regex de más abajo tiene
+        # que tolerar los dos finales de línea: si no encuentra el bloque
+        # anterior no lo borra, y el replace de después agrega un segundo
+        # bloque en vez de reemplazarlo.
+        salto = '\r\n' if '\r\n' in html else '\n'
+        bloque = ('  <script type="application/ld+json" data-schema>' + salto
+                  + cuerpo.replace('\n', salto) + salto
+                  + '  </script>' + salto)
 
         # Borra el bloque anterior y escribe el nuevo justo antes de </head>.
         html = re.sub(
-            r'[ \t]*<script type="application/ld\+json" data-schema>.*?</script>\n',
+            r'[ \t]*<script type="application/ld\+json" data-schema>.*?</script>\r?\n',
             '', html, flags=re.S,
         )
         html = html.replace('</head>', bloque + '</head>', 1)
