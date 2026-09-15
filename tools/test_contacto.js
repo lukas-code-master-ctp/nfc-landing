@@ -22,13 +22,17 @@ function res() {
   return r;
 }
 
-function req(body, metodo) {
-  return { method: metodo || 'POST', body: body };
+function req(body, metodo, cabeceras) {
+  return {
+    method: metodo || 'POST',
+    headers: cabeceras || { 'content-type': 'application/json' },
+    body: body
+  };
 }
 
 // Vercel expone req.body como getter y lanza cuando el JSON viene malformado.
 function reqRoto() {
-  var o = { method: 'POST' };
+  var o = { method: 'POST', headers: { 'content-type': 'application/json' } };
   Object.defineProperty(o, 'body', {
     get: function () { throw new SyntaxError('JSON malformado'); }
   });
@@ -290,6 +294,73 @@ async function main() {
       await handler(req(datos(casos[i])), r);
       assert.strictEqual(r.codigo, 400, 'el caso ' + i + ' deberia rechazarse');
     }
+  });
+
+  // Un <form> ajeno posteando urlencoded no dispara preflight: sin este
+  // chequeo, cualquier pagina podria disparar correos usando a sus visitantes.
+  await prueba('rechaza un content-type que no es JSON', async function () {
+    var r = res();
+    await handler(req(datos(), 'POST', { 'content-type': 'application/x-www-form-urlencoded' }), r);
+    assert.strictEqual(r.codigo, 415);
+    assert.strictEqual(enviados.length, 0);
+  });
+
+  await prueba('rechaza una peticion sin content-type', async function () {
+    var r = res();
+    await handler(req(datos(), 'POST', {}), r);
+    assert.strictEqual(r.codigo, 415);
+    assert.strictEqual(enviados.length, 0);
+  });
+
+  await prueba('acepta el content-type con charset', async function () {
+    var r = res();
+    await handler(req(datos(), 'POST', { 'content-type': 'application/json; charset=utf-8' }), r);
+    assert.strictEqual(r.codigo, 200);
+  });
+
+  await prueba('en produccion rechaza un Origin ajeno', async function () {
+    process.env.VERCEL_ENV = 'production';
+    var r = res();
+    await handler(req(datos(), 'POST', { 'content-type': 'application/json', origin: 'https://atacante.example' }), r);
+    assert.strictEqual(r.codigo, 403);
+    assert.strictEqual(enviados.length, 0);
+    delete process.env.VERCEL_ENV;
+  });
+
+  await prueba('en produccion acepta el Origin del sitio', async function () {
+    process.env.VERCEL_ENV = 'production';
+    var r = res();
+    await handler(req(datos(), 'POST', { 'content-type': 'application/json', origin: 'https://tapcar.cl' }), r);
+    assert.strictEqual(r.codigo, 200);
+    delete process.env.VERCEL_ENV;
+  });
+
+  // En los deploys de preview el origen es *.vercel.app y cambia en cada uno.
+  await prueba('fuera de produccion no mira el Origin', async function () {
+    var r = res();
+    await handler(req(datos(), 'POST', { 'content-type': 'application/json', origin: 'https://tapcar-abc123.vercel.app' }), r);
+    assert.strictEqual(r.codigo, 200);
+  });
+
+  await prueba('la trampa deja rastro en los logs', async function () {
+    var avisos = [];
+    var warnOriginal = console.warn;
+    console.warn = function (m) { avisos.push(m); };
+    var r = res();
+    await handler(req(datos({ sitio: 'http://spam.example', empresa: 'ACME SpA' })), r);
+    console.warn = warnOriginal;
+    assert.strictEqual(r.codigo, 200);
+    assert.strictEqual(enviados.length, 0);
+    assert.strictEqual(avisos.length, 1);
+    assert.match(avisos[0], /trampa/i);
+    assert.match(avisos[0], /ACME SpA/);
+  });
+
+  await prueba('le pone timeout a la llamada a Resend', async function () {
+    var r = res();
+    await handler(req(datos()), r);
+    assert.strictEqual(r.codigo, 200);
+    assert.ok(enviados[0].opciones.signal, 'el fetch a Resend debe llevar un signal de timeout');
   });
 
   // ── Cierre ────────────────────────────────────────────────────────

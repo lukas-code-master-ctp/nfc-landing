@@ -21,10 +21,10 @@ function texto(v) {
 }
 
 // Los campos de una sola linea se limpian de saltos y de caracteres de
-// control. `empresa` viaja al asunto del correo, y el asunto es un encabezado:
-// un salto ahi seria inyeccion de encabezados, el mismo riesgo que la regex
-// del correo ya cubre para reply_to. `mensaje` no pasa por aca, porque ahi los
-// saltos son legitimos y solo van al cuerpo en texto plano.
+// control. `empresa` lo necesita de verdad: viaja al asunto del correo, y el
+// asunto es un encabezado, el mismo riesgo que la regex ya cubre para
+// reply_to. `nombre` y `telefono` solo llegan al cuerpo, asi que ahi es
+// higiene y no seguridad. `mensaje` no pasa por aca: sus saltos son legitimos.
 function linea(v) {
   return texto(v).replace(/[\u0000-\u001F\u007F]+/g, ' ').trim();
 }
@@ -99,6 +99,23 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'Método no permitido.' });
   }
 
+  // El endpoint no se puede apoyar solo en CORS: un <form> ajeno que postee
+  // urlencoded es una "simple request", no dispara preflight, y Vercel parsea
+  // ese cuerpo igual. Exigir JSON cierra esa puerta.
+  var tipo = (req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
+  if (tipo !== 'application/json') {
+    return res.status(415).json({ ok: false, error: 'Formato no soportado.' });
+  }
+
+  // El navegador manda Origin en las peticiones cross-site. En los deploys de
+  // preview el origen es *.vercel.app y cambia en cada uno, asi que la
+  // comprobacion estricta corre solo en produccion.
+  var origen = req.headers.origin;
+  if (process.env.VERCEL_ENV === 'production' && origen &&
+      !/^https:\/\/(www\.)?tapcar\.cl$/.test(origen)) {
+    return res.status(403).json({ ok: false, error: 'Origen no permitido.' });
+  }
+
   var body;
   try {
     // Vercel parsea el cuerpo solo cuando el Content-Type es JSON, y expone
@@ -112,7 +129,10 @@ module.exports = async function handler(req, res) {
 
   // Trampa para bots: un humano nunca ve ni llena este campo. Se responde 200
   // para no darle al bot la señal de que fue detectado.
-  if (d.sitio) return res.status(200).json({ ok: true });
+  if (d.sitio) {
+    console.warn('[contacto] descartado por la trampa: ' + d.empresa);
+    return res.status(200).json({ ok: true });
+  }
 
   var error = validar(d);
   if (error) return res.status(400).json({ ok: false, error: error });
@@ -136,7 +156,8 @@ module.exports = async function handler(req, res) {
         reply_to: d.email,
         subject: 'Consulta de flota — ' + d.empresa + ' (' + d.vehiculos + ' vehículos)',
         text: cuerpo(d)
-      })
+      }),
+      signal: AbortSignal.timeout(8000)
     });
     if (!r.ok) {
       var detalle = await r.text();
