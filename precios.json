@@ -1,0 +1,60 @@
+{
+  "_comentario": [
+    "Fuente unica de los precios de TapCar. Este archivo manda: si una cifra de",
+    "aca no calza con lo que dice el sitio, el sitio esta mal.",
+    "",
+    "Se sirve en https://tapcar.cl/precios.json porque el sitio es estatico y",
+    "cualquier archivo del repo queda publicado. Esa URL es el contrato que",
+    "app.tapcar.cl puede verificar contra su configuracion de cobro.",
+    "",
+    "OJO: es un contrato PARA VERIFICAR, no una fuente de cobro en vivo. Si la",
+    "app lo leyera en runtime para facturar, un error de edicion aca se cobraria",
+    "de inmediato y sin revision.",
+    "",
+    "Tras editarlo:  python tools/precios.py --generar && python tools/schema.py",
+    "Para comprobar que el sitio calza:  python tools/precios.py"
+  ],
+  "actualizado": "2026-09-15",
+
+  "planes": {
+    "particular": {
+      "nombre": "Uso particular",
+      "vehiculos": { "min": 1, "max": 10 },
+      "moneda": "CLP",
+      "iva_incluido": true,
+      "vehiculo": { "mes": 2500, "anio": 22000 }
+    },
+    "flota": {
+      "nombre": "Flotas",
+      "vehiculos": { "min": 11, "max": 100 },
+      "moneda": "CLF",
+      "iva_incluido": false,
+      "vehiculo": { "mes": 0.057, "anio": 0.5 },
+      "cuenta_conductor": { "mes": 0.12, "anio": 1.05 },
+      "sobre_el_maximo": "cotizacion"
+    }
+  },
+
+  "envio_chips": {
+    "_comentario": "El chip no se cobra; solo el despacho, y se cobra en cada envio, no una sola vez. Los tramos son por cantidad de chips despachados y no calzan con los del plan: son otro eje.",
+    "moneda": "CLP",
+    "iva_incluido": true,
+    "tramos": [
+      { "hasta": 2, "precio": 2000 },
+      { "hasta": 50, "precio": 5000 },
+      { "hasta": 100, "precio": 10000 }
+    ],
+    "sobre_el_maximo": "cotizacion"
+  },
+
+  "cifras_ajenas": {
+    "_comentario": "Cifras que el sitio menciona a proposito y que NO son tarifas vigentes de TapCar. El revisor no las marca como error.",
+    "$1.000": "Lo que app.tapcar.cl todavia cobra por chip bajo 5 vehiculos: el modelo viejo. El README lo documenta como pendiente."
+  },
+
+  "equipo": {
+    "_comentario": "Miembros del panel con rol Administrador, Editor o Visor. Las cuentas de conductor fijo de Flotas NO ocupan lugar en este tope.",
+    "maximo_miembros": 5,
+    "costo": 0
+  }
+}

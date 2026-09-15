@@ -18,6 +18,23 @@ import re
 from bs4 import BeautifulSoup
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Los precios NO se escriben aca: salen de precios.json, la fuente unica.
+# Si hay que cambiar una tarifa, se cambia alla y se vuelve a correr esto.
+with io.open(os.path.join(RAIZ, 'precios.json'), encoding='utf-8') as _f:
+    PRECIOS = json.load(_f)
+_PART = PRECIOS['planes']['particular']
+_FLOTA = PRECIOS['planes']['flota']
+_DESC = int(round((1 - _PART['vehiculo']['anio'] /
+                   (_PART['vehiculo']['mes'] * 12.0)) * 100))
+
+
+def _clp(n):
+    return '{:,}'.format(int(n)).replace(',', '.')
+
+
+def _uf(n):
+    return ('%f' % n).rstrip('0').rstrip('.').replace('.', ',')
 SITIO = 'https://tapcar.cl'
 ORG = SITIO + '/#organizacion'
 WEB = SITIO + '/#sitio'
@@ -111,21 +128,22 @@ def producto():
         'offers': {
             '@type': 'AggregateOffer',
             'priceCurrency': 'CLP',
-            'lowPrice': '2500',
-            'highPrice': '22000',
+            'lowPrice': str(_PART['vehiculo']['mes']),
+            'highPrice': str(_PART['vehiculo']['anio']),
             'offerCount': 4,
             'offers': [
                 {
                     '@type': 'Offer',
                     'name': 'Uso particular — plan mensual',
-                    'description': '$2.500 por vehículo al mes, hasta 10 vehículos, sin permanencia.',
-                    'price': '2500',
+                    'description': '$%s por vehículo al mes, hasta %d vehículos, sin permanencia.'
+                                   % (_clp(_PART['vehiculo']['mes']), _PART['vehiculos']['max']),
+                    'price': str(_PART['vehiculo']['mes']),
                     'priceCurrency': 'CLP',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
                     'priceSpecification': {
                         '@type': 'UnitPriceSpecification',
-                        'price': '2500',
+                        'price': str(_PART['vehiculo']['mes']),
                         'priceCurrency': 'CLP',
                         'valueAddedTaxIncluded': True,
                         'unitText': 'vehículo',
@@ -139,14 +157,15 @@ def producto():
                 {
                     '@type': 'Offer',
                     'name': 'Uso particular — plan anual',
-                    'description': '$22.000 por vehículo al año, un 27% menos que pagando mes a mes.',
-                    'price': '22000',
+                    'description': '$%s por vehículo al año, un %d%% menos que pagando mes a mes.'
+                                   % (_clp(_PART['vehiculo']['anio']), _DESC),
+                    'price': str(_PART['vehiculo']['anio']),
                     'priceCurrency': 'CLP',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
                     'priceSpecification': {
                         '@type': 'UnitPriceSpecification',
-                        'price': '22000',
+                        'price': str(_PART['vehiculo']['anio']),
                         'priceCurrency': 'CLP',
                         'valueAddedTaxIncluded': True,
                         'unitText': 'vehículo',
@@ -160,17 +179,18 @@ def producto():
                 {
                     '@type': 'Offer',
                     'name': 'Flotas — vehículo',
-                    'description': 'UF 0,5 por vehículo al año más IVA, desde el vehículo 11.',
-                    'price': '0.5',
+                    'description': 'UF %s por vehículo al año más IVA, desde el vehículo %d.'
+                                   % (_uf(_FLOTA['vehiculo']['anio']), _FLOTA['vehiculos']['min']),
+                    'price': str(_FLOTA['vehiculo']['anio']),
                     'priceCurrency': 'CLF',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
                     'eligibleQuantity': {
-                        '@type': 'QuantitativeValue', 'minValue': 11, 'unitText': 'vehículo'
+                        '@type': 'QuantitativeValue', 'minValue': _FLOTA['vehiculos']['min'], 'unitText': 'vehículo'
                     },
                     'priceSpecification': {
                         '@type': 'UnitPriceSpecification',
-                        'price': '0.5',
+                        'price': str(_FLOTA['vehiculo']['anio']),
                         'priceCurrency': 'CLF',
                         'valueAddedTaxIncluded': False,
                         'unitText': 'vehículo',
@@ -184,14 +204,15 @@ def producto():
                 {
                     '@type': 'Offer',
                     'name': 'Flotas — cuenta de conductor fijo',
-                    'description': 'UF 0,12 al mes más IVA por cada conductor con cuenta propia. La asignación de conductor va incluida.',
-                    'price': '0.12',
+                    'description': 'UF %s al mes más IVA por cada conductor con cuenta propia. La asignación de conductor va incluida.'
+                                   % _uf(_FLOTA['cuenta_conductor']['mes']),
+                    'price': str(_FLOTA['cuenta_conductor']['mes']),
                     'priceCurrency': 'CLF',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
                     'priceSpecification': {
                         '@type': 'UnitPriceSpecification',
-                        'price': '0.12',
+                        'price': str(_FLOTA['cuenta_conductor']['mes']),
                         'priceCurrency': 'CLF',
                         'valueAddedTaxIncluded': False,
                         'unitText': 'conductor',

@@ -1980,6 +1980,8 @@ a { color: inherit; }
       // Particular va en pesos con IVA incluido; Flotas en UF más IVA. Los
       // precios mensuales de Flotas son la tarifa lista y los anuales son el
       // precio ya con el descuento aplicado.
+      // <precios>  Generado por tools/precios.py desde precios.json.
+      // No editar a mano: el proximo --generar lo pisa.
       var PLANES = {
         particular: { veh: { mes: 2500, anio: 22000 }, min: 1, max: 10 },
         flota: {
@@ -1988,21 +1990,17 @@ a { color: inherit; }
           min: 11, max: 100
         }
       };
-      // El descuento se calcula, no se escribe a mano. Las tres tarifas dan 27.
-      function descuento(t) { return Math.round((1 - t.anio / (t.mes * 12)) * 100); }
-      var DESCUENTO = descuento(PLANES.particular.veh);
-
-      var IVA = 'Valores en UF, no incluyen IVA.';
-
-      // El chip va incluido siempre; lo unico que se paga es el despacho, y se
-      // cobra cada vez que se envian chips, no una sola vez. Los tramos de
-      // envio son su propio eje y no calzan con los del plan: el visitante
-      // nunca los ve, solo ve la cifra que le toca.
       function envio(chips) {
         if (chips <= 2) return 2000;
         if (chips <= 50) return 5000;
         return 10000;
       }
+      // </precios>
+
+      // El descuento se calcula, no se escribe a mano. Las tres tarifas dan 27.
+      function descuento(t) { return Math.round((1 - t.anio / (t.mes * 12)) * 100); }
+      var DESCUENTO = descuento(PLANES.particular.veh);
+      var IVA = 'Valores en UF, no incluyen IVA.';
       // En Flotas esta frase convive con precios en UF mas IVA, asi que el
       // "IVA incluido" del envio tiene que ir dicho, no supuesto.
       function chip(n) {

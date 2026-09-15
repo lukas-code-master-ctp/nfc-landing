@@ -92,6 +92,35 @@ Cada página lleva su bloque de `canonical` + Open Graph + Twitter Card, con **U
 
 La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada con Pillow usando Segoe UI, no Geist —las fuentes de marca no están instaladas localmente—, así que la tipografía no es exacta. Sirve, pero es candidata a rehacerse con las fuentes reales.
 
+### Precios: fuente única
+
+`precios.json` manda. Es la única fuente de las tarifas, y se sirve en **`https://tapcar.cl/precios.json`** porque el sitio es estático y cualquier archivo del repo queda publicado. Esa URL es el contrato que `app.tapcar.cl` puede verificar contra su configuración de cobro.
+
+**Es un contrato para verificar, no una fuente de cobro en vivo.** Si la app lo leyera en runtime para facturar, un error de edición acá se cobraría de inmediato y sin revisión.
+
+Tras editarlo:
+
+```bash
+python tools/precios.py --generar && python tools/schema.py
+```
+
+Para comprobar que el sitio calza con él:
+
+```bash
+python tools/precios.py
+```
+
+`tools/precios.py` hace dos cosas distintas a propósito:
+
+- **`--generar`** escribe las constantes de la calculadora en `planes/index.html`, entre los marcadores `// <precios>` y `// </precios>`. Eso es dato estructurado y se genera sin riesgo. **Solo datos: la lógica que los usa —`descuento()`, `IVA`, `chip()`— vive fuera de los marcadores**, o el generador la borraría.
+- **Sin argumentos, revisa.** Busca en el sitio toda cifra con forma de precio y avisa si aparece alguna que `precios.json` no explica, o si falta alguna que debería estar. Sale con código 1 si encuentra algo.
+
+No genera la prosa a propósito: las frases del FAQ y de los términos llevan las cifras metidas en oraciones, y un generador que las escriba produce copy peor y un fuente ilegible. Revisar atrapa el mismo error —cambiaste un número y se te quedó uno viejo— sin pretender escribir español.
+
+Lo que el revisor **no** ve: que el JavaScript siga funcionando. Solo compara cifras. Después de tocar el bloque generado, hay que abrir la página.
+
+`tools/schema.py` también lee `precios.json`, así que el JSON-LD no es una segunda fuente.
+
 ### Schema.org (JSON-LD)
 
 Cada página lleva un bloque `<script type="application/ld+json" data-schema>` con `Organization`, `WebSite`, `WebPage` y `BreadcrumbList`; la home y Planes suman `SoftwareApplication` con los dos precios, ¿Cómo funciona? suma `HowTo` (8 pasos) y `FAQPage` (9 preguntas), Planes suma `FAQPage` (6) y ¿Es legal? un `FAQPage` de 1.

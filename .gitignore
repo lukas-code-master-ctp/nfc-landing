@@ -5,3 +5,6 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Cache de los scripts de tools/
+__pycache__/
