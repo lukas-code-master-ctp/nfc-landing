@@ -334,6 +334,13 @@ Expected: falla al arrancar, antes de correr ninguna prueba, con una traza de `n
 
 - [ ] **Step 3: Escribir la función**
 
+> **Corregido durante la ejecución.** El código de abajo dejaba `empresa` sin
+> limpiar de saltos de línea, aunque viaja al `subject` del correo, que es un
+> encabezado — la misma exposición que la regex ya cubría para `email`. La
+> implementación final agrega un helper `linea()` para los campos de una sola
+> línea. Si vuelves a usar este plan, mira `api/contacto.js` en el repo, no solo
+> este bloque.
+
 Crear `api/contacto.js` con exactamente esto:
 
 ```js
