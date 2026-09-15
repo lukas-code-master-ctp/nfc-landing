@@ -34,6 +34,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── robots.txt              # Bloquea /_design_src/, apunta al sitemap
 ├── sitemap.xml
 ├── llms.txt                # Resumen del sitio para motores generativos
+├── api/contacto.js         # Función serverless: formulario de flota -> Resend
 ├── tools/schema.py         # Regenera el JSON-LD desde el contenido visible
 └── _design_src/            # Archivos originales del diseño y fotos sin procesar
 ```
@@ -77,6 +78,7 @@ Cada página lleva su script incrustado al final del `<body>`:
 - **Reveal on scroll** (home y ¿Cómo funciona?) — `IntersectionObserver` con retraso escalonado.
 - **Contador del hero** (home) — el número de vehículos cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
 - **Calculadora** (planes) — dos sistemas de precio en pills (Uso particular y Flotas), toggle mensual/anual, slider de vehículos por plan, slider de cuentas de conductor en Flotas acotado al número de vehículos, ahorro anual, burbuja del slider y empujón al plan anual. Sobre 100 vehículos reemplaza el precio por un llamado a contacto.
+- **Formulario de flota grande** (planes) — en el tramo de más de 100 vehículos, envía la consulta por `fetch` a `/api/contacto`. Botón deshabilitado mientras viaja, confirmación con foco al terminar y, si falla, un mensaje de error. El enlace `mailto:` queda visible siempre, así que ni sin JavaScript ni con la función caída alguien se queda sin forma de escribir.
 
 ### Notas de responsive
 
@@ -118,6 +120,50 @@ Dos condiciones para que mida:
 ### llms.txt
 
 [`llms.txt`](llms.txt) resume el sitio para motores generativos (ChatGPT, Perplexity, Google AI Overviews): qué resuelve TapCar, **qué no es** —no es GPS, no emite documentos, no reemplaza los originales—, los precios, la base legal y cómo citar la marca. Es el archivo que evita que un modelo describa mal el producto. Hay que actualizarlo cuando cambien los precios o el alcance.
+
+## Backend: la función de contacto
+
+`api/contacto.js` es **la única pieza de servidor del repo**. Recibe el formulario del tramo "más de 100 vehículos" de `/planes/` y manda la consulta a contacto@tapcar.cl a través de [Resend](https://resend.com).
+
+Vercel toma cualquier `.js` dentro de `/api` como función serverless, sin configuración. Está escrita en **CommonJS** y usa `fetch` nativo a propósito: un `.js` con `import` necesitaría un `package.json` con `"type": "module"`, y el SDK de Resend obligaría a instalar npm. Ninguna de las dos cosas entra acá.
+
+Dos decisiones que conviene no deshacer:
+
+- **El destinatario está escrito en el código**, nunca se lee del cuerpo de la petición. Es lo que impide que alguien use el endpoint para mandar correo a terceros: lo peor que puede pasar es que llenen la casilla de TapCar.
+- **El correo va en texto plano** (campo `text` de Resend, nunca `html`). Con HTML habría que escapar cada valor antes de interpolarlo o se puede inyectar markup en el correo que llega.
+
+El remitente es `web@tapcar.cl` y depende de que **`tapcar.cl` esté verificado como dominio en Resend**. Si algún día se verifica otro dominio o subdominio, hay que cambiar la constante `REMITENTE` de la función.
+
+Contra el spam hay un campo trampa (`sitio`), topes de largo en todos los campos y rechazo de todo lo que no sea POST. No hay captcha a propósito: agrega fricción a la consulta más valiosa del sitio y el destinatario fijo ya acota el daño. Si aparece abuso real, lo que corresponde es activar rate limiting en el WAF de Vercel desde el panel — disponible desde el plan Pro en adelante, no en Hobby — porque entre invocaciones serverless no hay estado compartido para implementarlo a mano.
+
+### Pruebas
+
+```bash
+node tools/test_contacto.js
+```
+
+Sin dependencias y sin red: las pruebas reemplazan el `fetch` global por uno falso, así que **no hace falta ninguna API key para correrlas**. Cubren el método no permitido, el JSON malformado, cada regla de validación, la trampa, la key ausente, el error de Resend y el caso feliz.
+
+Lo que las pruebas **no** pueden comprobar es que el correo llegue de verdad. Eso solo se ve desplegado.
+
+### Variable de entorno
+
+| Variable | Dónde | Para qué |
+|---|---|---|
+| `RESEND_API_KEY` | Vercel → el proyecto → Settings → Environment Variables | Autentica la llamada a Resend |
+
+**Nunca va al repo.** Si falta, la función responde 500 con un mensaje claro y deja el detalle en los logs de Vercel; el formulario muestra el error y el enlace `mailto:` que siempre queda visible.
+
+Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se agota la cuota de Resend— cada consulta se pierde con un mensaje amable y el único rastro queda en los logs de Vercel. Hoy no hay alerta: conviene revisarlos de vez en cuando, o montar un log drain si el formulario empieza a traer volumen.
+
+### Puesta en marcha
+
+1. Crear cuenta en [resend.com](https://resend.com).
+2. Agregar y verificar el dominio **`tapcar.cl`** con los registros DNS que entrega Resend.
+3. Crear una API key con permiso de envío.
+4. Cargarla en Vercel como `RESEND_API_KEY`, en los tres entornos.
+5. **Volver a desplegar.** Las variables de entorno no se aplican a despliegues ya hechos.
+6. Enviar una consulta de prueba desde `/planes/` y confirmar que llega a contacto@tapcar.cl.
 
 ## Pendientes conocidos
 
