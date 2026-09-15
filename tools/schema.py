@@ -111,8 +111,8 @@ def producto():
         'offers': {
             '@type': 'AggregateOffer',
             'priceCurrency': 'CLP',
-            'lowPrice': '22000',
-            'highPrice': '30000',
+            'lowPrice': '2500',
+            'highPrice': '22000',
             'offerCount': 4,
             'offers': [
                 {
@@ -127,6 +127,7 @@ def producto():
                         '@type': 'UnitPriceSpecification',
                         'price': '2500',
                         'priceCurrency': 'CLP',
+                        'valueAddedTaxIncluded': True,
                         'unitText': 'vehículo',
                         'billingIncrement': 1,
                         'billingDuration': 1,
@@ -147,6 +148,7 @@ def producto():
                         '@type': 'UnitPriceSpecification',
                         'price': '22000',
                         'priceCurrency': 'CLP',
+                        'valueAddedTaxIncluded': True,
                         'unitText': 'vehículo',
                         'billingIncrement': 1,
                         'billingDuration': 1,
