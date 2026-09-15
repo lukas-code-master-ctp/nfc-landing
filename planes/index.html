@@ -779,6 +779,50 @@ a { color: inherit; }
   display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--azul);
 }
 
+/* Planes — Formulario de la consulta de flota grande */
+.form { margin: 18px 0 0; display: flex; flex-direction: column; gap: 14px; }
+.form[hidden] { display: none; }
+.form__fila { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+/* min-width: 0 para que un input no ensanche su columna y saque scroll. */
+.form__campo { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.form__label { font-size: 13px; font-weight: 600; color: var(--tinta); }
+.form__opcional { font-weight: 400; color: var(--acero); }
+.form__input {
+  width: 100%; font-family: var(--font-sans); font-size: 15px; color: var(--tinta);
+  padding: 10px 12px; background: var(--superficie);
+  border: 1px solid var(--linea); border-radius: var(--radius-sm);
+  transition: border-color var(--duration-base) var(--ease-standard),
+              box-shadow var(--duration-base) var(--ease-standard);
+}
+.form__input:focus { outline: none; border-color: var(--azul); box-shadow: 0 0 0 3px var(--azul-soft); }
+.form__input--corto { max-width: 150px; }
+.form__textarea { resize: vertical; min-height: 76px; }
+.form__enviar { margin-top: 4px; }
+.form__enviar[disabled] { opacity: 0.6; cursor: default; }
+.form__estado { margin: 0; font-size: 13px; line-height: 1.5; color: var(--estado-vencido-fg); }
+.form__estado:empty { display: none; }
+.form__salida { margin: 14px 0 0; font-size: 13px; color: var(--acero); }
+.form__salida a { color: var(--azul); font-weight: 600; }
+
+/* Trampa para bots. Fuera de pantalla y no display:none, porque hay bots que
+   leen el CSS y se saltan justamente los campos ocultos de esa forma. */
+.form__trampa {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* Confirmación de envío */
+.form__ok {
+  display: flex; align-items: flex-start; gap: 12px; margin: 18px 0 0;
+  padding: 16px 18px; border-radius: var(--radius-md);
+  background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
+}
+.form__ok[hidden] { display: none; }
+.form__ok:focus { outline: none; }
+.form__ok__icon { flex: 0 0 auto; margin-top: 2px; }
+.form__ok__title { margin: 0; font-size: 16px; font-weight: 700; }
+.form__ok__text { margin: 4px 0 0; font-size: 14px; line-height: 1.5; opacity: 0.9; }
+
 /* ===================================================================
    Página Legal (¿Es legal?)
    =================================================================== */
@@ -1161,6 +1205,10 @@ a { color: inherit; }
   .plan-pills__hint { display: none; }
   .calc__control + .calc__control { margin-top: 26px; }
   .calc__linea { font-size: 13px; }
+
+  /* Bajo 560px las dos columnas no caben: los campos se apilan. */
+  .form__fila { grid-template-columns: 1fr; }
+  .form__input--corto { max-width: none; }
 
   /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
   .step__llavero { height: 90px; }
@@ -1696,8 +1744,56 @@ a { color: inherit; }
 
         <div class="calc__contacto" data-contacto hidden>
           <p class="calc__contacto__title">Más de 100 vehículos</p>
-          <p class="calc__contacto__text">Contáctanos para revisar tu solicitud y armarte una propuesta a la medida de tu operación.</p>
-          <a href="mailto:contacto@tapcar.cl" class="calc__contacto__mail">contacto@tapcar.cl</a>
+          <p class="calc__contacto__text">Cuéntanos de tu operación y te armamos una propuesta a la medida.</p>
+
+          <form class="form" data-form-flota>
+            <div class="form__fila">
+              <div class="form__campo">
+                <label class="form__label" for="f-empresa">Empresa</label>
+                <input class="form__input" id="f-empresa" name="empresa" type="text" maxlength="120" required autocomplete="organization">
+              </div>
+              <div class="form__campo">
+                <label class="form__label" for="f-nombre">Tu nombre</label>
+                <input class="form__input" id="f-nombre" name="nombre" type="text" maxlength="120" required autocomplete="name">
+              </div>
+            </div>
+            <div class="form__fila">
+              <div class="form__campo">
+                <label class="form__label" for="f-email">Correo</label>
+                <input class="form__input" id="f-email" name="email" type="email" maxlength="160" required autocomplete="email">
+              </div>
+              <div class="form__campo">
+                <label class="form__label" for="f-telefono">Teléfono <span class="form__opcional">(opcional)</span></label>
+                <input class="form__input" id="f-telefono" name="telefono" type="tel" maxlength="40" autocomplete="tel">
+              </div>
+            </div>
+            <div class="form__campo">
+              <label class="form__label" for="f-vehiculos">Vehículos de la flota</label>
+              <input class="form__input form__input--corto" id="f-vehiculos" name="vehiculos" type="number" min="1" max="100000" step="1" value="100" required>
+            </div>
+            <div class="form__campo">
+              <label class="form__label" for="f-mensaje">Mensaje <span class="form__opcional">(opcional)</span></label>
+              <textarea class="form__input form__textarea" id="f-mensaje" name="mensaje" maxlength="2000" rows="3"></textarea>
+            </div>
+
+            <div class="form__trampa" aria-hidden="true">
+              <label for="f-sitio">No llenes este campo</label>
+              <input id="f-sitio" name="sitio" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg form__enviar" data-form-btn>Enviar consulta</button>
+            <p class="form__estado" data-form-estado role="alert" aria-live="polite"></p>
+          </form>
+
+          <div class="form__ok" data-form-ok hidden tabindex="-1">
+            <svg class="form__ok__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>
+              <p class="form__ok__title">Consulta enviada</p>
+              <p class="form__ok__text">Te respondemos a la brevedad al correo que nos dejaste.</p>
+            </span>
+          </div>
+
+          <p class="form__salida">O escríbenos directo a <a href="mailto:contacto@tapcar.cl">contacto@tapcar.cl</a></p>
         </div>
 
         <div class="calc__spacer"></div>
@@ -2066,6 +2162,61 @@ a { color: inherit; }
 
       window.addEventListener('resize', render);
       render();
+    })();
+  </script>
+
+  <script>
+    // ── Envío de la consulta de flota grande ───────────────────────
+    (function () {
+      var form = document.querySelector('[data-form-flota]');
+      if (!form) return;
+      var btn = form.querySelector('[data-form-btn]');
+      var estado = form.querySelector('[data-form-estado]');
+      var ok = document.querySelector('[data-form-ok]');
+      var SALIDA = 'No pudimos enviar tu consulta. Escríbenos a contacto@tapcar.cl.';
+
+      function fallar(mensaje) {
+        estado.textContent = mensaje;
+        btn.disabled = false;
+        btn.textContent = 'Enviar consulta';
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        estado.textContent = '';
+        // Deshabilitar el botón evita el doble envío mientras viaja la petición.
+        btn.disabled = true;
+        btn.textContent = 'Enviando…';
+
+        fetch('/api/contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nombre: form.nombre.value,
+            empresa: form.empresa.value,
+            email: form.email.value,
+            telefono: form.telefono.value,
+            vehiculos: form.vehiculos.value,
+            mensaje: form.mensaje.value,
+            sitio: form.sitio.value
+          })
+        }).then(function (r) {
+          // Si la respuesta no es JSON (por ejemplo, una página de error de
+          // Vercel), json() rechaza y cae en el catch de abajo.
+          return r.json().then(function (cuerpo) { return { ok: r.ok, cuerpo: cuerpo }; });
+        }).then(function (r) {
+          if (r.ok && r.cuerpo && r.cuerpo.ok) {
+            form.hidden = true;
+            ok.hidden = false;
+            // Mover el foco hace que un lector de pantalla anuncie el resultado.
+            ok.focus();
+            return;
+          }
+          fallar((r.cuerpo && r.cuerpo.error) || SALIDA);
+        })['catch'](function () {
+          fallar(SALIDA);
+        });
+      });
     })();
   </script>
 
