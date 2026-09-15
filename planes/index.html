@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Precios TapCar: $2.500 por vehículo al mes, sin permanencia</title>
-  <meta name="description" content="Desde $2.500 por vehículo al mes, o $20.000 al año con 33% de descuento. Chip NFC, recordatorios y panel incluidos. Sin permanencia: cancela cuando quieras.">
+  <meta name="description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Sobre 10, plan Flotas a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
   <link rel="canonical" href="https://tapcar.cl/planes/">
 
   <!-- Tarjeta al compartir (WhatsApp, LinkedIn, X). La imagen es absoluta
@@ -14,14 +14,14 @@
   <meta property="og:locale" content="es_CL">
   <meta property="og:url" content="https://tapcar.cl/planes/">
   <meta property="og:title" content="Precios TapCar: $2.500 por vehículo al mes, sin permanencia">
-  <meta property="og:description" content="Desde $2.500 por vehículo al mes, o $20.000 al año con 33% de descuento. Chip NFC, recordatorios y panel incluidos. Sin permanencia: cancela cuando quieras.">
+  <meta property="og:description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Sobre 10, plan Flotas a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
   <meta property="og:image" content="https://tapcar.cl/assets/og-tapcar.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="TapCar — tus vehículos a un Tap">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Precios TapCar: $2.500 por vehículo al mes, sin permanencia">
-  <meta name="twitter:description" content="Desde $2.500 por vehículo al mes, o $20.000 al año con 33% de descuento. Chip NFC, recordatorios y panel incluidos. Sin permanencia: cancela cuando quieras.">
+  <meta name="twitter:description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Sobre 10, plan Flotas a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
   <meta name="twitter:image" content="https://tapcar.cl/assets/og-tapcar.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -519,6 +519,30 @@ a { color: inherit; }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
+/* Planes — Selector de plan (uso particular / flotas).
+   Mismo lenguaje visual que el toggle de facturación de abajo: los dos son
+   controles del mismo precio y tienen que leerse como una familia. */
+.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+.plan-pills {
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
+}
+.plan-pills__opt {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
+  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  transition: background-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+.plan-pills__opt:hover { color: var(--tinta); }
+.plan-pills__opt.is-active { background: var(--azul); color: #fff; }
+.plan-pills__hint {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
+  border-radius: var(--radius-pill); background: var(--azul-soft); color: var(--azul);
+}
+.plan-pills__opt.is-active .plan-pills__hint { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
 /* Planes — Toggle de facturación (mensual / anual) */
 .billing-toggle-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 28px; }
 
@@ -707,6 +731,53 @@ a { color: inherit; }
   background: var(--azul-soft); color: var(--azul); font-size: 13px; font-weight: 600;
 }
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* Planes — Piezas de la calculadora de dos planes.
+   .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
+   por eso hay que apagarlo a mano. Los divs que siguen son block y no lo
+   necesitarían, pero se declaran igual para que nadie los "arregle" después
+   poniéndoles un display y los rompa en silencio. */
+.calc[hidden], .calc__control[hidden], .calc__precio[hidden],
+.calc__contacto[hidden], .calc__bridge[hidden], .included__group[hidden] { display: none; }
+
+/* Flotas apila dos sliders: vehículos y cuentas de conductor. */
+.calc__control + .calc__control { margin-top: 30px; }
+
+/* Flotas desglosa el precio en líneas con subtotal a la derecha. */
+.calc__lineas { display: flex; flex-direction: column; gap: 8px; }
+.calc__linea {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  font-size: 14px; color: var(--acero);
+}
+.calc__linea[hidden] { display: none; }
+.calc__linea__monto {
+  font-family: var(--font-mono); font-size: 13px; color: var(--tinta); white-space: nowrap;
+}
+
+/* Particular — puente hacia Flotas cuando el slider llega al tope. */
+.calc__bridge {
+  display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 0;
+  padding: 14px 16px; border-radius: var(--radius-md); background: var(--azul-soft);
+}
+.calc__bridge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
+.calc__bridge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
+.calc__bridge__text strong { color: var(--tinta); font-weight: 600; }
+.calc__bridge__btn {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 5px; padding: 0;
+  border: 0; background: transparent; cursor: pointer; font-family: var(--font-sans);
+  font-size: 14px; font-weight: 600; color: var(--azul);
+}
+.calc__bridge__btn:hover { text-decoration: underline; }
+
+/* Flotas — tramo "Más de 100": reemplaza el precio por un llamado a contacto. */
+.calc__contacto {
+  margin: 8px 0 0; padding: 20px 22px; border-radius: var(--radius-md); background: var(--azul-soft);
+}
+.calc__contacto__title { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.calc__contacto__text { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
+.calc__contacto__mail {
+  display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--azul);
+}
 
 /* ===================================================================
    Página Legal (¿Es legal?)
@@ -1084,6 +1155,12 @@ a { color: inherit; }
   .calc__actions { flex-direction: column; }
   .calc__actions .btn { width: 100%; }
   .billing-note__text { font-size: 19px; }
+  /* Bajo 560px las pills ocupan el ancho y el hint "sobre 10" estorba. */
+  .plan-pills { width: 100%; }
+  .plan-pills__opt { flex: 1; justify-content: center; padding: 9px 12px; }
+  .plan-pills__hint { display: none; }
+  .calc__control + .calc__control { margin-top: 26px; }
+  .calc__linea { font-size: 13px; }
 
   /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
   .step__llavero { height: 90px; }
@@ -1161,7 +1238,7 @@ a { color: inherit; }
       "@id": "https://tapcar.cl/planes/#pagina",
       "url": "https://tapcar.cl/planes/",
       "name": "Menos que un café al mes por cada vehículo.",
-      "description": "Desde $2.500 por vehículo al mes, o $20.000 al año con 33% de descuento. Chip NFC, recordatorios y panel incluidos. Sin permanencia: cancela cuando quieras.",
+      "description": "$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Sobre 10, plan Flotas a UF 0,5 por vehículo al año más IVA. Sin permanencia.",
       "inLanguage": "es-CL",
       "isPartOf": {
         "@id": "https://tapcar.cl/#sitio"
@@ -1219,14 +1296,14 @@ a { color: inherit; }
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "CLP",
-        "lowPrice": "20000",
-        "highPrice": "30000",
-        "offerCount": 2,
+        "lowPrice": "2500",
+        "highPrice": "22000",
+        "offerCount": 4,
         "offers": [
           {
             "@type": "Offer",
-            "name": "Plan mensual",
-            "description": "$2.500 por vehículo al mes, sin permanencia.",
+            "name": "Uso particular — plan mensual",
+            "description": "$2.500 por vehículo al mes, hasta 10 vehículos, sin permanencia.",
             "price": "2500",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
@@ -1235,6 +1312,7 @@ a { color: inherit; }
               "@type": "UnitPriceSpecification",
               "price": "2500",
               "priceCurrency": "CLP",
+              "valueAddedTaxIncluded": true,
               "unitText": "vehículo",
               "billingIncrement": 1,
               "billingDuration": 1,
@@ -1247,16 +1325,17 @@ a { color: inherit; }
           },
           {
             "@type": "Offer",
-            "name": "Plan anual",
-            "description": "$20.000 por vehículo al año, un 33% menos que pagando mes a mes.",
-            "price": "20000",
+            "name": "Uso particular — plan anual",
+            "description": "$22.000 por vehículo al año, un 27% menos que pagando mes a mes.",
+            "price": "22000",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
             "url": "https://tapcar.cl/planes/",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
-              "price": "20000",
+              "price": "22000",
               "priceCurrency": "CLP",
+              "valueAddedTaxIncluded": true,
               "unitText": "vehículo",
               "billingIncrement": 1,
               "billingDuration": 1,
@@ -1264,6 +1343,57 @@ a { color: inherit; }
                 "@type": "QuantitativeValue",
                 "value": 1,
                 "unitCode": "ANN"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Flotas — vehículo",
+            "description": "UF 0,5 por vehículo al año más IVA, desde el vehículo 11.",
+            "price": "0.5",
+            "priceCurrency": "CLF",
+            "availability": "https://schema.org/InStock",
+            "url": "https://tapcar.cl/planes/",
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "minValue": 11,
+              "unitText": "vehículo"
+            },
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "0.5",
+              "priceCurrency": "CLF",
+              "valueAddedTaxIncluded": false,
+              "unitText": "vehículo",
+              "billingIncrement": 1,
+              "billingDuration": 1,
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitCode": "ANN"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Flotas — cuenta de conductor fijo",
+            "description": "UF 0,12 al mes más IVA por cada conductor con cuenta propia. La asignación de conductor va incluida.",
+            "price": "0.12",
+            "priceCurrency": "CLF",
+            "availability": "https://schema.org/InStock",
+            "url": "https://tapcar.cl/planes/",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "0.12",
+              "priceCurrency": "CLF",
+              "valueAddedTaxIncluded": false,
+              "unitText": "conductor",
+              "billingIncrement": 1,
+              "billingDuration": 1,
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitCode": "MON"
               }
             }
           }
@@ -1279,7 +1409,31 @@ a { color: inherit; }
           "name": "¿Cuánto cuesta?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "$2.500 por vehículo al mes — menos que un café. Con el plan anual son $20.000 por vehículo al año, un 33% menos. Es una tarifa fija por vehículo, con toda la plataforma incluida y sin costos ocultos."
+            "text": "Hasta 10 vehículos, $2.500 por vehículo al mes — menos que un café. Con el plan anual son $22.000 por vehículo al año, un 27% menos. Sobre 10 vehículos pasas al plan Flotas: UF 0,5 por vehículo al año más IVA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuándo paso a Flotas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Desde el vehículo 11. Hasta 10 estás en Uso particular; sobre eso, Flotas cambia la tarifa a UF por vehículo y suma la opción de darle cuenta propia a cada conductor. Sobre 100 vehículos lo conversamos: escríbenos a contacto@tapcar.cl y armamos una propuesta a la medida."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué es un conductor fijo y qué se cobra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Son dos cosas distintas. La asignación —que el vehículo tenga un conductor titular, que aparezca prellenado al abrir la ficha y que puedas saltarte el PIN— va incluida. La cuenta es que ese conductor entre con su propio usuario y mantenga solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento, sin ver la flota ni a sus compañeros. Eso cuesta UF 0,12 al mes y no ocupa lugar en el tope de 5 personas del equipo. Se cobra la cuenta, no la asignación."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Los precios incluyen IVA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Los precios en pesos del plan particular sí: $2.500 y $22.000 son lo que pagas. Los valores en UF del plan Flotas van más IVA, como es habitual entre empresas."
           }
         },
         {
@@ -1311,7 +1465,7 @@ a { color: inherit; }
           "name": "¿Y si sumo más vehículos?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Agregas vehículos cuando quieras; se suman a tu suscripción a $2.500 c/u. Te enviamos los chips de los vehículos nuevos."
+            "text": "Agregas vehículos cuando quieras y se suman a tu suscripción. Si pasas de 10, tu cuenta se cotiza como Flotas. Te enviamos los chips de los vehículos nuevos."
           }
         },
         {
@@ -1376,16 +1530,22 @@ a { color: inherit; }
     <div class="pl-hero__inner">
       <span class="eyebrow">Planes</span>
       <h1 class="pl-hero__title">Menos que un café al mes por cada vehículo.</h1>
-      <p class="pl-hero__lead">$2.500 por vehículo al mes, con toda la operación incluida: documentos, uso con PIN, panel de control y fiscalización. Sin tramos, sin permanencia — cambia o cancela cuando quieras.</p>
+      <p class="pl-hero__lead">$2.500 por vehículo al mes para uso particular, y tarifa por flota sobre 10 vehículos. Documentos, uso con PIN, panel de control y fiscalización incluidos. Sin permanencia — cambia o cancela cuando quieras.</p>
     </div>
   </section>
 
   <!-- ============ CALCULADORA ============ -->
   <section class="pricing">
+    <div class="plan-pills-wrap">
+      <div class="plan-pills" role="group" aria-label="Tipo de plan">
+        <button type="button" class="plan-pills__opt is-active" data-plan="particular" aria-pressed="true">Uso particular</button>
+        <button type="button" class="plan-pills__opt" data-plan="flota" aria-pressed="false">Flotas <span class="plan-pills__hint">sobre 10</span></button>
+      </div>
+    </div>
     <div class="billing-toggle-wrap">
       <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
-        <button type="button" class="billing-toggle__opt is-active" data-period="mensual">Mensual</button>
-        <button type="button" class="billing-toggle__opt" data-period="anual">Anual <span class="billing-toggle__save">−33%</span></button>
+        <button type="button" class="billing-toggle__opt is-active" data-period="mensual" aria-pressed="true">Mensual</button>
+        <button type="button" class="billing-toggle__opt" data-period="anual" aria-pressed="false">Anual <span class="billing-toggle__save">−27%</span></button>
       </div>
       <span class="billing-note">
         <svg class="billing-note__arrow" viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1398,26 +1558,27 @@ a { color: inherit; }
     </div>
     <div class="pricing__grid">
 
-      <!-- CALCULADORA -->
-      <div class="calc">
+      <!-- CALCULADORA — USO PARTICULAR -->
+      <div class="calc" data-calc="particular">
         <span class="calc__eyebrow">Calcula tu plan</span>
 
-        <div class="calc__row">
-          <span class="calc__row-label">Vehículos a registrar</span>
+        <div class="calc__control">
+          <div class="calc__row">
+            <span class="calc__row-label">Vehículos a registrar</span>
+          </div>
+          <div class="calc__slider-wrap">
+            <span class="calc__bubble" data-bubble>3 vehículos</span>
+            <input type="range" min="1" max="10" value="3" step="1" class="calc__slider" data-slider
+                   aria-label="Cantidad de vehículos a registrar">
+          </div>
+          <div class="calc__scale"><span>1</span><span>10</span></div>
         </div>
-
-        <div class="calc__slider-wrap">
-          <span class="calc__bubble" data-bubble>10 vehículos</span>
-          <input type="range" min="1" max="100" value="10" step="1" class="calc__slider" data-slider
-                 aria-label="Cantidad de vehículos a registrar">
-        </div>
-        <div class="calc__scale"><span>1</span><span>100+</span></div>
 
         <div class="calc__divider"></div>
 
-        <span class="calc__formula"><span data-count-label>10 vehículos</span> × $<span data-rate>2.500</span></span>
+        <span class="calc__formula"><span data-count>3 vehículos</span> × $<span data-rate>2.500</span></span>
         <div class="calc__total-row">
-          <span class="calc__total" data-total>$25.000</span>
+          <span class="calc__total" data-total>$7.500</span>
           <span class="calc__total-period">/mes</span>
         </div>
         <span class="calc__cafe" data-cafe-wrap>
@@ -1427,8 +1588,8 @@ a { color: inherit; }
         <div class="calc__save" data-save hidden>
           <svg class="calc__save__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
           <span>
-            <span class="calc__save__amount" data-save-amount>Ahorras $100.000 al año</span>
-            <span class="calc__save__note" data-save-note>$1.667 por vehículo al mes — 33% menos que pagando mes a mes.</span>
+            <span class="calc__save__amount" data-save-amount>Ahorras $24.000 al año</span>
+            <span class="calc__save__note" data-save-note>$1.833 por vehículo al mes — 27% menos que pagando mes a mes.</span>
           </span>
         </div>
         <p class="calc__fineprint" data-fineprint>Un chip NFC por vehículo, incluido — solo pagas el envío. Sin costos ocultos.</p>
@@ -1436,9 +1597,20 @@ a { color: inherit; }
         <div class="calc__nudge" data-nudge>
           <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
           <span>
-            <span class="calc__nudge__text">Con el plan anual este mismo plan te queda en <strong data-nudge-total>$16.667</strong> al mes.</span>
+            <span class="calc__nudge__text">Con el plan anual este mismo plan te queda en <strong data-nudge-total>$5.500</strong> al mes.</span>
             <button type="button" class="calc__nudge__btn" data-nudge-btn>
-              Cambiar a anual y ahorrar <span data-nudge-amount>$100.000</span> al año
+              Cambiar a anual y ahorrar <span data-nudge-amount>$24.000</span> al año
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </span>
+        </div>
+
+        <div class="calc__bridge" data-bridge hidden>
+          <svg class="calc__bridge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1-4h12l1 4h2"/><path d="M6 13 7.5 8h9L18 13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+          <span>
+            <span class="calc__bridge__text">¿Más de 10 vehículos? Tu plan es <strong>Flotas</strong>, con tarifa por vehículo y cuentas para tus conductores.</span>
+            <button type="button" class="calc__bridge__btn" data-bridge-btn>
+              Ver el plan Flotas
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </span>
@@ -1456,11 +1628,95 @@ a { color: inherit; }
         </div>
       </div>
 
+      <!-- CALCULADORA — FLOTAS -->
+      <div class="calc" data-calc="flota" hidden>
+        <span class="calc__eyebrow">Calcula tu flota</span>
+
+        <div class="calc__control">
+          <div class="calc__row">
+            <span class="calc__row-label">Vehículos de la flota</span>
+          </div>
+          <div class="calc__slider-wrap">
+            <span class="calc__bubble" data-bubble="veh">25 vehículos</span>
+            <input type="range" min="11" max="101" value="25" step="1" class="calc__slider" data-slider="veh"
+                   aria-label="Cantidad de vehículos de la flota">
+          </div>
+          <div class="calc__scale"><span>11</span><span>100+</span></div>
+        </div>
+
+        <div class="calc__control" data-control-cuentas>
+          <div class="calc__row">
+            <span class="calc__row-label">Cuentas de conductor</span>
+          </div>
+          <div class="calc__slider-wrap">
+            <span class="calc__bubble" data-bubble="cuentas">10 cuentas</span>
+            <input type="range" min="0" max="25" value="10" step="1" class="calc__slider" data-slider="cuentas"
+                   aria-label="Cantidad de cuentas de conductor">
+          </div>
+          <div class="calc__scale"><span>0</span><span data-scale-max>25</span></div>
+        </div>
+
+        <div class="calc__divider"></div>
+
+        <div class="calc__precio" data-precio>
+          <div class="calc__lineas">
+            <div class="calc__linea" data-linea-veh>
+              <span data-linea-label>25 vehículos × UF 0,057</span>
+              <span class="calc__linea__monto" data-linea-monto>UF 1,425</span>
+            </div>
+            <div class="calc__linea" data-linea-cuentas>
+              <span data-linea-label>10 cuentas de conductor × UF 0,12</span>
+              <span class="calc__linea__monto" data-linea-monto>UF 1,2</span>
+            </div>
+          </div>
+          <div class="calc__total-row">
+            <span class="calc__total" data-total>UF 2,625</span>
+            <span class="calc__total-period" data-total-period>/mes</span>
+          </div>
+          <div class="calc__save" data-save hidden>
+            <svg class="calc__save__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
+            <span>
+              <span class="calc__save__amount" data-save-amount>Ahorras UF 8,5 al año</span>
+              <span class="calc__save__note" data-save-note>27% menos que pagando mes a mes. Equivale a UF 1,917 al mes.</span>
+            </span>
+          </div>
+          <p class="calc__fineprint" data-fineprint>Valores en UF, no incluyen IVA. Un chip NFC por vehículo, incluido — solo pagas el envío. Sin costos ocultos.</p>
+
+          <div class="calc__nudge" data-nudge>
+            <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
+            <span>
+              <span class="calc__nudge__text">Con el plan anual esta misma flota te queda en <strong data-nudge-total>UF 23</strong> al año.</span>
+              <button type="button" class="calc__nudge__btn" data-nudge-btn>
+                Cambiar a anual y ahorrar <span data-nudge-amount>UF 8,5</span> al año
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="calc__contacto" data-contacto hidden>
+          <p class="calc__contacto__title">Más de 100 vehículos</p>
+          <p class="calc__contacto__text">Contáctanos para revisar tu solicitud y armarte una propuesta a la medida de tu operación.</p>
+          <a href="mailto:contacto@tapcar.cl" class="calc__contacto__mail">contacto@tapcar.cl</a>
+        </div>
+
+        <div class="calc__spacer"></div>
+        <ul class="calc__trust">
+          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia</li>
+          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>La asignación de conductor va incluida</li>
+          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sumas y quitas vehículos cuando quieras</li>
+        </ul>
+        <div class="calc__actions">
+          <a href="mailto:contacto@tapcar.cl" class="btn btn--primary btn--lg">Hablemos de tu flota</a>
+          <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta</a>
+        </div>
+      </div>
+
       <!-- INCLUIDO -->
       <div class="included included--con-llavero">
         <img src="/assets/chip-llavero.webp" class="llavero llavero--included" alt="Llavero con el chip NFC de TapCar" loading="lazy" width="345" height="400">
         <span class="included__eyebrow">Todo incluido</span>
-        <p class="included__lead">Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.</p>
+        <p class="included__lead" data-included-lead>Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.</p>
 
         <div class="included__group">
           <p class="included__group-title">Para cualquier vehículo</p>
@@ -1482,6 +1738,15 @@ a { color: inherit; }
             <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Invita a tu equipo (hasta 5 personas) como Administrador, Editor o Visor</li>
           </ul>
         </div>
+
+        <div class="included__group" data-grupo="flota" hidden>
+          <p class="included__group-title">Conductor fijo</p>
+          <ul class="included__list">
+            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La asignación va incluida.</strong> El vehículo tiene un conductor titular: al abrir la ficha desde el chip aparece él prellenado en vez de la lista completa y, si lo configuras así, sin pedir PIN. "Soy otro conductor" sigue estando — es un atajo, no un candado.</span></li>
+            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La cuenta cuesta UF 0,12 al mes, o UF 1,05 al año.</strong> Ese conductor entra con su propio usuario y ve solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento. No ve la flota ni a sus compañeros, y no ocupa lugar en el tope de 5 personas del equipo.</span></li>
+            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Se cobra la cuenta, no la asignación</li>
+          </ul>
+        </div>
       </div>
 
     </div>
@@ -1497,7 +1762,19 @@ a { color: inherit; }
       <div class="faq__list">
         <div class="faq__item">
           <h3 class="faq__q">¿Cuánto cuesta?</h3>
-          <p class="faq__a">$2.500 por vehículo al mes — menos que un café. Con el plan anual son $20.000 por vehículo al año, un 33% menos. Es una tarifa fija por vehículo, con toda la plataforma incluida y sin costos ocultos.</p>
+          <p class="faq__a">Hasta 10 vehículos, $2.500 por vehículo al mes — menos que un café. Con el plan anual son $22.000 por vehículo al año, un 27% menos. Sobre 10 vehículos pasas al plan Flotas: UF 0,5 por vehículo al año más IVA.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Cuándo paso a Flotas?</h3>
+          <p class="faq__a">Desde el vehículo 11. Hasta 10 estás en Uso particular; sobre eso, Flotas cambia la tarifa a UF por vehículo y suma la opción de darle cuenta propia a cada conductor. Sobre 100 vehículos lo conversamos: escríbenos a contacto@tapcar.cl y armamos una propuesta a la medida.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Qué es un conductor fijo y qué se cobra?</h3>
+          <p class="faq__a">Son dos cosas distintas. La asignación —que el vehículo tenga un conductor titular, que aparezca prellenado al abrir la ficha y que puedas saltarte el PIN— va incluida. La cuenta es que ese conductor entre con su propio usuario y mantenga solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento, sin ver la flota ni a sus compañeros. Eso cuesta UF 0,12 al mes y no ocupa lugar en el tope de 5 personas del equipo. Se cobra la cuenta, no la asignación.</p>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__q">¿Los precios incluyen IVA?</h3>
+          <p class="faq__a">Los precios en pesos del plan particular sí: $2.500 y $22.000 son lo que pagas. Los valores en UF del plan Flotas van más IVA, como es habitual entre empresas.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿El chip NFC está incluido?</h3>
@@ -1513,7 +1790,7 @@ a { color: inherit; }
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Y si sumo más vehículos?</h3>
-          <p class="faq__a">Agregas vehículos cuando quieras; se suman a tu suscripción a $2.500 c/u. Te enviamos los chips de los vehículos nuevos.</p>
+          <p class="faq__a">Agregas vehículos cuando quieras y se suman a tu suscripción. Si pasas de 10, tu cuenta se cotiza como Flotas. Te enviamos los chips de los vehículos nuevos.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Puedo cancelar?</h3>
@@ -1527,7 +1804,7 @@ a { color: inherit; }
   <section class="cta">
     <div class="cta__inner">
       <h2 class="cta__title">Todos tus vehículos controlados por lo que cuesta un café.</h2>
-      <p class="cta__lead">$2.500 por vehículo al mes. Registra tus vehículos y empieza a operar con un Tap.</p>
+      <p class="cta__lead">$2.500 por vehículo al mes, o tarifa de flota sobre 10 vehículos. Registra tus vehículos y empieza a operar con un Tap.</p>
       <div class="cta__actions">
         <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1589,88 +1866,204 @@ a { color: inherit; }
   <script>
     // ── Calculadora de precio ──────────────────────────────────────
     (function () {
-      // El plan mensual se cotiza por mes y el anual por año. Todo el dinero
-      // sale de estas dos cifras: el equivalente mensual del anual se muestra
-      // redondeado, pero nunca se usa para calcular, porque 12 × $1.667 no da
-      // los $20.000 reales.
-      var PRECIO = { mes: 2500, anio: 20000 };
-      var ANUAL_MES = Math.round(PRECIO.anio / 12);                        // 1.667
-      var DESCUENTO = Math.round((1 - PRECIO.anio / (PRECIO.mes * 12)) * 100); // 33
-      var period = 'mensual';
-      var slider = document.querySelector('[data-slider]');
-      var bubbleEl = document.querySelector('[data-bubble]');
-      var labelEl = document.querySelector('[data-count-label]');
-      var rateEl = document.querySelector('[data-rate]');
-      var totalEl = document.querySelector('[data-total]');
-      var cafeEl = document.querySelector('[data-cafe]');
-      var cafeWrap = document.querySelector('[data-cafe-wrap]');
-      var saveEl = document.querySelector('[data-save]');
-      var saveAmountEl = document.querySelector('[data-save-amount]');
-      var saveNoteEl = document.querySelector('[data-save-note]');
-      var fineEl = document.querySelector('[data-fineprint]');
-      var nudgeEl = document.querySelector('[data-nudge]');
-      var nudgeTotalEl = document.querySelector('[data-nudge-total]');
-      var nudgeAmountEl = document.querySelector('[data-nudge-amount]');
-      var opts = document.querySelectorAll('.billing-toggle__opt');
+      // Las cifras ancla son la mensual y la anual, y todo el dinero sale de
+      // ahí. El equivalente mensual del plan anual se muestra pero nunca se usa
+      // para calcular: 12 × $1.833 da $21.996, no los $22.000 reales.
+      //
+      // Particular va en pesos con IVA incluido; Flotas en UF más IVA. Los
+      // precios mensuales de Flotas son la tarifa lista y los anuales son el
+      // precio ya con el descuento aplicado.
+      var PLANES = {
+        particular: { veh: { mes: 2500, anio: 22000 }, min: 1, max: 10 },
+        flota: {
+          veh: { mes: 0.057, anio: 0.5 },
+          cuenta: { mes: 0.12, anio: 1.05 },
+          min: 11, max: 100
+        }
+      };
+      // El descuento se calcula, no se escribe a mano. Las tres tarifas dan 27.
+      function descuento(t) { return Math.round((1 - t.anio / (t.mes * 12)) * 100); }
+      var DESCUENTO = descuento(PLANES.particular.veh);
+
       var CHIP = 'Un chip NFC por vehículo, incluido — solo pagas el envío.';
-      function fmt(n) { return '$' + n.toLocaleString('es-CL'); }
+      var IVA = 'Valores en UF, no incluyen IVA.';
+
+      function clp(n) { return '$' + Math.round(n).toLocaleString('es-CL'); }
+      // Las tarifas en UF tienen hasta tres decimales (UF 0,057) y los totales
+      // arrastran ruido del punto flotante: 10 × 1,05 da 10.500000000000002.
+      // El formateador redondea, así que no hace falta limpiarlo antes.
+      function uf(n) {
+        return 'UF ' + n.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 3 });
+      }
+      function veh(n) { return n === 1 ? '1 vehículo' : n + ' vehículos'; }
+      function ctas(n) { return n === 1 ? '1 cuenta de conductor' : n + ' cuentas de conductor'; }
+
+      var plan = 'particular';
+      var period = 'mensual';
+
+      var cardP = document.querySelector('[data-calc="particular"]');
+      var cardF = document.querySelector('[data-calc="flota"]');
+      var grupoFlota = document.querySelector('[data-grupo="flota"]');
+      var leadIncluido = document.querySelector('[data-included-lead]');
+      var LEAD = {
+        particular: 'Una sola suscripción por vehículo, con toda la plataforma. Sin extras ni letra chica.',
+        flota: 'Tarifa por vehículo con toda la plataforma incluida. Aparte solo van las cuentas de conductor, si las quieres, y el envío de los chips.'
+      };
+      function P(sel) { return cardP.querySelector(sel); }
+      function F(sel) { return cardF.querySelector(sel); }
+
       // Pinta el relleno del riel y deja la burbuja sobre el pulgar. La burbuja
       // se topa contra los bordes del riel; la flecha sigue apuntando al pulgar.
-      function placeBubble(count) {
+      // Recibe el slider porque Flotas tiene dos.
+      function placeBubble(slider, bubble) {
         var min = parseInt(slider.min, 10), max = parseInt(slider.max, 10);
-        var p = (count - min) / (max - min);
+        var p = max === min ? 0 : (parseInt(slider.value, 10) - min) / (max - min);
         slider.style.setProperty('--pct', (p * 100) + '%');
         var track = slider.getBoundingClientRect().width;
         var thumb = 22;
         if (!track) return;
         var x = thumb / 2 + p * (track - thumb);
-        var half = bubbleEl.offsetWidth / 2;
+        var half = bubble.offsetWidth / 2;
         var left = Math.min(Math.max(x, half), track - half);
-        bubbleEl.style.left = left + 'px';
-        bubbleEl.style.setProperty('--arrow', (x - left + half) + 'px');
+        bubble.style.left = left + 'px';
+        bubble.style.setProperty('--arrow', (x - left + half) + 'px');
       }
-      function render() {
-        var count = parseInt(slider.value, 10);
-        if (isNaN(count)) count = 1;
+
+      function renderParticular() {
+        var cfg = PLANES.particular, t = cfg.veh;
+        var s = P('[data-slider]');
+        var n = parseInt(s.value, 10) || cfg.min;
         var anual = period === 'anual';
-        var rate = anual ? ANUAL_MES : PRECIO.mes;
-        bubbleEl.textContent = count === 1 ? '1 vehículo' : count + ' vehículos';
-        placeBubble(count);
-        labelEl.textContent = count === 1 ? '1 vehículo' : count + ' vehículos';
-        rateEl.textContent = rate.toLocaleString('es-CL');
-        // El mensual del plan anual se deriva del total del año, no de
-        // multiplicar la cifra redondeada.
-        var porMes = anual ? Math.round(count * PRECIO.anio / 12) : count * PRECIO.mes;
-        totalEl.textContent = fmt(porMes);
-        // Ahorro = lo que costaría un año en plan mensual, menos el plan anual.
-        var ahorro = count * (PRECIO.mes * 12 - PRECIO.anio);
-        cafeWrap.hidden = anual;
-        saveEl.hidden = !anual;
-        nudgeEl.hidden = anual;
-        nudgeTotalEl.textContent = fmt(Math.round(count * PRECIO.anio / 12));
-        nudgeAmountEl.textContent = fmt(ahorro);
+        var tarifa = anual ? Math.round(t.anio / 12) : t.mes;
+        var porMes = anual ? Math.round(n * t.anio / 12) : n * t.mes;
+        var ahorro = n * (t.mes * 12 - t.anio);
+
+        P('[data-bubble]').textContent = veh(n);
+        placeBubble(s, P('[data-bubble]'));
+        P('[data-count]').textContent = veh(n);
+        P('[data-rate]').textContent = tarifa.toLocaleString('es-CL');
+        P('[data-total]').textContent = clp(porMes);
+
+        P('[data-cafe-wrap]').hidden = anual;
+        P('[data-save]').hidden = !anual;
+        P('[data-nudge]').hidden = anual;
+        // El puente a Flotas aparece recién en el tope del slider.
+        P('[data-bridge]').hidden = n < cfg.max;
+
         if (anual) {
-          saveAmountEl.textContent = 'Ahorras ' + fmt(ahorro) + ' al año';
-          saveNoteEl.textContent = fmt(rate) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
-          fineEl.textContent = 'Facturado una vez al año (' + fmt(count * PRECIO.anio) + '). ' + CHIP;
+          P('[data-save-amount]').textContent = 'Ahorras ' + clp(ahorro) + ' al año';
+          P('[data-save-note]').textContent = clp(tarifa) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
+          P('[data-fineprint]').textContent = 'Facturado una vez al año (' + clp(n * t.anio) + '). ' + CHIP;
         } else {
-          cafeEl.textContent = fmt(rate) + ' por vehículo — menos que un café al mes.';
-          fineEl.textContent = CHIP + ' Sin costos ocultos.';
+          P('[data-cafe]').textContent = clp(tarifa) + ' por vehículo — menos que un café al mes.';
+          P('[data-fineprint]').textContent = CHIP + ' Sin costos ocultos.';
+          P('[data-nudge-total]').textContent = clp(Math.round(n * t.anio / 12));
+          P('[data-nudge-amount]').textContent = clp(ahorro);
         }
       }
-      opts.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          period = btn.getAttribute('data-period');
-          opts.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
-          render();
+
+      function renderFlota() {
+        var cfg = PLANES.flota;
+        var sv = F('[data-slider="veh"]');
+        var sc = F('[data-slider="cuentas"]');
+        // El slider llega a max+1: esa posición extra es el centinela del tramo
+        // "Más de 100", no 101 vehículos.
+        var raw = parseInt(sv.value, 10) || cfg.min;
+        var sobre = raw > cfg.max;
+        var n = sobre ? cfg.max : raw;
+        var anual = period === 'anual';
+
+        F('[data-bubble="veh"]').textContent = sobre ? 'Más de 100 vehículos' : veh(n);
+        placeBubble(sv, F('[data-bubble="veh"]'));
+
+        F('[data-contacto]').hidden = !sobre;
+        F('[data-precio]').hidden = sobre;
+        F('[data-control-cuentas]').hidden = sobre;
+        if (sobre) return;
+
+        // Un conductor fijo es el titular de un vehículo, así que no puede
+        // haber más cuentas que vehículos: al bajar la flota, las cuentas
+        // sobrantes se recortan solas.
+        sc.max = n;
+        if (parseInt(sc.value, 10) > n) sc.value = n;
+        var c = parseInt(sc.value, 10) || 0;
+        F('[data-bubble="cuentas"]').textContent = c === 1 ? '1 cuenta' : c + ' cuentas';
+        placeBubble(sc, F('[data-bubble="cuentas"]'));
+        F('[data-scale-max]').textContent = n;
+
+        var tv = anual ? cfg.veh.anio : cfg.veh.mes;
+        var tc = anual ? cfg.cuenta.anio : cfg.cuenta.mes;
+        var total = n * tv + c * tc;
+        var lista = (n * cfg.veh.mes + c * cfg.cuenta.mes) * 12;
+        var ahorro = lista - (n * cfg.veh.anio + c * cfg.cuenta.anio);
+
+        var lv = F('[data-linea-veh]');
+        lv.querySelector('[data-linea-label]').textContent = veh(n) + ' × ' + uf(tv);
+        lv.querySelector('[data-linea-monto]').textContent = uf(n * tv);
+        var lc = F('[data-linea-cuentas]');
+        lc.hidden = c === 0;
+        lc.querySelector('[data-linea-label]').textContent = ctas(c) + ' × ' + uf(tc);
+        lc.querySelector('[data-linea-monto]').textContent = uf(c * tc);
+
+        F('[data-total]').textContent = uf(total);
+        // A diferencia de Particular, el número grande de Flotas sigue el
+        // periodo de facturación: es un contrato en UF, no un cargo mensual.
+        F('[data-total-period]').textContent = anual ? '/año' : '/mes';
+
+        F('[data-save]').hidden = !anual;
+        F('[data-nudge]').hidden = anual;
+
+        if (anual) {
+          F('[data-save-amount]').textContent = 'Ahorras ' + uf(ahorro) + ' al año';
+          F('[data-save-note]').textContent = DESCUENTO + '% menos que pagando mes a mes. Equivale a ' + uf(total / 12) + ' al mes.';
+          F('[data-fineprint]').textContent = 'Facturado una vez al año. ' + IVA + ' ' + CHIP;
+        } else {
+          F('[data-fineprint]').textContent = IVA + ' ' + CHIP + ' Sin costos ocultos.';
+          F('[data-nudge-total]').textContent = uf(n * cfg.veh.anio + c * cfg.cuenta.anio);
+          F('[data-nudge-amount]').textContent = uf(ahorro);
+        }
+      }
+
+      function render() {
+        // Mostrar la tarjeta antes de medir: placeBubble usa el ancho del riel,
+        // y un elemento con hidden mide 0.
+        cardP.hidden = plan !== 'particular';
+        cardF.hidden = plan !== 'flota';
+        grupoFlota.hidden = plan !== 'flota';
+        leadIncluido.textContent = LEAD[plan];
+        if (plan === 'particular') renderParticular(); else renderFlota();
+      }
+
+      function grupo(sel, attr, set) {
+        var btns = document.querySelectorAll(sel);
+        [].forEach.call(btns, function (btn) {
+          btn.addEventListener('click', function () {
+            set(btn.getAttribute(attr));
+            [].forEach.call(btns, function (b) {
+              b.classList.toggle('is-active', b === btn);
+              b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+            });
+            render();
+          });
+        });
+      }
+      // Plan y periodo son independientes: cambiar de pill conserva el periodo.
+      grupo('.plan-pills__opt', 'data-plan', function (v) { plan = v; });
+      grupo('.billing-toggle__opt', 'data-period', function (v) { period = v; });
+
+      [].forEach.call(document.querySelectorAll('.calc__slider'), function (s) {
+        s.addEventListener('input', render);
+        s.addEventListener('change', render);
+      });
+      P('[data-bridge-btn]').addEventListener('click', function () {
+        document.querySelector('.plan-pills__opt[data-plan="flota"]').click();
+      });
+      [].forEach.call(document.querySelectorAll('[data-nudge-btn]'), function (b) {
+        b.addEventListener('click', function () {
+          document.querySelector('.billing-toggle__opt[data-period="anual"]').click();
         });
       });
-      document.querySelector('[data-nudge-btn]').addEventListener('click', function () {
-        var anual = document.querySelector('.billing-toggle__opt[data-period="anual"]');
-        if (anual) anual.click();
-      });
-      slider.addEventListener('input', render);
-      slider.addEventListener('change', render);
+
       window.addEventListener('resize', render);
       render();
     })();

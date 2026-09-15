@@ -487,6 +487,30 @@ a { color: inherit; }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
+/* Planes — Selector de plan (uso particular / flotas).
+   Mismo lenguaje visual que el toggle de facturación de abajo: los dos son
+   controles del mismo precio y tienen que leerse como una familia. */
+.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+.plan-pills {
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
+}
+.plan-pills__opt {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
+  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  transition: background-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+.plan-pills__opt:hover { color: var(--tinta); }
+.plan-pills__opt.is-active { background: var(--azul); color: #fff; }
+.plan-pills__hint {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
+  border-radius: var(--radius-pill); background: var(--azul-soft); color: var(--azul);
+}
+.plan-pills__opt.is-active .plan-pills__hint { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
 /* Planes — Toggle de facturación (mensual / anual) */
 .billing-toggle-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 28px; }
 
@@ -675,6 +699,53 @@ a { color: inherit; }
   background: var(--azul-soft); color: var(--azul); font-size: 13px; font-weight: 600;
 }
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* Planes — Piezas de la calculadora de dos planes.
+   .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
+   por eso hay que apagarlo a mano. Los divs que siguen son block y no lo
+   necesitarían, pero se declaran igual para que nadie los "arregle" después
+   poniéndoles un display y los rompa en silencio. */
+.calc[hidden], .calc__control[hidden], .calc__precio[hidden],
+.calc__contacto[hidden], .calc__bridge[hidden], .included__group[hidden] { display: none; }
+
+/* Flotas apila dos sliders: vehículos y cuentas de conductor. */
+.calc__control + .calc__control { margin-top: 30px; }
+
+/* Flotas desglosa el precio en líneas con subtotal a la derecha. */
+.calc__lineas { display: flex; flex-direction: column; gap: 8px; }
+.calc__linea {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  font-size: 14px; color: var(--acero);
+}
+.calc__linea[hidden] { display: none; }
+.calc__linea__monto {
+  font-family: var(--font-mono); font-size: 13px; color: var(--tinta); white-space: nowrap;
+}
+
+/* Particular — puente hacia Flotas cuando el slider llega al tope. */
+.calc__bridge {
+  display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 0;
+  padding: 14px 16px; border-radius: var(--radius-md); background: var(--azul-soft);
+}
+.calc__bridge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
+.calc__bridge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
+.calc__bridge__text strong { color: var(--tinta); font-weight: 600; }
+.calc__bridge__btn {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 5px; padding: 0;
+  border: 0; background: transparent; cursor: pointer; font-family: var(--font-sans);
+  font-size: 14px; font-weight: 600; color: var(--azul);
+}
+.calc__bridge__btn:hover { text-decoration: underline; }
+
+/* Flotas — tramo "Más de 100": reemplaza el precio por un llamado a contacto. */
+.calc__contacto {
+  margin: 8px 0 0; padding: 20px 22px; border-radius: var(--radius-md); background: var(--azul-soft);
+}
+.calc__contacto__title { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.calc__contacto__text { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
+.calc__contacto__mail {
+  display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--azul);
+}
 
 /* ===================================================================
    Página Legal (¿Es legal?)
@@ -1052,6 +1123,12 @@ a { color: inherit; }
   .calc__actions { flex-direction: column; }
   .calc__actions .btn { width: 100%; }
   .billing-note__text { font-size: 19px; }
+  /* Bajo 560px las pills ocupan el ancho y el hint "sobre 10" estorba. */
+  .plan-pills { width: 100%; }
+  .plan-pills__opt { flex: 1; justify-content: center; padding: 9px 12px; }
+  .plan-pills__hint { display: none; }
+  .calc__control + .calc__control { margin-top: 26px; }
+  .calc__linea { font-size: 13px; }
 
   /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
   .step__llavero { height: 90px; }

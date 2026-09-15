@@ -12,7 +12,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 |---|---|---|
 | Home / Landing | [`index.html`](index.html) | Hero con rotor de palabra, "¿Para quién es?", "Cómo funciona", "Un toque, toda la operación", beneficios, showcase de la ficha, CTA |
 | ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08) + FAQ de 9 preguntas |
-| Planes | [`planes/index.html`](planes/index.html) | Calculadora con slider, toggle mensual/anual con el ahorro en pesos, "Todo incluido" por audiencia, FAQ, CTA |
+| Planes | [`planes/index.html`](planes/index.html) | Pills de plan (Uso particular / Flotas), toggle mensual/anual con el ahorro, calculadora con slider por plan, "Todo incluido" por audiencia, FAQ, CTA |
 | Términos y Condiciones | [`terminos/index.html`](terminos/index.html) | Términos del servicio con la política de privacidad incluida. Enlazada solo desde el footer, no desde el nav |
 | ¿Es legal? | [`legal/index.html`](legal/index.html) | Tabla documento por documento, las cuatro bases normativas, los tres requisitos de validez, qué pasa en un control, referencias oficiales y FAQ de 8 preguntas. **Es la página pensada para captar búsqueda**: "¿es legal mostrar los documentos del auto en digital?" es una consulta real y poco respondida |
 
@@ -76,7 +76,7 @@ Cada página lleva su script incrustado al final del `<body>`:
 - **Rotor del hero** (home) — la palabra de "Tu _flota_ a un Tap." rota entre flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
 - **Reveal on scroll** (home y ¿Cómo funciona?) — `IntersectionObserver` con retraso escalonado.
 - **Contador del hero** (home) — el número de vehículos cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
-- **Calculadora** (planes) — precio por vehículo, ahorro anual en pesos, burbuja del slider y empujón al plan anual.
+- **Calculadora** (planes) — dos sistemas de precio en pills (Uso particular y Flotas), toggle mensual/anual, slider de vehículos por plan, slider de cuentas de conductor en Flotas acotado al número de vehículos, ahorro anual, burbuja del slider y empujón al plan anual. Sobre 100 vehículos reemplaza el precio por un llamado a contacto.
 
 ### Notas de responsive
 
@@ -131,7 +131,7 @@ Dos condiciones para que mida:
 - El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos; solo se paga el envío. **Pendiente:** reflejarlo en el flujo de compra de `app.tapcar.cl`.
 - Las **alertas del panel son fijas**, no configurables por el usuario.
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
-- El plan mensual son **$2.500 por vehículo al mes**; el **anual, $20.000 por vehículo al año** (equivale a $1.667 al mes, un **33% menos**). La calculadora saca todo el dinero de esas dos cifras y nunca del mensual redondeado, porque 12 × $1.667 da $20.004, no $20.000.
+- Hay dos sistemas de precio, seleccionables con pills. **Uso particular** (1 a 10 vehículos) son **$2.500 por vehículo al mes** o **$22.000 al año**, IVA incluido. **Flotas** (desde el vehículo 11) cobran por vehículo **UF 0,057 al mes** o **UF 0,5 al año**, más cada cuenta de conductor a **UF 0,12 al mes** o **UF 1,05 al año**; esos valores van más IVA. Las tres tarifas dan **−27%** en anual. La calculadora saca todo el dinero de las cifras mensual y anual, nunca del equivalente mensual redondeado: 12 × $1.833 da $21.996, no $22.000. Sobre 100 vehículos la página deja de cotizar y manda a contacto.
 - Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
 - La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7**. Se identifica en la sección 1 de `/terminos/` y en el `legalName` del schema; el pie lleva `© 2026 TapCar` y la pertenencia la comunica el lockup de Impulse AI, para no repetir la matriz dos veces en el mismo footer.
 - TapCar es **una empresa de Impulse AI**. El footer lleva el lockup oficial, versión *color*, enlazado a `https://www.impulseai.cl/`. No se recolorea: es la marca de otra empresa.
