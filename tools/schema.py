@@ -103,17 +103,22 @@ def producto():
             'Datos del vehículo: combustible, neumáticos, transmisión y aceite',
         ],
         'provider': {'@id': ORG},
+        # El AggregateOffer admite una sola priceCurrency, y acá conviven pesos
+        # (Particular) y UF (Flotas). Se deja en CLP con el rango de Particular
+        # en lowPrice/highPrice, y cada oferta de Flotas declara su propia
+        # priceCurrency CLF, que es el codigo ISO 4217 de la Unidad de Fomento.
+        # Es lo mas cerca de la verdad que permite el vocabulario.
         'offers': {
             '@type': 'AggregateOffer',
             'priceCurrency': 'CLP',
-            'lowPrice': '20000',
+            'lowPrice': '22000',
             'highPrice': '30000',
-            'offerCount': 2,
+            'offerCount': 4,
             'offers': [
                 {
                     '@type': 'Offer',
-                    'name': 'Plan mensual',
-                    'description': '$2.500 por vehículo al mes, sin permanencia.',
+                    'name': 'Uso particular — plan mensual',
+                    'description': '$2.500 por vehículo al mes, hasta 10 vehículos, sin permanencia.',
                     'price': '2500',
                     'priceCurrency': 'CLP',
                     'availability': 'https://schema.org/InStock',
@@ -132,21 +137,66 @@ def producto():
                 },
                 {
                     '@type': 'Offer',
-                    'name': 'Plan anual',
-                    'description': '$20.000 por vehículo al año, un 33% menos que pagando mes a mes.',
-                    'price': '20000',
+                    'name': 'Uso particular — plan anual',
+                    'description': '$22.000 por vehículo al año, un 27% menos que pagando mes a mes.',
+                    'price': '22000',
                     'priceCurrency': 'CLP',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
                     'priceSpecification': {
                         '@type': 'UnitPriceSpecification',
-                        'price': '20000',
+                        'price': '22000',
                         'priceCurrency': 'CLP',
                         'unitText': 'vehículo',
                         'billingIncrement': 1,
                         'billingDuration': 1,
                         'referenceQuantity': {
                             '@type': 'QuantitativeValue', 'value': 1, 'unitCode': 'ANN'
+                        },
+                    },
+                },
+                {
+                    '@type': 'Offer',
+                    'name': 'Flotas — vehículo',
+                    'description': 'UF 0,5 por vehículo al año más IVA, desde 10 vehículos.',
+                    'price': '0.5',
+                    'priceCurrency': 'CLF',
+                    'availability': 'https://schema.org/InStock',
+                    'url': SITIO + '/planes/',
+                    'eligibleQuantity': {
+                        '@type': 'QuantitativeValue', 'minValue': 10, 'unitText': 'vehículo'
+                    },
+                    'priceSpecification': {
+                        '@type': 'UnitPriceSpecification',
+                        'price': '0.5',
+                        'priceCurrency': 'CLF',
+                        'valueAddedTaxIncluded': False,
+                        'unitText': 'vehículo',
+                        'billingIncrement': 1,
+                        'billingDuration': 1,
+                        'referenceQuantity': {
+                            '@type': 'QuantitativeValue', 'value': 1, 'unitCode': 'ANN'
+                        },
+                    },
+                },
+                {
+                    '@type': 'Offer',
+                    'name': 'Flotas — cuenta de conductor fijo',
+                    'description': 'UF 0,12 al mes más IVA por cada conductor con cuenta propia. La asignación de conductor va incluida.',
+                    'price': '0.12',
+                    'priceCurrency': 'CLF',
+                    'availability': 'https://schema.org/InStock',
+                    'url': SITIO + '/planes/',
+                    'priceSpecification': {
+                        '@type': 'UnitPriceSpecification',
+                        'price': '0.12',
+                        'priceCurrency': 'CLF',
+                        'valueAddedTaxIncluded': False,
+                        'unitText': 'conductor',
+                        'billingIncrement': 1,
+                        'billingDuration': 1,
+                        'referenceQuantity': {
+                            '@type': 'QuantitativeValue', 'value': 1, 'unitCode': 'MON'
                         },
                     },
                 },

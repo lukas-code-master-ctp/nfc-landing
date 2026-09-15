@@ -1238,7 +1238,7 @@ a { color: inherit; }
       "@id": "https://tapcar.cl/planes/#pagina",
       "url": "https://tapcar.cl/planes/",
       "name": "Menos que un café al mes por cada vehículo.",
-      "description": "Desde $2.500 por vehículo al mes, o $20.000 al año con 33% de descuento. Chip NFC, recordatorios y panel incluidos. Sin permanencia: cancela cuando quieras.",
+      "description": "$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Desde 10, plan Flotas a UF 0,5 por vehículo al año más IVA. Sin permanencia.",
       "inLanguage": "es-CL",
       "isPartOf": {
         "@id": "https://tapcar.cl/#sitio"
@@ -1296,14 +1296,14 @@ a { color: inherit; }
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "CLP",
-        "lowPrice": "20000",
+        "lowPrice": "22000",
         "highPrice": "30000",
-        "offerCount": 2,
+        "offerCount": 4,
         "offers": [
           {
             "@type": "Offer",
-            "name": "Plan mensual",
-            "description": "$2.500 por vehículo al mes, sin permanencia.",
+            "name": "Uso particular — plan mensual",
+            "description": "$2.500 por vehículo al mes, hasta 10 vehículos, sin permanencia.",
             "price": "2500",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
@@ -1324,15 +1324,15 @@ a { color: inherit; }
           },
           {
             "@type": "Offer",
-            "name": "Plan anual",
-            "description": "$20.000 por vehículo al año, un 33% menos que pagando mes a mes.",
-            "price": "20000",
+            "name": "Uso particular — plan anual",
+            "description": "$22.000 por vehículo al año, un 27% menos que pagando mes a mes.",
+            "price": "22000",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
             "url": "https://tapcar.cl/planes/",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
-              "price": "20000",
+              "price": "22000",
               "priceCurrency": "CLP",
               "unitText": "vehículo",
               "billingIncrement": 1,
@@ -1341,6 +1341,57 @@ a { color: inherit; }
                 "@type": "QuantitativeValue",
                 "value": 1,
                 "unitCode": "ANN"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Flotas — vehículo",
+            "description": "UF 0,5 por vehículo al año más IVA, desde 10 vehículos.",
+            "price": "0.5",
+            "priceCurrency": "CLF",
+            "availability": "https://schema.org/InStock",
+            "url": "https://tapcar.cl/planes/",
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "minValue": 10,
+              "unitText": "vehículo"
+            },
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "0.5",
+              "priceCurrency": "CLF",
+              "valueAddedTaxIncluded": false,
+              "unitText": "vehículo",
+              "billingIncrement": 1,
+              "billingDuration": 1,
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitCode": "ANN"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Flotas — cuenta de conductor fijo",
+            "description": "UF 0,12 al mes más IVA por cada conductor con cuenta propia. La asignación de conductor va incluida.",
+            "price": "0.12",
+            "priceCurrency": "CLF",
+            "availability": "https://schema.org/InStock",
+            "url": "https://tapcar.cl/planes/",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "0.12",
+              "priceCurrency": "CLF",
+              "valueAddedTaxIncluded": false,
+              "unitText": "conductor",
+              "billingIncrement": 1,
+              "billingDuration": 1,
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitCode": "MON"
               }
             }
           }
@@ -1356,7 +1407,31 @@ a { color: inherit; }
           "name": "¿Cuánto cuesta?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "$2.500 por vehículo al mes — menos que un café. Con el plan anual son $20.000 por vehículo al año, un 33% menos. Es una tarifa fija por vehículo, con toda la plataforma incluida y sin costos ocultos."
+            "text": "Hasta 10 vehículos, $2.500 por vehículo al mes — menos que un café. Con el plan anual son $22.000 por vehículo al año, un 27% menos. Desde 10 vehículos pasas al plan Flotas: UF 0,5 por vehículo al año más IVA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuándo paso a Flotas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Desde 10 vehículos. Flotas cambia la tarifa a UF por vehículo y suma la opción de darle cuenta propia a cada conductor. Sobre 100 vehículos lo conversamos: escríbenos a contacto@tapcar.cl y armamos una propuesta a la medida."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué es un conductor fijo y qué se cobra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Son dos cosas distintas. La asignación —que el vehículo tenga un conductor titular, que aparezca prellenado al abrir la ficha y que puedas saltarte el PIN— va incluida. La cuenta es que ese conductor entre con su propio usuario y mantenga solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento, sin ver la flota ni a sus compañeros. Eso cuesta UF 0,12 al mes y no ocupa lugar en el tope de 5 personas del equipo. Se cobra la cuenta, no la asignación."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Los precios incluyen IVA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Los precios en pesos del plan particular sí: $2.500 y $22.000 son lo que pagas. Los valores en UF del plan Flotas van más IVA, como es habitual entre empresas."
           }
         },
         {
@@ -1388,7 +1463,7 @@ a { color: inherit; }
           "name": "¿Y si sumo más vehículos?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Agregas vehículos cuando quieras; se suman a tu suscripción a $2.500 c/u. Te enviamos los chips de los vehículos nuevos."
+            "text": "Agregas vehículos cuando quieras y se suman a tu suscripción. Si pasas de 10, tu cuenta se cotiza como Flotas. Te enviamos los chips de los vehículos nuevos."
           }
         },
         {
