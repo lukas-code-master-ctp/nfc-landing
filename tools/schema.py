@@ -160,13 +160,13 @@ def producto():
                 {
                     '@type': 'Offer',
                     'name': 'Flotas — vehículo',
-                    'description': 'UF 0,5 por vehículo al año más IVA, desde 10 vehículos.',
+                    'description': 'UF 0,5 por vehículo al año más IVA, desde el vehículo 11.',
                     'price': '0.5',
                     'priceCurrency': 'CLF',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
                     'eligibleQuantity': {
-                        '@type': 'QuantitativeValue', 'minValue': 10, 'unitText': 'vehículo'
+                        '@type': 'QuantitativeValue', 'minValue': 11, 'unitText': 'vehículo'
                     },
                     'priceSpecification': {
                         '@type': 'UnitPriceSpecification',
