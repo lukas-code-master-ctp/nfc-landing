@@ -804,8 +804,9 @@ a { color: inherit; }
 .form__salida { margin: 14px 0 0; font-size: 13px; color: var(--acero); }
 .form__salida a { color: var(--azul); font-weight: 600; }
 
-/* Trampa para bots. Fuera de pantalla y no display:none, porque hay bots que
-   leen el CSS y se saltan justamente los campos ocultos de esa forma. */
+/* Trampa para bots. Se esconde midiendo 1×1 y recortando con clip-path, no
+   con display:none, porque hay bots que leen el CSS y se saltan justamente los
+   campos ocultos de esa forma. */
 .form__trampa {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip-path: inset(50%); white-space: nowrap;
@@ -821,7 +822,17 @@ a { color: inherit; }
 .form__ok:focus { outline: none; }
 .form__ok__icon { flex: 0 0 auto; margin-top: 2px; }
 .form__ok__title { margin: 0; font-size: 16px; font-weight: 700; }
-.form__ok__text { margin: 4px 0 0; font-size: 14px; line-height: 1.5; opacity: 0.9; }
+.form__ok__text { margin: 4px 0 0; font-size: 14px; line-height: 1.5; }
+
+/* El formulario vive sobre .calc__contacto, que es azul-soft: el anillo de
+   foco y los bordes de arriba se escribieron para fondo blanco y ahi
+   desaparecen. Estos valores estan medidos contra #eaeefc:
+   el anillo da 3,4:1 y el borde 3,6:1, sobre el 3:1 que pide WCAG 1.4.11. */
+.calc__contacto .form__input { border-color: #6d7c9b; }
+.calc__contacto .form__input:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px rgba(41, 82, 230, 0.75);
+}
 
 /* ===================================================================
    Página Legal (¿Es legal?)
@@ -1782,7 +1793,7 @@ a { color: inherit; }
             </div>
 
             <button type="submit" class="btn btn--primary btn--lg form__enviar" data-form-btn>Enviar consulta</button>
-            <p class="form__estado" data-form-estado role="alert" aria-live="polite"></p>
+            <p class="form__estado" data-form-estado role="alert"></p>
           </form>
 
           <div class="form__ok" data-form-ok hidden tabindex="-1">
@@ -2188,6 +2199,15 @@ a { color: inherit; }
         btn.disabled = true;
         btn.textContent = 'Enviando…';
 
+        // Si la red se cuelga, el botón no puede quedarse en "Enviando…" para
+        // siempre: a los 12 segundos se le devuelve el control al visitante.
+        var resuelto = false;
+        var reloj = setTimeout(function () {
+          if (resuelto) return;
+          resuelto = true;
+          fallar(SALIDA);
+        }, 12000);
+
         fetch('/api/contacto', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -2205,6 +2225,9 @@ a { color: inherit; }
           // Vercel), json() rechaza y cae en el catch de abajo.
           return r.json().then(function (cuerpo) { return { ok: r.ok, cuerpo: cuerpo }; });
         }).then(function (r) {
+          if (resuelto) return;
+          resuelto = true;
+          clearTimeout(reloj);
           if (r.ok && r.cuerpo && r.cuerpo.ok) {
             form.hidden = true;
             ok.hidden = false;
@@ -2214,6 +2237,9 @@ a { color: inherit; }
           }
           fallar((r.cuerpo && r.cuerpo.error) || SALIDA);
         })['catch'](function () {
+          if (resuelto) return;
+          resuelto = true;
+          clearTimeout(reloj);
           fallar(SALIDA);
         });
       });
