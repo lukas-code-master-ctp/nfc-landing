@@ -20,6 +20,15 @@ function texto(v) {
   return typeof v === 'string' ? v.trim() : '';
 }
 
+// Los campos de una sola linea se limpian de saltos y de caracteres de
+// control. `empresa` viaja al asunto del correo, y el asunto es un encabezado:
+// un salto ahi seria inyeccion de encabezados, el mismo riesgo que la regex
+// del correo ya cubre para reply_to. `mensaje` no pasa por aca, porque ahi los
+// saltos son legitimos y solo van al cuerpo en texto plano.
+function linea(v) {
+  return texto(v).replace(/[\u0000-\u001F\u007F]+/g, ' ').trim();
+}
+
 function entero(v) {
   if (typeof v === 'number' && Number.isInteger(v)) return v;
   if (typeof v === 'string' && /^\d+$/.test(v.trim())) return parseInt(v.trim(), 10);
@@ -29,10 +38,10 @@ function entero(v) {
 function normalizar(body) {
   var b = body || {};
   return {
-    nombre: texto(b.nombre),
-    empresa: texto(b.empresa),
-    email: texto(b.email),
-    telefono: texto(b.telefono),
+    nombre: linea(b.nombre),
+    empresa: linea(b.empresa),
+    email: linea(b.email),
+    telefono: linea(b.telefono),
     vehiculos: entero(b.vehiculos),
     mensaje: texto(b.mensaje),
     sitio: texto(b.sitio)

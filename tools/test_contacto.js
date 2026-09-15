@@ -248,6 +248,50 @@ async function main() {
     assert.strictEqual(ultimoCorreo().reply_to, 'juan@acme.cl');
   });
 
+  // `empresa` viaja al asunto, que es un encabezado del correo: mismo riesgo
+  // que reply_to, que ya estaba cubierto.
+  await prueba('limpia los saltos de linea de la empresa antes del asunto', async function () {
+    var r = res();
+    await handler(req(datos({ empresa: 'ACME\nBcc: victima@ejemplo.cl' })), r);
+    assert.strictEqual(r.codigo, 200);
+    var correo = ultimoCorreo();
+    assert.doesNotMatch(correo.subject, /[\r\n]/);
+    assert.match(correo.subject, /ACME Bcc: victima@ejemplo\.cl/);
+  });
+
+  await prueba('limpia los saltos de linea del nombre y del telefono', async function () {
+    var r = res();
+    await handler(req(datos({ nombre: 'Juan\r\nPérez', telefono: '+56 9\n1234' })), r);
+    assert.strictEqual(r.codigo, 200);
+    var correo = ultimoCorreo();
+    assert.match(correo.text, /Nombre:     Juan Pérez/);
+    assert.match(correo.text, /Teléfono:   \+56 9 1234/);
+  });
+
+  // El mensaje si puede llevar saltos: va al cuerpo en texto plano, no a un
+  // encabezado.
+  await prueba('conserva los saltos de linea del mensaje', async function () {
+    var r = res();
+    await handler(req(datos({ mensaje: 'Primera línea.\nSegunda línea.' })), r);
+    assert.strictEqual(r.codigo, 200);
+    assert.match(ultimoCorreo().text, /Primera línea\.\nSegunda línea\./);
+  });
+
+  await prueba('acepta el limite superior de vehiculos', async function () {
+    var r = res();
+    await handler(req(datos({ vehiculos: 100000 })), r);
+    assert.strictEqual(r.codigo, 200);
+  });
+
+  await prueba('rechaza los campos de una linea demasiado largos', async function () {
+    var casos = [{ nombre: 'x'.repeat(121) }, { empresa: 'x'.repeat(121) }, { telefono: 'x'.repeat(41) }];
+    for (var i = 0; i < casos.length; i++) {
+      var r = res();
+      await handler(req(datos(casos[i])), r);
+      assert.strictEqual(r.codigo, 400, 'el caso ' + i + ' deberia rechazarse');
+    }
+  });
+
   // ── Cierre ────────────────────────────────────────────────────────
   globalThis.fetch = fetchOriginal;
   if (keyOriginal === undefined) delete process.env.RESEND_API_KEY;
