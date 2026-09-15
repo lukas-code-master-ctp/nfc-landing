@@ -9,9 +9,10 @@
 // Es lo que impide que alguien use este endpoint para mandar correo a otros:
 // lo peor que puede pasar es que llenen la casilla de TapCar.
 var DESTINO = 'contacto@tapcar.cl';
-// Depende de que tapcar.cl este verificado como dominio en Resend. Si algun
-// dia se verifica otro dominio o subdominio, se cambia esta linea.
-var REMITENTE = 'TapCar web <web@tapcar.cl>';
+// El dominio verificado en Resend es el subdominio notifications.tapcar.cl,
+// no el apex: mandar desde @tapcar.cl lo rechaza. Si algun dia se verifica
+// otro, se cambia esta linea.
+var REMITENTE = 'TapCar <no-replay@notifications.tapcar.cl>';
 var RESEND = 'https://api.resend.com/emails';
 
 var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

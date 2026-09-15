@@ -132,7 +132,7 @@ Dos decisiones que conviene no deshacer:
 - **El destinatario está escrito en el código**, nunca se lee del cuerpo de la petición. Es lo que impide que alguien use el endpoint para mandar correo a terceros: lo peor que puede pasar es que llenen la casilla de TapCar.
 - **El correo va en texto plano** (campo `text` de Resend, nunca `html`). Con HTML habría que escapar cada valor antes de interpolarlo o se puede inyectar markup en el correo que llega.
 
-El remitente es `web@tapcar.cl` y depende de que **`tapcar.cl` esté verificado como dominio en Resend**. Si algún día se verifica otro dominio o subdominio, hay que cambiar la constante `REMITENTE` de la función.
+El remitente es `no-replay@notifications.tapcar.cl`. El dominio verificado en Resend es **el subdominio `notifications.tapcar.cl`, no el apex `tapcar.cl`**: mandar desde `@tapcar.cl` lo rechaza, porque el apex solo tiene los registros de Google Workspace. Si algún día se verifica otro dominio, hay que cambiar la constante `REMITENTE` de la función.
 
 Contra el spam hay un campo trampa (`sitio`), topes de largo en todos los campos y rechazo de todo lo que no sea POST. No hay captcha a propósito: agrega fricción a la consulta más valiosa del sitio y el destinatario fijo ya acota el daño. Si aparece abuso real, lo que corresponde es activar rate limiting en el WAF de Vercel desde el panel — disponible desde el plan Pro en adelante, no en Hobby — porque entre invocaciones serverless no hay estado compartido para implementarlo a mano.
 
@@ -159,7 +159,7 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 ### Puesta en marcha
 
 1. Crear cuenta en [resend.com](https://resend.com).
-2. Agregar y verificar el dominio **`tapcar.cl`** con los registros DNS que entrega Resend.
+2. Agregar y verificar el dominio en Resend con los registros DNS que entrega. Hoy el verificado es **`notifications.tapcar.cl`**; el apex `tapcar.cl` no sirve como remitente.
 3. Crear una API key con permiso de envío.
 4. Cargarla en Vercel como `RESEND_API_KEY`, en los tres entornos.
 5. **Volver a desplegar.** Las variables de entorno no se aplican a despliegues ya hechos.
