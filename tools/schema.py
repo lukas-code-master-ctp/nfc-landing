@@ -179,7 +179,7 @@ def producto():
                 {
                     '@type': 'Offer',
                     'name': 'Flotas — vehículo',
-                    'description': 'UF %s por vehículo al año más IVA, desde el vehículo %d.'
+                    'description': 'UF %s por vehículo al año más IVA, desde %d vehículos.'
                                    % (_uf(_FLOTA['vehiculo']['anio']), _FLOTA['vehiculos']['min']),
                     'price': str(_FLOTA['vehiculo']['anio']),
                     'priceCurrency': 'CLF',

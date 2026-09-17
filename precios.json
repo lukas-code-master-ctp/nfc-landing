@@ -14,9 +14,21 @@
     "Tras editarlo:  python tools/precios.py --generar && python tools/schema.py",
     "Para comprobar que el sitio calza:  python tools/precios.py"
   ],
-  "actualizado": "2026-09-15",
+  "actualizado": "2026-09-17",
 
   "planes": {
+    "_comentario": [
+      "Los rangos SE SOLAPAN entre 5 y 10 vehiculos, y es a proposito: ahi manda",
+      "el tipo de cuenta que elige el cliente, no la cantidad de vehiculos.",
+      "Bajo 5 solo existe Particular. De 5 a 10 el cliente elige. Desde 11 es",
+      "obligatorio Flotas. En esa banda Flotas sale algo mas caro al mismo numero",
+      "de vehiculos, y se toma por lo que habilita -- cuentas de conductor y",
+      "reportes de uso --, no por precio.",
+      "",
+      "OJO con flota.vehiculos.max: ese 100 NO es el techo del plan. El plan",
+      "Flotas no tiene tope. Es hasta donde se contrata solo desde la web; sobre",
+      "eso se cotiza con el equipo, que es lo que dice sobre_el_maximo."
+    ],
     "particular": {
       "nombre": "Uso particular",
       "vehiculos": { "min": 1, "max": 10 },
@@ -26,7 +38,7 @@
     },
     "flota": {
       "nombre": "Flotas",
-      "vehiculos": { "min": 11, "max": 100 },
+      "vehiculos": { "min": 5, "max": 100 },
       "moneda": "CLF",
       "iva_incluido": false,
       "vehiculo": { "mes": 0.057, "anio": 0.5 },
@@ -48,8 +60,7 @@
   },
 
   "cifras_ajenas": {
-    "_comentario": "Cifras que el sitio menciona a proposito y que NO son tarifas vigentes de TapCar. El revisor no las marca como error.",
-    "$1.000": "Lo que app.tapcar.cl todavia cobra por chip bajo 5 vehiculos: el modelo viejo. El README lo documenta como pendiente."
+    "_comentario": "Cifras que el sitio menciona a proposito y que NO son tarifas vigentes de TapCar. El revisor no las marca como error. Hoy no hay ninguna declarada: la del chip bajo 5 vehiculos se borro el 2026-09-17, cuando app.tapcar.cl dejo de cobrarlo."
   },
 
   "equipo": {
