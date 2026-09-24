@@ -1019,6 +1019,15 @@ select.form__input {
 .rubro__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .rubro__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 .rubro__tipos { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Planes — la franja del rubro explica cada perfil en una línea. */
+.rubro-banda { max-width: 1140px; margin: 24px auto 0; padding: 0 24px; }
+.rubro-banda .rubro { margin-top: 0; }
+.rubro__lista {
+  margin: 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.rubro__lista li { font-size: 14px; line-height: 1.5; color: var(--acero); }
+.rubro__lista strong { color: var(--tinta); font-weight: 600; }
 
 /* ===================================================================
    Documento legal (Términos y Condiciones)
@@ -1413,6 +1422,7 @@ select.form__input {
         <a href="/como-funciona/" class="nav__link">¿Cómo funciona?</a>
         <a href="/legal/" class="nav__link">¿Es legal?</a>
         <a href="/planes/" class="nav__link">Planes</a>
+        <a href="/socios/" class="nav__link">Socios</a>
       </nav>
       <div class="nav__actions">
         <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
@@ -1427,6 +1437,7 @@ select.form__input {
       <a href="/como-funciona/" class="nav__panel-link" data-nav="/como-funciona/">¿Cómo funciona?</a>
       <a href="/legal/" class="nav__panel-link" data-nav="/legal/">¿Es legal?</a>
       <a href="/planes/" class="nav__panel-link" data-nav="/planes/">Planes</a>
+      <a href="/socios/" class="nav__panel-link" data-nav="/socios/">Socios</a>
       <div class="nav__panel-actions">
         <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
       </div>

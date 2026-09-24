@@ -12,8 +12,8 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 |---|---|---|
 | Home / Landing | [`index.html`](index.html) | Hero con rotor de palabra, "¿Para quién es?", franja de empresas del rubro, "Cómo funciona", "Un toque, toda la operación", beneficios, showcase de la ficha, CTA |
 | ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08) + FAQ de 9 preguntas |
-| Planes | [`planes/index.html`](planes/index.html) | Pills de plan (Uso particular / Flotas), toggle mensual/anual con el ahorro, calculadora con slider por plan, "Todo incluido" por audiencia, FAQ, CTA |
-| Empresas del rubro | [`socios/index.html`](socios/index.html) | Los tres perfiles (automotoras y aseguradoras con Convenio, gestorías con Envíos), cómo se empieza, FAQ de 5 preguntas y formulario de contacto. Enlazada desde la franja del home y el footer, no desde el nav |
+| Planes | [`planes/index.html`](planes/index.html) | Pills de plan (Uso particular / Flotas), toggle mensual/anual con el ahorro, calculadora con slider por plan, "Todo incluido" por audiencia, franja de empresas del rubro, FAQ, CTA |
+| Empresas del rubro | [`socios/index.html`](socios/index.html) | Los tres perfiles (automotoras y aseguradoras con Convenio, gestorías con Envíos), cómo se empieza, FAQ de 5 preguntas y formulario de contacto. Enlazada desde el nav ("Socios"), la franja del home, la franja de Planes y el footer |
 | Términos de uso y privacidad | [`terminos/index.html`](terminos/index.html) | Términos del **sitio** y cómo trata los datos que se dejan en él. El servicio tiene sus propios términos, que la app pide aceptar al crear la cuenta según el tipo de cuenta. Enlazada solo desde el footer, no desde el nav |
 | ¿Es legal? | [`legal/index.html`](legal/index.html) | Tabla documento por documento, las cuatro bases normativas, los tres requisitos de validez, qué pasa en un control, referencias oficiales y FAQ de 8 preguntas. **Es la página pensada para captar búsqueda**: "¿es legal mostrar los documentos del auto en digital?" es una consulta real y poco respondida |
 
