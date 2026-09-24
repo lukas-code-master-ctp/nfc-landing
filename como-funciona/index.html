@@ -1599,10 +1599,11 @@ select.form__input {
           <li class="hw-step">
             <div class="hw-step__rail"><span class="hw-step__num">01</span><span class="hw-step__line"></span></div>
             <div class="hw-step__body">
-              <h3 class="hw-step__title">Crea tu cuenta y carga tus vehículos</h3>
-              <p class="hw-step__text">Registra cada vehículo con su patente, marca y modelo. Si operas como empresa, puedes sumar tus datos (RUT, razón social y giro); si son los autos de tu casa, no hace falta. Y si ya los tienes en una planilla, los importas desde Excel en vez de cargarlos a mano.</p>
+              <h3 class="hw-step__title">Crea tu cuenta y carga tus vehículos con IA</h3>
+              <p class="hw-step__text">Registra cada vehículo a mano o usa la Carga inteligente: sueltas hasta 40 PDF o fotos de sus documentos y la IA detecta el tipo, la patente, el vencimiento, la marca, el modelo, el año y el color. Agrupa todo por patente y te propone qué crear; tú revisas antes de importar. Si operas como empresa, puedes sumar tus datos (RUT, razón social y giro); si son los autos de tu casa, no hace falta.</p>
               <div class="hw-step__chips">
-                <span class="hw-chip">Importar desde Excel</span>
+                <span class="hw-chip">Carga inteligente con IA</span>
+                <span class="hw-chip">Hasta 40 archivos</span>
                 <span class="hw-chip">Datos de empresa opcionales</span>
               </div>
             </div>
@@ -1612,7 +1613,7 @@ select.form__input {
             <div class="hw-step__rail"><span class="hw-step__num">02</span><span class="hw-step__line"></span></div>
             <div class="hw-step__body">
               <h3 class="hw-step__title">Sube los documentos de cada vehículo</h3>
-              <p class="hw-step__text">Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo y su fecha de vencimiento. TapCar calcula solo el estado de cada documento y lo mantiene a la vista.</p>
+              <p class="hw-step__text">Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Homologación (C.H.I.-e), Padrón y cualquier otro con el nombre que quieras. Puedes subir el PDF o sacarle fotos —hasta 10 hojas por documento, con recorte— y TapCar las junta en un PDF. La IA te sugiere la fecha de vencimiento y tú la confirmas; desde ahí, TapCar calcula el estado de cada documento y lo mantiene a la vista.</p>
               <div class="hw-step__chips">
                 <span class="badge badge--al_dia">Vigente</span>
                 <span class="badge badge--por_vencer">Por vencer</span>
@@ -1625,10 +1626,11 @@ select.form__input {
             <div class="hw-step__rail"><span class="hw-step__num">03</span><span class="hw-step__line"></span></div>
             <div class="hw-step__body">
               <h3 class="hw-step__title">Suma a tus conductores con un PIN</h3>
-              <p class="hw-step__text">Cada conductor queda registrado con un PIN de 4 dígitos que tú le asignas. No crean cuenta, no descargan nada y no tienen que recordar una contraseña. Puedes cambiar el PIN o desactivar a un conductor cuando quieras.</p>
+              <p class="hw-step__text">Cada conductor queda registrado con un PIN de 4 dígitos que tú le asignas. No crean cuenta, no descargan nada y no tienen que recordar una contraseña. Si ya los tienes en una planilla, pegas las filas desde Excel y quedan importados. Puedes cambiar el PIN o desactivar a un conductor cuando quieras.</p>
               <div class="hw-step__chips">
+                <span class="plan-tag">Solo en Flotas</span>
                 <span class="hw-chip">PIN de 4 dígitos</span>
-                <span class="hw-chip">Sin cuentas ni apps</span>
+                <span class="hw-chip">Importar desde Excel</span>
               </div>
             </div>
           </li>
@@ -1639,9 +1641,10 @@ select.form__input {
               <div class="hw-step__cols">
                 <div>
                   <h3 class="hw-step__title">Graba el chip NFC y déjalo con el vehículo</h3>
-                  <p class="hw-step__text">Cada vehículo tiene una URL única y permanente. La grabas en su chip NFC y lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho, desde $2.000.</p>
+                  <p class="hw-step__text">Cada vehículo tiene una URL única. La grabas en su chip NFC desde tu propio celular si es Android; en iPhone, con la app NFC Tools y la guía que te damos. Lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho, desde $2.000.</p>
                   <div class="hw-step__chips">
                     <span class="hw-chip">Una URL por vehículo</span>
+                    <span class="hw-chip">Android o iPhone</span>
                     <span class="hw-chip">Parabrisas o llavero</span>
                   </div>
                 </div>
@@ -1662,7 +1665,7 @@ select.form__input {
           </h2>
           <span class="hw-phase__rule"></span>
         </div>
-        <p class="hw-phase__note">Desde acá todo parte del mismo gesto. La misma ficha resuelve tres cosas distintas según quién la abra: el conductor, quien fiscaliza y tú.</p>
+        <p class="hw-phase__note">Desde acá todo parte del mismo gesto. La misma ficha resuelve cosas distintas según quién la abra: quien fiscaliza, tú y, en Flotas, el conductor.</p>
 
         <ol class="hw-steps">
 
@@ -1672,6 +1675,7 @@ select.form__input {
               <h3 class="hw-step__title">El conductor toma el vehículo con un Tap</h3>
               <p class="hw-step__text">Acerca el teléfono al chip, elige «Tomar», ingresa su PIN y el vehículo queda a su nombre. Toma unos segundos y desde ese momento queda registrado quién lo está usando.</p>
               <div class="hw-step__chips">
+                <span class="plan-tag">Solo en Flotas</span>
                 <span class="hw-chip">Tap + PIN</span>
                 <span class="hw-chip">Queda en custodia</span>
               </div>
@@ -1682,10 +1686,12 @@ select.form__input {
             <div class="hw-step__rail"><span class="hw-step__num">06</span><span class="hw-step__line"></span></div>
             <div class="hw-step__body">
               <h3 class="hw-step__title">Al terminar, lo entrega con dos fotos</h3>
-              <p class="hw-step__text">Otro Tap, elige «Entregar» y sube dos fotos: el tablero y la cabina. La IA lee el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic. Si hay un golpe o una falla, el conductor lo reporta ahí mismo.</p>
+              <p class="hw-step__text">Otro Tap, elige «Entregar» y sube las fotos que tú definiste, por ejemplo el tablero y la cabina. La IA lee el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic. Si hay un golpe o una falla, el conductor lo reporta ahí mismo: el daño lo informa él, la IA no lo analiza. TapCar además marca «Revisar consumo» cuando el uso gastó más de lo esperado —si configuraste el rendimiento y el estanque—, detecta si la foto del odómetro es antigua o reenviada y te avisa si un uso pasa de 12 horas.</p>
               <div class="hw-step__chips">
+                <span class="plan-tag">Solo en Flotas</span>
                 <span class="hw-chip">Lectura por IA</span>
                 <span class="hw-chip">Reporte de daños</span>
+                <span class="hw-chip">Revisar consumo</span>
               </div>
             </div>
           </li>
@@ -1694,10 +1700,11 @@ select.form__input {
             <div class="hw-step__rail"><span class="hw-step__num">07</span><span class="hw-step__line"></span></div>
             <div class="hw-step__body">
               <h3 class="hw-step__title">En la calle, la fiscalización es un Tap</h3>
-              <p class="hw-step__text">Quien fiscaliza acerca su teléfono y se abre la ficha pública: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno. Es de solo lectura — no hay login, no se edita nada y no se accede a tu cuenta.</p>
+              <p class="hw-step__text">Quien fiscaliza acerca su teléfono y se abre la ficha pública: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno, las mantenciones y el aviso de daño si hay uno activo. Es de solo lectura — no hay login, no se edita nada y no se accede a tu cuenta. ¿Vas a un lugar sin señal? Guarda la ficha en tu teléfono y la abres sin conexión durante 7 días.</p>
               <div class="hw-step__chips">
                 <span class="hw-chip">Solo lectura</span>
                 <span class="hw-chip">Sin login</span>
+                <span class="hw-chip">Sin conexión, 7 días</span>
               </div>
             </div>
           </li>
@@ -1706,9 +1713,9 @@ select.form__input {
             <div class="hw-step__rail"><span class="hw-step__num">08</span><span class="hw-step__line"></span></div>
             <div class="hw-step__body">
               <h3 class="hw-step__title">Tú controlas todo desde el panel</h3>
-              <p class="hw-step__text">Ves qué vehículo está disponible y cuál está en uso, y por quién, en este momento. Las alertas te avisan de daños reportados o usos sin entrega formal, la bitácora te deja filtrar por conductor, vehículo y fecha, y los recordatorios llegan por correo antes de cada vencimiento.</p>
+              <p class="hw-step__text">Ves los documentos y las mantenciones con su estado, una etiqueta si a un vehículo le falta un documento obligatorio, y categorías, buscador y filtros para encontrar cualquier vehículo. Los recordatorios llegan por correo antes de cada vencimiento y de cada mantención. En Flotas, además ves qué vehículo está en uso y por quién, las alertas de daños y de usos sin entrega, la bitácora, y reportes que descargas en Excel o PDF.</p>
               <div class="hw-step__chips">
-                <span class="hw-chip">Estado de la flota</span>
+                <span class="hw-chip">Documentos y mantenciones</span>
                 <span class="hw-chip">Alertas</span>
                 <span class="hw-chip">Bitácora y reportes</span>
               </div>
@@ -1746,47 +1753,47 @@ select.form__input {
 
         <div class="faq__item">
           <h3 class="faq__q">¿Hay que instalar alguna app?</h3>
-          <p class="faq__a">No. Ni tú, ni tus conductores, ni quien fiscaliza. El chip abre una página web en el navegador del teléfono — eso es todo.</p>
+          <p class="faq__a">No para usar TapCar: ni tú, ni tus conductores, ni quien fiscaliza. El chip abre una página web en el navegador del teléfono. La única excepción es grabar el chip desde un iPhone, que se hace con la app NFC Tools.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Qué pasa si el teléfono no lee NFC?</h3>
-          <p class="faq__a">Cada vehículo tiene una URL única y permanente, así que la ficha se abre igual desde el enlace. El Tap es el atajo, no el requisito.</p>
+          <p class="faq__a">Cada vehículo tiene una URL única, así que la ficha se abre igual desde el enlace. El Tap es el atajo, no el requisito. Y si vas a estar sin señal, guarda la ficha en tu teléfono: se abre sin conexión durante 7 días.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Qué ve exactamente quien fiscaliza?</h3>
-          <p class="faq__a">La ficha pública de solo lectura: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno. No ve tu panel, no puede editar nada ni entrar a tu cuenta.</p>
+          <p class="faq__a">La ficha pública de solo lectura: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno, sus mantenciones y el aviso de daño si hay uno activo. No ve tu panel, no puede editar nada ni entrar a tu cuenta.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Mis conductores necesitan una cuenta?</h3>
-          <p class="faq__a">No. Se identifican con un PIN de 4 dígitos que tú les asignas. Puedes cambiarlo o desactivar a un conductor en cualquier momento.</p>
+          <p class="faq__a">No. En Flotas se identifican con un PIN de 4 dígitos que tú les asignas, y puedes cambiarlo o desactivar a un conductor en cualquier momento. Si quieres que el conductor fijo de un vehículo lo mantenga él mismo, puede tener su propia cuenta: ve solo ese vehículo, sube documentos y mantenciones y recibe los avisos. Esa cuenta se cobra aparte.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Qué documentos puedo cargar?</h3>
-          <p class="faq__a">Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo adjunto y su fecha de vencimiento.</p>
+          <p class="faq__a">Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Homologación (C.H.I.-e) y Padrón, y cualquier otro con el nombre que le pongas. Cada uno lleva su archivo —un PDF, o fotos de hasta 10 hojas que TapCar convierte en PDF— y su fecha de vencimiento. El Certificado de Gases no va aparte: viene dentro de la Revisión Técnica.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo me entero de que algo está por vencer?</h3>
-          <p class="faq__a">Cada documento muestra su estado —Vigente, Por vencer o Vencido— y te llega un correo de recordatorio antes del vencimiento, con un botón para renovar.</p>
+          <p class="faq__a">Cada documento muestra su estado —Vigente, Por vencer o Vencido— y te llega un correo de recordatorio antes del vencimiento, con un botón para renovar. Las mantenciones avisan igual cuando están próximas o vencidas, y si a un vehículo le falta un documento obligatorio, te lo recordamos por correo una vez al mes.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Y si un conductor no entrega el vehículo?</h3>
-          <p class="faq__a">Queda registrado como un uso sin entrega formal y aparece en la bandeja de alertas del panel, junto con los daños reportados.</p>
+          <p class="faq__a">Queda como un uso sin entrega formal y aparece en la bandeja de alertas del panel, junto con los daños reportados. Si un uso pasa de 12 horas —o del plazo que elijas— te avisamos, y puedes cerrarlo tú. Esto es parte de Flotas, el plan con conductores.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Cuánto demora dejar la flota lista?</h3>
-          <p class="faq__a">Depende del tamaño. Cargar los vehículos desde Excel y subir los documentos toma una tarde en una flota mediana; grabar y pegar cada chip, un par de minutos por vehículo.</p>
+          <p class="faq__a">Depende del tamaño, pero la Carga inteligente hace la parte lenta: sueltas hasta 40 PDF o fotos de los documentos y la IA te propone los vehículos armados, que revisas antes de importar. En una flota mediana queda listo en una tarde; grabar y pegar cada chip toma un par de minutos por vehículo.</p>
         </div>
 
         <div class="faq__item">
           <h3 class="faq__q">¿Puede entrar más de una persona al panel?</h3>
-          <p class="faq__a">Sí. Invitas por correo hasta 5 miembros por empresa, con rol de Administrador, Editor o Visor según lo que necesite cada uno.</p>
+          <p class="faq__a">En Flotas, sí: invitas por correo hasta 5 miembros por empresa, con rol de Administrador, Editor o Visor. Las cuentas de conductor fijo no ocupan lugar en ese tope. En Uso particular la cuenta es solo tuya.</p>
         </div>
 
       </div>
