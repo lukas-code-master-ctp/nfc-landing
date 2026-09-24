@@ -291,8 +291,13 @@ def howto_de(sopa, ruta):
         t = paso.select_one('.hw-step__title')
         x = paso.select_one('.hw-step__text')
         if t and x:
+            # Si el paso lleva la etiqueta de plan ("Solo en Flotas"), va en el
+            # nombre: sin ella, el marcado presentaria como de todos un paso que
+            # la pagina marca como de un solo plan.
+            tag = paso.select_one('.plan-tag')
+            nombre = limpio(t) + (' (' + limpio(tag) + ')' if tag else '')
             pasos.append({
-                '@type': 'HowToStep', 'position': i, 'name': limpio(t), 'text': limpio(x)
+                '@type': 'HowToStep', 'position': i, 'name': nombre, 'text': limpio(x)
             })
     if not pasos:
         return None

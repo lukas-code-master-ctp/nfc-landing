@@ -174,7 +174,7 @@ Contra el spam hay un campo trampa (`sitio`), topes de largo en todos los campos
 node tools/test_contacto.js
 ```
 
-Sin dependencias y sin red: las pruebas reemplazan el `fetch` global por uno falso, así que **no hace falta ninguna API key para correrlas**. Cubren el método no permitido, el JSON malformado, cada regla de validación, la trampa, la key ausente, el error de Resend y el caso feliz.
+Sin dependencias y sin red: las pruebas reemplazan el `fetch` global por uno falso, así que **no hace falta ninguna API key para correrlas**. Cubren el método no permitido, el JSON malformado, cada regla de validación, la trampa, la key ausente, el error de Resend, el caso feliz y el campo `tipo` del formulario de socios.
 
 Lo que las pruebas **no** pueden comprobar es que el correo llegue de verdad. Eso solo se ve desplegado.
 
@@ -195,12 +195,12 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 3. Crear una API key con permiso de envío.
 4. Cargarla en Vercel como `RESEND_API_KEY`, en los tres entornos.
 5. **Volver a desplegar.** Las variables de entorno no se aplican a despliegues ya hechos.
-6. Enviar una consulta de prueba desde `/planes/` y confirmar que llega a contacto@tapcar.cl.
+6. Enviar una consulta de prueba desde `/planes/` y otra desde `/socios/`, y confirmar que las dos llegan a contacto@tapcar.cl.
 
 ## Pendientes conocidos
 
 - **`/terminos/` no declara domicilio.** La sociedad ya está identificada (IMPULSE AI SpA, RUT 78.479.762-7) pero falta la dirección; en un documento legal conviene tenerla.
-- **El documento no pasó por revisión legal.** Está escrito en lenguaje simple y describe el servicio tal como funciona, pero conviene que un abogado lo revise.
+- **El documento no pasó por revisión legal.** Está escrito en lenguaje simple y, desde el 2026-09-24, cubre solo el sitio (el servicio tiene sus propios términos en la app), pero conviene que un abogado lo revise.
 - Las fechas de vencimiento de las fichas de ejemplo **son ilustrativas a propósito**, no tienen que cuadrar con la fecha real.
 - **`/legal/` afirma cosas sobre normativa chilena y lleva fecha.** Dice "vigente a agosto de 2026" en el disclaimer. Los cuatro enlaces oficiales están verificados uno por uno (BCN 196640 = Ley 19.799, BCN 1007469 = texto refundido de la Ley de Tránsito, el dictamen E71389/2021 de Contraloría y CONASET). Si la normativa cambia, hay que revisar la página y mover esa fecha.
 
@@ -209,7 +209,7 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 - El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos: el chip no se cobra, solo el despacho, y se cobra **en cada envío**, no una sola vez. Tramos con IVA incluido: **$2.000 hasta 2 chips, $5.000 de 3 a 50, $10.000 de 51 a 100**; sobre 100 se cotiza. La letra chica de la calculadora muestra la cifra que corresponde a la cantidad elegida, en vez de una tabla. `app.tapcar.cl` dejó de cobrar el chip el 2026-09-17, así que la landing y la caja por fin prometen lo mismo en este punto.
 - Las **alertas del panel son fijas**, no configurables por el usuario.
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
-- Hay dos sistemas de precio, seleccionables con pills. **Uso particular** (1 a 10 vehículos) son **$2.500 por vehículo al mes** o **$22.000 al año**, IVA incluido. **Flotas** (desde 5 vehículos) cobran por vehículo **UF 0,057 al mes** o **UF 0,5 al año**, más cada cuenta de conductor a **UF 0,12 al mes** o **UF 1,05 al año**; esos valores van más IVA. Las tres tarifas dan **−27%** en anual. La calculadora saca todo el dinero de las cifras mensual y anual, nunca del equivalente mensual redondeado: 12 × $1.833 da $21.996, no $22.000. Los rangos **se solapan a propósito entre 5 y 10**: ahí manda el tipo de cuenta que elige el cliente, no la cantidad. Bajo 5 solo hay Particular; desde 11, solo Flotas. En la banda común Flotas cuesta algo más y se toma por lo que habilita —cuentas de conductor y reportes—, no por precio, y cada tarjeta de la calculadora avisa de la otra. El plan Flotas **no tiene tope de vehículos**: el 100 es hasta dónde se contrata solo desde la web, y sobre eso la página manda a contacto.
+- Hay dos sistemas de precio, seleccionables con pills. **Uso particular** (1 a 10 vehículos) son **$2.500 por vehículo al mes** o **$22.000 al año**, IVA incluido. **Flotas** (desde 5 vehículos) cobran por vehículo **UF 0,057 al mes** o **UF 0,5 al año**, más cada cuenta de conductor a **UF 0,12 al mes** o **UF 1,05 al año**; esos valores van más IVA. Las tres tarifas dan **−27%** en anual. La calculadora saca todo el dinero de las cifras mensual y anual, nunca del equivalente mensual redondeado: 12 × $1.833 da $21.996, no $22.000. Los rangos **se solapan a propósito entre 5 y 10**: ahí manda el tipo de cuenta que elige el cliente, no la cantidad. Bajo 5 solo hay Particular; desde 11, solo Flotas. En la banda común Flotas cuesta algo más y se toma por lo que habilita —conductores con PIN, Tomar/Entregar, bitácora, alertas, reportes, equipo y cuentas de conductor—, no por precio, y cada tarjeta de la calculadora avisa de la otra. El plan Flotas **no tiene tope de vehículos**: el 100 es hasta dónde se contrata solo desde la web, y sobre eso la página manda a contacto.
 - Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
 - La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7**. Se identifica en la sección 1 de `/terminos/` y en el `legalName` del schema; el pie lleva `© 2026 TapCar` y la pertenencia la comunica el lockup de Impulse AI, para no repetir la matriz dos veces en el mismo footer.
 - TapCar es **una empresa de Impulse AI**. El footer lleva el lockup oficial, versión *color*, enlazado a `https://www.impulseai.cl/`. No se recolorea: es la marca de otra empresa.
