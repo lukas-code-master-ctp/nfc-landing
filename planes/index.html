@@ -2157,7 +2157,7 @@ select.form__input {
         if (anual) {
           P('[data-save-amount]').textContent = 'Ahorras ' + clp(ahorro) + ' al año';
           P('[data-save-note]').textContent = clp(tarifa) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
-          P('[data-fineprint]').textContent = 'Facturado una vez al año (' + clp(n * t.anio) + '). ' + chip(n);
+          P('[data-fineprint]').textContent = 'Se cobra una vez al año (' + clp(n * t.anio) + '). ' + chip(n);
         } else {
           P('[data-cafe]').textContent = clp(tarifa) + ' por vehículo — menos que un café al mes.';
           P('[data-fineprint]').textContent = chip(n) + ' Sin costos ocultos.';
@@ -2229,7 +2229,7 @@ select.form__input {
         if (anual) {
           F('[data-save-amount]').textContent = 'Ahorras ' + uf(ahorro) + ' al año';
           F('[data-save-note]').textContent = DESCUENTO + '% menos que pagando mes a mes. Equivale a ' + uf(total / 12) + ' al mes.';
-          F('[data-fineprint]').textContent = 'Facturado una vez al año. ' + IVA + ' ' + chip(n);
+          F('[data-fineprint]').textContent = 'Se cobra una vez al año. ' + IVA + ' ' + chip(n);
         } else {
           F('[data-fineprint]').textContent = IVA + ' ' + chip(n) + ' Sin costos ocultos.';
           F('[data-nudge-total]').textContent = uf(n * cfg.veh.anio + c * cfg.cuenta.anio);
