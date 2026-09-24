@@ -45,7 +45,8 @@ PAGINAS = [
     ('como-funciona/index.html', '/como-funciona/', 'Cómo funciona'),
     ('legal/index.html', '/legal/', 'Validez legal'),
     ('planes/index.html', '/planes/', 'Planes y precios'),
-    ('terminos/index.html', '/terminos/', 'Términos y Condiciones'),
+    ('socios/index.html', '/socios/', 'Empresas del rubro'),
+    ('terminos/index.html', '/terminos/', 'Términos de uso y privacidad'),
 ]
 
 
@@ -103,21 +104,25 @@ def producto():
         'operatingSystem': 'Navegador web (sin instalación)',
         'inLanguage': 'es-CL',
         'description': (
-            'Plataforma chilena para tener la documentación de tus vehículos al día '
-            'y mostrarla en una fiscalización con un toque a un chip NFC. Guarda '
-            'Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y '
-            'Padrón con su fecha de vencimiento, avisa por correo antes de que '
-            'venzan, y registra con un PIN quién usa cada vehículo y en qué estado '
-            'lo entrega.'
+            'Plataforma chilena para tener la documentación y las mantenciones de '
+            'tus vehículos al día y mostrarlas en una fiscalización con un toque a '
+            'un chip NFC. Guarda el Permiso de Circulación, la Revisión Técnica, el '
+            'SOAP, el Certificado de Homologación y el Padrón con su fecha de '
+            'vencimiento y avisa por correo antes de que venzan. En el plan Flotas, '
+            'además registra con un PIN quién usa cada vehículo y en qué estado lo '
+            'entrega.'
         ),
         'featureList': [
+            'Carga inteligente: una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos',
             'Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido',
-            'Ficha pública de solo lectura que se abre con un chip NFC, sin instalar aplicaciones',
+            'Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días',
             'Recordatorios por correo antes de cada vencimiento',
-            'Registro de uso por conductor con PIN de 4 dígitos, sin cuentas',
-            'Fotos de entrega con lectura automática de kilometraje, combustible y limpieza',
-            'Panel con el estado de la flota, alertas de daño y bitácora filtrable',
+            'Mantenciones con pauta, estado y avisos por correo',
+            'Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones',
             'Datos del vehículo: combustible, neumáticos, transmisión y aceite',
+            'Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas',
+            'Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza',
+            'Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF',
         ],
         'provider': {'@id': ORG},
         # El AggregateOffer admite una sola priceCurrency, y acá conviven pesos

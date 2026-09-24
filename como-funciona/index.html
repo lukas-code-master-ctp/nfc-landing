@@ -1397,7 +1397,7 @@ select.form__input {
           "name": "¿Hay que instalar alguna app?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Ni tú, ni tus conductores, ni quien fiscaliza. El chip abre una página web en el navegador del teléfono — eso es todo."
+            "text": "No para usar TapCar: ni tú, ni tus conductores, ni quien fiscaliza. El chip abre una página web en el navegador del teléfono. La única excepción es grabar el chip desde un iPhone, que se hace con la app NFC Tools."
           }
         },
         {
@@ -1405,7 +1405,7 @@ select.form__input {
           "name": "¿Qué pasa si el teléfono no lee NFC?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Cada vehículo tiene una URL única y permanente, así que la ficha se abre igual desde el enlace. El Tap es el atajo, no el requisito."
+            "text": "Cada vehículo tiene una URL única, así que la ficha se abre igual desde el enlace. El Tap es el atajo, no el requisito. Y si vas a estar sin señal, guarda la ficha en tu teléfono: se abre sin conexión durante 7 días."
           }
         },
         {
@@ -1413,7 +1413,7 @@ select.form__input {
           "name": "¿Qué ve exactamente quien fiscaliza?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "La ficha pública de solo lectura: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno. No ve tu panel, no puede editar nada ni entrar a tu cuenta."
+            "text": "La ficha pública de solo lectura: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno, sus mantenciones y el aviso de daño si hay uno activo. No ve tu panel, no puede editar nada ni entrar a tu cuenta."
           }
         },
         {
@@ -1421,7 +1421,7 @@ select.form__input {
           "name": "¿Mis conductores necesitan una cuenta?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Se identifican con un PIN de 4 dígitos que tú les asignas. Puedes cambiarlo o desactivar a un conductor en cualquier momento."
+            "text": "No. En Flotas se identifican con un PIN de 4 dígitos que tú les asignas, y puedes cambiarlo o desactivar a un conductor en cualquier momento. Si quieres que el conductor fijo de un vehículo lo mantenga él mismo, puede tener su propia cuenta: ve solo ese vehículo, sube documentos y mantenciones y recibe los avisos. Esa cuenta se cobra aparte."
           }
         },
         {
@@ -1429,7 +1429,7 @@ select.form__input {
           "name": "¿Qué documentos puedo cargar?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo adjunto y su fecha de vencimiento."
+            "text": "Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Homologación (C.H.I.-e) y Padrón, y cualquier otro con el nombre que le pongas. Cada uno lleva su archivo —un PDF, o fotos de hasta 10 hojas que TapCar convierte en PDF— y su fecha de vencimiento. El Certificado de Gases no va aparte: viene dentro de la Revisión Técnica."
           }
         },
         {
@@ -1437,7 +1437,7 @@ select.form__input {
           "name": "¿Cómo me entero de que algo está por vencer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Cada documento muestra su estado —Vigente, Por vencer o Vencido— y te llega un correo de recordatorio antes del vencimiento, con un botón para renovar."
+            "text": "Cada documento muestra su estado —Vigente, Por vencer o Vencido— y te llega un correo de recordatorio antes del vencimiento, con un botón para renovar. Las mantenciones avisan igual cuando están próximas o vencidas, y si a un vehículo le falta un documento obligatorio, te lo recordamos por correo una vez al mes."
           }
         },
         {
@@ -1445,7 +1445,7 @@ select.form__input {
           "name": "¿Y si un conductor no entrega el vehículo?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Queda registrado como un uso sin entrega formal y aparece en la bandeja de alertas del panel, junto con los daños reportados."
+            "text": "Queda como un uso sin entrega formal y aparece en la bandeja de alertas del panel, junto con los daños reportados. Si un uso pasa de 12 horas —o del plazo que elijas— te avisamos, y puedes cerrarlo tú. Esto es parte de Flotas, el plan con conductores."
           }
         },
         {
@@ -1453,7 +1453,7 @@ select.form__input {
           "name": "¿Cuánto demora dejar la flota lista?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Depende del tamaño. Cargar los vehículos desde Excel y subir los documentos toma una tarde en una flota mediana; grabar y pegar cada chip, un par de minutos por vehículo."
+            "text": "Depende del tamaño, pero la Carga inteligente hace la parte lenta: sueltas hasta 40 PDF o fotos de los documentos y la IA te propone los vehículos armados, que revisas antes de importar. En una flota mediana queda listo en una tarde; grabar y pegar cada chip toma un par de minutos por vehículo."
           }
         },
         {
@@ -1461,7 +1461,7 @@ select.form__input {
           "name": "¿Puede entrar más de una persona al panel?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí. Invitas por correo hasta 5 miembros por empresa, con rol de Administrador, Editor o Visor según lo que necesite cada uno."
+            "text": "En Flotas, sí: invitas por correo hasta 5 miembros por empresa, con rol de Administrador, Editor o Visor. Las cuentas de conductor fijo no ocupan lugar en ese tope. En Uso particular la cuenta es solo tuya."
           }
         }
       ]
@@ -1476,26 +1476,26 @@ select.form__input {
         {
           "@type": "HowToStep",
           "position": 1,
-          "name": "Crea tu cuenta y carga tus vehículos",
-          "text": "Registra cada vehículo con su patente, marca y modelo. Si operas como empresa, puedes sumar tus datos (RUT, razón social y giro); si son los autos de tu casa, no hace falta. Y si ya los tienes en una planilla, los importas desde Excel en vez de cargarlos a mano."
+          "name": "Crea tu cuenta y carga tus vehículos con IA",
+          "text": "Registra cada vehículo a mano o usa la Carga inteligente: sueltas hasta 40 PDF o fotos de sus documentos y la IA detecta el tipo, la patente, el vencimiento, la marca, el modelo, el año y el color. Agrupa todo por patente y te propone qué crear; tú revisas antes de importar. Si operas como empresa, puedes sumar tus datos (RUT, razón social y giro); si son los autos de tu casa, no hace falta."
         },
         {
           "@type": "HowToStep",
           "position": 2,
           "name": "Sube los documentos de cada vehículo",
-          "text": "Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo y su fecha de vencimiento. TapCar calcula solo el estado de cada documento y lo mantiene a la vista."
+          "text": "Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Homologación (C.H.I.-e), Padrón y cualquier otro con el nombre que quieras. Puedes subir el PDF o sacarle fotos —hasta 10 hojas por documento, con recorte— y TapCar las junta en un PDF. La IA te sugiere la fecha de vencimiento y tú la confirmas; desde ahí, TapCar calcula el estado de cada documento y lo mantiene a la vista."
         },
         {
           "@type": "HowToStep",
           "position": 3,
           "name": "Suma a tus conductores con un PIN",
-          "text": "Cada conductor queda registrado con un PIN de 4 dígitos que tú le asignas. No crean cuenta, no descargan nada y no tienen que recordar una contraseña. Puedes cambiar el PIN o desactivar a un conductor cuando quieras."
+          "text": "Cada conductor queda registrado con un PIN de 4 dígitos que tú le asignas. No crean cuenta, no descargan nada y no tienen que recordar una contraseña. Si ya los tienes en una planilla, pegas las filas desde Excel y quedan importados. Puedes cambiar el PIN o desactivar a un conductor cuando quieras."
         },
         {
           "@type": "HowToStep",
           "position": 4,
           "name": "Graba el chip NFC y déjalo con el vehículo",
-          "text": "Cada vehículo tiene una URL única y permanente. La grabas en su chip NFC y lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho, desde $2.000."
+          "text": "Cada vehículo tiene una URL única. La grabas en su chip NFC desde tu propio celular si es Android; en iPhone, con la app NFC Tools y la guía que te damos. Lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho, desde $2.000."
         },
         {
           "@type": "HowToStep",
@@ -1506,20 +1506,20 @@ select.form__input {
         {
           "@type": "HowToStep",
           "position": 6,
-          "name": "Al terminar, lo entrega con dos fotos",
-          "text": "Otro Tap, elige «Entregar» y sube dos fotos: el tablero y la cabina. La IA lee el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic. Si hay un golpe o una falla, el conductor lo reporta ahí mismo."
+          "name": "Al terminar, lo entrega con fotos",
+          "text": "Otro Tap, elige «Entregar» y sube las fotos que tú definiste, por ejemplo el tablero y la cabina. La IA lee el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic. Si hay un golpe o una falla, el conductor lo reporta ahí mismo: el daño lo informa él, la IA no lo analiza. TapCar además marca «Revisar consumo» cuando el uso gastó más de lo esperado —si configuraste el rendimiento y el estanque—, detecta si la foto del odómetro es antigua o reenviada y te avisa si un uso pasa de 12 horas."
         },
         {
           "@type": "HowToStep",
           "position": 7,
           "name": "En la calle, la fiscalización es un Tap",
-          "text": "Quien fiscaliza acerca su teléfono y se abre la ficha pública: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno. Es de solo lectura — no hay login, no se edita nada y no se accede a tu cuenta."
+          "text": "Quien fiscaliza acerca su teléfono y se abre la ficha pública: el vehículo, sus documentos con la fecha de vencimiento y el estado de cada uno, las mantenciones y el aviso de daño si hay uno activo. Es de solo lectura — no hay login, no se edita nada y no se accede a tu cuenta. ¿Vas a un lugar sin señal? Guarda la ficha en tu teléfono y la abres sin conexión durante 7 días."
         },
         {
           "@type": "HowToStep",
           "position": 8,
           "name": "Tú controlas todo desde el panel",
-          "text": "Ves qué vehículo está disponible y cuál está en uso, y por quién, en este momento. Las alertas te avisan de daños reportados o usos sin entrega formal, la bitácora te deja filtrar por conductor, vehículo y fecha, y los recordatorios llegan por correo antes de cada vencimiento."
+          "text": "Ves los documentos y las mantenciones con su estado, una etiqueta si a un vehículo le falta un documento obligatorio, y categorías, buscador y filtros para encontrar cualquier vehículo. Los recordatorios llegan por correo antes de cada vencimiento y de cada mantención. En Flotas, además ves qué vehículo está en uso y por quién, las alertas de daños y de usos sin entrega, la bitácora, y reportes que descargas en Excel o PDF."
         }
       ]
     }
@@ -1845,6 +1845,7 @@ select.form__input {
         <div>
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
+            <a href="/socios/" class="footer__link">Para empresas del rubro</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
           </div>
@@ -1852,7 +1853,7 @@ select.form__input {
         <div>
           <p class="footer__col-title">Legal</p>
           <div class="footer__links">
-            <a href="/terminos/" class="footer__link">Términos y Condiciones</a>
+            <a href="/terminos/" class="footer__link">Términos y privacidad</a>
           </div>
         </div>
       </div>

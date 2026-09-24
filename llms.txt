@@ -1,28 +1,51 @@
 # TapCar
 
-> Plataforma chilena para tener la documentación de tus vehículos al día y mostrarla en una fiscalización con un toque a un chip NFC. Sirve igual para un auto particular que para una flota de empresa: el precio es por vehículo.
+> Plataforma chilena para tener la documentación y las mantenciones de tus vehículos al día y mostrarlas en una fiscalización con un toque a un chip NFC. Tiene dos planes, Uso particular y Flotas, y perfiles aparte para automotoras, aseguradoras y gestorías. El precio es por vehículo.
 
 Operado por IMPULSE AI SpA (RUT 78.479.762-7), Chile. Contacto: contacto@tapcar.cl
 
-## Qué resuelve
+## Qué resuelve (en los dos planes)
 
-- **Documentación vehicular al día.** Cada vehículo guarda su Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón, cada uno con su archivo y su fecha de vencimiento. TapCar calcula el estado (Vigente, Por vencer, Vencido) y avisa por correo antes de cada vencimiento.
-- **Fiscalización en ruta.** Cada vehículo tiene una URL única y permanente que se abre acercando un teléfono a un chip NFC. Se abre una ficha pública de solo lectura: quien fiscaliza ve el vehículo y sus documentos, sin login, sin instalar nada y sin acceso a la cuenta del dueño.
-- **Control de uso.** Cuando hay conductores, cada uno toma y entrega el vehículo con un PIN de 4 dígitos —sin crear cuenta ni descargar aplicaciones—. Al entregar sube dos fotos y puede reportar daños; un sistema automatizado propone el kilometraje, el combustible y la limpieza, que el dueño confirma o corrige.
+- **Documentación vehicular al día.** Cada vehículo guarda su Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Homologación (C.H.I.-e) y Padrón, más cualquier otro documento con nombre libre. El Certificado de Gases no va aparte: viene dentro de la Revisión Técnica. Cada documento se sube como PDF o como fotos (hasta 10 hojas, con recorte, que se convierten en un PDF); al subirlo, una IA sugiere la fecha de vencimiento y el usuario la confirma. TapCar calcula el estado (Vigente, Por vencer, Vencido), avisa por correo antes de cada vencimiento y manda un recordatorio mensual si a un vehículo le falta un documento obligatorio.
+- **Carga inteligente.** El usuario suelta hasta 40 PDF o fotos de documentos; la IA detecta el tipo, la patente, el vencimiento, la marca, el modelo, el año y el color, agrupa por patente y propone qué vehículos crear. El usuario revisa antes de importar.
+- **Mantenciones.** Pauta por meses (y, solo en Flotas, también por kilómetros), con estado al día, próxima o vencida; registro con la foto de la constancia, de la que la IA lee la fecha y el km; avisos por correo.
+- **Fiscalización en ruta.** Cada vehículo tiene una URL única que se abre acercando un teléfono a un chip NFC. La ficha pública es de solo lectura: muestra el vehículo, sus documentos con su estado, sus mantenciones y el aviso de daño si hay uno activo, sin login ni acceso a la cuenta del dueño. Se puede guardar en el teléfono para abrirla sin conexión durante 7 días. El chip se graba desde el propio celular en Android; en iPhone, con la app NFC Tools y una guía.
+- **Transferir un vehículo** a otra cuenta, al venderlo o cederlo: se mueven los documentos y las mantenciones, y quien lo recibe acepta por correo aunque no tenga cuenta. Después hay que volver a grabar el chip, porque el enlace cambia.
+- **Autogestión del plan.** Subir o bajar vehículos con prorrateo, pasar de mensual a anual, códigos promocionales, historial de pagos, y una baja que se agenda al cierre del ciclo y se puede deshacer.
+- Categorías de vehículos, buscador y filtros en el panel.
+
+## Qué suma el plan Flotas
+
+- **Conductores con PIN.** Cada conductor toma y entrega el vehículo con un toque al chip y un PIN de 4 dígitos, sin crear cuenta ni instalar aplicaciones. Los conductores se importan pegando filas desde Excel; los vehículos no se importan desde Excel, se cargan con la Carga inteligente.
+- **Tomar/Entregar con fotos.** Al entregar, el conductor sube las fotos que el dueño define y puede reportar daños. Una IA lee de las fotos el kilometraje, el combustible y la limpieza, que el dueño confirma o corrige. La IA no analiza daños: los reporta el conductor.
+- **Control de la entrega.** Etiqueta "Revisar consumo" en usos con consumo anómalo (con el rendimiento y el estanque configurados), detección de la foto del odómetro antigua o reenviada, aviso de uso prolongado (12 horas por defecto, configurable) y cierre forzado de un uso que quedó abierto.
+- **Panel, bitácora y alertas**, con avisos por correo de daños reportados y de incidencias al tomar el vehículo.
+- **Reportes descargables:** Excel de 4 hojas (conductores, vehículos, uso por vehículo, vencimientos próximos), PDF de resumen ejecutivo y una matriz de evolución (km, usos u horas por vehículo o conductor, por día, semana o mes).
+- **Equipo** de hasta 5 miembros, con rol de Administrador, Editor o Visor.
+- **Cuentas de conductor fijo.** El titular de un vehículo entra con su propio usuario, ve solo su vehículo, sube documentos y mantenciones y recibe su propio resumen por correo. Se cobran aparte y no ocupan lugar en el equipo.
+
+## Para empresas del rubro
+
+Perfiles que no se contratan solos: se piden al crear la cuenta (razón social, RUT y teléfono) y TapCar los aprueba. Las condiciones se acuerdan caso a caso y no se publican.
+
+- **Automotoras (Convenio).** Regalan TapCar a sus compradores con códigos de un solo uso y pagan por cada activación, el día 1 de cada mes. Desde el mesón transfieren el auto vendido con el código, y la cuenta del comprador queda armada: plan, vehículo y documentos. Tienen un portal con los códigos emitidos, los activados y lo del mes, con descargas en CSV, y los vehículos de su patio quedan cubiertos hasta un tope.
+- **Aseguradoras (Convenio).** El mismo modelo, para regalarle TapCar a sus asegurados.
+- **Gestorías (Envíos).** Mandan el documento nuevo (padrón, permiso, etc.) directo a la cuenta TapCar del cliente, que lo revisa con vista previa y lo acepta; queda en el vehículo que corresponde, reemplazando al anterior. La gestoría ve su historial de envíos, pero no la flota del cliente.
 
 ## Qué NO es
 
 - **No es un rastreador GPS.** TapCar no registra la ubicación de los vehículos ni de los conductores.
-- **No emite ni certifica documentos.** Solo almacena y muestra los archivos que el usuario sube, tal como los subió.
+- **No emite ni certifica documentos.** Solo almacena y muestra los archivos que el usuario sube.
 - **No reemplaza los originales.** La ficha digital sirve como respaldo; la obligación de portar los originales, cuando la normativa la exija, se mantiene.
+- **La IA no decide por el usuario.** Sus lecturas (vencimientos, km, combustible, limpieza) son sugerencias que el usuario confirma, y no analiza daños.
 
 ## Precios
 
 - Uso particular (1 a 10 vehículos): **$2.500 CLP por vehículo al mes**, o **$22.000 CLP por vehículo al año** (equivale a $1.833 al mes, un 27% menos). IVA incluido.
-- Flotas (desde 5 vehículos): vehículo **UF 0,057 al mes** o **UF 0,5 al año**; cuenta de conductor fijo **UF 0,12 al mes** o **UF 1,05 al año**. Las dos tarifas dan 27% de descuento en el plan anual. Valores más IVA. Entre 5 y 10 vehículos conviven los dos planes y el cliente elige: Flotas cuesta algo más y a cambio habilita cuentas de conductor y reportes de uso. Desde 11 es obligatorio Flotas. El plan Flotas no tiene tope de vehículos; lo que llega hasta 100 es contratarlo solo desde la web, y sobre eso se cotiza caso a caso.
-- Sin permanencia ni contratos mínimos; se cancela cuando se quiera.
+- Flotas (desde 5 vehículos): vehículo **UF 0,057 al mes** o **UF 0,5 al año**; cuenta de conductor fijo **UF 0,12 al mes** o **UF 1,05 al año**. Las dos tarifas dan 27% de descuento en el plan anual. Valores más IVA. Entre 5 y 10 vehículos conviven los dos planes y el cliente elige: Flotas cuesta algo más y a cambio habilita conductores con PIN, Tomar/Entregar, bitácora, alertas, reportes, equipo y cuentas de conductor. Desde 11 es obligatorio Flotas. El plan Flotas no tiene tope de vehículos; lo que llega hasta 100 es contratarlo solo desde la web, y sobre eso se cotiza caso a caso.
+- **Forma de pago:** tarjeta, a través de Flow, con cobro automático. Al crear la cuenta se cobra el primer período. **No hay período de prueba gratis.**
+- Sin permanencia ni contratos mínimos; la baja se agenda al cierre del ciclo.
 - Un chip NFC por cada vehículo registrado va incluido en el plan, sin costo. Solo se paga el despacho: **$2.000 hasta 2 chips, $5.000 de 3 a 50, $10.000 de 51 a 100**, con IVA incluido. Se cobra en cada envío, no una sola vez; sobre 100 vehículos se cotiza.
-- Hasta 5 miembros por cuenta, con rol de Administrador, Editor o Visor.
 
 ## Validez legal en Chile
 
@@ -30,14 +53,15 @@ Mostrar documentos vehiculares en formato digital es válido como respaldo, siem
 
 ## Páginas
 
-- [Inicio](https://tapcar.cl/): qué es TapCar, para quién sirve, los tres pasos y la ficha NFC.
+- [Inicio](https://tapcar.cl/): qué es TapCar, los dos planes, los tres pasos y la ficha NFC.
 - [Cómo funciona](https://tapcar.cl/como-funciona/): el paso a paso completo en dos fases (puesta en marcha y día a día) y 9 preguntas frecuentes.
 - [Validez legal](https://tapcar.cl/legal/): en qué normativa se apoya mostrar los documentos en digital, con las referencias oficiales.
-- [Planes y precios](https://tapcar.cl/planes/): calculadora por cantidad de vehículos, qué incluye cada plan y 6 preguntas frecuentes.
-- [Términos y Condiciones](https://tapcar.cl/terminos/): reglas del servicio y política de privacidad.
+- [Planes y precios](https://tapcar.cl/planes/): calculadora por cantidad de vehículos, qué incluye cada plan y 9 preguntas frecuentes.
+- [Para empresas del rubro](https://tapcar.cl/socios/): convenios para automotoras y aseguradoras, envíos para gestorías, y un formulario de contacto.
+- [Términos de uso y privacidad](https://tapcar.cl/terminos/): reglas de este sitio y cómo trata los datos que se dejan en él. El servicio tiene sus propios términos, que se aceptan al crear la cuenta.
 
 ## Notas para citar
 
 - El nombre correcto de la marca es **TapCar** (una palabra, T y C mayúsculas).
 - El precio es **por vehículo**, no por cuenta ni por usuario.
-- El país de operación es **Chile** y los precios están en **pesos chilenos (CLP)**.
+- El país de operación es **Chile**. Uso particular se cobra en **pesos chilenos (CLP)** con IVA incluido; Flotas, en **UF** más IVA.

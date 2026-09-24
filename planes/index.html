@@ -1397,15 +1397,18 @@ select.form__input {
       "applicationSubCategory": "Gestión de documentación vehicular",
       "operatingSystem": "Navegador web (sin instalación)",
       "inLanguage": "es-CL",
-      "description": "Plataforma chilena para tener la documentación de tus vehículos al día y mostrarla en una fiscalización con un toque a un chip NFC. Guarda Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Gases y Padrón con su fecha de vencimiento, avisa por correo antes de que venzan, y registra con un PIN quién usa cada vehículo y en qué estado lo entrega.",
+      "description": "Plataforma chilena para tener la documentación y las mantenciones de tus vehículos al día y mostrarlas en una fiscalización con un toque a un chip NFC. Guarda el Permiso de Circulación, la Revisión Técnica, el SOAP, el Certificado de Homologación y el Padrón con su fecha de vencimiento y avisa por correo antes de que venzan. En el plan Flotas, además registra con un PIN quién usa cada vehículo y en qué estado lo entrega.",
       "featureList": [
+        "Carga inteligente: una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos",
         "Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido",
-        "Ficha pública de solo lectura que se abre con un chip NFC, sin instalar aplicaciones",
+        "Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días",
         "Recordatorios por correo antes de cada vencimiento",
-        "Registro de uso por conductor con PIN de 4 dígitos, sin cuentas",
-        "Fotos de entrega con lectura automática de kilometraje, combustible y limpieza",
-        "Panel con el estado de la flota, alertas de daño y bitácora filtrable",
-        "Datos del vehículo: combustible, neumáticos, transmisión y aceite"
+        "Mantenciones con pauta, estado y avisos por correo",
+        "Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones",
+        "Datos del vehículo: combustible, neumáticos, transmisión y aceite",
+        "Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas",
+        "Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza",
+        "Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF"
       ],
       "provider": {
         "@id": "https://tapcar.cl/#organizacion"
@@ -1534,7 +1537,7 @@ select.form__input {
           "name": "¿Cuál de los dos planes me toca?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Depende de cuántos vehículos tengas y, en el medio, de ti. Con menos de 5 vehículos solo existe Uso particular. Desde 11 el plan es Flotas. Entre 5 y 10 los dos están disponibles y eliges: Flotas cuesta algo más al mismo número de vehículos, y a cambio habilita cuentas de conductor y reportes de uso. Si no los necesitas, Uso particular te sirve igual. Sobre 100 vehículos armamos la propuesta contigo: el plan no tiene tope, lo que llega hasta 100 es contratarlo solo desde la web."
+            "text": "Depende de cuántos vehículos tengas y de qué necesitas. Con menos de 5 vehículos solo existe Uso particular. Desde 11 el plan es Flotas. Entre 5 y 10 eliges tú. Uso particular trae documentos, ficha NFC, recordatorios, mantenciones, datos del vehículo, transferencia de vehículos y el chip. Flotas suma conductores con PIN, Tomar/Entregar con fotos, bitácora, alertas, reportes, equipo de hasta 5 personas y cuentas de conductor, y cuesta algo más al mismo número de vehículos. Si no tienes conductores, Uso particular te sirve igual. Sobre 100 vehículos armamos la propuesta contigo: el plan no tiene tope, lo que llega hasta 100 es contratarlo solo desde la web."
           }
         },
         {
@@ -1566,7 +1569,7 @@ select.form__input {
           "name": "¿Cómo se paga?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Por ahora coordinamos el cobro contigo de forma directa. La factura electrónica del SII llega en una próxima etapa."
+            "text": "Con tarjeta, a través de Flow. El cobro es automático: al crear la cuenta se cobra el primer período, y los siguientes se cobran solos. La factura electrónica del SII llega en una próxima etapa."
           }
         },
         {
@@ -1574,7 +1577,7 @@ select.form__input {
           "name": "¿Necesito instalar una app?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Ni tú, ni tus conductores, ni quien fiscaliza. Todo se abre con un toque al chip NFC o desde el panel web."
+            "text": "No. Ni tú, ni tus conductores, ni quien fiscaliza: todo se abre con un toque al chip NFC o desde el panel web. La única excepción es grabar el chip desde un iPhone, que se hace con la app NFC Tools."
           }
         },
         {
@@ -1582,7 +1585,7 @@ select.form__input {
           "name": "¿Y si sumo más vehículos?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Agregas vehículos cuando quieras y se suman a tu suscripción. Si estás en Uso particular y pasas de 10, tu cuenta se mueve a Flotas. Te enviamos los chips de los vehículos nuevos."
+            "text": "Los sumas tú desde el panel cuando quieras, y se cobra la diferencia prorrateada. También puedes bajar vehículos, pasar de mensual a anual, usar un código promocional y revisar tu historial de pagos. Uso particular llega hasta 10 vehículos: si pasas de ahí, necesitas el plan Flotas. Te enviamos los chips de los vehículos nuevos."
           }
         },
         {
@@ -1590,7 +1593,7 @@ select.form__input {
           "name": "¿Puedo cancelar?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, cuando quieras. No hay contratos de permanencia ni penalizaciones."
+            "text": "Sí, cuando quieras, sin contratos de permanencia ni penalizaciones. La baja se agenda para el cierre de tu ciclo: hasta ahí sigues usando TapCar, y si te arrepientes la puedes deshacer."
           }
         }
       ]
@@ -2026,6 +2029,7 @@ select.form__input {
         <div>
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
+            <a href="/socios/" class="footer__link">Para empresas del rubro</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
           </div>
@@ -2033,7 +2037,7 @@ select.form__input {
         <div>
           <p class="footer__col-title">Legal</p>
           <div class="footer__links">
-            <a href="/terminos/" class="footer__link">Términos y Condiciones</a>
+            <a href="/terminos/" class="footer__link">Términos y privacidad</a>
           </div>
         </div>
       </div>

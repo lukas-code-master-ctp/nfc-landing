@@ -1,8 +1,8 @@
 # TapCar — Sitio web
 
-Landing comercial de **TapCar**: la operación de tus vehículos a un toque. Cada vehículo guarda sus papeles (Permiso de Circulación, Revisión Técnica, SOAP, etc.), registra quién lo usa con un PIN y abre su ficha pública desde un chip NFC —pegado al parabrisas o de llavero—.
+Landing comercial de **TapCar**: la operación de tus vehículos a un toque. Cada vehículo guarda sus papeles (Permiso de Circulación, Revisión Técnica, SOAP, etc.), en el plan Flotas registra quién lo usa con un PIN, y abre su ficha pública desde un chip NFC —pegado al parabrisas o de llavero—.
 
-Sirve tanto para un auto particular como para una flota de empresa; el precio es por vehículo.
+Tiene dos planes —Uso particular y Flotas— con precio por vehículo, y perfiles aparte para automotoras, aseguradoras y gestorías.
 
 Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude Design](https://claude.ai/design).
 
@@ -10,10 +10,11 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 
 | Página | Archivo | Contenido |
 |---|---|---|
-| Home / Landing | [`index.html`](index.html) | Hero con rotor de palabra, "¿Para quién es?", "Cómo funciona", "Un toque, toda la operación", beneficios, showcase de la ficha, CTA |
+| Home / Landing | [`index.html`](index.html) | Hero con rotor de palabra, "¿Para quién es?", franja de empresas del rubro, "Cómo funciona", "Un toque, toda la operación", beneficios, showcase de la ficha, CTA |
 | ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08) + FAQ de 9 preguntas |
 | Planes | [`planes/index.html`](planes/index.html) | Pills de plan (Uso particular / Flotas), toggle mensual/anual con el ahorro, calculadora con slider por plan, "Todo incluido" por audiencia, FAQ, CTA |
-| Términos y Condiciones | [`terminos/index.html`](terminos/index.html) | Términos del servicio con la política de privacidad incluida. Enlazada solo desde el footer, no desde el nav |
+| Empresas del rubro | [`socios/index.html`](socios/index.html) | Los tres perfiles (automotoras y aseguradoras con Convenio, gestorías con Envíos), cómo se empieza, FAQ de 5 preguntas y formulario de contacto. Enlazada desde la franja del home y el footer, no desde el nav |
+| Términos de uso y privacidad | [`terminos/index.html`](terminos/index.html) | Términos del **sitio** y cómo trata los datos que se dejan en él. El servicio tiene sus propios términos, que la app pide aceptar al crear la cuenta según el tipo de cuenta. Enlazada solo desde el footer, no desde el nav |
 | ¿Es legal? | [`legal/index.html`](legal/index.html) | Tabla documento por documento, las cuatro bases normativas, los tres requisitos de validez, qué pasa en un control, referencias oficiales y FAQ de 8 preguntas. **Es la página pensada para captar búsqueda**: "¿es legal mostrar los documentos del auto en digital?" es una consulta real y poco respondida |
 
 ## Estructura
@@ -23,6 +24,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── index.html              # Home / Landing (autónoma, CSS incrustado)
 ├── como-funciona/index.html
 ├── planes/index.html
+├── socios/index.html
 ├── legal/index.html
 ├── terminos/index.html
 ├── styles.css              # Design system compartido (fuente editable)
@@ -34,7 +36,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── robots.txt              # Bloquea /_design_src/, apunta al sitemap
 ├── sitemap.xml
 ├── llms.txt                # Resumen del sitio para motores generativos
-├── api/contacto.js         # Función serverless: formulario de flota -> Resend
+├── api/contacto.js         # Función serverless: formularios de flota y de socios -> Resend
 ├── tools/schema.py         # Regenera el JSON-LD desde el contenido visible
 └── _design_src/            # Archivos originales del diseño y fotos sin procesar
 ```
@@ -48,7 +50,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 Tras editar `styles.css` hay que volver a incrustarlo en las cinco páginas:
 
 ```bash
-python -c "import io; css=io.open('styles.css',encoding='utf-8').read().rstrip(); [io.open(f,'w',encoding='utf-8',newline='').write(h[:h.index('<style>')+7]+'\n'+css+'\n'+h[h.index('  </style>'):]) for f in ['index.html','planes/index.html','legal/index.html','como-funciona/index.html','terminos/index.html'] for h in [io.open(f,encoding='utf-8').read()]]"
+python -c "import io; css=io.open('styles.css',encoding='utf-8').read().rstrip(); [io.open(f,'w',encoding='utf-8',newline='').write(h[:h.index('<style>')+7]+'\n'+css+'\n'+h[h.index('  </style>'):]) for f in ['index.html','planes/index.html','legal/index.html','como-funciona/index.html','terminos/index.html','socios/index.html'] for h in [io.open(f,encoding='utf-8').read()]]"
 ```
 
 Editar el `<style>` de un `.html` a mano hace que ese cambio se pierda en la siguiente sincronización.
@@ -74,11 +76,12 @@ Sírvela en vez de abrir el archivo si vas a probar la navegación: los enlaces 
 Cada página lleva su script incrustado al final del `<body>`:
 
 - **Menú móvil** (las 5 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta" solo vive dentro del panel.
-- **Rotor del hero** (home) — la palabra de "Tu _flota_ a un Tap." rota entre flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
+- **Rotor del hero** (home) — la palabra de "Tu _vehículo_ a un Tap." rota entre vehículo/flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
 - **Reveal on scroll** (home y ¿Cómo funciona?) — `IntersectionObserver` con retraso escalonado.
 - **Contador del hero** (home) — el número de vehículos cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
 - **Calculadora** (planes) — dos sistemas de precio en pills (Uso particular y Flotas), toggle mensual/anual, slider de vehículos por plan, slider de cuentas de conductor en Flotas acotado al número de vehículos, ahorro anual, burbuja del slider y empujón al plan anual. Sobre 100 vehículos reemplaza el precio por un llamado a contacto.
 - **Formulario de flota grande** (planes) — en el tramo de más de 100 vehículos, envía la consulta por `fetch` a `/api/contacto`. Botón deshabilitado mientras viaja, confirmación con foco al terminar y, si falla, un mensaje de error. El enlace `mailto:` queda visible siempre, así que ni sin JavaScript ni con la función caída alguien se queda sin forma de escribir.
+- **Formulario de empresas del rubro** (socios) — el mismo patrón que el de flota grande, con un campo `tipo` (automotora, aseguradora, gestoría u otra) y sin cantidad de vehículos.
 
 ### Notas de responsive
 
@@ -123,7 +126,7 @@ Lo que el revisor **no** ve: que el JavaScript siga funcionando. Solo compara ci
 
 ### Schema.org (JSON-LD)
 
-Cada página lleva un bloque `<script type="application/ld+json" data-schema>` con `Organization`, `WebSite`, `WebPage` y `BreadcrumbList`; la home y Planes suman `SoftwareApplication` con los dos precios, ¿Cómo funciona? suma `HowTo` (8 pasos) y `FAQPage` (9 preguntas), Planes suma `FAQPage` (6) y ¿Es legal? un `FAQPage` de 1.
+Cada página lleva un bloque `<script type="application/ld+json" data-schema>` con `Organization`, `WebSite`, `WebPage` y `BreadcrumbList`; la home y Planes suman `SoftwareApplication` con los dos precios, ¿Cómo funciona? suma `HowTo` (8 pasos) y `FAQPage` (9 preguntas), Planes suma `FAQPage` (9), ¿Es legal? un `FAQPage` de 8 y Empresas del rubro un `FAQPage` de 5.
 
 **No se edita a mano.** Lo genera [`tools/schema.py`](tools/schema.py), que lee las preguntas y los pasos del propio HTML:
 
@@ -148,11 +151,11 @@ Dos condiciones para que mida:
 
 ### llms.txt
 
-[`llms.txt`](llms.txt) resume el sitio para motores generativos (ChatGPT, Perplexity, Google AI Overviews): qué resuelve TapCar, **qué no es** —no es GPS, no emite documentos, no reemplaza los originales—, los precios, la base legal y cómo citar la marca. Es el archivo que evita que un modelo describa mal el producto. Hay que actualizarlo cuando cambien los precios o el alcance.
+[`llms.txt`](llms.txt) resume el sitio para motores generativos (ChatGPT, Perplexity, Google AI Overviews): qué resuelve TapCar, **qué no es** —no es GPS, no emite documentos, no reemplaza los originales—, los precios, la base legal y cómo citar la marca. Es el archivo que evita que un modelo describa mal el producto. Hay que actualizarlo cuando cambien los precios o el alcance. Hoy además declara lo que el sitio no promete —la prueba gratis, el análisis de daños—, para que un modelo no lo invente.
 
 ## Backend: la función de contacto
 
-`api/contacto.js` es **la única pieza de servidor del repo**. Recibe el formulario del tramo "más de 100 vehículos" de `/planes/` y manda la consulta a contacto@tapcar.cl a través de [Resend](https://resend.com).
+`api/contacto.js` es **la única pieza de servidor del repo**. Recibe dos formularios: el del tramo "más de 100 vehículos" de `/planes/` y el de empresas del rubro de `/socios/`, que se distingue por el campo `tipo`. Los manda a contacto@tapcar.cl a través de [Resend](https://resend.com).
 
 Vercel toma cualquier `.js` dentro de `/api` como función serverless, sin configuración. Está escrita en **CommonJS** y usa `fetch` nativo a propósito: un `.js` con `import` necesitaría un `package.json` con `"type": "module"`, y el SDK de Resend obligaría a instalar npm. Ninguna de las dos cosas entra acá.
 
@@ -212,4 +215,8 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 - TapCar es **una empresa de Impulse AI**. El footer lleva el lockup oficial, versión *color*, enlazado a `https://www.impulseai.cl/`. No se recolorea: es la marca de otra empresa.
   **Se usa el PNG oficial, no el SVG.** En el SVG exportado la palabra "Impulse AI" es un `<text>` sin `font-family` ni fuente incrustada, así que el navegador la dibuja con la fuente por defecto: ocupa 77 unidades en vez de ~280 y el lockup se ve chico y descuadrado dentro de una viewBox medio vacía. `assets/impulse-ai.webp` sale del PNG recortado y reescalado a 3x (349×72) para mostrarse a 24px de alto. Si algún día entregan un SVG con la tipografía trazada, conviene volver al vector.
 - El correo de contacto es **contacto@tapcar.cl** (footer de las 5 páginas, los dos CTA secundarios de Planes y el CTA de Términos).
-- El hero declara **+500 vehículos operando**. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
+- El hero declara **+600 vehículos operando**, la última medición real al 2026-09-24. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
+- **Uso particular no tiene conductores, PIN, Tomar/Entregar, bitácora, alertas, reportes ni equipo**: todo eso es de Flotas, y el sitio lo marca con la etiqueta `.plan-tag`. Lo que la auditoría de la app (2026-09-24) no asigna a Flotas —Carga inteligente, IA de vencimiento, fotos a PDF, categorías, copia sin conexión, autogestión del plan— se presenta como de los dos planes.
+- **No prometer**: que la IA analiza daños (solo lee km, bencina y limpieza); la pauta de mantención por km en Particular (ahí el km no se actualiza); que los envíos de gestoría avisan el vencimiento (llegan sin fecha); las notificaciones de un convenio a sus clientes, salvo como servicio adicional a conversar; una prueba gratis (terminó el 2026-09-01); chips o facturación manual para socios.
+- El **cobro es automático con tarjeta vía Flow**; al crear la cuenta se cobra el primer período. La factura electrónica del SII todavía no está.
+- Los **perfiles del rubro** (automotoras, aseguradoras, gestorías) se piden al crear la cuenta con "Otra cosa" y los aprueba TapCar. Sus precios no se publican.

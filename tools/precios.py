@@ -36,6 +36,7 @@ REVISAR = [
     'como-funciona/index.html',
     'terminos/index.html',
     'legal/index.html',
+    'socios/index.html',
     'llms.txt',
     'README.md',
 ]
