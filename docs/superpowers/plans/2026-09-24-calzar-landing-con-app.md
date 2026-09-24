@@ -405,6 +405,7 @@ Todos los reemplazos van anclados en el markup visible (`hw-step__title`, `hw-st
 - [ ] **Step 6: Paso 05.** Texto sin cambios. Chips: agregar al principio `<span class="plan-tag">Solo en Flotas</span>`.
 
 - [ ] **Step 7: Paso 06.**
+  - Título: `Al terminar, lo entrega con dos fotos` → `Al terminar, lo entrega con fotos` (agregado en la ejecución: el texto nuevo ya no fija dos fotos).
   - Texto → `Otro Tap, elige «Entregar» y sube las fotos que tú definiste, por ejemplo el tablero y la cabina. La IA lee el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic. Si hay un golpe o una falla, el conductor lo reporta ahí mismo: el daño lo informa él, la IA no lo analiza. TapCar además marca «Revisar consumo» cuando el uso gastó más de lo esperado —si configuraste el rendimiento y el estanque—, detecta si la foto del odómetro es antigua o reenviada y te avisa si un uso pasa de 12 horas.`
   - Chips: `<span class="plan-tag">Solo en Flotas</span>`, `Lectura por IA`, `Reporte de daños`, `Revisar consumo`.
 
