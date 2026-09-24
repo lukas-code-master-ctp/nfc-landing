@@ -1,5 +1,6 @@
-// Recibe el formulario de flotas grandes de /planes/ y manda la consulta a
-// contacto@tapcar.cl a traves de Resend.
+// Recibe dos formularios y manda la consulta a contacto@tapcar.cl a traves de
+// Resend: el de flotas grandes de /planes/ y el de empresas del rubro de
+// /socios/. Los distingue el campo `tipo`: sin el, es una consulta de flota.
 //
 // CommonJS a proposito: un .js con `import` necesitaria un package.json con
 // "type": "module", y este repo no tiene npm. Vercel toma cualquier .js dentro
@@ -16,6 +17,16 @@ var REMITENTE = 'TapCar <no-replay@notifications.tapcar.cl>';
 var RESEND = 'https://api.resend.com/emails';
 
 var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Tipos de empresa del formulario de /socios/. Sin `tipo`, la consulta es de
+// flota y se valida como siempre. El tipo no cambia el destinatario: solo el
+// asunto y el cuerpo del correo.
+var TIPOS = {
+  automotora: 'Automotora',
+  aseguradora: 'Aseguradora',
+  gestoria: 'Gestoría',
+  otra: 'Otra empresa del rubro'
+};
 
 function texto(v) {
   return typeof v === 'string' ? v.trim() : '';
@@ -39,6 +50,7 @@ function entero(v) {
 function normalizar(body) {
   var b = body || {};
   return {
+    tipo: linea(b.tipo).toLowerCase(),
     nombre: linea(b.nombre),
     empresa: linea(b.empresa),
     email: linea(b.email),
@@ -53,6 +65,7 @@ function normalizar(body) {
 // null si los datos sirven. Es la validacion autoritativa: los `required` del
 // HTML son comodidad, no seguridad.
 function validar(d) {
+  if (d.tipo && !TIPOS.hasOwnProperty(d.tipo)) return 'Elige el tipo de empresa.';
   if (!d.nombre) return 'Falta tu nombre.';
   if (d.nombre.length > 120) return 'El nombre es demasiado largo.';
   if (!d.empresa) return 'Falta el nombre de la empresa.';
@@ -64,9 +77,13 @@ function validar(d) {
   // seria inyeccion de encabezados.
   if (!EMAIL_RE.test(d.email)) return 'Ese correo no parece válido.';
   if (d.telefono.length > 40) return 'El teléfono es demasiado largo.';
-  if (d.vehiculos === null) return 'Indica cuántos vehículos tiene tu flota.';
-  if (d.vehiculos < 1 || d.vehiculos > 100000) {
-    return 'La cantidad de vehículos debe estar entre 1 y 100.000.';
+  // Los vehiculos se piden solo en la consulta de flota. Con `tipo` no se
+  // miran: si llegan, se ignoran.
+  if (!d.tipo) {
+    if (d.vehiculos === null) return 'Indica cuántos vehículos tiene tu flota.';
+    if (d.vehiculos < 1 || d.vehiculos > 100000) {
+      return 'La cantidad de vehículos debe estar entre 1 y 100.000.';
+    }
   }
   if (d.mensaje.length > 2000) return 'El mensaje es demasiado largo.';
   return null;
@@ -75,17 +92,26 @@ function validar(d) {
 // Texto plano, nunca HTML: con HTML habria que escapar cada valor antes de
 // interpolarlo o alguien puede inyectar markup en el correo que llega.
 function cuerpo(d) {
-  var lineas = [
-    'Nueva consulta de flota desde tapcar.cl/planes/',
-    '',
+  var lineas = d.tipo
+    ? ['Nueva consulta de empresa del rubro desde tapcar.cl/socios/', '',
+       'Tipo:       ' + TIPOS[d.tipo]]
+    : ['Nueva consulta de flota desde tapcar.cl/planes/', ''];
+  lineas.push(
     'Empresa:    ' + d.empresa,
     'Nombre:     ' + d.nombre,
     'Correo:     ' + d.email
-  ];
+  );
   if (d.telefono) lineas.push('Teléfono:   ' + d.telefono);
-  lineas.push('Vehículos:  ' + d.vehiculos);
+  if (!d.tipo) lineas.push('Vehículos:  ' + d.vehiculos);
   if (d.mensaje) lineas.push('', 'Mensaje:', d.mensaje);
   return lineas.join('\n');
+}
+
+function asunto(d) {
+  if (d.tipo) {
+    return 'Consulta de empresa del rubro — ' + d.empresa + ' (' + TIPOS[d.tipo] + ')';
+  }
+  return 'Consulta de flota — ' + d.empresa + ' (' + d.vehiculos + ' vehículos)';
 }
 
 function falla(res) {
@@ -155,7 +181,7 @@ module.exports = async function handler(req, res) {
         from: REMITENTE,
         to: [DESTINO],
         reply_to: d.email,
-        subject: 'Consulta de flota — ' + d.empresa + ' (' + d.vehiculos + ' vehículos)',
+        subject: asunto(d),
         text: cuerpo(d)
       }),
       signal: AbortSignal.timeout(8000)

@@ -70,6 +70,21 @@ function datos(extra) {
   return d;
 }
 
+// Una consulta del formulario de /socios/: lleva `tipo` y no lleva `vehiculos`.
+function socio(extra) {
+  var d = {
+    tipo: 'automotora',
+    empresa: 'Automotora Sur SpA',
+    nombre: 'Ana Rojas',
+    email: 'ana@sur.cl',
+    telefono: '',
+    mensaje: 'Queremos regalarlo.',
+    sitio: ''
+  };
+  for (var k in (extra || {})) d[k] = extra[k];
+  return d;
+}
+
 // El cuerpo JSON que la funcion le mando a Resend en la ultima llamada.
 function ultimoCorreo() {
   return JSON.parse(enviados[enviados.length - 1].opciones.body);
@@ -361,6 +376,84 @@ async function main() {
     await handler(req(datos()), r);
     assert.strictEqual(r.codigo, 200);
     assert.ok(enviados[0].opciones.signal, 'el fetch a Resend debe llevar un signal de timeout');
+  });
+
+  // ── Empresas del rubro (/socios/) ───────────────────────────────────
+  await prueba('envia la consulta de una empresa del rubro', async function () {
+    var r = res();
+    await handler(req(socio()), r);
+    assert.strictEqual(r.codigo, 200);
+    assert.strictEqual(r.cuerpo.ok, true);
+    assert.strictEqual(enviados.length, 1);
+    var correo = ultimoCorreo();
+    assert.deepStrictEqual(correo.to, ['contacto@tapcar.cl']);
+    assert.match(correo.subject, /Automotora Sur SpA/);
+    assert.match(correo.subject, /Automotora/);
+    assert.match(correo.text, /Tipo:/);
+    assert.match(correo.text, /Automotora/);
+    assert.match(correo.text, /tapcar\.cl\/socios\//);
+    assert.doesNotMatch(correo.text, /Vehículos:/);
+  });
+
+  await prueba('acepta los otros tipos de empresa', async function () {
+    var tipos = ['aseguradora', 'gestoria', 'otra'];
+    for (var i = 0; i < tipos.length; i++) {
+      var r = res();
+      await handler(req(socio({ tipo: tipos[i] })), r);
+      assert.strictEqual(r.codigo, 200, 'el tipo ' + tipos[i] + ' deberia aceptarse');
+      if (tipos[i] === 'gestoria') assert.match(ultimoCorreo().subject, /Gestoría/);
+    }
+  });
+
+  await prueba('rechaza un tipo de empresa desconocido', async function () {
+    var r = res();
+    await handler(req(socio({ tipo: 'banco' })), r);
+    assert.strictEqual(r.codigo, 400);
+    assert.match(r.cuerpo.error, /tipo de empresa/i);
+    assert.strictEqual(enviados.length, 0);
+  });
+
+  await prueba('normaliza el tipo a minusculas', async function () {
+    var r = res();
+    await handler(req(socio({ tipo: 'AUTOMOTORA' })), r);
+    assert.strictEqual(r.codigo, 200);
+  });
+
+  // Con `tipo`, la cantidad de vehiculos no se pide: si llega, se ignora.
+  await prueba('con tipo ignora los vehiculos', async function () {
+    var r = res();
+    await handler(req(socio({ vehiculos: 'abc' })), r);
+    assert.strictEqual(r.codigo, 200);
+    assert.doesNotMatch(ultimoCorreo().text, /Vehículos:/);
+  });
+
+  await prueba('la empresa del rubro tambien exige la empresa', async function () {
+    var r = res();
+    await handler(req(socio({ empresa: '' })), r);
+    assert.strictEqual(r.codigo, 400);
+    assert.match(r.cuerpo.error, /empresa/i);
+    assert.strictEqual(enviados.length, 0);
+  });
+
+  // Despues de limpiar los saltos queda 'automotora Bcc: x@y.cl', que no es
+  // un tipo valido.
+  await prueba('rechaza un tipo con saltos de linea', async function () {
+    var r = res();
+    await handler(req(socio({ tipo: 'automotora\r\nBcc: x@y.cl' })), r);
+    assert.strictEqual(r.codigo, 400);
+    assert.strictEqual(enviados.length, 0);
+  });
+
+  // El formulario de flota de /planes/ sigue igual: sin `tipo`, los
+  // vehiculos son obligatorios.
+  await prueba('sin tipo sigue exigiendo los vehiculos', async function () {
+    var d = socio();
+    delete d.tipo;
+    var r = res();
+    await handler(req(d), r);
+    assert.strictEqual(r.codigo, 400);
+    assert.match(r.cuerpo.error, /vehículos/i);
+    assert.strictEqual(enviados.length, 0);
   });
 
   // ── Cierre ────────────────────────────────────────────────────────
