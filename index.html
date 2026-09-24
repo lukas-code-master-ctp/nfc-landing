@@ -1296,7 +1296,7 @@ a { color: inherit; }
       "@type": "WebPage",
       "@id": "https://tapcar.cl/#pagina",
       "url": "https://tapcar.cl/",
-      "name": "Tu flota a un Tap .",
+      "name": "Tu vehículo a un Tap .",
       "description": "Ten al día el Permiso de Circulación, la Revisión Técnica y el SOAP de cada vehículo, y muéstralos en una fiscalización con un toque al chip NFC.",
       "inLanguage": "es-CL",
       "isPartOf": {
@@ -1508,7 +1508,7 @@ a { color: inherit; }
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
           Para autos, motos y flotas
         </div>
-        <h1 class="lp-hero__title" aria-label="Tus vehículos a un Tap."><span aria-hidden="true">Tu <span class="rotor" data-rotor><span class="rotor__word">flota</span></span><br class="lp-hero__nl"> a un <span style="color:var(--azul);">Tap</span>.</span></h1>
+        <h1 class="lp-hero__title" aria-label="Tus vehículos a un Tap."><span aria-hidden="true">Tu <span class="rotor" data-rotor><span class="rotor__word">vehículo</span></span><br class="lp-hero__nl"> a un <span style="color:var(--azul);">Tap</span>.</span></h1>
         <p class="lp-hero__lead">Opera todos tus vehículos con un toque: documentos, quién usa cada uno y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
         <div class="lp-hero__actions">
           <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
@@ -1949,12 +1949,15 @@ a { color: inherit; }
   </footer>
 
   <script>
-    // ── Rotor del hero: "Tu flota/auto/moto a un Tap" ──────────────
+    // ── Rotor del hero: "Tu vehículo/flota/auto... a un Tap" ───────
     (function () {
       var rotor = document.querySelector('[data-rotor]');
       if (!rotor) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var PALABRAS = ['flota', 'auto', 'moto', 'camioneta'];
+      // El primer elemento tiene que ser la misma palabra que el HTML pinta:
+      // el intervalo avanza el índice ANTES de pintar, así que arranca en el
+      // segundo. Si se desincronizan, la primera vuelta salta una palabra.
+      var PALABRAS = ['vehículo', 'flota', 'auto', 'moto', 'camioneta'];
       var ESPERA = 2600, SALIDA = 380;
       var word = rotor.querySelector('.rotor__word');
       var i = 0;
