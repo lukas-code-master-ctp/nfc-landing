@@ -47,7 +47,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 
 `styles.css` es **la fuente editable**. El mismo CSS va incrustado dentro del `<style>` de cada `.html` para que las páginas funcionen de forma autónoma (abrir con doble clic, sin servidor).
 
-Tras editar `styles.css` hay que volver a incrustarlo en las cinco páginas:
+Tras editar `styles.css` hay que volver a incrustarlo en las seis páginas:
 
 ```bash
 python -c "import io; css=io.open('styles.css',encoding='utf-8').read().rstrip(); [io.open(f,'w',encoding='utf-8',newline='').write(h[:h.index('<style>')+7]+'\n'+css+'\n'+h[h.index('  </style>'):]) for f in ['index.html','planes/index.html','legal/index.html','como-funciona/index.html','terminos/index.html','socios/index.html'] for h in [io.open(f,encoding='utf-8').read()]]"
@@ -75,7 +75,7 @@ Sírvela en vez de abrir el archivo si vas a probar la navegación: los enlaces 
 
 Cada página lleva su script incrustado al final del `<body>`:
 
-- **Menú móvil** (las 5 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta" solo vive dentro del panel.
+- **Menú móvil** (las 6 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta" solo vive dentro del panel.
 - **Rotor del hero** (home) — la palabra de "Tu _vehículo_ a un Tap." rota entre vehículo/flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
 - **Reveal on scroll** (home y ¿Cómo funciona?) — `IntersectionObserver` con retraso escalonado.
 - **Contador del hero** (home) — el número de vehículos cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
@@ -91,7 +91,7 @@ Cada página lleva su script incrustado al final del `<body>`:
 
 ### Metadatos
 
-Cada página lleva su bloque de `canonical` + Open Graph + Twitter Card, con **URLs absolutas a `https://tapcar.cl`**. `og:image` no admite rutas relativas, así que si cambia el dominio hay que actualizar los cinco bloques a mano.
+Cada página lleva su bloque de `canonical` + Open Graph + Twitter Card, con **URLs absolutas a `https://tapcar.cl`**. `og:image` no admite rutas relativas, así que si cambia el dominio hay que actualizar los seis bloques a mano.
 
 La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada con Pillow usando Segoe UI, no Geist —las fuentes de marca no están instaladas localmente—, así que la tipografía no es exacta. Sirve, pero es candidata a rehacerse con las fuentes reales.
 
@@ -138,7 +138,7 @@ Es idempotente: borra el bloque anterior y escribe uno nuevo. **Hay que volver a
 
 ### Analítica
 
-El sitio está alojado en **Vercel**. Las 5 páginas llevan al final del `<body>` la variante **`html`** de la [documentación de Web Analytics](https://vercel.com/docs/analytics/quickstart): la cola `window.va` y el `<script defer>`.
+El sitio está alojado en **Vercel**. Las 6 páginas llevan al final del `<body>` la variante **`html`** de la [documentación de Web Analytics](https://vercel.com/docs/analytics/quickstart): la cola `window.va` y el `<script defer>`.
 
 **No se instala el paquete npm `@vercel/analytics`.** La guía de Vercel tiene un selector de framework; el `import { Analytics } from '@vercel/analytics/next'` que se ve por defecto corresponde al selector `nextjs`. En el selector `html` el paso de instalación aparece vacío: no hay npm. Acá no habría dónde importarlo — el sitio es HTML estático sin bundler — e instalarlo dejaría `package.json` y `node_modules` para un paquete que el navegador nunca cargaría.
 
@@ -214,7 +214,7 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 - La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7**. Se identifica en la sección 1 de `/terminos/` y en el `legalName` del schema; el pie lleva `© 2026 TapCar` y la pertenencia la comunica el lockup de Impulse AI, para no repetir la matriz dos veces en el mismo footer.
 - TapCar es **una empresa de Impulse AI**. El footer lleva el lockup oficial, versión *color*, enlazado a `https://www.impulseai.cl/`. No se recolorea: es la marca de otra empresa.
   **Se usa el PNG oficial, no el SVG.** En el SVG exportado la palabra "Impulse AI" es un `<text>` sin `font-family` ni fuente incrustada, así que el navegador la dibuja con la fuente por defecto: ocupa 77 unidades en vez de ~280 y el lockup se ve chico y descuadrado dentro de una viewBox medio vacía. `assets/impulse-ai.webp` sale del PNG recortado y reescalado a 3x (349×72) para mostrarse a 24px de alto. Si algún día entregan un SVG con la tipografía trazada, conviene volver al vector.
-- El correo de contacto es **contacto@tapcar.cl** (footer de las 5 páginas, los dos CTA secundarios de Planes y el CTA de Términos).
+- El correo de contacto es **contacto@tapcar.cl** (footer de las 6 páginas, los dos CTA secundarios de Planes, el CTA de Términos y la salida del formulario de Socios).
 - El hero declara **+600 vehículos operando**, la última medición real al 2026-09-24. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
 - **Uso particular no tiene conductores, PIN, Tomar/Entregar, bitácora, alertas, reportes ni equipo**: todo eso es de Flotas, y el sitio lo marca con la etiqueta `.plan-tag`. Lo que la auditoría de la app (2026-09-24) no asigna a Flotas —Carga inteligente, IA de vencimiento, fotos a PDF, categorías, copia sin conexión, autogestión del plan— se presenta como de los dos planes.
 - **No prometer**: que la IA analiza daños (solo lee km, bencina y limpieza); la pauta de mantención por km en Particular (ahí el km no se actualiza); que los envíos de gestoría avisan el vencimiento (llegan sin fecha); las notificaciones de un convenio a sus clientes, salvo como servicio adicional a conversar; una prueba gratis (terminó el 2026-09-01); chips o facturación manual para socios.
