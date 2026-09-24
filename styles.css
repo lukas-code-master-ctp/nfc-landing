@@ -765,6 +765,13 @@ a { color: inherit; }
 .form__input:focus { outline: none; border-color: var(--azul); box-shadow: 0 0 0 3px var(--azul-soft); }
 .form__input--corto { max-width: 150px; }
 .form__textarea { resize: vertical; min-height: 76px; }
+/* El select usa la misma caja que los inputs; la flecha nativa se reemplaza
+   para que se vea igual en todos los navegadores. */
+select.form__input {
+  -webkit-appearance: none; appearance: none; cursor: pointer; padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235b6573' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center;
+}
 .form__enviar { margin-top: 4px; }
 .form__enviar[disabled] { opacity: 0.6; cursor: default; }
 .form__estado { margin: 0; font-size: 13px; line-height: 1.5; color: var(--estado-vencido-fg); }
@@ -792,15 +799,32 @@ a { color: inherit; }
 .form__ok__title { margin: 0; font-size: 16px; font-weight: 700; }
 .form__ok__text { margin: 4px 0 0; font-size: 14px; line-height: 1.5; }
 
-/* El formulario vive sobre .calc__contacto, que es azul-soft: el anillo de
-   foco y los bordes de arriba se escribieron para fondo blanco y ahi
-   desaparecen. Estos valores estan medidos contra #eaeefc:
+/* Los dos formularios viven sobre azul-soft: el de flotas en .calc__contacto
+   (/planes/) y el de empresas del rubro en .contacto-box (/socios/). El anillo
+   de foco y los bordes de arriba se escribieron para fondo blanco y ahí
+   desaparecen. Estos valores están medidos contra #eaeefc:
    el anillo da 3,4:1 y el borde 3,6:1, sobre el 3:1 que pide WCAG 1.4.11. */
-.calc__contacto .form__input { border-color: #6d7c9b; }
-.calc__contacto .form__input:focus {
+.calc__contacto .form__input,
+.contacto-box .form__input { border-color: #6d7c9b; }
+.calc__contacto .form__input:focus,
+.contacto-box .form__input:focus {
   border-color: var(--azul);
   box-shadow: 0 0 0 3px rgba(41, 82, 230, 0.75);
 }
+
+/* ===================================================================
+   Empresas del rubro (/socios/)
+   =================================================================== */
+.socios-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.contacto-box {
+  max-width: 720px; margin: 0 auto; padding: 32px 36px;
+  background: var(--azul-soft); border-radius: var(--radius-lg);
+}
+.contacto-box__title { margin: 0; font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; font-weight: 700; }
+.contacto-box__text { margin: 10px 0 0; font-size: 16px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
    Página Legal (¿Es legal?)
@@ -936,6 +960,33 @@ a { color: inherit; }
   font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
 }
 .aud-card__link:hover { text-decoration: underline; }
+
+/* Etiqueta de plan: "Uso particular", "Flotas", "Solo en Flotas". Azul sobre
+   azul-soft da 5,3:1, sobre el 4,5:1 que pide texto de 11px. */
+.plan-tag {
+  display: inline-flex; align-items: center; flex: 0 0 auto;
+  padding: 4px 10px; border-radius: var(--radius-pill);
+  background: var(--azul-soft); color: var(--azul);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; line-height: 1.3; white-space: nowrap;
+}
+/* Cabeza de tarjeta con el ícono a la izquierda y la etiqueta a la derecha. */
+.tag-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+/* Home — franja "Para empresas del rubro", bajo las dos tarjetas de audiencia.
+   Es otro tipo de cliente, por eso va aparte y no como tercera tarjeta. */
+.rubro {
+  margin-top: 20px; display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; align-items: center;
+}
+.rubro__eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--azul);
+}
+.rubro__title { margin: 8px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+.rubro__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+.rubro__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.rubro__tipos { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* ===================================================================
    Documento legal (Términos y Condiciones)
@@ -1090,6 +1141,7 @@ a { color: inherit; }
      (patentes, documentos) estiran la columna y aparece scroll lateral. */
   .op-grid { grid-template-columns: minmax(0, 1fr); }
   .aud-grid { grid-template-columns: minmax(0, 1fr); }
+  .socios-grid { grid-template-columns: minmax(0, 1fr); }
   .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .lp-hero__title { font-size: 40px; }
   .fs-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
@@ -1098,6 +1150,8 @@ a { color: inherit; }
 }
 @media (max-width: 860px) {
   .pricing__grid { grid-template-columns: minmax(0, 1fr); }
+  /* Franja del rubro: el texto y los chips se apilan. */
+  .rubro { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .pl-hero__title { font-size: 36px; }
   /* Bajo este ancho la navegación pasa al panel desplegable, pero
      "Ingresar" se queda a la vista: es la acción que más se repite. */
@@ -1212,6 +1266,10 @@ a { color: inherit; }
   .legal-point { flex-direction: column; gap: 14px; padding: 22px; }
   .legal-refs { margin-top: 28px; }
   .legal-disclaimer { margin-top: 20px; }
+
+  /* Empresas del rubro */
+  .contacto-box { padding: 24px 20px; }
+  .contacto-box__title { font-size: 22px; }
 
   /* Footer */
   .footer { padding: 44px 0 28px; }
