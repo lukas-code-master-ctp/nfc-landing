@@ -388,9 +388,9 @@ async function main() {
     var correo = ultimoCorreo();
     assert.deepStrictEqual(correo.to, ['contacto@tapcar.cl']);
     assert.match(correo.subject, /Automotora Sur SpA/);
-    assert.match(correo.subject, /Automotora/);
-    assert.match(correo.text, /Tipo:/);
-    assert.match(correo.text, /Automotora/);
+    // La empresa ya contiene la palabra: se exige la etiqueta en su lugar.
+    assert.match(correo.subject, /\(Automotora\)$/);
+    assert.match(correo.text, /Tipo:\s+Automotora\n/);
     assert.match(correo.text, /tapcar\.cl\/socios\//);
     assert.doesNotMatch(correo.text, /Vehículos:/);
   });
