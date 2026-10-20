@@ -34,7 +34,7 @@ Reglas para cada tarea:
    CTA final.
 5. **Planes desde cero + generador.** `tools/precios.py` adaptado (cifras
    esperadas, canónicas, bloque JS con `gratis`, `veh.anio` y
-   `envioParticular`); `--generar`; tarjetas Gratis / Plan completo, slider 1–10
+   `ENVIO_PARTICULAR`); `--generar`; tarjetas Gratis / Plan completo, slider 1–10
    con total anual, nota de chips; Flotas con su calculadora y toggle intactos;
    FAQ y "Todo incluido" recortados y con precios nuevos; formulario de flota
    grande intacto. `python tools/precios.py` en verde.

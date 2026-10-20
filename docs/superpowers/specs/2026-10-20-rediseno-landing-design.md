@@ -100,7 +100,8 @@ Regla: máximo 1–2 elementos animados a la vez en una vista.
   Técnica, SOAP, Padrón, Homologación), avisos por correo, ficha pública con
   un toque. *Plan completo* — $5.000 al año por vehículo; todo lo gratis +
   mantenciones, datos del vehículo, carga inteligente con IA, otros documentos,
-  ficha sin conexión. Slider 1–10 → "Total: $X al año (IVA incluido)".
+  ficha sin conexión. Slider 1–10 en una franja a lo ancho bajo las dos
+  tarjetas ("Calcula tu plan completo") → "Total: $X al año (IVA incluido)".
   Chips: "Chips gratis. Despacho $3.000 por envío (1 a 10 chips)."
   Sin selector mensual/anual.
 - **Flotas**: calculadora y selector mensual/anual tal cual (lógica intacta),
@@ -143,7 +144,7 @@ compara byte a byte `lib/contrato/precios.tapcar.json` contra el publicado
 `tools/precios.py` se adapta: el particular ya no tiene `mes` ni descuento, las
 cifras esperadas son $5.000, los totales de 1 a 10 autos ($5.000…$50.000) y los
 $3.000 del despacho particular; el bloque generado expone
-`particular: { gratis: 1, veh: { anio: 5000 }, ... }` y `envioParticular`.
+`particular: { gratis: 1, veh: { anio: 5000 }, ... }` y `ENVIO_PARTICULAR`.
 
 ## Riesgos
 

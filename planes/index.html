@@ -1210,8 +1210,10 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
 
 /* Planes — Uso particular: dos tarjetas (Gratis / Plan completo) lado a
-   lado, apiladas en celular. El slider del total vive en la de pago: es la
-   única que cambia con la cantidad de vehículos. */
+   lado, apiladas en celular, con las mismas piezas en el mismo orden para
+   que se comparen fila a fila. El slider del total va en una franja a lo
+   ancho debajo (.plan-calc): dentro de la tarjeta de pago la estiraba y la
+   Gratis quedaba con ~470 px de blanco al lado. */
 .planes-part { max-width: 1000px; margin: 0 auto; padding: 0 var(--gutter); }
 .plan-duo {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1235,22 +1237,30 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .plan-card__mas + .plan-card__lista { margin-top: 12px; }
 .plan-card__lista li { display: flex; gap: 10px; font-size: 15px; line-height: 1.45; color: var(--tinta); }
 .plan-card__check { flex: 0 0 auto; margin-top: 1px; color: var(--vigente-texto); }
-.plan-card__calc {
-  margin: 24px 0 0; padding: 50px 18px 18px;
-  background: var(--azul-50); border-radius: var(--radius-md);
-}
-.plan-card__calc .calc__slider-wrap { margin-top: 0; }
-.plan-card__total { margin: 16px 0 0; font-size: 16px; color: var(--acero); }
-.plan-card__total strong {
-  font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--tinta);
-  font-variant-numeric: tabular-nums;
-}
-.plan-card__fino { margin: 4px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
 /* El botón va al pie (margin-top: auto): así los dos de la fila quedan a
    la misma altura. El aire mínimo va en el padding y no en el margen de lo
    de arriba, porque lo de arriba puede estar oculto (el puente a Flotas). */
 .plan-card__pie { margin-top: auto; padding-top: 28px; }
 .plan-card__pie .btn { width: 100%; }
+/* Franja "Calcula tu plan completo": slider a la izquierda, total a la
+   derecha; en celular se apilan. El título va dentro de la columna del
+   slider para que la burbuja (que flota 38 px sobre el riel) tenga su aire
+   debajo del título y no encima de la tarjeta. */
+.plan-calc { margin-top: 24px; padding: 28px 32px; background: var(--azul-50); border-color: var(--azul-100); box-shadow: none; }
+.plan-calc__fila {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px 48px; align-items: end;
+}
+.plan-calc__title { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.plan-calc__control .calc__slider-wrap { margin-top: 52px; }
+.plan-calc__resultado { text-align: right; }
+.plan-calc__total { margin: 0; font-size: 16px; color: var(--acero); white-space: nowrap; }
+.plan-calc__total strong {
+  font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+}
+.plan-calc__fino { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+.plan-calc .calc__bridge { margin-top: 20px; background: var(--superficie); }
 .planes-nota {
   margin: 24px 0 0; display: flex; align-items: center; justify-content: center; gap: 10px;
   font-size: 15px; color: var(--acero); text-align: center;
@@ -1732,6 +1742,10 @@ select.form__input {
   .nav__panel.is-open { display: block; }
   /* Las dos tarjetas de Uso particular se apilan. */
   .plan-duo { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin: 0 auto; }
+  /* La franja del total sigue el ancho de las tarjetas apiladas. */
+  .plan-calc { max-width: 520px; margin-left: auto; margin-right: auto; }
+  .plan-calc__fila { grid-template-columns: minmax(0, 1fr); }
+  .plan-calc__resultado { text-align: left; }
   .footer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
   .footer__brand-col { grid-column: 1 / -1; }
 }
@@ -1796,6 +1810,8 @@ select.form__input {
   .plan-card { padding: 24px; }
   .plan-card--pro { padding: 23px; }
   .plan-card__monto { font-size: 42px; }
+  .plan-calc { padding: 22px 20px; }
+  .plan-calc__total strong { font-size: 28px; }
   .planes-nota { align-items: flex-start; text-align: left; font-size: 14px; }
   .planes-nota svg { margin-top: 1px; }
   .billing-toggle { align-self: stretch; }
@@ -1947,7 +1963,7 @@ select.form__input {
         "Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido",
         "Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días",
         "Recordatorios por correo antes de cada vencimiento",
-        "Mantenciones con pauta, estado y avisos por correo",
+        "Mantenciones con estado y avisos por correo",
         "Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones",
         "Datos del vehículo: combustible, neumáticos, transmisión y aceite",
         "Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas",
@@ -2094,7 +2110,7 @@ select.form__input {
           "name": "¿El chip NFC está incluido?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, uno por vehículo y sin costo. Solo pagas el despacho de cada envío: $3.000 de 1 a 10 chips en Uso particular; en Flotas, $2.000 hasta 2, $5.000 hasta 50 y $10.000 hasta 100."
+            "text": "Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: $3.000 por 1 a 10 chips en Uso particular. En los demás planes va por tramos: $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100."
           }
         },
         {
@@ -2195,8 +2211,12 @@ select.form__input {
       <div class="plan-duo">
 
         <article class="card plan-card">
-          <h2 class="plan-card__name">Gratis</h2>
+          <div class="tag-row">
+            <h2 class="plan-card__name">Gratis</h2>
+          </div>
           <p class="plan-card__precio"><span class="plan-card__monto">$0</span><span class="plan-card__per">con 1 vehículo</span></p>
+          <p class="plan-card__sub">Tu primer vehículo, sin costo.</p>
+          <p class="plan-card__mas">Incluye:</p>
           <ul class="plan-card__lista">
             <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Documentos de fiscalización: Permiso de Circulación, Revisión Técnica, SOAP, Padrón y Homologación</li>
             <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de cada vencimiento</li>
@@ -2217,41 +2237,51 @@ select.form__input {
           <p class="plan-card__sub">Cada vehículo, incluido el primero. IVA incluido.</p>
           <p class="plan-card__mas">Todo lo del plan gratis, más:</p>
           <ul class="plan-card__lista">
-            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mantenciones con pauta y avisos</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mantenciones con avisos</li>
             <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Datos del vehículo y otros documentos</li>
             <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Carga inteligente: muchos PDF o fotos de una vez</li>
             <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha sin conexión, guardada en tu teléfono</li>
             <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cargas de combustible desde la ficha</li>
           </ul>
 
-          <div class="plan-card__calc">
+          <div class="plan-card__pie">
+            <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Empezar con el plan completo</a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- La calculadora va a lo ancho bajo las tarjetas y no dentro de la de
+           pago: adentro la estiraba ~470 px y la tarjeta Gratis quedaba con
+           ese blanco. Sigue dentro de [data-calc="particular"], que es donde
+           la busca el JS. -->
+      <section class="card plan-calc" aria-labelledby="calc-part-titulo">
+        <div class="plan-calc__fila">
+          <div class="plan-calc__control">
+            <h2 class="plan-calc__title" id="calc-part-titulo">Calcula tu plan completo</h2>
             <div class="calc__slider-wrap">
               <span class="calc__bubble" data-bubble>2 vehículos</span>
               <input type="range" min="1" max="10" value="2" step="1" class="calc__slider" data-slider
                      aria-label="Cantidad de vehículos">
             </div>
             <div class="calc__scale"><span>1</span><span>10</span></div>
-            <p class="plan-card__total" aria-live="polite">Total: <strong data-total>$10.000</strong> al año</p>
-            <p class="plan-card__fino" data-formula>2 vehículos × $5.000. Se renueva sola cada año.</p>
           </div>
-
-          <div class="calc__bridge" data-bridge hidden>
-            <svg class="calc__bridge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1-4h12l1 4h2"/><path d="M6 13 7.5 8h9L18 13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
-            <span>
-              <span class="calc__bridge__text" data-bridge-text></span>
-              <button type="button" class="calc__bridge__btn" data-bridge-btn>
-                Ver el plan Flotas
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-            </span>
+          <div class="plan-calc__resultado">
+            <p class="plan-calc__total" aria-live="polite">Total: <strong data-total>$10.000</strong> al año</p>
+            <p class="plan-calc__fino"><span data-formula>2 vehículos × $5.000</span>. IVA incluido.</p>
           </div>
-
-          <div class="plan-card__pie">
-            <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
-          </div>
-        </article>
-
-      </div>
+        </div>
+        <div class="calc__bridge" data-bridge hidden>
+          <svg class="calc__bridge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1-4h12l1 4h2"/><path d="M6 13 7.5 8h9L18 13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+          <span>
+            <span class="calc__bridge__text" data-bridge-text></span>
+            <button type="button" class="calc__bridge__btn" data-bridge-btn>
+              Ver el plan Flotas
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </span>
+        </div>
+      </section>
 
       <p class="planes-nota">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.27 16.5 9.42"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
@@ -2459,7 +2489,7 @@ select.form__input {
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿El chip NFC está incluido?</h3>
-          <p class="faq__a">Sí, uno por vehículo y sin costo. Solo pagas el despacho de cada envío: $3.000 de 1 a 10 chips en Uso particular; en Flotas, $2.000 hasta 2, $5.000 hasta 50 y $10.000 hasta 100.</p>
+          <p class="faq__a">Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: $3.000 por 1 a 10 chips en Uso particular. En los demás planes va por tramos: $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo se paga?</h3>
@@ -2621,7 +2651,7 @@ select.form__input {
         P('[data-bubble]').textContent = veh(n);
         placeBubble(s, P('[data-bubble]'));
         P('[data-total]').textContent = clp(n * cfg.veh.anio);
-        P('[data-formula]').textContent = veh(n) + ' × ' + clp(cfg.veh.anio) + '. Se renueva sola cada año.';
+        P('[data-formula]').textContent = veh(n) + ' × ' + clp(cfg.veh.anio);
         P('[data-envio-part]').textContent = clp(ENVIO_PARTICULAR);
 
         // El puente aparece en cuanto Flotas es elegible, no solo en el tope.

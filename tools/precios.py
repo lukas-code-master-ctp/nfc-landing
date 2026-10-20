@@ -41,12 +41,17 @@ REVISAR = [
     'README.md',
 ]
 
-# El JS reescribe estos nodos en cada render: lo que diga el HTML ahi es un
-# ejemplo para el valor inicial del slider, no una promesa. Revisarlo obligaria
-# a reimplementar la aritmetica de la calculadora en Python, o sea a tener dos
-# fuentes para la misma cuenta.
+# Nodos que el JS reescribe con un resultado que DEPENDE DEL SLIDER (o del
+# toggle mensual/anual): lo que diga el HTML ahi es un ejemplo para el valor
+# inicial, no una promesa. Revisarlo obligaria a reimplementar la aritmetica de
+# la calculadora en Python, o sea a tener dos fuentes para la misma cuenta.
+#
+# Lo que el JS escribe pero NO depende del slider no va aca: `data-envio-part`
+# (el despacho de Uso particular) es una constante, la misma con 1 o con 10
+# chips, y el HTML la dice como promesa. Si estuviera en esta lista, un $3.000
+# viejo en esa linea pasaria sin aviso.
 ESCRITOS_POR_JS = re.compile(
-    r'data-(total|fineprint|formula|envio-part|save-amount|save-note'
+    r'data-(total|fineprint|formula|save-amount|save-note'
     r'|nudge-total|nudge-amount|linea-label|linea-monto|bubble|scale-max)')
 
 # Cifras con forma de precio. El ultimo caracter tiene que ser digito para no
@@ -136,7 +141,7 @@ def revisar(p):
     conocidas = ok_pesos | ok_ufs | ok_pct
     ajenas = set(k for k in p.get('cifras_ajenas', {}) if not k.startswith('_'))
     problemas = []
-    vistas = set()
+    vistas = {}     # ruta -> cifras vistas en ESE archivo
 
     for ruta in REVISAR:
         fs = os.path.join(RAIZ, ruta)
@@ -156,7 +161,7 @@ def revisar(p):
                 if cifra.endswith('%') and ruta == 'README.md':
                     continue
                 if cifra in conocidas or cifra in ajenas:
-                    vistas.add(cifra)
+                    vistas.setdefault(ruta, set()).add(cifra)
                 else:
                     problemas.append(
                         '  %s:%d  %s  <- precios.json no explica esta cifra'
@@ -166,15 +171,37 @@ def revisar(p):
     # que poder leer en el sitio sin mover un slider. Las derivadas (el total
     # de 7 vehiculos, el ahorro anual de Flotas) solo existen en tiempo de
     # ejecucion.
-    canonicas = set([clp(p['planes']['particular']['vehiculo']['anio']),
-                     clp(p['envio_chips']['particular']['precio'])])
-    for tramo in p['envio_chips']['tramos']:
-        canonicas.add(clp(tramo['precio']))
-    flota = p['planes']['flota']
-    for t in (flota['vehiculo'], flota['cuenta_conductor']):
-        canonicas.add(uf(t['anio']))
-    faltan = sorted(canonicas - vistas)
+    #
+    # Y se exigen EN SU ARCHIVO, no en el sitio entero. Con un conjunto global,
+    # borrar todos los $5.000 de Planes no avisaba: $5.000 es tambien el tramo
+    # de 3 a 50 chips, y cualquier otro archivo (llms.txt, el FAQ) lo seguia
+    # diciendo.
+    faltan = []
+    for ruta, cifras in sorted(canonicas_por_archivo(p).items()):
+        for cifra in sorted(cifras - vistas.get(ruta, set())):
+            faltan.append('%s  %s' % (ruta, cifra))
     return problemas, faltan
+
+
+def canonicas_por_archivo(p):
+    """Que cifras tiene que decir cada archivo, leidas como promesa.
+
+    Planes es la pagina de precios: tiene que mostrar el $0 del plan gratis, el
+    precio anual por vehiculo, el despacho de Uso particular y los tramos de
+    despacho (FAQ del chip), las dos tarifas anuales de Flotas en UF y el
+    descuento del anual (el toggle). Todo eso sin mover un slider.
+    """
+    part = p['planes']['particular']
+    flota = p['planes']['flota']
+    envio = p['envio_chips']
+    planes = set([clp(0), clp(part['vehiculo']['anio']),
+                  clp(envio['particular']['precio'])])
+    for tramo in envio['tramos']:
+        planes.add(clp(tramo['precio']))
+    for t in (flota['vehiculo'], flota['cuenta_conductor']):
+        planes.add(uf(t['anio']))
+        planes.add('%d%%' % descuento(t))
+    return {'planes/index.html': planes}
 
 
 def bloque_js(p):
@@ -248,7 +275,7 @@ def main():
         for x in problemas:
             print(x)
     if faltan:
-        print('Cifras de precios.json que no aparecen en ninguna parte del sitio:')
+        print('Cifras de precios.json que faltan en el archivo donde corresponde:')
         for x in faltan:
             print('  %s' % x)
     if not problemas and not faltan:

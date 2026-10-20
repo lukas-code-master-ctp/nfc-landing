@@ -115,7 +115,7 @@ def producto():
             'Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido',
             'Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días',
             'Recordatorios por correo antes de cada vencimiento',
-            'Mantenciones con pauta, estado y avisos por correo',
+            'Mantenciones con estado y avisos por correo',
             'Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones',
             'Datos del vehículo: combustible, neumáticos, transmisión y aceite',
             'Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas',
