@@ -46,7 +46,7 @@ REVISAR = [
 # a reimplementar la aritmetica de la calculadora en Python, o sea a tener dos
 # fuentes para la misma cuenta.
 ESCRITOS_POR_JS = re.compile(
-    r'data-(total|fineprint|count|rate|cafe|save-amount|save-note'
+    r'data-(total|fineprint|formula|envio-part|save-amount|save-note'
     r'|nudge-total|nudge-amount|linea-label|linea-monto|bubble|scale-max)')
 
 # Cifras con forma de precio. El ultimo caracter tiene que ser digito para no
@@ -73,35 +73,40 @@ def uf(n):
 
 
 def descuento(t):
+    # Solo Flotas tiene descuento: Uso particular es solo anual desde el
+    # 2026-10-20, asi que no hay precio mensual contra el cual compararlo.
     return int(round((1 - t['anio'] / (t['mes'] * 12.0)) * 100))
 
 
 def esperados(p):
     """Todas las cifras que el sitio puede decir legitimamente.
 
-    Incluye las derivadas: el equivalente mensual del plan anual, el precio de
-    lista anualizado, el ahorro, y los $21.996 de la nota que explica por que
-    no se multiplica el mensual redondeado.
+    Uso particular: el $0 del plan gratis, el precio anual por vehiculo y los
+    totales de 1 al maximo de vehiculos -- "2 autos son $10.000" es una cifra
+    que el FAQ o un ejemplo pueden decir, y sale de multiplicar, no de una
+    tabla aparte --, mas su despacho propio. Ya no hay mensual, descuento,
+    ahorro ni la nota del redondeo: el plan es solo anual y nada se divide.
+
+    Flotas: sus tarifas en UF, mensual y anual, y el porcentaje de descuento
+    del anual, que se calcula y no se escribe a mano.
     """
-    part = p['planes']['particular']['vehiculo']
+    part = p['planes']['particular']
     flota = p['planes']['flota']
+    envio = p['envio_chips']
     pesos, ufs, pct = set(), set(), set()
 
-    pesos.add(part['mes'])
-    pesos.add(part['anio'])
-    mensual_anual = int(round(part['anio'] / 12.0))
-    pesos.add(mensual_anual)
-    pesos.add(part['mes'] * 12)                 # precio lista anualizado
-    pesos.add(part['mes'] * 12 - part['anio'])  # ahorro por vehiculo
-    pesos.add(mensual_anual * 12)               # la nota del redondeo
-    for tramo in p['envio_chips']['tramos']:
+    pesos.add(0)                                # la tarjeta "Gratis"
+    anio = part['vehiculo']['anio']
+    for n in range(part['vehiculos']['min'], part['vehiculos']['max'] + 1):
+        pesos.add(n * anio)                     # incluye el 1 x $5.000
+    pesos.add(envio['particular']['precio'])
+    for tramo in envio['tramos']:
         pesos.add(tramo['precio'])
 
     for t in (flota['vehiculo'], flota['cuenta_conductor']):
         ufs.add(t['mes'])
         ufs.add(t['anio'])
         pct.add(descuento(t))
-    pct.add(descuento(part))
 
     return (set(clp(n) for n in pesos),
             set(uf(n) for n in ufs),
@@ -157,10 +162,12 @@ def revisar(p):
                         '  %s:%d  %s  <- precios.json no explica esta cifra'
                         % (ruta, linea_n, cifra))
 
-    # Solo se exige que aparezcan las canonicas. Las derivadas (el precio de
-    # lista anualizado, el ahorro) solo existen en tiempo de ejecucion.
-    canonicas = set([clp(p['planes']['particular']['vehiculo']['mes']),
-                     clp(p['planes']['particular']['vehiculo']['anio'])])
+    # Solo se exige que aparezcan las canonicas: las tarifas que alguien tiene
+    # que poder leer en el sitio sin mover un slider. Las derivadas (el total
+    # de 7 vehiculos, el ahorro anual de Flotas) solo existen en tiempo de
+    # ejecucion.
+    canonicas = set([clp(p['planes']['particular']['vehiculo']['anio']),
+                     clp(p['envio_chips']['particular']['precio'])])
     for tramo in p['envio_chips']['tramos']:
         canonicas.add(clp(tramo['precio']))
     flota = p['planes']['flota']
@@ -171,6 +178,13 @@ def revisar(p):
 
 
 def bloque_js(p):
+    """Las constantes de la calculadora, y nada mas que constantes.
+
+    Uso particular no tiene `mes`: es solo anual. `gratis` es cuantos
+    vehiculos cubre el plan gratis. ENVIO_PARTICULAR es un monto fijo (de 1 a
+    10 chips cuesta lo mismo), asi que va como constante y no como funcion;
+    envio() sigue siendo la de los tramos, que es la que usa Flotas.
+    """
     part = p['planes']['particular']
     flota = p['planes']['flota']
     tramos = p['envio_chips']['tramos']
@@ -179,8 +193,8 @@ def bloque_js(p):
         MARCA_INI + '  Generado por tools/precios.py desde precios.json.',
         '      // No editar a mano: el proximo --generar lo pisa.',
         '      var PLANES = {',
-        '        particular: { veh: { mes: %d, anio: %d }, min: %d, max: %d },'
-        % (part['vehiculo']['mes'], part['vehiculo']['anio'],
+        '        particular: { gratis: %d, veh: { anio: %d }, min: %d, max: %d },'
+        % (part['gratis']['vehiculos'], part['vehiculo']['anio'],
            part['vehiculos']['min'], part['vehiculos']['max']),
         '        flota: {',
         '          veh: { mes: %s, anio: %s },'
@@ -191,6 +205,7 @@ def bloque_js(p):
                                         flota['vehiculos']['max']),
         '        }',
         '      };',
+        '      var ENVIO_PARTICULAR = %d;' % p['envio_chips']['particular']['precio'],
         '      function envio(chips) {',
     ]
     for tramo in tramos[:-1]:

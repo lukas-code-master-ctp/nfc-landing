@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Precios TapCar: $2.500 por vehículo al mes, sin permanencia</title>
-  <meta name="description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
+  <title>Precios TapCar: gratis con 1 auto, $5.000 al año por vehículo</title>
+  <meta name="description" content="Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.">
   <link rel="canonical" href="https://tapcar.cl/planes/">
 
   <!-- Tarjeta al compartir (WhatsApp, LinkedIn, X). La imagen es absoluta
@@ -13,15 +13,15 @@
   <meta property="og:site_name" content="TapCar">
   <meta property="og:locale" content="es_CL">
   <meta property="og:url" content="https://tapcar.cl/planes/">
-  <meta property="og:title" content="Precios TapCar: $2.500 por vehículo al mes, sin permanencia">
-  <meta property="og:description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
+  <meta property="og:title" content="Precios TapCar: gratis con 1 auto, $5.000 al año por vehículo">
+  <meta property="og:description" content="Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.">
   <meta property="og:image" content="https://tapcar.cl/assets/og-tapcar.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="TapCar — tus vehículos a un Tap">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Precios TapCar: $2.500 por vehículo al mes, sin permanencia">
-  <meta name="twitter:description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
+  <meta name="twitter:title" content="Precios TapCar: gratis con 1 auto, $5.000 al año por vehículo">
+  <meta name="twitter:description" content="Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.">
   <meta name="twitter:image" content="https://tapcar.cl/assets/og-tapcar.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -1012,9 +1012,10 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
 /* Planes — Selector de plan (uso particular / flotas).
-   Mismo lenguaje visual que el toggle de facturación de abajo: los dos son
-   controles del mismo precio y tienen que leerse como una familia. */
-.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+   Mismo lenguaje visual que el toggle de facturación de Flotas: los dos son
+   controles del mismo precio y tienen que leerse como una familia. Las
+   opciones miden 44px de alto: es el objetivo táctil mínimo. */
+.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 32px; padding: 0 var(--gutter); }
 .plan-pills {
   display: inline-flex; align-items: center; gap: 4px; padding: 5px;
   background: var(--superficie); border: 1px solid var(--linea);
@@ -1022,8 +1023,8 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .plan-pills__opt {
   display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
-  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  cursor: pointer; font-family: var(--font-sans); font-size: 15px; font-weight: 600;
+  color: var(--acero); min-height: 44px; padding: 0 22px; border-radius: var(--radius-pill);
   transition: background-color var(--dur-base) var(--ease-salir),
               color var(--dur-base) var(--ease-salir);
 }
@@ -1035,31 +1036,18 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .plan-pills__opt.is-active .plan-pills__hint { background: rgba(255, 255, 255, 0.22); color: #fff; }
 
-/* Planes — Toggle de facturación (mensual / anual) */
-.billing-toggle-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 28px; }
-
-/* Anotación que apunta al toggle anual. Era manuscrita; quedó con la
-   fuente del sitio hasta que Planes se rehaga (tarea 5). */
-.billing-note {
-  position: absolute; top: 50%; left: calc(50% + 118px);
-  transform: translateY(-52%);
-  display: flex; align-items: flex-start; gap: 2px; pointer-events: none;
-}
-.billing-note__arrow { flex: 0 0 auto; width: 58px; height: 40px; color: var(--tinta); }
-.billing-note__text {
-  margin-top: 9px; max-width: 150px;
-  font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  line-height: 1.3; color: var(--azul);
-}
+/* Planes — Toggle de facturación de Flotas (mensual / anual). Vive dentro
+   de su tarjeta: Uso particular es solo anual y no lo necesita. */
 .billing-toggle {
-  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  display: inline-flex; align-self: flex-start; align-items: center; gap: 4px;
+  margin-top: 16px; padding: 4px;
   background: var(--superficie); border: 1px solid var(--linea);
   border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
 }
 .billing-toggle__opt {
   display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
   cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  color: var(--acero); min-height: 44px; padding: 0 18px; border-radius: var(--radius-pill);
   transition: background-color var(--dur-base) var(--ease-salir),
               color var(--dur-base) var(--ease-salir);
 }
@@ -1075,7 +1063,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .pricing { padding: 40px 0 24px; }
 .pricing__grid {
   max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
-  display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: stretch;
+  display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 24px; align-items: start;
 }
 .calc {
   display: flex; flex-direction: column; background: var(--superficie);
@@ -1083,8 +1071,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   box-shadow: var(--shadow-md); padding: 36px;
 }
 .calc__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--azul); }
-.calc__row { margin: 24px 0 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
-.calc__row-label { font-size: 16px; color: var(--acero); line-height: 1.4; }
+.calc__row-label { margin: 24px 0 0; font-size: 16px; color: var(--acero); line-height: 1.4; }
 
 /* Planes — Slider con burbuja pegada al pulgar.
    El relleno del riel y la posición de la burbuja los calcula el JS
@@ -1092,6 +1079,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__slider-wrap { position: relative; margin-top: 46px; }
 .calc__bubble {
   position: absolute; top: -38px; transform: translateX(-50%); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
   background: var(--azul); color: #fff; font-size: 13px; font-weight: 700;
   padding: 6px 12px; border-radius: var(--radius-pill);
   box-shadow: var(--shadow-md); pointer-events: none;
@@ -1131,11 +1119,9 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--acero); margin-top: 10px; }
 .calc__divider { margin: 28px 0; height: 1px; background: var(--linea); }
-.calc__formula { font-size: 14px; color: var(--acero); }
 .calc__total-row { margin: 8px 0 4px; display: flex; align-items: baseline; gap: 7px; }
-.calc__total { font-size: 50px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.calc__total { font-size: 50px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
 .calc__total-period { font-size: 17px; color: var(--acero); }
-.calc__note { font-size: 13px; color: var(--acero); line-height: 1.5; }
 .calc__spacer { flex: 1; min-height: 24px; }
 .calc__actions { display: flex; gap: 12px; }
 
@@ -1149,26 +1135,19 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__nudge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
 .calc__nudge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
 .calc__nudge__text strong { color: var(--tinta); font-weight: 600; }
-.calc__nudge__btn {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
-  padding: 0; border: 0; background: none; cursor: pointer;
+/* Bloque y no flex: en celular el texto envuelve, y como flex cada trozo
+   (texto, monto, flecha) se volvía una columna aparte. Como bloque envuelve
+   como una frase. El relleno vertical le da los 44px de objetivo táctil
+   sin que se vea como un botón lleno. */
+.calc__nudge__btn, .calc__bridge__btn {
+  display: block; min-height: 44px; margin: 2px 0 -8px; padding: 10px 0;
+  border: 0; background: none; cursor: pointer; text-align: left; line-height: 1.5;
   font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--azul);
+  border-radius: var(--radius-sm);
 }
-.calc__nudge__btn:hover { text-decoration: underline; }
-/* En celular el texto del botón envuelve: como flex, cada trozo (texto,
-   monto, flecha) se volvía una columna aparte. En línea envuelve como
-   una frase. */
-.calc__nudge__btn { display: inline; text-align: left; line-height: 1.5; }
-.calc__nudge__btn svg { display: inline-block; vertical-align: -3px; margin-left: 4px; }
+.calc__nudge__btn:hover, .calc__bridge__btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+.calc__nudge__btn svg, .calc__bridge__btn svg { display: inline-block; vertical-align: -3px; margin-left: 4px; }
 
-/* Planes — Garantías bajo la calculadora */
-.calc__trust {
-  margin: 0 0 20px; padding: 18px 0 0; list-style: none;
-  border-top: 1px solid var(--linea);
-  display: flex; flex-wrap: wrap; gap: 10px 20px;
-}
-.calc__trust li { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--acero); }
-.calc__trust svg { flex: 0 0 auto; }
 
 .included {
   display: flex; flex-direction: column; background: var(--azul-50);
@@ -1188,6 +1167,8 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   text-transform: uppercase; color: var(--acero);
 }
 .included__group .included__list { margin-top: 16px; }
+.included__nota { margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.included__nota strong { color: var(--tinta); font-weight: 600; }
 
 /* Planes — Ahorro del plan anual */
 .calc__save {
@@ -1195,9 +1176,9 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   padding: 15px 17px; border-radius: var(--radius-md);
   background: var(--vigente-suave); color: var(--vigente-texto);
 }
-.calc__save[hidden], .calc__cafe[hidden] { display: none; }
+.calc__save[hidden] { display: none; }
 .calc__save__icon { flex: 0 0 auto; margin-top: 3px; }
-.calc__save__amount { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.calc__save__amount { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
 .calc__save__note { display: block; margin-top: 5px; font-size: 13px; font-weight: 500; line-height: 1.5; opacity: 0.82; }
 
 /* Planes — FAQ */
@@ -1217,13 +1198,57 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .op-card__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
 .op-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
-/* Planes — Analogía de precio ("menos que un café") */
-.calc__cafe {
-  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
-  margin: 14px 0 0; padding: 8px 13px; border-radius: var(--radius-pill);
-  background: var(--azul-50); color: var(--azul); font-size: 13px; font-weight: 600;
-}
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* Planes — Uso particular: dos tarjetas (Gratis / Plan completo) lado a
+   lado, apiladas en celular. El slider del total vive en la de pago: es la
+   única que cambia con la cantidad de vehículos. */
+.planes-part { max-width: 1000px; margin: 0 auto; padding: 0 var(--gutter); }
+.plan-duo {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px; align-items: stretch;
+}
+.plan-card { display: flex; flex-direction: column; padding: 32px; }
+.plan-card--pro { border: 2px solid var(--azul); box-shadow: var(--shadow-lg); padding: 31px; }
+.plan-card__name { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.015em; }
+.plan-card__precio { margin: 16px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.plan-card__monto {
+  font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.plan-card__per { font-size: 16px; color: var(--acero); }
+.plan-card__sub { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--acero); }
+.plan-card__mas { margin: 22px 0 0; font-size: 14px; font-weight: 600; color: var(--tinta); }
+.plan-card__lista {
+  margin: 20px 0 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.plan-card__mas + .plan-card__lista { margin-top: 12px; }
+.plan-card__lista li { display: flex; gap: 10px; font-size: 15px; line-height: 1.45; color: var(--tinta); }
+.plan-card__check { flex: 0 0 auto; margin-top: 1px; color: var(--vigente-texto); }
+.plan-card__calc {
+  margin: 24px 0 0; padding: 50px 18px 18px;
+  background: var(--azul-50); border-radius: var(--radius-md);
+}
+.plan-card__calc .calc__slider-wrap { margin-top: 0; }
+.plan-card__total { margin: 16px 0 0; font-size: 16px; color: var(--acero); }
+.plan-card__total strong {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+}
+.plan-card__fino { margin: 4px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+/* El botón va al pie (margin-top: auto): así los dos de la fila quedan a
+   la misma altura. El aire mínimo va en el padding y no en el margen de lo
+   de arriba, porque lo de arriba puede estar oculto (el puente a Flotas). */
+.plan-card__pie { margin-top: auto; padding-top: 28px; }
+.plan-card__pie .btn { width: 100%; }
+.planes-nota {
+  margin: 24px 0 0; display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 15px; color: var(--acero); text-align: center;
+}
+.planes-nota svg { flex: 0 0 auto; color: var(--azul); }
+.planes-nota strong { color: var(--tinta); font-weight: 600; }
+.tabular { font-variant-numeric: tabular-nums; }
 
 /* Planes — Piezas de la calculadora de dos planes.
    .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
@@ -1231,10 +1256,11 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
    necesitarían, pero se declaran igual para que nadie los "arregle" después
    poniéndoles un display y los rompa en silencio. */
 .calc[hidden], .calc__control[hidden], .calc__precio[hidden],
-.calc__contacto[hidden], .calc__bridge[hidden], .included__group[hidden] { display: none; }
+.calc__contacto[hidden], .calc__bridge[hidden], .pricing__grid[hidden],
+.planes-part[hidden] { display: none; }
 
 /* Flotas apila dos sliders: vehículos y cuentas de conductor. */
-.calc__control + .calc__control { margin-top: 30px; }
+.calc__control + .calc__control { margin-top: 8px; }
 
 /* Flotas desglosa el precio en líneas con subtotal a la derecha. */
 .calc__lineas { display: flex; flex-direction: column; gap: 8px; }
@@ -1244,10 +1270,12 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .calc__linea[hidden] { display: none; }
 .calc__linea__monto {
-  font-family: var(--font-mono); font-size: 13px; color: var(--tinta); white-space: nowrap;
+  font-size: 14px; font-weight: 600; color: var(--tinta); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Particular — puente hacia Flotas cuando el slider llega al tope. */
+/* Particular — puente hacia Flotas en la banda de 5 a 10 vehículos (y su
+   par en Flotas, la vuelta a Uso particular). */
 .calc__bridge {
   display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 0;
   padding: 14px 16px; border-radius: var(--radius-md); background: var(--azul-50);
@@ -1255,12 +1283,6 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__bridge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
 .calc__bridge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
 .calc__bridge__text strong { color: var(--tinta); font-weight: 600; }
-.calc__bridge__btn {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 5px; padding: 0;
-  border: 0; background: transparent; cursor: pointer; font-family: var(--font-sans);
-  font-size: 14px; font-weight: 600; color: var(--azul);
-}
-.calc__bridge__btn:hover { text-decoration: underline; }
 
 /* Flotas — tramo "Más de 100": reemplaza el precio por un llamado a contacto. */
 .calc__contacto {
@@ -1268,9 +1290,6 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .calc__contacto__title { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
 .calc__contacto__text { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
-.calc__contacto__mail {
-  display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--azul);
-}
 
 /* Planes — Formulario de la consulta de flota grande */
 .form { margin: 18px 0 0; display: flex; flex-direction: column; gap: 14px; }
@@ -1482,11 +1501,6 @@ select.form__input {
 .aud-card__list { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .aud-card__item { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--tinta); }
 .aud-card__check { flex: 0 0 auto; margin-top: 2px; }
-.aud-card__link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
-}
-.aud-card__link:hover { text-decoration: underline; }
 
 /* Etiqueta de plan: "Uso particular", "Flotas", "Solo en Flotas". Azul sobre
    azul-50 da 5,4:1, sobre el 4,5:1 que pide texto de 11px. */
@@ -1513,15 +1527,10 @@ select.form__input {
 .rubro__title { margin: 8px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
 .rubro__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .rubro__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-/* Planes — la franja del rubro explica cada perfil en una línea. */
-.rubro-banda { max-width: var(--contenedor); margin: 24px auto 0; padding: 0 var(--gutter); }
+/* Planes — la franja del rubro: una línea y el enlace a Socios. */
+.rubro-banda { max-width: 1000px; margin: 40px auto 0; padding: 0 var(--gutter); }
+@media (min-width: 861px) { .rubro-banda .rubro__lado { align-items: flex-end; } }
 .rubro-banda .rubro { margin-top: 0; }
-.rubro__lista {
-  margin: 0; padding: 0; list-style: none;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.rubro__lista li { font-size: 14px; line-height: 1.5; color: var(--acero); }
-.rubro__lista strong { color: var(--tinta); font-weight: 600; }
 
 /* ===================================================================
    Documento legal (Términos y Condiciones)
@@ -1682,17 +1691,8 @@ select.form__input {
   }
   .nav__burger { display: inline-flex; }
   .nav__panel.is-open { display: block; }
-  /* La anotación no cabe al lado del toggle: pasa a ir debajo, con la
-     flecha reflejada para que siga apuntando al botón anual. */
-  .billing-toggle-wrap { flex-direction: column; align-items: center; gap: 6px; }
-  .billing-note {
-    position: static; transform: none; align-items: center; gap: 8px;
-    flex-direction: row-reverse;
-  }
-  /* Girada 180°, la flecha queda a la derecha del texto y apunta hacia
-     arriba, al badge del botón anual. */
-  .billing-note__arrow { width: 44px; height: 30px; transform: rotate(180deg); }
-  .billing-note__text { margin-top: 0; max-width: none; }
+  /* Las dos tarjetas de Uso particular se apilan. */
+  .plan-duo { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin: 0 auto; }
   .footer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
   .footer__brand-col { grid-column: 1 / -1; }
 }
@@ -1753,9 +1753,15 @@ select.form__input {
   .calc__actions .btn { width: 100%; }
   /* Bajo 560px las pills ocupan el ancho y el hint "desde 5" estorba. */
   .plan-pills { width: 100%; }
-  .plan-pills__opt { flex: 1; justify-content: center; padding: 9px 12px; }
+  .plan-pills__opt { flex: 1; justify-content: center; padding: 0 12px; }
+  .plan-card { padding: 24px; }
+  .plan-card--pro { padding: 23px; }
+  .plan-card__monto { font-size: 42px; }
+  .planes-nota { align-items: flex-start; text-align: left; font-size: 14px; }
+  .planes-nota svg { margin-top: 1px; }
+  .billing-toggle { align-self: stretch; }
+  .billing-toggle__opt { flex: 1; justify-content: center; padding: 0 10px; }
   .plan-pills__hint { display: none; }
-  .calc__control + .calc__control { margin-top: 26px; }
   .calc__linea { font-size: 13px; }
 
   /* Bajo 560px las dos columnas no caben: los campos se apilan. */
@@ -1853,8 +1859,8 @@ select.form__input {
       "@type": "WebPage",
       "@id": "https://tapcar.cl/planes/#pagina",
       "url": "https://tapcar.cl/planes/",
-      "name": "Menos que un café al mes por cada vehículo.",
-      "description": "$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.",
+      "name": "Empieza gratis. Paga solo si quieres más.",
+      "description": "Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.",
       "inLanguage": "es-CL",
       "isPartOf": {
         "@id": "https://tapcar.cl/#sitio"
@@ -1915,44 +1921,41 @@ select.form__input {
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "CLP",
-        "lowPrice": "2500",
-        "highPrice": "22000",
+        "lowPrice": "0",
+        "highPrice": "5000",
         "offerCount": 4,
         "offers": [
           {
             "@type": "Offer",
-            "name": "Uso particular — plan mensual",
-            "description": "$2.500 por vehículo al mes, hasta 10 vehículos, sin permanencia.",
-            "price": "2500",
+            "name": "Uso particular — gratis",
+            "description": "Gratis con 1 vehículo: documentos de fiscalización, avisos por correo y ficha pública con un toque.",
+            "price": "0",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
             "url": "https://tapcar.cl/planes/",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "price": "2500",
-              "priceCurrency": "CLP",
-              "valueAddedTaxIncluded": true,
-              "unitText": "vehículo",
-              "billingIncrement": 1,
-              "billingDuration": 1,
-              "referenceQuantity": {
-                "@type": "QuantitativeValue",
-                "value": 1,
-                "unitCode": "MON"
-              }
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "maxValue": 1,
+              "unitText": "vehículo"
             }
           },
           {
             "@type": "Offer",
-            "name": "Uso particular — plan anual",
-            "description": "$22.000 por vehículo al año, un 27% menos que pagando mes a mes.",
-            "price": "22000",
+            "name": "Uso particular — plan completo",
+            "description": "$5.000 al año por cada vehículo, incluido el primero, hasta 10 vehículos. IVA incluido.",
+            "price": "5000",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
             "url": "https://tapcar.cl/planes/",
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "minValue": 1,
+              "maxValue": 10,
+              "unitText": "vehículo"
+            },
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
-              "price": "22000",
+              "price": "5000",
               "priceCurrency": "CLP",
               "valueAddedTaxIncluded": true,
               "unitText": "vehículo",
@@ -2028,23 +2031,15 @@ select.form__input {
           "name": "¿Cuánto cuesta?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Uso particular cubre de 1 a 10 vehículos: $2.500 por vehículo al mes — menos que un café — o $22.000 al año, un 27% menos. Flotas parte en 5 vehículos y cuesta UF 0,5 por vehículo al año más IVA. Entre 5 y 10 los dos están disponibles y eliges tú."
+            "text": "Uso particular es gratis con 1 vehículo. El plan completo cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Cuál de los dos planes me toca?",
+          "name": "¿Qué plan me toca?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Depende de cuántos vehículos tengas y de qué necesitas. Con menos de 5 vehículos solo existe Uso particular. Desde 11 el plan es Flotas. Entre 5 y 10 eliges tú. Uso particular trae documentos, ficha NFC, recordatorios, mantenciones, datos del vehículo, transferencia de vehículos y el chip. Flotas suma conductores con PIN, Tomar/Entregar con fotos, bitácora, alertas, reportes, equipo de hasta 5 personas y cuentas de conductor, y cuesta algo más al mismo número de vehículos. Si no tienes conductores, Uso particular te sirve igual. Sobre 100 vehículos armamos la propuesta contigo: el plan no tiene tope, lo que llega hasta 100 es contratarlo solo desde la web."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Qué es un conductor fijo y qué se cobra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Son dos cosas distintas. La asignación —que el vehículo tenga un conductor titular, que aparezca prellenado al abrir la ficha y que puedas saltarte el PIN— va incluida. La cuenta es que ese conductor entre con su propio usuario y mantenga solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento, sin ver la flota ni a sus compañeros. Eso cuesta UF 0,12 al mes y no ocupa lugar en el tope de 5 personas del equipo. Se cobra la cuenta, no la asignación."
+            "text": "Con menos de 5 vehículos, Uso particular. Desde 11, Flotas. Entre 5 y 10 eliges tú: Flotas suma conductores con PIN, fotos de entrega, reportes y equipo."
           }
         },
         {
@@ -2052,7 +2047,7 @@ select.form__input {
           "name": "¿Los precios incluyen IVA?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Los precios en pesos del plan particular sí: $2.500 y $22.000 son lo que pagas. Los valores en UF del plan Flotas van más IVA, como es habitual entre empresas."
+            "text": "Los de Uso particular sí. Los valores en UF de Flotas van más IVA."
           }
         },
         {
@@ -2060,7 +2055,7 @@ select.form__input {
           "name": "¿El chip NFC está incluido?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, y da lo mismo cuántos vehículos tengas: va un chip por cada uno, sin costo. Lo único que se paga es el despacho — $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100, con IVA incluido. Se cobra en cada envío, así que si más adelante sumas vehículos y te mandamos sus chips, ese despacho se cobra aparte. Sobre 100 vehículos el envío entra en la cotización."
+            "text": "Sí, uno por vehículo y sin costo. Solo pagas el despacho de cada envío: $3.000 de 1 a 10 chips en Uso particular; en Flotas, $2.000 hasta 2, $5.000 hasta 50 y $10.000 hasta 100."
           }
         },
         {
@@ -2068,23 +2063,15 @@ select.form__input {
           "name": "¿Cómo se paga?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Con tarjeta, a través de Flow. El cobro es automático: al crear la cuenta se cobra el primer período, y los siguientes se cobran solos. La factura electrónica del SII llega en una próxima etapa."
+            "text": "Con tarjeta, vía Flow. El plan completo se cobra al año y se renueva solo; Flotas, mensual o anual."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Necesito instalar una app?",
+          "name": "¿Y si sumo vehículos?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Ni tú, ni tus conductores, ni quien fiscaliza: todo se abre con un toque al chip NFC o desde el panel web. La única excepción es grabar el chip desde un iPhone, que se hace con la app NFC Tools."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Y si sumo más vehículos?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Los sumas tú desde el panel cuando quieras, y se cobra la diferencia prorrateada. También puedes bajar vehículos, pasar de mensual a anual, usar un código promocional y revisar tu historial de pagos. Uso particular llega hasta 10 vehículos: si pasas de ahí, necesitas el plan Flotas. Te enviamos los chips de los vehículos nuevos."
+            "text": "Los sumas desde el panel y pagas la diferencia prorrateada. Desde 11 vehículos, el plan es Flotas."
           }
         },
         {
@@ -2092,7 +2079,7 @@ select.form__input {
           "name": "¿Puedo cancelar?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, cuando quieras, sin contratos de permanencia ni penalizaciones. La baja se agenda para el cierre de tu ciclo: hasta ahí sigues usando TapCar, y si te arrepientes la puedes deshacer."
+            "text": "Sí, sin permanencia ni multas. La baja corre al cierre de tu período."
           }
         }
       ]
@@ -2150,12 +2137,12 @@ select.form__input {
   <section class="pl-hero">
     <div class="pl-hero__inner">
       <span class="eyebrow">Planes</span>
-      <h1 class="pl-hero__title">Menos que un café al mes por cada vehículo.</h1>
-      <p class="pl-hero__lead">$2.500 por vehículo al mes para uso particular, y tarifa por flota desde 5 vehículos. Documentos, ficha NFC, recordatorios y mantenciones en los dos planes; conductores con PIN, reportes y equipo en Flotas. Sin permanencia — cambia o cancela cuando quieras.</p>
+      <h1 class="pl-hero__title">Empieza gratis. Paga solo si quieres más.</h1>
+      <p class="pl-hero__lead">Uso particular es gratis con 1 vehículo. Flotas parte en 5.</p>
     </div>
   </section>
 
-  <!-- ============ CALCULADORA ============ -->
+  <!-- ============ PLANES ============ -->
   <section class="pricing">
     <div class="plan-pills-wrap">
       <div class="plan-pills" role="group" aria-label="Tipo de plan">
@@ -2163,100 +2150,89 @@ select.form__input {
         <button type="button" class="plan-pills__opt" data-plan="flota" aria-pressed="false">Flotas <span class="plan-pills__hint">desde 5</span></button>
       </div>
     </div>
-    <div class="billing-toggle-wrap">
-      <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
-        <button type="button" class="billing-toggle__opt is-active" data-period="mensual" aria-pressed="true">Mensual</button>
-        <button type="button" class="billing-toggle__opt" data-period="anual" aria-pressed="false">Anual <span class="billing-toggle__save">−27%</span></button>
+
+    <!-- USO PARTICULAR: dos tarjetas. Solo anual, sin selector de periodo. -->
+    <div class="planes-part" data-calc="particular">
+      <div class="plan-duo">
+
+        <article class="card plan-card">
+          <h2 class="plan-card__name">Gratis</h2>
+          <p class="plan-card__precio"><span class="plan-card__monto">$0</span><span class="plan-card__per">con 1 vehículo</span></p>
+          <ul class="plan-card__lista">
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Documentos de fiscalización: Permiso de Circulación, Revisión Técnica, SOAP, Padrón y Homologación</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de cada vencimiento</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha pública con un toque al chip</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>La IA lee la fecha de vencimiento por ti</li>
+          </ul>
+          <div class="plan-card__pie">
+            <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta gratis</a>
+          </div>
+        </article>
+
+        <article class="card plan-card plan-card--pro">
+          <div class="tag-row">
+            <h2 class="plan-card__name">Plan completo</h2>
+            <span class="plan-tag">Anual</span>
+          </div>
+          <p class="plan-card__precio"><span class="plan-card__monto">$5.000</span><span class="plan-card__per">al año por vehículo</span></p>
+          <p class="plan-card__sub">Cada vehículo, incluido el primero. IVA incluido.</p>
+          <p class="plan-card__mas">Todo lo del plan gratis, más:</p>
+          <ul class="plan-card__lista">
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mantenciones con pauta y avisos</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Datos del vehículo y otros documentos</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Carga inteligente: muchos PDF o fotos de una vez</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha sin conexión, guardada en tu teléfono</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cargas de combustible desde la ficha</li>
+          </ul>
+
+          <div class="plan-card__calc">
+            <div class="calc__slider-wrap">
+              <span class="calc__bubble" data-bubble>2 vehículos</span>
+              <input type="range" min="1" max="10" value="2" step="1" class="calc__slider" data-slider
+                     aria-label="Cantidad de vehículos">
+            </div>
+            <div class="calc__scale"><span>1</span><span>10</span></div>
+            <p class="plan-card__total" aria-live="polite">Total: <strong data-total>$10.000</strong> al año</p>
+            <p class="plan-card__fino" data-formula>2 vehículos × $5.000. Se renueva sola cada año.</p>
+          </div>
+
+          <div class="calc__bridge" data-bridge hidden>
+            <svg class="calc__bridge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1-4h12l1 4h2"/><path d="M6 13 7.5 8h9L18 13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+            <span>
+              <span class="calc__bridge__text" data-bridge-text></span>
+              <button type="button" class="calc__bridge__btn" data-bridge-btn>
+                Ver el plan Flotas
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </span>
+          </div>
+
+          <div class="plan-card__pie">
+            <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
+          </div>
+        </article>
+
       </div>
-      <span class="billing-note">
-        <svg class="billing-note__arrow" viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M61 11C51 2 26 1 10 33"/>
-          <path d="M10 33 13 19"/>
-          <path d="M10 33 25 30"/>
-        </svg>
-        <span class="billing-note__text">Aprovecha la promoción anual</span>
-      </span>
+
+      <p class="planes-nota">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.27 16.5 9.42"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        <span>Chips gratis. Despacho <strong class="tabular" data-envio-part>$3.000</strong> por envío (1 a 10 chips).</span>
+      </p>
     </div>
-    <div class="pricing__grid">
 
-      <!-- CALCULADORA — USO PARTICULAR -->
-      <div class="calc" data-calc="particular">
-        <span class="calc__eyebrow">Calcula tu plan</span>
+    <!-- FLOTAS: calculadora en UF con toggle mensual/anual. -->
+    <div class="pricing__grid" data-calc="flota" hidden>
 
-        <div class="calc__control">
-          <div class="calc__row">
-            <span class="calc__row-label">Vehículos a registrar</span>
-          </div>
-          <div class="calc__slider-wrap">
-            <span class="calc__bubble" data-bubble>3 vehículos</span>
-            <input type="range" min="1" max="10" value="3" step="1" class="calc__slider" data-slider
-                   aria-label="Cantidad de vehículos a registrar">
-          </div>
-          <div class="calc__scale"><span>1</span><span>10</span></div>
-        </div>
-
-        <div class="calc__divider"></div>
-
-        <span class="calc__formula"><span data-count>3 vehículos</span> × $<span data-rate>2.500</span></span>
-        <div class="calc__total-row">
-          <span class="calc__total" data-total>$7.500</span>
-          <span class="calc__total-period">/mes</span>
-        </div>
-        <span class="calc__cafe" data-cafe-wrap>
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2M14 2v2M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1Z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2"/></svg>
-          <span data-cafe>$2.500 por vehículo — menos que un café al mes.</span>
-        </span>
-        <div class="calc__save" data-save hidden>
-          <svg class="calc__save__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
-          <span>
-            <span class="calc__save__amount" data-save-amount>Ahorras $24.000 al año</span>
-            <span class="calc__save__note" data-save-note>$1.833 por vehículo al mes — 27% menos que pagando mes a mes.</span>
-          </span>
-        </div>
-        <p class="calc__fineprint" data-fineprint>Un chip NFC por vehículo, incluido. El envío de los 3 chips cuesta $5.000 con IVA incluido, y se cobra en cada despacho. Sin costos ocultos.</p>
-
-        <div class="calc__nudge" data-nudge>
-          <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
-          <span>
-            <span class="calc__nudge__text">Con el plan anual este mismo plan te queda en <strong data-nudge-total>$5.500</strong> al mes.</span>
-            <button type="button" class="calc__nudge__btn" data-nudge-btn>
-              Cambiar a anual y ahorrar <span data-nudge-amount>$24.000</span> al año
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </span>
-        </div>
-
-        <div class="calc__bridge" data-bridge hidden>
-          <svg class="calc__bridge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1-4h12l1 4h2"/><path d="M6 13 7.5 8h9L18 13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
-          <span>
-            <span class="calc__bridge__text" data-bridge-text></span>
-            <button type="button" class="calc__bridge__btn" data-bridge-btn>
-              Ver el plan Flotas
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </span>
-        </div>
-
-        <div class="calc__spacer"></div>
-        <ul class="calc__trust">
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin costos ocultos</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cambias de plan cuando quieras</li>
-        </ul>
-        <div class="calc__actions">
-          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
-          <a href="mailto:contacto@tapcar.cl" class="btn btn--secondary btn--lg">contacto@tapcar.cl</a>
-        </div>
-      </div>
-
-      <!-- CALCULADORA — FLOTAS -->
-      <div class="calc" data-calc="flota" hidden>
+      <div class="calc">
         <span class="calc__eyebrow">Calcula tu flota</span>
 
+        <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
+          <button type="button" class="billing-toggle__opt is-active" data-period="mensual" aria-pressed="true">Mensual</button>
+          <button type="button" class="billing-toggle__opt" data-period="anual" aria-pressed="false">Anual <span class="billing-toggle__save">−27%</span></button>
+        </div>
+
         <div class="calc__control">
-          <div class="calc__row">
-            <span class="calc__row-label">Vehículos de la flota</span>
-          </div>
+          <p class="calc__row-label">Vehículos de la flota</p>
           <div class="calc__slider-wrap">
             <span class="calc__bubble" data-bubble="veh">25 vehículos</span>
             <input type="range" min="5" max="101" value="25" step="1" class="calc__slider" data-slider="veh"
@@ -2266,9 +2242,7 @@ select.form__input {
         </div>
 
         <div class="calc__control" data-control-cuentas>
-          <div class="calc__row">
-            <span class="calc__row-label">Cuentas de conductor</span>
-          </div>
+          <p class="calc__row-label">Cuentas de conductor</p>
           <div class="calc__slider-wrap">
             <span class="calc__bubble" data-bubble="cuentas">10 cuentas</span>
             <input type="range" min="0" max="25" value="10" step="1" class="calc__slider" data-slider="cuentas"
@@ -2328,7 +2302,7 @@ select.form__input {
 
         <div class="calc__contacto" data-contacto hidden>
           <p class="calc__contacto__title">Más de 100 vehículos</p>
-          <p class="calc__contacto__text">El plan Flotas no tiene tope: lo que llega hasta 100 es contratarlo solo desde la web. Cuéntanos de tu operación y te armamos la propuesta.</p>
+          <p class="calc__contacto__text">Flotas no tiene tope. Cuéntanos de tu operación y te armamos la propuesta.</p>
 
           <form class="form" data-form-flota>
             <div class="form__fila">
@@ -2381,56 +2355,27 @@ select.form__input {
         </div>
 
         <div class="calc__spacer"></div>
-        <ul class="calc__trust">
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>La asignación de conductor va incluida</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sumas y quitas vehículos cuando quieras</li>
-        </ul>
         <div class="calc__actions">
           <a href="mailto:contacto@tapcar.cl" class="btn btn--primary btn--lg">Hablemos de tu flota</a>
           <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta</a>
         </div>
       </div>
 
-      <!-- INCLUIDO -->
+      <!-- INCLUIDO EN FLOTAS -->
       <div class="included included--con-llavero">
         <img src="/assets/chip-llavero.webp" class="llavero llavero--included" alt="Llavero con el chip NFC de TapCar" loading="lazy" width="345" height="400">
         <span class="included__eyebrow">Todo incluido</span>
-        <p class="included__lead" data-included-lead>Una sola suscripción por vehículo, con todo lo que necesitas para tus autos. Sin extras ni letra chica.</p>
-
+        <p class="included__lead">Todo lo del plan completo de Uso particular, más:</p>
+        <ul class="included__list">
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Conductores con PIN que toman y entregan con un Tap</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fotos de entrega: la IA anota kilometraje, combustible y limpieza</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bitácora, alertas de daños y control de consumo</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Reportes en Excel y PDF</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Equipo de hasta 5 personas</li>
+        </ul>
         <div class="included__group">
-          <p class="included__group-title">En los dos planes</p>
-          <ul class="included__list">
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un chip NFC por vehículo, incluido — el chip no se cobra, solo el despacho, desde $2.000</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tus documentos listos para mostrar en fiscalización — solo lectura, y sin conexión por 7 días</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Carga inteligente: la IA arma tus vehículos a partir de los PDF o fotos de sus documentos</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de que venza cada documento</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mantenciones con pauta por meses, estado y avisos por correo</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Datos del vehículo a mano: combustible, neumáticos, transmisión y más</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Transfiere un vehículo a otra cuenta si lo vendes o lo cedes</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia — cancela cuando quieras</li>
-          </ul>
-        </div>
-
-        <div class="included__group" data-grupo="flota" hidden>
-          <p class="included__group-title">Solo en Flotas</p>
-          <ul class="included__list">
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Conductores con PIN que toman y entregan el vehículo con un Tap</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Al entregar, las fotos que tú defines, y la IA anota kilometraje, bencina y limpieza</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bitácora, alertas de daños y de usos sin entrega, y control de consumo y de usos largos</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Reportes en Excel y PDF, y la evolución de km, usos u horas</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pauta de mantención también por kilómetros</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Invita a tu equipo (hasta 5 personas) como Administrador, Editor o Visor</li>
-          </ul>
-        </div>
-
-        <div class="included__group" data-grupo="flota" hidden>
           <p class="included__group-title">Conductor fijo</p>
-          <ul class="included__list">
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La asignación va incluida.</strong> El vehículo tiene un conductor titular: al abrir la ficha desde el chip aparece él prellenado en vez de la lista completa y, si lo configuras así, sin pedir PIN. "Soy otro conductor" sigue estando — es un atajo, no un candado.</span></li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La cuenta cuesta UF 0,12 al mes, o UF 1,05 al año.</strong> Ese conductor entra con su propio usuario y ve solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento. No ve la flota ni a sus compañeros, y no ocupa lugar en el tope de 5 personas del equipo.</span></li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Se cobra la cuenta, no la asignación</li>
-          </ul>
+          <p class="included__nota">La asignación va incluida. La <strong>cuenta de conductor</strong> cuesta UF 0,12 al mes o UF 1,05 al año: entra con su usuario y ve solo su vehículo.</p>
         </div>
       </div>
 
@@ -2442,16 +2387,11 @@ select.form__input {
     <div class="card card--p28 rubro">
       <div>
         <span class="rubro__eyebrow">Empresas del rubro</span>
-        <h2 class="rubro__title">¿Eres automotora, aseguradora o gestoría?</h2>
-        <p class="rubro__text">Lo tuyo no se calcula en esta página. Son convenios y envíos que se piden al crear la cuenta, que aprobamos nosotros y cuyas condiciones se acuerdan caso a caso.</p>
+        <h2 class="rubro__title">¿Automotora, aseguradora o gestoría?</h2>
+        <p class="rubro__text">Trabajas con convenios y envíos que acordamos contigo.</p>
       </div>
       <div class="rubro__lado">
-        <ul class="rubro__lista">
-          <li><strong>Automotoras</strong> — le regalas TapCar a quien te compra un auto con un código de un solo uso, y pagas por cada código activado.</li>
-          <li><strong>Aseguradoras</strong> — el mismo convenio, para tus asegurados.</li>
-          <li><strong>Gestorías</strong> — mandas el documento que tramitaste directo a la cuenta TapCar de tu cliente.</li>
-        </ul>
-        <a href="/socios/" class="aud-card__link">Ver cómo funcionan
+        <a href="/socios/" class="btn btn--secondary btn--md">Ver cómo funcionan
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
@@ -2468,39 +2408,31 @@ select.form__input {
       <div class="faq__list">
         <div class="faq__item">
           <h3 class="faq__q">¿Cuánto cuesta?</h3>
-          <p class="faq__a">Uso particular cubre de 1 a 10 vehículos: $2.500 por vehículo al mes — menos que un café — o $22.000 al año, un 27% menos. Flotas parte en 5 vehículos y cuesta UF 0,5 por vehículo al año más IVA. Entre 5 y 10 los dos están disponibles y eliges tú.</p>
+          <p class="faq__a">Uso particular es gratis con 1 vehículo. El plan completo cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA.</p>
         </div>
         <div class="faq__item">
-          <h3 class="faq__q">¿Cuál de los dos planes me toca?</h3>
-          <p class="faq__a">Depende de cuántos vehículos tengas y de qué necesitas. Con menos de 5 vehículos solo existe Uso particular. Desde 11 el plan es Flotas. Entre 5 y 10 eliges tú. Uso particular trae documentos, ficha NFC, recordatorios, mantenciones, datos del vehículo, transferencia de vehículos y el chip. Flotas suma conductores con PIN, Tomar/Entregar con fotos, bitácora, alertas, reportes, equipo de hasta 5 personas y cuentas de conductor, y cuesta algo más al mismo número de vehículos. Si no tienes conductores, Uso particular te sirve igual. Sobre 100 vehículos armamos la propuesta contigo: el plan no tiene tope, lo que llega hasta 100 es contratarlo solo desde la web.</p>
-        </div>
-        <div class="faq__item">
-          <h3 class="faq__q">¿Qué es un conductor fijo y qué se cobra?</h3>
-          <p class="faq__a">Son dos cosas distintas. La asignación —que el vehículo tenga un conductor titular, que aparezca prellenado al abrir la ficha y que puedas saltarte el PIN— va incluida. La cuenta es que ese conductor entre con su propio usuario y mantenga solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento, sin ver la flota ni a sus compañeros. Eso cuesta UF 0,12 al mes y no ocupa lugar en el tope de 5 personas del equipo. Se cobra la cuenta, no la asignación.</p>
+          <h3 class="faq__q">¿Qué plan me toca?</h3>
+          <p class="faq__a">Con menos de 5 vehículos, Uso particular. Desde 11, Flotas. Entre 5 y 10 eliges tú: Flotas suma conductores con PIN, fotos de entrega, reportes y equipo.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Los precios incluyen IVA?</h3>
-          <p class="faq__a">Los precios en pesos del plan particular sí: $2.500 y $22.000 son lo que pagas. Los valores en UF del plan Flotas van más IVA, como es habitual entre empresas.</p>
+          <p class="faq__a">Los de Uso particular sí. Los valores en UF de Flotas van más IVA.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿El chip NFC está incluido?</h3>
-          <p class="faq__a">Sí, y da lo mismo cuántos vehículos tengas: va un chip por cada uno, sin costo. Lo único que se paga es el despacho — $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100, con IVA incluido. Se cobra en cada envío, así que si más adelante sumas vehículos y te mandamos sus chips, ese despacho se cobra aparte. Sobre 100 vehículos el envío entra en la cotización.</p>
+          <p class="faq__a">Sí, uno por vehículo y sin costo. Solo pagas el despacho de cada envío: $3.000 de 1 a 10 chips en Uso particular; en Flotas, $2.000 hasta 2, $5.000 hasta 50 y $10.000 hasta 100.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo se paga?</h3>
-          <p class="faq__a">Con tarjeta, a través de Flow. El cobro es automático: al crear la cuenta se cobra el primer período, y los siguientes se cobran solos. La factura electrónica del SII llega en una próxima etapa.</p>
+          <p class="faq__a">Con tarjeta, vía Flow. El plan completo se cobra al año y se renueva solo; Flotas, mensual o anual.</p>
         </div>
         <div class="faq__item">
-          <h3 class="faq__q">¿Necesito instalar una app?</h3>
-          <p class="faq__a">No. Ni tú, ni tus conductores, ni quien fiscaliza: todo se abre con un toque al chip NFC o desde el panel web. La única excepción es grabar el chip desde un iPhone, que se hace con la app NFC Tools.</p>
-        </div>
-        <div class="faq__item">
-          <h3 class="faq__q">¿Y si sumo más vehículos?</h3>
-          <p class="faq__a">Los sumas tú desde el panel cuando quieras, y se cobra la diferencia prorrateada. También puedes bajar vehículos, pasar de mensual a anual, usar un código promocional y revisar tu historial de pagos. Uso particular llega hasta 10 vehículos: si pasas de ahí, necesitas el plan Flotas. Te enviamos los chips de los vehículos nuevos.</p>
+          <h3 class="faq__q">¿Y si sumo vehículos?</h3>
+          <p class="faq__a">Los sumas desde el panel y pagas la diferencia prorrateada. Desde 11 vehículos, el plan es Flotas.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Puedo cancelar?</h3>
-          <p class="faq__a">Sí, cuando quieras, sin contratos de permanencia ni penalizaciones. La baja se agenda para el cierre de tu ciclo: hasta ahí sigues usando TapCar, y si te arrepientes la puedes deshacer.</p>
+          <p class="faq__a">Sí, sin permanencia ni multas. La baja corre al cierre de tu período.</p>
         </div>
       </div>
     </div>
@@ -2509,13 +2441,12 @@ select.form__input {
   <!-- ============ CTA ============ -->
   <section class="cta">
     <div data-reveal class="cta__inner">
-      <h2 class="cta__title">Todos tus vehículos controlados por lo que cuesta un café.</h2>
-      <p class="cta__lead">$2.500 por vehículo al mes, o tarifa de flota desde 5 vehículos. Registra tus vehículos y empieza a operar con un Tap.</p>
+      <h2 class="cta__title">Empieza gratis con 1 auto.</h2>
+      <p class="cta__lead">Suma vehículos cuando quieras.</p>
       <div class="cta__actions">
-        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
+        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta gratis
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="mailto:contacto@tapcar.cl" class="cta__secondary">contacto@tapcar.cl</a>
       </div>
     </div>
   </section>
@@ -2568,23 +2499,21 @@ select.form__input {
   <script>
     // ── Calculadora de precio ──────────────────────────────────────
     (function () {
-      // Las cifras ancla son la mensual y la anual, y todo el dinero sale de
-      // ahí. El equivalente mensual del plan anual se muestra pero nunca se usa
-      // para calcular: 12 × $1.833 da $21.996, no los $22.000 reales.
-      //
-      // Particular va en pesos con IVA incluido; Flotas en UF más IVA. Los
-      // precios mensuales de Flotas son la tarifa lista y los anuales son el
+      // Uso particular va en pesos con IVA incluido y es SOLO anual: el total
+      // es vehículos × precio anual, sin mensual ni descuento. Flotas va en UF
+      // más IVA; sus precios mensuales son la tarifa lista y los anuales, el
       // precio ya con el descuento aplicado.
       // <precios>  Generado por tools/precios.py desde precios.json.
       // No editar a mano: el proximo --generar lo pisa.
       var PLANES = {
-        particular: { veh: { mes: 2500, anio: 22000 }, min: 1, max: 10 },
+        particular: { gratis: 1, veh: { anio: 5000 }, min: 1, max: 10 },
         flota: {
           veh: { mes: 0.057, anio: 0.5 },
           cuenta: { mes: 0.12, anio: 1.05 },
           min: 5, max: 100
         }
       };
+      var ENVIO_PARTICULAR = 3000;
       function envio(chips) {
         if (chips <= 2) return 2000;
         if (chips <= 50) return 5000;
@@ -2592,9 +2521,10 @@ select.form__input {
       }
       // </precios>
 
-      // El descuento se calcula, no se escribe a mano. Las tres tarifas dan 27.
+      // El descuento se calcula, no se escribe a mano. Solo Flotas lo tiene:
+      // sus dos tarifas dan 27.
       function descuento(t) { return Math.round((1 - t.anio / (t.mes * 12)) * 100); }
-      var DESCUENTO = descuento(PLANES.particular.veh);
+      var DESCUENTO = descuento(PLANES.flota.veh);
       // Los rangos se solapan a proposito entre 5 y 10 vehiculos: ahi los dos
       // planes estan disponibles y elige el cliente, asi que cada tarjeta avisa
       // de la otra. Bajo 5 solo hay Particular; desde 11, solo Flotas.
@@ -2619,16 +2549,11 @@ select.form__input {
       function ctas(n) { return n === 1 ? '1 cuenta de conductor' : n + ' cuentas de conductor'; }
 
       var plan = 'particular';
+      // El periodo solo existe en Flotas: Uso particular es anual.
       var period = 'mensual';
 
       var cardP = document.querySelector('[data-calc="particular"]');
       var cardF = document.querySelector('[data-calc="flota"]');
-      var gruposFlota = document.querySelectorAll('[data-grupo="flota"]');
-      var leadIncluido = document.querySelector('[data-included-lead]');
-      var LEAD = {
-        particular: 'Una sola suscripción por vehículo, con todo lo que necesitas para tus autos. Sin extras ni letra chica.',
-        flota: 'Tarifa por vehículo con toda la plataforma incluida. Aparte solo van las cuentas de conductor, si las quieres, y el envío de los chips.'
-      };
       function P(sel) { return cardP.querySelector(sel); }
       function F(sel) { return cardF.querySelector(sel); }
 
@@ -2650,40 +2575,22 @@ select.form__input {
       }
 
       function renderParticular() {
-        var cfg = PLANES.particular, t = cfg.veh;
+        var cfg = PLANES.particular;
         var s = P('[data-slider]');
         var n = parseInt(s.value, 10) || cfg.min;
-        var anual = period === 'anual';
-        var tarifa = anual ? Math.round(t.anio / 12) : t.mes;
-        var porMes = anual ? Math.round(n * t.anio / 12) : n * t.mes;
-        var ahorro = n * (t.mes * 12 - t.anio);
 
         P('[data-bubble]').textContent = veh(n);
         placeBubble(s, P('[data-bubble]'));
-        P('[data-count]').textContent = veh(n);
-        P('[data-rate]').textContent = tarifa.toLocaleString('es-CL');
-        P('[data-total]').textContent = clp(porMes);
+        P('[data-total]').textContent = clp(n * cfg.veh.anio);
+        P('[data-formula]').textContent = veh(n) + ' × ' + clp(cfg.veh.anio) + '. Se renueva sola cada año.';
+        P('[data-envio-part]').textContent = clp(ENVIO_PARTICULAR);
 
-        P('[data-cafe-wrap]').hidden = anual;
-        P('[data-save]').hidden = !anual;
-        P('[data-nudge]').hidden = anual;
         // El puente aparece en cuanto Flotas es elegible, no solo en el tope.
         P('[data-bridge]').hidden = n < BANDA.min;
         if (n >= BANDA.min) {
           P('[data-bridge-text]').textContent = n < BANDA.max
-            ? 'Con ' + veh(n) + ' también puedes tomar Flotas: cuesta un poco más al mes y suma conductores con PIN, Tomar/Entregar, reportes y equipo.'
-            : 'Este es el tope de Uso particular. Desde ' + (BANDA.max + 1) + ' vehículos el plan es Flotas, que además suma conductores con PIN, Tomar/Entregar, reportes y equipo.';
-        }
-
-        if (anual) {
-          P('[data-save-amount]').textContent = 'Ahorras ' + clp(ahorro) + ' al año';
-          P('[data-save-note]').textContent = clp(tarifa) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
-          P('[data-fineprint]').textContent = 'Se cobra una vez al año (' + clp(n * t.anio) + '). ' + chip(n);
-        } else {
-          P('[data-cafe]').textContent = clp(tarifa) + ' por vehículo — menos que un café al mes.';
-          P('[data-fineprint]').textContent = chip(n) + ' Sin costos ocultos.';
-          P('[data-nudge-total]').textContent = clp(Math.round(n * t.anio / 12));
-          P('[data-nudge-amount]').textContent = clp(ahorro);
+            ? 'Con ' + veh(n) + ' también puedes tomar Flotas: cuesta más y suma conductores con PIN, reportes y equipo.'
+            : 'Es el tope de Uso particular. Desde ' + (BANDA.max + 1) + ' vehículos el plan es Flotas.';
         }
       }
 
@@ -2740,8 +2647,8 @@ select.form__input {
         lc.querySelector('[data-linea-monto]').textContent = uf(c * tc);
 
         F('[data-total]').textContent = uf(total);
-        // A diferencia de Particular, el número grande de Flotas sigue el
-        // periodo de facturación: es un contrato en UF, no un cargo mensual.
+        // El número grande de Flotas sigue el periodo de facturación: es un
+        // contrato en UF, no un cargo mensual.
         F('[data-total-period]').textContent = anual ? '/año' : '/mes';
 
         F('[data-save]').hidden = !anual;
@@ -2759,12 +2666,10 @@ select.form__input {
       }
 
       function render() {
-        // Mostrar la tarjeta antes de medir: placeBubble usa el ancho del riel,
+        // Mostrar el panel antes de medir: placeBubble usa el ancho del riel,
         // y un elemento con hidden mide 0.
         cardP.hidden = plan !== 'particular';
         cardF.hidden = plan !== 'flota';
-        [].forEach.call(gruposFlota, function (g) { g.hidden = plan !== 'flota'; });
-        leadIncluido.textContent = LEAD[plan];
         if (plan === 'particular') renderParticular(); else renderFlota();
       }
 
@@ -2781,7 +2686,6 @@ select.form__input {
           });
         });
       }
-      // Plan y periodo son independientes: cambiar de pill conserva el periodo.
       grupo('.plan-pills__opt', 'data-plan', function (v) { plan = v; });
       grupo('.billing-toggle__opt', 'data-period', function (v) { period = v; });
 

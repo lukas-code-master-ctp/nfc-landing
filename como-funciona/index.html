@@ -1012,9 +1012,10 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
 
 /* Planes — Selector de plan (uso particular / flotas).
-   Mismo lenguaje visual que el toggle de facturación de abajo: los dos son
-   controles del mismo precio y tienen que leerse como una familia. */
-.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+   Mismo lenguaje visual que el toggle de facturación de Flotas: los dos son
+   controles del mismo precio y tienen que leerse como una familia. Las
+   opciones miden 44px de alto: es el objetivo táctil mínimo. */
+.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 32px; padding: 0 var(--gutter); }
 .plan-pills {
   display: inline-flex; align-items: center; gap: 4px; padding: 5px;
   background: var(--superficie); border: 1px solid var(--linea);
@@ -1022,8 +1023,8 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .plan-pills__opt {
   display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
-  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  cursor: pointer; font-family: var(--font-sans); font-size: 15px; font-weight: 600;
+  color: var(--acero); min-height: 44px; padding: 0 22px; border-radius: var(--radius-pill);
   transition: background-color var(--dur-base) var(--ease-salir),
               color var(--dur-base) var(--ease-salir);
 }
@@ -1035,31 +1036,18 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .plan-pills__opt.is-active .plan-pills__hint { background: rgba(255, 255, 255, 0.22); color: #fff; }
 
-/* Planes — Toggle de facturación (mensual / anual) */
-.billing-toggle-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 28px; }
-
-/* Anotación que apunta al toggle anual. Era manuscrita; quedó con la
-   fuente del sitio hasta que Planes se rehaga (tarea 5). */
-.billing-note {
-  position: absolute; top: 50%; left: calc(50% + 118px);
-  transform: translateY(-52%);
-  display: flex; align-items: flex-start; gap: 2px; pointer-events: none;
-}
-.billing-note__arrow { flex: 0 0 auto; width: 58px; height: 40px; color: var(--tinta); }
-.billing-note__text {
-  margin-top: 9px; max-width: 150px;
-  font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  line-height: 1.3; color: var(--azul);
-}
+/* Planes — Toggle de facturación de Flotas (mensual / anual). Vive dentro
+   de su tarjeta: Uso particular es solo anual y no lo necesita. */
 .billing-toggle {
-  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  display: inline-flex; align-self: flex-start; align-items: center; gap: 4px;
+  margin-top: 16px; padding: 4px;
   background: var(--superficie); border: 1px solid var(--linea);
   border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
 }
 .billing-toggle__opt {
   display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
   cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
+  color: var(--acero); min-height: 44px; padding: 0 18px; border-radius: var(--radius-pill);
   transition: background-color var(--dur-base) var(--ease-salir),
               color var(--dur-base) var(--ease-salir);
 }
@@ -1075,7 +1063,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .pricing { padding: 40px 0 24px; }
 .pricing__grid {
   max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
-  display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: stretch;
+  display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 24px; align-items: start;
 }
 .calc {
   display: flex; flex-direction: column; background: var(--superficie);
@@ -1083,8 +1071,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   box-shadow: var(--shadow-md); padding: 36px;
 }
 .calc__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--azul); }
-.calc__row { margin: 24px 0 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
-.calc__row-label { font-size: 16px; color: var(--acero); line-height: 1.4; }
+.calc__row-label { margin: 24px 0 0; font-size: 16px; color: var(--acero); line-height: 1.4; }
 
 /* Planes — Slider con burbuja pegada al pulgar.
    El relleno del riel y la posición de la burbuja los calcula el JS
@@ -1092,6 +1079,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__slider-wrap { position: relative; margin-top: 46px; }
 .calc__bubble {
   position: absolute; top: -38px; transform: translateX(-50%); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
   background: var(--azul); color: #fff; font-size: 13px; font-weight: 700;
   padding: 6px 12px; border-radius: var(--radius-pill);
   box-shadow: var(--shadow-md); pointer-events: none;
@@ -1131,11 +1119,9 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--acero); margin-top: 10px; }
 .calc__divider { margin: 28px 0; height: 1px; background: var(--linea); }
-.calc__formula { font-size: 14px; color: var(--acero); }
 .calc__total-row { margin: 8px 0 4px; display: flex; align-items: baseline; gap: 7px; }
-.calc__total { font-size: 50px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.calc__total { font-size: 50px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
 .calc__total-period { font-size: 17px; color: var(--acero); }
-.calc__note { font-size: 13px; color: var(--acero); line-height: 1.5; }
 .calc__spacer { flex: 1; min-height: 24px; }
 .calc__actions { display: flex; gap: 12px; }
 
@@ -1149,26 +1135,19 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__nudge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
 .calc__nudge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
 .calc__nudge__text strong { color: var(--tinta); font-weight: 600; }
-.calc__nudge__btn {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
-  padding: 0; border: 0; background: none; cursor: pointer;
+/* Bloque y no flex: en celular el texto envuelve, y como flex cada trozo
+   (texto, monto, flecha) se volvía una columna aparte. Como bloque envuelve
+   como una frase. El relleno vertical le da los 44px de objetivo táctil
+   sin que se vea como un botón lleno. */
+.calc__nudge__btn, .calc__bridge__btn {
+  display: block; min-height: 44px; margin: 2px 0 -8px; padding: 10px 0;
+  border: 0; background: none; cursor: pointer; text-align: left; line-height: 1.5;
   font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--azul);
+  border-radius: var(--radius-sm);
 }
-.calc__nudge__btn:hover { text-decoration: underline; }
-/* En celular el texto del botón envuelve: como flex, cada trozo (texto,
-   monto, flecha) se volvía una columna aparte. En línea envuelve como
-   una frase. */
-.calc__nudge__btn { display: inline; text-align: left; line-height: 1.5; }
-.calc__nudge__btn svg { display: inline-block; vertical-align: -3px; margin-left: 4px; }
+.calc__nudge__btn:hover, .calc__bridge__btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+.calc__nudge__btn svg, .calc__bridge__btn svg { display: inline-block; vertical-align: -3px; margin-left: 4px; }
 
-/* Planes — Garantías bajo la calculadora */
-.calc__trust {
-  margin: 0 0 20px; padding: 18px 0 0; list-style: none;
-  border-top: 1px solid var(--linea);
-  display: flex; flex-wrap: wrap; gap: 10px 20px;
-}
-.calc__trust li { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--acero); }
-.calc__trust svg { flex: 0 0 auto; }
 
 .included {
   display: flex; flex-direction: column; background: var(--azul-50);
@@ -1188,6 +1167,8 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   text-transform: uppercase; color: var(--acero);
 }
 .included__group .included__list { margin-top: 16px; }
+.included__nota { margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.included__nota strong { color: var(--tinta); font-weight: 600; }
 
 /* Planes — Ahorro del plan anual */
 .calc__save {
@@ -1195,9 +1176,9 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   padding: 15px 17px; border-radius: var(--radius-md);
   background: var(--vigente-suave); color: var(--vigente-texto);
 }
-.calc__save[hidden], .calc__cafe[hidden] { display: none; }
+.calc__save[hidden] { display: none; }
 .calc__save__icon { flex: 0 0 auto; margin-top: 3px; }
-.calc__save__amount { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.calc__save__amount { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
 .calc__save__note { display: block; margin-top: 5px; font-size: 13px; font-weight: 500; line-height: 1.5; opacity: 0.82; }
 
 /* Planes — FAQ */
@@ -1217,13 +1198,57 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .op-card__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
 .op-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
-/* Planes — Analogía de precio ("menos que un café") */
-.calc__cafe {
-  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
-  margin: 14px 0 0; padding: 8px 13px; border-radius: var(--radius-pill);
-  background: var(--azul-50); color: var(--azul); font-size: 13px; font-weight: 600;
-}
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* Planes — Uso particular: dos tarjetas (Gratis / Plan completo) lado a
+   lado, apiladas en celular. El slider del total vive en la de pago: es la
+   única que cambia con la cantidad de vehículos. */
+.planes-part { max-width: 1000px; margin: 0 auto; padding: 0 var(--gutter); }
+.plan-duo {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px; align-items: stretch;
+}
+.plan-card { display: flex; flex-direction: column; padding: 32px; }
+.plan-card--pro { border: 2px solid var(--azul); box-shadow: var(--shadow-lg); padding: 31px; }
+.plan-card__name { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.015em; }
+.plan-card__precio { margin: 16px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.plan-card__monto {
+  font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.plan-card__per { font-size: 16px; color: var(--acero); }
+.plan-card__sub { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--acero); }
+.plan-card__mas { margin: 22px 0 0; font-size: 14px; font-weight: 600; color: var(--tinta); }
+.plan-card__lista {
+  margin: 20px 0 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.plan-card__mas + .plan-card__lista { margin-top: 12px; }
+.plan-card__lista li { display: flex; gap: 10px; font-size: 15px; line-height: 1.45; color: var(--tinta); }
+.plan-card__check { flex: 0 0 auto; margin-top: 1px; color: var(--vigente-texto); }
+.plan-card__calc {
+  margin: 24px 0 0; padding: 50px 18px 18px;
+  background: var(--azul-50); border-radius: var(--radius-md);
+}
+.plan-card__calc .calc__slider-wrap { margin-top: 0; }
+.plan-card__total { margin: 16px 0 0; font-size: 16px; color: var(--acero); }
+.plan-card__total strong {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+}
+.plan-card__fino { margin: 4px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+/* El botón va al pie (margin-top: auto): así los dos de la fila quedan a
+   la misma altura. El aire mínimo va en el padding y no en el margen de lo
+   de arriba, porque lo de arriba puede estar oculto (el puente a Flotas). */
+.plan-card__pie { margin-top: auto; padding-top: 28px; }
+.plan-card__pie .btn { width: 100%; }
+.planes-nota {
+  margin: 24px 0 0; display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 15px; color: var(--acero); text-align: center;
+}
+.planes-nota svg { flex: 0 0 auto; color: var(--azul); }
+.planes-nota strong { color: var(--tinta); font-weight: 600; }
+.tabular { font-variant-numeric: tabular-nums; }
 
 /* Planes — Piezas de la calculadora de dos planes.
    .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
@@ -1231,10 +1256,11 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
    necesitarían, pero se declaran igual para que nadie los "arregle" después
    poniéndoles un display y los rompa en silencio. */
 .calc[hidden], .calc__control[hidden], .calc__precio[hidden],
-.calc__contacto[hidden], .calc__bridge[hidden], .included__group[hidden] { display: none; }
+.calc__contacto[hidden], .calc__bridge[hidden], .pricing__grid[hidden],
+.planes-part[hidden] { display: none; }
 
 /* Flotas apila dos sliders: vehículos y cuentas de conductor. */
-.calc__control + .calc__control { margin-top: 30px; }
+.calc__control + .calc__control { margin-top: 8px; }
 
 /* Flotas desglosa el precio en líneas con subtotal a la derecha. */
 .calc__lineas { display: flex; flex-direction: column; gap: 8px; }
@@ -1244,10 +1270,12 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .calc__linea[hidden] { display: none; }
 .calc__linea__monto {
-  font-family: var(--font-mono); font-size: 13px; color: var(--tinta); white-space: nowrap;
+  font-size: 14px; font-weight: 600; color: var(--tinta); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Particular — puente hacia Flotas cuando el slider llega al tope. */
+/* Particular — puente hacia Flotas en la banda de 5 a 10 vehículos (y su
+   par en Flotas, la vuelta a Uso particular). */
 .calc__bridge {
   display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 0;
   padding: 14px 16px; border-radius: var(--radius-md); background: var(--azul-50);
@@ -1255,12 +1283,6 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__bridge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
 .calc__bridge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
 .calc__bridge__text strong { color: var(--tinta); font-weight: 600; }
-.calc__bridge__btn {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 5px; padding: 0;
-  border: 0; background: transparent; cursor: pointer; font-family: var(--font-sans);
-  font-size: 14px; font-weight: 600; color: var(--azul);
-}
-.calc__bridge__btn:hover { text-decoration: underline; }
 
 /* Flotas — tramo "Más de 100": reemplaza el precio por un llamado a contacto. */
 .calc__contacto {
@@ -1268,9 +1290,6 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .calc__contacto__title { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
 .calc__contacto__text { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
-.calc__contacto__mail {
-  display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--azul);
-}
 
 /* Planes — Formulario de la consulta de flota grande */
 .form { margin: 18px 0 0; display: flex; flex-direction: column; gap: 14px; }
@@ -1482,11 +1501,6 @@ select.form__input {
 .aud-card__list { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .aud-card__item { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--tinta); }
 .aud-card__check { flex: 0 0 auto; margin-top: 2px; }
-.aud-card__link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
-}
-.aud-card__link:hover { text-decoration: underline; }
 
 /* Etiqueta de plan: "Uso particular", "Flotas", "Solo en Flotas". Azul sobre
    azul-50 da 5,4:1, sobre el 4,5:1 que pide texto de 11px. */
@@ -1513,15 +1527,10 @@ select.form__input {
 .rubro__title { margin: 8px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
 .rubro__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .rubro__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-/* Planes — la franja del rubro explica cada perfil en una línea. */
-.rubro-banda { max-width: var(--contenedor); margin: 24px auto 0; padding: 0 var(--gutter); }
+/* Planes — la franja del rubro: una línea y el enlace a Socios. */
+.rubro-banda { max-width: 1000px; margin: 40px auto 0; padding: 0 var(--gutter); }
+@media (min-width: 861px) { .rubro-banda .rubro__lado { align-items: flex-end; } }
 .rubro-banda .rubro { margin-top: 0; }
-.rubro__lista {
-  margin: 0; padding: 0; list-style: none;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.rubro__lista li { font-size: 14px; line-height: 1.5; color: var(--acero); }
-.rubro__lista strong { color: var(--tinta); font-weight: 600; }
 
 /* ===================================================================
    Documento legal (Términos y Condiciones)
@@ -1682,17 +1691,8 @@ select.form__input {
   }
   .nav__burger { display: inline-flex; }
   .nav__panel.is-open { display: block; }
-  /* La anotación no cabe al lado del toggle: pasa a ir debajo, con la
-     flecha reflejada para que siga apuntando al botón anual. */
-  .billing-toggle-wrap { flex-direction: column; align-items: center; gap: 6px; }
-  .billing-note {
-    position: static; transform: none; align-items: center; gap: 8px;
-    flex-direction: row-reverse;
-  }
-  /* Girada 180°, la flecha queda a la derecha del texto y apunta hacia
-     arriba, al badge del botón anual. */
-  .billing-note__arrow { width: 44px; height: 30px; transform: rotate(180deg); }
-  .billing-note__text { margin-top: 0; max-width: none; }
+  /* Las dos tarjetas de Uso particular se apilan. */
+  .plan-duo { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin: 0 auto; }
   .footer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
   .footer__brand-col { grid-column: 1 / -1; }
 }
@@ -1753,9 +1753,15 @@ select.form__input {
   .calc__actions .btn { width: 100%; }
   /* Bajo 560px las pills ocupan el ancho y el hint "desde 5" estorba. */
   .plan-pills { width: 100%; }
-  .plan-pills__opt { flex: 1; justify-content: center; padding: 9px 12px; }
+  .plan-pills__opt { flex: 1; justify-content: center; padding: 0 12px; }
+  .plan-card { padding: 24px; }
+  .plan-card--pro { padding: 23px; }
+  .plan-card__monto { font-size: 42px; }
+  .planes-nota { align-items: flex-start; text-align: left; font-size: 14px; }
+  .planes-nota svg { margin-top: 1px; }
+  .billing-toggle { align-self: stretch; }
+  .billing-toggle__opt { flex: 1; justify-content: center; padding: 0 10px; }
   .plan-pills__hint { display: none; }
-  .calc__control + .calc__control { margin-top: 26px; }
   .calc__linea { font-size: 13px; }
 
   /* Bajo 560px las dos columnas no caben: los campos se apilan. */
@@ -1994,7 +2000,7 @@ select.form__input {
           "@type": "HowToStep",
           "position": 4,
           "name": "Graba el chip NFC y déjalo con el vehículo",
-          "text": "Cada vehículo tiene una URL única. La grabas en su chip NFC desde tu propio celular si es Android; en iPhone, con la app NFC Tools y la guía que te damos. Lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho, desde $2.000."
+          "text": "Cada vehículo tiene una URL única. La grabas en su chip NFC desde tu propio celular si es Android; en iPhone, con la app NFC Tools y la guía que te damos. Lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho: $3.000 en Uso particular."
         },
         {
           "@type": "HowToStep",
@@ -2142,7 +2148,7 @@ select.form__input {
               <div class="hw-step__cols">
                 <div>
                   <h3 class="hw-step__title">Graba el chip NFC y déjalo con el vehículo</h3>
-                  <p class="hw-step__text">Cada vehículo tiene una URL única. La grabas en su chip NFC desde tu propio celular si es Android; en iPhone, con la app NFC Tools y la guía que te damos. Lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho, desde $2.000.</p>
+                  <p class="hw-step__text">Cada vehículo tiene una URL única. La grabas en su chip NFC desde tu propio celular si es Android; en iPhone, con la app NFC Tools y la guía que te damos. Lo dejas donde más te acomode: pegado al parabrisas o de llavero, junto a las llaves. Va un chip por cada vehículo que registres, incluido en tu plan: el chip no se cobra, solo el despacho: $3.000 en Uso particular.</p>
                   <div class="hw-step__chips">
                     <span class="hw-chip">Una URL por vehículo</span>
                     <span class="hw-chip">Android o iPhone</span>
