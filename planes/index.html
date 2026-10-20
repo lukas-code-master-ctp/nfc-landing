@@ -533,11 +533,11 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
    Texto a la izquierda y la escena "Tap" a la derecha (debajo en
    celular). Una sola acción primaria: "Ver planes" es un enlace.
    =================================================================== */
-.lp-hero { padding: 64px 0 76px; }
+.lp-hero { padding: 56px 0 72px; }
 .lp-hero__grid {
   max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
-  gap: 56px; align-items: center;
+  gap: 48px; align-items: center;
 }
 .lp-hero__badge {
   display: inline-flex; align-items: center;
@@ -565,12 +565,13 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .rotor__word.is-out { transform: translateY(-105%); opacity: 0; }
 .rotor__word.is-prep { transition: none; transform: translateY(105%); opacity: 0; }
 
-/* Quiebre fijo del titular, solo en pantallas angostas.
-   Bajo ~420px "camioneta" no cabe junto a "a un Tap.": el h1 pasa de una
-   línea a dos y todo el hero (y lo que sigue) baja y sube en cada rotación.
-   Con el salto forzado el titular mide siempre dos líneas, dé igual la
-   palabra que esté puesta. */
-.lp-hero__nl { display: none; }
+/* Quiebre fijo del titular, en TODOS los anchos: "Tu vehículo / a un Tap."
+   Sin él, el h1 cabía en una línea con "auto" y pasaba a dos con
+   "camioneta" (y a 1024–1100px también con "vehículo"); como la grilla
+   centra en vertical, todo el hero bajaba y subía ~30px cada 2,6 s. Con el
+   salto forzado el titular mide siempre dos líneas, dé igual la palabra.
+   Si agregas palabras al rotor, ninguna debería ser tan larga que parta
+   también la primera línea ("Tu camioneta" es la más larga hoy). */
 @media (prefers-reduced-motion: reduce) {
   .rotor { transition: none; }
   .rotor__word { transition: none; }
@@ -592,6 +593,14 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .lp-hero__micro svg { flex: 0 0 auto; color: var(--vigente-texto); }
 .lp-hero__escena { width: min(460px, 100%); justify-self: end; }
+/* Escritorio ancho: la escena crece hasta 540px para equilibrar el texto,
+   y el hero pierde aire arriba (con la escena más alta ya sobraba). */
+@media (min-width: 1200px) {
+  .lp-hero { padding: 40px 0 64px; }
+  .lp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 540px); gap: 64px; }
+  .lp-hero__title { font-size: 64px; }
+  .lp-hero__escena { width: min(540px, 100%); }
+}
 
 /* Prueba social: una franja angosta bajo el hero. El número es la única
    pieza grande, así que se lee solo. */
@@ -1593,10 +1602,13 @@ select.form__input {
    quieto. Solo transform y opacity.
 
    Mini escenas de "Así de simple": se animan UNA vez, cuando el patrón
-   de aparición le pone `.is-visible` al paso. En escritorio los tres
-   pasos entran juntos, así que cada uno espera su turno (`--paso-t`):
-   nunca hay más de dos piezas moviéndose a la vez. En una columna cada
-   paso entra solo al hacer scroll y no espera.
+   de aparición le pone `.is-visible` al paso. Cada paso espera su turno
+   (`--paso-t`), 700ms después del anterior, para que nunca haya más de
+   dos piezas moviéndose a la vez. El turno lo reparte el script del
+   inicio en ORDEN DE ENTRADA (en una columna, en celular, los pasos
+   pueden entrar de a uno o de a varios según el alto de la pantalla y la
+   velocidad del scroll); los `nth-child` de abajo son el respaldo para
+   cuando ese script no corre, y calzan con el caso de escritorio.
    =================================================================== */
 .paso__ilus .i-cae, .paso__ilus .i-pop, .paso__ilus .i-onda,
 .paso__ilus .i-sube, .paso__ilus .i-ping { transform-box: fill-box; transform-origin: 50% 50%; }
@@ -1656,21 +1668,48 @@ select.form__input {
   /* minmax(0,1fr) y no 1fr: si no, las fichas con texto que no envuelve
      (patentes, documentos) estiran la columna y aparece scroll lateral. */
   .socios-grid { grid-template-columns: minmax(0, 1fr); }
-  /* Hero: la escena pasa debajo del texto, centrada. */
+  /* Hero en tablet: SIGUE en dos columnas, con la escena más chica. En una
+     columna el texto quedaba pegado a la izquierda y la escena centrada
+     abajo, desalineados, con un hueco a la derecha del texto. */
   .lp-hero { padding: 48px 0 60px; }
-  .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .lp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 32px; }
   .lp-hero__title { font-size: 48px; }
-  .lp-hero__escena { justify-self: center; }
+  .lp-hero__lead { font-size: 17px; }
   .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .steps-grid { grid-template-columns: minmax(0, 1fr); }
 }
-@media (max-width: 760px) {
-  /* Pasos y audiencias: una columna, sin estirarse de más en tablet. */
-  .pasos, .quien { grid-template-columns: minmax(0, 1fr); max-width: 480px; margin-left: auto; margin-right: auto; }
+@media (max-width: 900px) {
+  /* Pasos y audiencias: una columna. A tres columnas en tablet los títulos
+     se partían en dos líneas y las ilustraciones quedaban diminutas. */
+  .pasos, .quien { grid-template-columns: minmax(0, 1fr); max-width: 640px; margin-left: auto; margin-right: auto; }
 }
-@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
-  /* En una columna cada paso entra solo al hacer scroll: no espera turno. */
-  .pasos > .paso:nth-child(n) { --paso-t: 150ms; }
+@media (max-width: 900px) and (min-width: 561px) {
+  /* Con el ancho de tablet cada paso es una fila: ilustración a la
+     izquierda, número, título y texto a la derecha. */
+  .paso {
+    display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto auto 1fr; column-gap: 24px; padding: 16px 24px 16px 16px;
+  }
+  .paso__ilus { grid-column: 1; grid-row: 1 / -1; }
+  .paso__num { grid-column: 2; grid-row: 2; justify-self: start; margin: 0; }
+  .paso__title { grid-column: 2; grid-row: 3; margin-left: 0; }
+  .paso__text { grid-column: 2; grid-row: 4; margin-left: 0; }
+  /* Audiencias: el ícono a la izquierda y el enlace a la derecha, en una
+     fila; apiladas, cada tarjeta era un bloque alto casi vacío. */
+  .quien__card {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr) auto;
+    column-gap: 18px; align-items: center; padding: 20px 24px;
+  }
+  .quien__card > .icon-chip { grid-row: 1 / span 2; }
+  .quien__title { grid-column: 2; margin: 0; }
+  .quien__text { grid-column: 2; }
+  .quien__link { grid-column: 3; grid-row: 1 / span 2; margin: 0; padding: 0; }
+}
+@media (max-width: 760px) {
+  /* Hero en una columna: el bloque de texto y la escena comparten el mismo
+     ancho y el mismo eje, así que quedan alineados aunque sobre pantalla. */
+  .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 36px; max-width: calc(480px + 2 * var(--gutter)); }
+  .lp-hero__escena { width: min(420px, 100%); justify-self: center; }
 }
 @media (max-width: 860px) {
   .pricing__grid { grid-template-columns: minmax(0, 1fr); }
@@ -1703,12 +1742,12 @@ select.form__input {
   .lp-hero { padding: 32px 0 44px; }
   .lp-hero__badge { font-size: 12px; padding: 6px 12px; }
   .lp-hero__title { margin-top: 16px; font-size: 38px; }
-  .lp-hero__nl { display: inline; }
   .lp-hero__lead { margin-top: 14px; font-size: 17px; }
   .lp-hero__actions { flex-direction: column; align-items: stretch; gap: 4px; margin-top: 24px; }
   .lp-hero__actions .btn { width: 100%; }
-  .lp-hero__sec { justify-content: center; }
-  .lp-hero__micro { justify-content: center; margin-top: 8px; }
+  /* Alineado a la izquierda como el resto del bloque, sin sangría. */
+  .lp-hero__sec { justify-content: flex-start; padding: 0; }
+  .lp-hero__micro { margin-top: 8px; }
   .lp-hero__grid { gap: 32px; }
   .prueba__inner { padding: 18px var(--gutter); }
   .prueba__num { font-size: 30px; }
