@@ -1019,6 +1019,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .pl-hero__inner { max-width: 680px; margin: 0 auto; padding: 0 var(--gutter); }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
+.pl-hero__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
 
 /* Planes — Selector de plan (uso particular / flotas).
    Mismo lenguaje visual que el toggle de facturación de Flotas: los dos son
@@ -1458,8 +1459,8 @@ select.form__input {
 /* ===================================================================
    Página Cómo funciona (paso a paso)
    =================================================================== */
-.hw-phase { max-width: 820px; margin: 0 auto; }
-.hw-phase + .hw-phase { margin-top: 60px; }
+.hw-phase { max-width: 960px; margin: 0 auto; }
+.hw-phase + .hw-phase { margin-top: 56px; }
 .hw-phase__head { display: flex; align-items: center; gap: 14px; }
 /* Es un h2 (encabezado de fase), no solo un chip: el margin por defecto
    del h2 lo descuadraría dentro del flex de .hw-phase__head. */
@@ -1472,37 +1473,46 @@ select.form__input {
 .hw-phase__rule { flex: 1; height: 1px; background: var(--linea); }
 .hw-phase__note { margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
-.hw-steps { margin: 26px 0 0; padding: 0; list-style: none; }
-.hw-step { display: flex; gap: 20px; }
-.hw-step__rail { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; }
+/* Los cuatro pasos de cada fase, en tarjetas de 2 × 2 (una columna en
+   celular). Cada paso: ícono, número y etiqueta de plan arriba; título y un
+   párrafo corto. tools/schema.py lee .hw-step, .hw-step__title,
+   .hw-step__text y la .plan-tag de cada uno para el HowTo. */
+.hw-steps {
+  margin: 24px 0 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;
+}
+.hw-step { display: flex; flex-direction: column; padding: 24px; }
+.hw-step__top { display: flex; align-items: center; gap: 12px; min-height: 44px; }
 .hw-step__num {
-  flex: 0 0 auto; width: 38px; height: 38px; border-radius: var(--radius-pill);
-  background: var(--azul); color: #fff; box-shadow: var(--shadow-sm);
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; letter-spacing: -0.01em;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  color: var(--acero); font-variant-numeric: tabular-nums;
 }
-.hw-step__line { flex: 1; width: 2px; background: var(--linea); margin: 8px 0; border-radius: 1px; }
-.hw-step:last-child .hw-step__line { display: none; }
-.hw-step__body {
-  flex: 1; min-width: 0; margin-bottom: 18px; padding: 22px 24px;
-  background: var(--superficie); border: 1px solid var(--linea);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+.hw-step__top .plan-tag, .hw-step__top .llavero { margin-left: auto; }
+.hw-step__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+.hw-step__text { margin: 6px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); text-wrap: pretty; }
+.hw-step__badges { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.hw-step__fino { margin: 10px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+
+/* Flotas: toda la operación — seis ítems sin tarjeta, como los beneficios
+   del inicio: ícono, título y una línea. */
+.op-grid {
+  margin: 44px 0 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 28px;
 }
-.hw-step:last-child .hw-step__body { margin-bottom: 0; }
-.hw-step__title { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
-.hw-step__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
-.hw-step__chips { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.hw-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-pill);
-  padding: 5px 11px; font-size: 12px; font-weight: 600; color: var(--acero);
-}
-.hw-chip svg { flex: 0 0 auto; }
+.op-item__title { margin: 14px 0 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.op-item__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.op-mas { margin: 36px 0 0; text-align: center; }
+.op-mas .quien__link { padding-top: 0; text-decoration: none; }
+.op-mas .quien__link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.section--aside { padding: 56px 0 0; }
 .hw-aside {
-  max-width: 820px; margin: 56px auto 0; display: flex; gap: 18px; align-items: flex-start;
+  max-width: 960px; margin: 0 auto; display: flex; gap: 18px; align-items: flex-start;
   background: var(--azul-50); border: 1px solid var(--linea);
   border-radius: var(--radius-lg); padding: 24px 26px;
 }
+/* El chip va en blanco: el azul-50 de siempre desaparece sobre el fondo del aviso. */
+.hw-aside .icon-chip { background: var(--superficie); }
 .hw-aside__title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
 .hw-aside__text { margin: 7px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .hw-aside__link {
@@ -1595,10 +1605,10 @@ select.form__input {
    =================================================================== */
 .llavero { display: block; filter: drop-shadow(0 10px 18px rgba(22, 25, 31, 0.16)); }
 
-/* Cómo funciona — paso 04: texto a la izquierda, foto a la derecha */
-.hw-step__cols { display: flex; align-items: center; gap: 20px; }
-.hw-step__cols > div { min-width: 0; flex: 1; }
-.llavero--paso { width: 92px; height: auto; flex: 0 0 auto; }
+/* Cómo funciona — paso 04: la foto del llavero en la esquina, donde los
+   pasos de Flotas llevan su etiqueta. Se monta sobre el borde de arriba
+   para no estirar la fila. */
+.llavero--paso { width: 52px; height: auto; flex: 0 0 auto; margin: -14px 0 -18px; transform: rotate(8deg); }
 
 /* Planes — esquina del panel "Todo incluido" */
 .included { position: relative; }
@@ -1742,6 +1752,8 @@ select.form__input {
   .nav__panel.is-open { display: block; }
   /* Las dos tarjetas de Uso particular se apilan. */
   .plan-duo { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin: 0 auto; }
+  /* Flotas: toda la operación, a dos columnas. */
+  .op-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* La franja del total sigue el ancho de las tarjetas apiladas. */
   .plan-calc { max-width: 520px; margin-left: auto; margin-right: auto; }
   .plan-calc__fila { grid-template-columns: minmax(0, 1fr); }
@@ -1823,19 +1835,21 @@ select.form__input {
   .form__fila { grid-template-columns: 1fr; }
   .form__input--corto { max-width: none; }
 
-  /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
-  .hw-step__cols { flex-direction: column; align-items: stretch; gap: 14px; }
-  .llavero--paso { width: 84px; align-self: center; }
+  /* Llavero NFC de "Todo incluido": más chico, para no comerse el texto */
   .llavero--included { width: 58px; top: 20px; right: 20px; }
   .included--con-llavero .included__lead { padding-right: 66px; }
 
   /* Cómo funciona */
-  .hw-step { gap: 14px; }
-  .hw-step__num { width: 32px; height: 32px; font-size: 13px; }
-  .hw-step__body { padding: 18px 20px; }
+  .hw-steps { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 20px; }
+  .hw-step { padding: 20px; }
   .hw-step__title { font-size: 17px; }
   .hw-phase + .hw-phase { margin-top: 40px; }
-  .hw-aside { flex-direction: column; gap: 14px; padding: 22px; margin-top: 36px; }
+  .section--aside { padding-top: 40px; }
+  .hw-aside { flex-direction: column; gap: 14px; padding: 22px; }
+  .op-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 28px; }
+  .op-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; }
+  .op-item > .icon-chip { grid-row: 1 / span 2; }
+  .op-item__title { margin-top: 0; align-self: center; }
 
   /* Legal */
   /* La tabla pasa a una ficha por documento: a tres columnas la tercera
@@ -1957,7 +1971,7 @@ select.form__input {
           "name": "¿Cuánto cuesta un convenio?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Se acuerda caso a caso. En los convenios de automotoras y aseguradoras se paga por cada código activado, el día 1 de cada mes; el valor lo conversamos contigo."
+            "text": "Se acuerda caso a caso. Se paga por cada código activado, el día 1 de cada mes."
           }
         },
         {
@@ -1965,7 +1979,7 @@ select.form__input {
           "name": "¿Qué recibe el comprador o el asegurado?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Un código de un solo uso para activar TapCar. En las automotoras, además, el auto se le transfiere desde el mesón con sus documentos, así que su cuenta queda armada: plan, vehículo y documentos."
+            "text": "Un código de un solo uso. El comprador de una automotora recibe además el auto transferido con sus documentos."
           }
         },
         {
@@ -1973,7 +1987,7 @@ select.form__input {
           "name": "¿La gestoría ve los vehículos de su cliente?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Ve su propio historial de envíos, pero no la flota del cliente. El cliente decide si acepta cada documento después de revisarlo con vista previa."
+            "text": "No. Ve solo su historial de envíos, y el cliente acepta cada documento."
           }
         },
         {
@@ -1981,7 +1995,7 @@ select.form__input {
           "name": "¿Podemos mandarles avisos a nuestros clientes?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Es posible, por ejemplo para un llamado a revisión, pero no viene activado en los convenios: es un servicio adicional que conversamos contigo."
+            "text": "No viene en los convenios, pero se puede conversar como servicio adicional."
           }
         },
         {
@@ -1989,7 +2003,7 @@ select.form__input {
           "name": "¿Cómo pido uno de estos perfiles?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Escríbenos con el formulario de esta página, o crea tu cuenta y elige «Otra cosa»: te pedimos la razón social, el RUT y un teléfono. Revisamos la solicitud y la aprobamos nosotros."
+            "text": "Con el formulario de esta página, o al crear tu cuenta eligiendo «Otra cosa». Nosotros aprobamos la solicitud."
           }
         }
       ]
@@ -2048,8 +2062,8 @@ select.form__input {
     <div class="pl-hero__inner">
       <span class="eyebrow">Para empresas del rubro</span>
       <h1 class="pl-hero__title">TapCar para automotoras, aseguradoras y gestorías.</h1>
-      <p class="pl-hero__lead">Tres formas de sumar TapCar a lo que ya haces con tus clientes. No se contratan desde la web: se piden al crear la cuenta y las aprobamos nosotros. Las condiciones se acuerdan caso a caso.</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px;">
+      <p class="pl-hero__lead">Se piden al crear la cuenta y los aprobamos nosotros. Las condiciones se acuerdan caso a caso.</p>
+      <div class="pl-hero__actions">
         <a href="#contacto" class="btn btn--primary btn--lg">Conversemos</a>
         <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta</a>
       </div>
@@ -2065,54 +2079,47 @@ select.form__input {
       </div>
       <div class="socios-grid">
 
-        <div class="card card--p28 aud-card">
+        <div data-reveal class="card card--p28 aud-card">
           <div class="tag-row">
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
-            </span>
+            <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></span>
             <span class="plan-tag">Convenio</span>
           </div>
           <h3 class="aud-card__title">Automotoras</h3>
           <p class="aud-card__text">Regálale TapCar a quien te compra un auto.</p>
           <ul class="aud-card__list">
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Entregas códigos de un solo uso a tus compradores.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Desde el mesón transfieres el auto vendido con el código, y la cuenta del comprador queda armada: plan, vehículo y documentos.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pagas por cada activación, el día 1 de cada mes.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un portal con los códigos emitidos, los activados y lo del mes, con descargas en CSV.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Los vehículos de tu patio quedan cubiertos hasta un tope.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Códigos de un solo uso para tus compradores.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Transfieres el auto con sus documentos desde el mesón.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pagas por activación, el día 1 de cada mes.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tu patio, cubierto hasta un tope.</li>
           </ul>
         </div>
 
-        <div class="card card--p28 aud-card">
+        <div data-reveal class="card card--p28 aud-card">
           <div class="tag-row">
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
-            </span>
+            <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
             <span class="plan-tag">Convenio</span>
           </div>
           <h3 class="aud-card__title">Aseguradoras</h3>
-          <p class="aud-card__text">El mismo convenio, para regalarle TapCar a tus asegurados.</p>
+          <p class="aud-card__text">El mismo convenio, para tus asegurados.</p>
           <ul class="aud-card__list">
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Entregas códigos de un solo uso a tus asegurados.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pagas por cada activación, el día 1 de cada mes.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un portal con los códigos emitidos, los activados y lo del mes, con descargas en CSV.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Códigos de un solo uso para tus asegurados.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pagas por activación, el día 1 de cada mes.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un portal con tus códigos y descargas en CSV.</li>
           </ul>
         </div>
 
-        <div class="card card--p28 aud-card">
+        <div data-reveal class="card card--p28 aud-card">
           <div class="tag-row">
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-            </span>
+            <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>
             <span class="plan-tag">Envíos</span>
           </div>
           <h3 class="aud-card__title">Gestorías</h3>
-          <p class="aud-card__text">Manda el documento nuevo directo a la cuenta TapCar de tu cliente.</p>
+          <p class="aud-card__text">Manda el documento nuevo a la cuenta de tu cliente.</p>
           <ul class="aud-card__list">
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Envías el padrón, el permiso o el documento que tramitaste.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tu cliente lo revisa con vista previa y lo acepta.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Queda en el vehículo que corresponde y, si ya había uno, reemplaza al anterior.</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ves tu historial de envíos, pero no la flota de tu cliente.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Envías el padrón, el permiso o lo que tramitaste.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tu cliente lo revisa y lo acepta.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Reemplaza al anterior en su vehículo.</li>
+            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No ves la flota de tu cliente.</li>
           </ul>
         </div>
 
@@ -2129,36 +2136,30 @@ select.form__input {
       </div>
       <div class="steps-grid">
 
-        <div class="step">
+        <div data-reveal class="step">
           <div class="card card--p28 card--fill">
             <span class="step__num">01</span>
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-            </span>
+            <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>
             <h3 class="step__title">Cuéntanos de tu empresa</h3>
-            <p class="step__text">Déjanos tus datos en el formulario de abajo, o crea tu cuenta en app.tapcar.cl y elige «Otra cosa»: te pedimos la razón social, el RUT y un teléfono.</p>
+            <p class="step__text">Con el formulario de abajo, o al crear tu cuenta eligiendo «Otra cosa».</p>
           </div>
         </div>
 
-        <div class="step">
+        <div data-reveal class="step">
           <div class="card card--p28 card--fill">
             <span class="step__num">02</span>
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
-            </span>
-            <h3 class="step__title">Revisamos y aprobamos el perfil</h3>
-            <p class="step__text">Estos perfiles no se activan solos. Revisamos cada solicitud y aprobamos el que corresponde a tu empresa.</p>
+            <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+            <h3 class="step__title">Aprobamos el perfil</h3>
+            <p class="step__text">Revisamos cada solicitud: estos perfiles no se activan solos.</p>
           </div>
         </div>
 
-        <div class="step">
+        <div data-reveal class="step">
           <div class="card card--p28 card--fill">
             <span class="step__num">03</span>
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-            </span>
+            <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
             <h3 class="step__title">Acordamos las condiciones</h3>
-            <p class="step__text">El precio de un convenio no se publica: lo conversamos contigo según tu volumen y tu operación.</p>
+            <p class="step__text">El precio no se publica: lo conversamos según tu volumen.</p>
           </div>
         </div>
 
@@ -2176,23 +2177,23 @@ select.form__input {
       <div class="faq__list">
         <div class="faq__item">
           <h3 class="faq__q">¿Cuánto cuesta un convenio?</h3>
-          <p class="faq__a">Se acuerda caso a caso. En los convenios de automotoras y aseguradoras se paga por cada código activado, el día 1 de cada mes; el valor lo conversamos contigo.</p>
+          <p class="faq__a">Se acuerda caso a caso. Se paga por cada código activado, el día 1 de cada mes.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Qué recibe el comprador o el asegurado?</h3>
-          <p class="faq__a">Un código de un solo uso para activar TapCar. En las automotoras, además, el auto se le transfiere desde el mesón con sus documentos, así que su cuenta queda armada: plan, vehículo y documentos.</p>
+          <p class="faq__a">Un código de un solo uso. El comprador de una automotora recibe además el auto transferido con sus documentos.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿La gestoría ve los vehículos de su cliente?</h3>
-          <p class="faq__a">No. Ve su propio historial de envíos, pero no la flota del cliente. El cliente decide si acepta cada documento después de revisarlo con vista previa.</p>
+          <p class="faq__a">No. Ve solo su historial de envíos, y el cliente acepta cada documento.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Podemos mandarles avisos a nuestros clientes?</h3>
-          <p class="faq__a">Es posible, por ejemplo para un llamado a revisión, pero no viene activado en los convenios: es un servicio adicional que conversamos contigo.</p>
+          <p class="faq__a">No viene en los convenios, pero se puede conversar como servicio adicional.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo pido uno de estos perfiles?</h3>
-          <p class="faq__a">Escríbenos con el formulario de esta página, o crea tu cuenta y elige «Otra cosa»: te pedimos la razón social, el RUT y un teléfono. Revisamos la solicitud y la aprobamos nosotros.</p>
+          <p class="faq__a">Con el formulario de esta página, o al crear tu cuenta eligiendo «Otra cosa». Nosotros aprobamos la solicitud.</p>
         </div>
       </div>
     </div>
@@ -2203,7 +2204,7 @@ select.form__input {
     <div class="container">
       <div class="contacto-box">
         <h2 class="contacto-box__title">Conversemos</h2>
-        <p class="contacto-box__text">Cuéntanos qué tipo de empresa eres y te contactamos para armar el convenio o habilitar los envíos.</p>
+        <p class="contacto-box__text">Cuéntanos qué tipo de empresa eres y te contactamos.</p>
 
         <form class="form" data-form-socios>
           <div class="form__campo">

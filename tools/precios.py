@@ -190,6 +190,7 @@ def canonicas_por_archivo(p):
     precio anual por vehiculo, el despacho de Uso particular y los tramos de
     despacho (FAQ del chip), las dos tarifas anuales de Flotas en UF y el
     descuento del anual (el toggle). Todo eso sin mover un slider.
+    ¿Como funciona? dice el despacho de Uso particular en el paso del chip.
     """
     part = p['planes']['particular']
     flota = p['planes']['flota']
@@ -201,7 +202,9 @@ def canonicas_por_archivo(p):
     for t in (flota['vehiculo'], flota['cuenta_conductor']):
         planes.add(uf(t['anio']))
         planes.add('%d%%' % descuento(t))
-    return {'planes/index.html': planes}
+    # El paso del chip de ¿Como funciona? promete el despacho de Uso particular.
+    return {'planes/index.html': planes,
+            'como-funciona/index.html': set([clp(envio['particular']['precio'])])}
 
 
 def bloque_js(p):
