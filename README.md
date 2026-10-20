@@ -1,8 +1,8 @@
 # TapCar — Sitio web
 
-Landing comercial de **TapCar**: la operación de tus vehículos a un toque. Cada vehículo guarda sus papeles (Permiso de Circulación, Revisión Técnica, SOAP, etc.), en el plan Flotas registra quién lo usa con un PIN, y abre su ficha pública desde un chip NFC —pegado al parabrisas o de llavero—.
+Landing comercial de **TapCar**: los documentos de tus vehículos a un toque. Cada vehículo guarda sus papeles (Permiso de Circulación, Revisión Técnica, SOAP, etc.), abre su ficha pública desde un chip NFC —pegado al parabrisas o de llavero— y, en el plan Flotas, registra quién lo usa con un PIN.
 
-Tiene dos planes —Uso particular y Flotas— con precio por vehículo, y perfiles aparte para automotoras, aseguradoras y gestorías.
+Uso particular es **gratis con 1 vehículo**, con un plan completo pagado por vehículo al año; Flotas se cobra por vehículo en UF. Hay perfiles aparte para automotoras, aseguradoras y gestorías.
 
 Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude Design](https://claude.ai/design).
 
@@ -10,10 +10,10 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 
 | Página | Archivo | Contenido |
 |---|---|---|
-| Home / Landing | [`index.html`](index.html) | Hero con rotor de palabra, "¿Para quién es?", franja de empresas del rubro, "Cómo funciona", "Un toque, toda la operación", beneficios, showcase de la ficha, CTA |
-| ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08) + FAQ de 9 preguntas |
-| Planes | [`planes/index.html`](planes/index.html) | Pills de plan (Uso particular / Flotas), toggle mensual/anual con el ahorro, calculadora con slider por plan, "Todo incluido" por audiencia, franja de empresas del rubro, FAQ, CTA |
-| Empresas del rubro | [`socios/index.html`](socios/index.html) | Los tres perfiles (automotoras y aseguradoras con Convenio, gestorías con Envíos), cómo se empieza, FAQ de 5 preguntas y formulario de contacto. Enlazada desde el nav ("Socios"), la franja del home, la franja de Planes y el footer |
+| Inicio | [`index.html`](index.html) | Hero con la insignia "Gratis con 1 auto", el titular con rotor de palabra, un solo CTA ("Crear cuenta gratis") más "Ver planes", y la escena Tap; franja de prueba social con el contador (+600 vehículos); "Así de simple" (3 pasos con mini escenas); "¿Para quién es?" (Uso particular, Flotas, empresas del rubro); 4 beneficios; CTA final |
+| ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08), con los pasos de Flotas marcados; bloque compacto "Con conductores, el mismo Tap controla la operación" (6 ítems de Flotas); enlace a ¿Es legal?; FAQ de 9 preguntas; CTA |
+| Planes | [`planes/index.html`](planes/index.html) | Pills de plan (Uso particular / Flotas). Uso particular: dos tarjetas (Gratis, $0 con 1 vehículo; Plan completo, $5.000 al año por vehículo), franja "Calcula tu plan completo" con slider 1–10 y el total anual, nota de chips. Flotas: toggle mensual/anual con el ahorro, sliders de vehículos y cuentas de conductor, formulario sobre 100 vehículos. Franja de empresas del rubro, FAQ de 7 preguntas, CTA |
+| Empresas del rubro | [`socios/index.html`](socios/index.html) | Los tres perfiles en tarjetas cortas (automotoras y aseguradoras con Convenio, gestorías con Envíos), tres pasos para empezar ("y el tercero lo conversamos"), FAQ de 5 preguntas y formulario de contacto. Enlazada desde el nav ("Socios"), la tarjeta de empresas del rubro del inicio, la franja de Planes y el footer |
 | Términos de uso y privacidad | [`terminos/index.html`](terminos/index.html) | Términos del **sitio** y cómo trata los datos que se dejan en él. El servicio tiene sus propios términos, que la app pide aceptar al crear la cuenta según el tipo de cuenta. Enlazada solo desde el footer, no desde el nav |
 | ¿Es legal? | [`legal/index.html`](legal/index.html) | Tabla documento por documento, las cuatro bases normativas, los tres requisitos de validez, qué pasa en un control, referencias oficiales y FAQ de 8 preguntas. **Es la página pensada para captar búsqueda**: "¿es legal mostrar los documentos del auto en digital?" es una consulta real y poco respondida |
 
@@ -36,8 +36,11 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── robots.txt              # Bloquea /_design_src/, apunta al sitemap
 ├── sitemap.xml
 ├── llms.txt                # Resumen del sitio para motores generativos
+├── precios.json            # Fuente única de las tarifas (publicada, es contrato con la app)
 ├── api/contacto.js         # Función serverless: formularios de flota y de socios -> Resend
+├── tools/precios.py        # Revisa las cifras del sitio contra precios.json; --generar escribe la calculadora
 ├── tools/schema.py         # Regenera el JSON-LD desde el contenido visible
+├── tools/test_contacto.js  # Pruebas de la función de contacto, sin red
 └── _design_src/            # Archivos originales del diseño y fotos sin procesar
 ```
 
@@ -67,19 +70,38 @@ Sírvela en vez de abrir el archivo si vas a probar la navegación: los enlaces 
 
 ## Diseño
 
-- Tipografías: **Geist** / **Geist Mono** (Google Fonts)
-- Color de marca: `#2952e6`
-- Tokens y componentes alineados con la app (`app/globals.css` y `docs/ui.md` del repo `nfc`): colores con estados `-texto`/`-suave`, radios, sombras, `ease-salir` y duraciones 120/200/320ms. Componentes: botón (`.btn`, alto mínimo 44px), tarjeta (`.card`), chip de ícono (`.icon-chip`), pill de estado (`.badge`, siempre con texto e ícono), placa de patente (`.placa`), VehicleCard y DocumentRow
+El sistema visual **se toma de la app, no se inventa**: los tokens viven en `:root` de `styles.css` y copian `app/globals.css` y `docs/ui.md` del repo `nfc`.
+
+- Tipografías: **Geist** / **Geist Mono** (Google Fonts, `display=swap`). **Caveat ya no se carga**: solo la usaba la anotación manuscrita de Planes, que desapareció con el rediseño.
+- Color: `tinta #16191f`, `acero #5b6573`, `linea #e3e6ea`, `lienzo #f6f7f9`, `superficie #fff`, `azul #2952e6` (marca) con `azul-press`, `azul-50` y `azul-100`, y `ambar`. Los estados (Vigente, Por vencer, Vencido) tienen sus variantes `-texto` y `-suave`: un color de estado nunca va solo —siempre con texto o ícono—, y como texto siempre la variante `-texto`, que pasa 4,5:1.
+- Movimiento: `ease-salir` (lo que entra), `ease-entrar` (lo que se va) y duraciones 120/200/320ms. Toda animación vive bajo `@media (prefers-reduced-motion: no-preference)` y mueve solo `transform` y `opacity`. **El estado base es el final**: con movimiento reducido, sin JavaScript o sin soporte de animación se ve todo armado y quieto, nunca a medio armar. Como regla, no más de uno o dos elementos animándose a la vez en una vista.
+- Componentes: botón (`.btn`, alto mínimo 44px), tarjeta (`.card`), chip de ícono (`.icon-chip`), pill de estado (`.badge`, siempre con texto e ícono), placa de patente (`.placa`). Íconos SVG de trazo, familia Lucide como la app. Sin emoji.
+
+#### Escena Tap (hero del inicio)
+
+HTML + SVG + CSS, autónoma, con todo bajo el prefijo `tap-` (bloque `<escena-tap>` de `styles.css`). Un llavero NFC —el mismo dibujo de `components/brand/Llavero.tsx` de la app— entra desde la izquierda y toca el celular; nacen las ondas NFC y en la pantalla se abre la ficha pública: encabezado, placa `GJ·KP·47`, "Toyota Hilux · 2022", el resumen "1 por vencer" y tres filas escalonadas (Permiso de Circulación *Vigente*, Revisión Técnica *Por vencer*, SOAP *Vigente*), cada pill con un pequeño rebote. Pausa de lectura, se desvanece y vuelve el reposo. Ciclo de **6 s en bucle**; la línea de tiempo está comentada al inicio del bloque.
+
+- **Se pausa fuera de pantalla**: un `IntersectionObserver` en el script del inicio le pone `.tap-pausada` a la escena cuando sale del viewport, y esa clase congela todo con `animation-play-state: paused`. Sin `IntersectionObserver` simplemente sigue corriendo.
+- **Con movimiento reducido** se ve el estado final, quieto: la ficha abierta con las tres filas y el llavero junto al celular.
+- Es decorativa (`aria-hidden="true"`): lo que muestra ya lo dice el subtítulo del hero.
+
+#### Aparición al hacer scroll y turnos de los pasos
+
+- Un solo patrón para todo el sitio: el HTML marca con `data-reveal` lo que aparece, y sube 8px con fundido, 320ms, escalonado 40ms entre hermanos (ver "Comportamientos con JS").
+- Las tres mini escenas de "Así de simple" (documentos que caen a la ficha, el chip que se graba, el toque que abre la ficha) se animan **una sola vez**, cuando el patrón de aparición le pone `.is-visible` al paso. **Cada paso espera su turno** (`--paso-t`), 700ms después del anterior, para que nunca haya más de dos moviéndose a la vez. El turno lo reparte el script del inicio en **orden de entrada** —en celular, en una columna, los pasos entran de a uno o de a varios según el alto de la pantalla y la velocidad del scroll—; los `nth-child` del CSS (150/850/1550ms) son el respaldo para cuando el script no corre, y calzan con el caso de escritorio.
 
 ### Comportamientos con JS
 
 Cada página lleva su script incrustado al final del `<body>`:
 
-- **Menú móvil** (las 6 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta gratis" solo vive dentro del panel.
-- **Rotor del hero** (home) — la palabra de "Tu _vehículo_ a un Tap." rota entre vehículo/flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
+- **Menú móvil** (las 6 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. En escritorio la barra lleva los cinco enlaces, "Ingresar" y "Crear cuenta gratis"; bajo 860px "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta gratis" pasa a vivir solo dentro del panel.
+- **Rotor del hero** (inicio) — la palabra de "Tu _vehículo_ a un Tap." rota entre vehículo/flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
+- **Escena Tap** (inicio) — el script solo la pausa fuera de pantalla; la animación es CSS. Ver "Escena Tap" en Diseño.
+- **Turnos de los pasos** (inicio) — un `MutationObserver` mira cuándo cada paso recibe `.is-visible` y le asigna `--paso-t` en orden de entrada. Ver "Aparición al hacer scroll y turnos de los pasos".
 - **Aparición al hacer scroll** (las 6 páginas, el mismo script que el menú) — un solo patrón: el HTML marca con `data-reveal` lo que aparece y sube 8px con fundido, 320ms, escalonado 40ms entre hermanos. Va con `animation` (no `transition`, que chocaba con el hover de las tarjetas) y solo bajo `prefers-reduced-motion: no-preference`: sin JS o con movimiento reducido todo se ve en su estado final.
-- **Contador del hero** (home) — el número de vehículos cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
-- **Calculadora** (planes) — dos sistemas de precio en pills (Uso particular y Flotas), toggle mensual/anual, slider de vehículos por plan, slider de cuentas de conductor en Flotas acotado al número de vehículos, ahorro anual, burbuja del slider y empujón al plan anual. Sobre 100 vehículos reemplaza el precio por un llamado a contacto.
+- **Contador de la prueba social** (inicio) — el número de vehículos de la franja bajo el hero cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
+- **Calculadora de Uso particular** (planes) — va en una franja a lo ancho bajo las dos tarjetas (Gratis y Plan completo): un slider de 1 a 10 vehículos con su burbuja, el total anual (`n × precio anual`, sin selector mensual/anual porque el plan es solo anual) y la fórmula ("2 vehículos × $5.000"). Escribe además el despacho de Uso particular desde `ENVIO_PARTICULAR`. Desde 5 vehículos muestra un puente al plan Flotas ("también puedes tomar Flotas"), y en 10 avisa que es el tope.
+- **Calculadora de Flotas** (planes) — igual que antes del rediseño, solo con el estilo nuevo: toggle mensual/anual con el descuento, slider de vehículos, slider de cuentas de conductor acotado al número de vehículos, desglose en UF, ahorro anual, burbuja del slider, empujón al plan anual y el despacho por tramos según la cantidad de chips. Entre 5 y 10 vehículos recuerda que Uso particular también sirve (cuesta menos, sin conductores ni reportes). Sobre 100 vehículos reemplaza el precio por un llamado a contacto.
 - **Formulario de flota grande** (planes) — en el tramo de más de 100 vehículos, envía la consulta por `fetch` a `/api/contacto`. Botón deshabilitado mientras viaja, confirmación con foco al terminar y, si falla, un mensaje de error. El enlace `mailto:` queda visible siempre, así que ni sin JavaScript ni con la función caída alguien se queda sin forma de escribir.
 - **Formulario de empresas del rubro** (socios) — el mismo patrón que el de flota grande, con un campo `tipo` (automotora, aseguradora, gestoría u otra) y sin cantidad de vehículos.
 
@@ -87,7 +109,7 @@ Cada página lleva su script incrustado al final del `<body>`:
 
 - Las grillas usan `minmax(0, 1fr)`, no `1fr`: las fichas con texto que no envuelve (patentes, documentos) estiraban la columna y sacaban scroll lateral.
 - `html` lleva `text-size-adjust: 100%` y `overflow-x: clip` (no `hidden`, que rompe el nav sticky) como red de seguridad contra el desborde horizontal en móviles reales.
-- El titular del hero lleva un `<br class="lp-hero__nl">` que solo existe bajo 560px. Sin él, la palabra más larga del rotor ("camioneta") no cabe junto a "a un Tap." en pantallas angostas: el `h1` pasa de una línea a dos y todo el hero baja y sube en cada rotación. Con el salto forzado el titular mide siempre dos líneas. Si agregas palabras al rotor, ninguna debería ser tan larga que parta también la primera línea.
+- El titular del hero lleva un `<br class="lp-hero__nl">` que **está activo en todos los anchos**: el titular se lee siempre en dos líneas, "Tu vehículo / a un Tap.". Antes solo existía bajo 560px, y en escritorio el `h1` cabía en una línea con "auto" y pasaba a dos con "camioneta" (y entre 1024 y 1100px también con "vehículo"); como la grilla del hero centra en vertical, todo el hero bajaba y subía ~30px cada 2,6 s, con cada vuelta del rotor. Con el salto forzado el alto del titular no depende de la palabra. Si agregas palabras al rotor, ninguna debería ser tan larga que parta también la primera línea ("Tu camioneta" es la más larga hoy).
 
 ### Metadatos
 
@@ -97,9 +119,17 @@ La tarjeta al compartir es `assets/og-tapcar.png` (1200×630). Está generada co
 
 ### Precios: fuente única
 
-`precios.json` manda. Es la única fuente de las tarifas, y se sirve en **`https://tapcar.cl/precios.json`** porque el sitio es estático y cualquier archivo del repo queda publicado. Esa URL es el contrato que `app.tapcar.cl` puede verificar contra su configuración de cobro.
+`precios.json` manda. Es la única fuente de las tarifas, y se sirve en **`https://tapcar.cl/precios.json`** porque el sitio es estático y cualquier archivo del repo queda publicado. Esa URL es el contrato que `app.tapcar.cl` verifica contra su configuración de cobro.
 
 **Es un contrato para verificar, no una fuente de cobro en vivo.** Si la app lo leyera en runtime para facturar, un error de edición acá se cobraría de inmediato y sin revisión.
+
+Su forma desde el 2026-10-20:
+
+- `planes.particular`: `gratis: { vehiculos: 1 }` (lo que cubre el plan gratis) y `vehiculo: { anio: 5000 }`. **No hay `mes`**: el plan completo es solo anual y cobra cada vehículo, incluido el primero. Sigue con `vehiculos: { min: 1, max: 10 }`, `moneda: "CLP"` e `iva_incluido: true`.
+- `planes.flota`: sin cambios (`vehiculo` y `cuenta_conductor` con `mes` y `anio` en UF, más IVA, de 5 a 100 vehículos desde la web).
+- `envio_chips.particular: { hasta: 10, precio: 3000 }`: el despacho propio de Uso particular, un monto fijo de 1 a 10 chips. Los `tramos` ($2.000 / $5.000 / $10.000) son para los demás tipos de cuenta.
+
+**Tiene que ser idéntico byte a byte a `lib/contrato/precios.tapcar.json` del repo `nfc`.** El workflow `contrato-precios.yml` de ese repo baja todos los lunes el archivo publicado y lo compara con `diff` contra su copia; si no calzan, falla. Por eso un cambio de precios **se publica el mismo día que la app**: si la web sale antes, promete un precio que la app todavía no cobra (y el contrato falla); si sale después, al revés. La copia de la app se hace copiando este archivo tal cual, no reescribiéndolo.
 
 Tras editarlo:
 
@@ -115,8 +145,9 @@ python tools/precios.py
 
 `tools/precios.py` hace dos cosas distintas a propósito:
 
-- **`--generar`** escribe las constantes de la calculadora en `planes/index.html`, entre los marcadores `// <precios>` y `// </precios>`. Eso es dato estructurado y se genera sin riesgo. **Solo datos: la lógica que los usa —`descuento()`, `IVA`, `chip()`— vive fuera de los marcadores**, o el generador la borraría.
-- **Sin argumentos, revisa.** Busca en el sitio toda cifra con forma de precio y avisa si aparece alguna que `precios.json` no explica, o si falta alguna que debería estar. Sale con código 1 si encuentra algo.
+- **`--generar`** escribe las constantes de la calculadora en `planes/index.html`, entre los marcadores `// <precios>` y `// </precios>`: `PLANES` (con `particular: { gratis: 1, veh: { anio: 5000 }, min, max }` y `flota: { veh: { mes, anio }, cuenta: { mes, anio }, min, max }`), `ENVIO_PARTICULAR` (el despacho fijo de Uso particular, una constante y no una función) y `envio(chips)` con los tramos, que usa Flotas. Eso es dato estructurado y se genera sin riesgo. **Solo datos: la lógica que los usa —`descuento()`, `IVA`, `chip()`— vive fuera de los marcadores**, o el generador la borraría.
+- **Sin argumentos, revisa.** Busca en el sitio (las seis páginas, `llms.txt` y este README) toda cifra con forma de precio y avisa si aparece alguna que `precios.json` no explica. Las cifras legítimas de Uso particular son el $0 del plan gratis, el precio anual y los totales de 1 a 10 vehículos ($5.000 a $50.000), más su despacho; ya no hay mensual, descuento ni ahorro en Uso particular. Sale con código 1 si encuentra algo.
+- **Y exige cada cifra canónica en su archivo** (`canonicas_por_archivo`), no en el sitio entero: Planes tiene que decir el $0, el precio anual por vehículo, el despacho de Uso particular, los tramos de despacho, las dos tarifas anuales de Flotas en UF y el descuento del anual; ¿Cómo funciona? tiene que decir el despacho de Uso particular en el paso del chip. Con un conjunto global, borrar todos los $5.000 de Planes no avisaba, porque $5.000 es también el tramo de 3 a 50 chips y otro archivo lo seguía diciendo.
 
 No genera la prosa a propósito: las frases del FAQ y de los términos llevan las cifras metidas en oraciones, y un generador que las escriba produce copy peor y un fuente ilegible. Revisar atrapa el mismo error —cambiaste un número y se te quedó uno viejo— sin pretender escribir español.
 
@@ -126,7 +157,7 @@ Lo que el revisor **no** ve: que el JavaScript siga funcionando. Solo compara ci
 
 ### Schema.org (JSON-LD)
 
-Cada página lleva un bloque `<script type="application/ld+json" data-schema>` con `Organization`, `WebSite`, `WebPage` y `BreadcrumbList`; la home y Planes suman `SoftwareApplication` con los dos precios, ¿Cómo funciona? suma `HowTo` (8 pasos) y `FAQPage` (9 preguntas), Planes suma `FAQPage` (9), ¿Es legal? un `FAQPage` de 8 y Empresas del rubro un `FAQPage` de 5.
+Cada página lleva un bloque `<script type="application/ld+json" data-schema>` con `Organization`, `WebSite`, `WebPage` y `BreadcrumbList`; el inicio y Planes suman `SoftwareApplication` con un `AggregateOffer` de cuatro ofertas (Uso particular gratis, plan completo anual por vehículo, Flotas por vehículo y cuenta de conductor fijo), ¿Cómo funciona? suma `HowTo` (8 pasos) y `FAQPage` (9 preguntas), Planes suma `FAQPage` (7), ¿Es legal? un `FAQPage` de 8 y Empresas del rubro un `FAQPage` de 5.
 
 **No se edita a mano.** Lo genera [`tools/schema.py`](tools/schema.py), que lee las preguntas y los pasos del propio HTML:
 
@@ -151,7 +182,7 @@ Dos condiciones para que mida:
 
 ### llms.txt
 
-[`llms.txt`](llms.txt) resume el sitio para motores generativos (ChatGPT, Perplexity, Google AI Overviews): qué resuelve TapCar, **qué no es** —no es GPS, no emite documentos, no reemplaza los originales—, los precios, la base legal y cómo citar la marca. Es el archivo que evita que un modelo describa mal el producto. Hay que actualizarlo cuando cambien los precios o el alcance. Hoy además declara lo que el sitio no promete —la prueba gratis, el análisis de daños—, para que un modelo no lo invente.
+[`llms.txt`](llms.txt) resume el sitio para motores generativos (ChatGPT, Perplexity, Google AI Overviews): qué resuelve TapCar, **qué no es** —no es GPS, no emite documentos, no reemplaza los originales—, los precios, la base legal y cómo citar la marca. Es el archivo que evita que un modelo describa mal el producto. Hay que actualizarlo cuando cambien los precios o el alcance. Hoy además declara lo que el sitio no promete —un período de prueba del plan de pago (el plan gratis de Uso particular existe, pero es otra cosa: permanente y con 1 vehículo), el análisis de daños—, para que un modelo no lo invente.
 
 ## Backend: la función de contacto
 
@@ -199,6 +230,8 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 
 ## Pendientes conocidos
 
+- **La landing no tiene staging.** `main` publica directo en `tapcar.cl`; lo que se revisa antes de mergear es la vista previa de Vercel del PR. Un cambio que dependa de la app (como los precios) se mergea el mismo día que la app sale a producción, con el OK del dueño del proyecto.
+
 - **`/terminos/` no declara domicilio.** La sociedad ya está identificada (IMPULSE AI SpA, RUT 78.479.762-7) pero falta la dirección; en un documento legal conviene tenerla.
 - **El documento no pasó por revisión legal.** Está escrito en lenguaje simple y, desde el 2026-09-24, cubre solo el sitio (el servicio tiene sus propios términos en la app), pero conviene que un abogado lo revise.
 - Las fechas de vencimiento de las fichas de ejemplo **son ilustrativas a propósito**, no tienen que cuadrar con la fecha real.
@@ -206,17 +239,18 @@ Cuando algo falla —la key expira, se cae la verificación DNS del dominio, se 
 
 ## Datos de producto que la copy asume
 
-- El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos: el chip no se cobra, solo el despacho, y se cobra **en cada envío**, no una sola vez. Tramos con IVA incluido: **$2.000 hasta 2 chips, $5.000 de 3 a 50, $10.000 de 51 a 100**; sobre 100 se cotiza. La letra chica de la calculadora muestra la cifra que corresponde a la cantidad elegida, en vez de una tabla. `app.tapcar.cl` dejó de cobrar el chip el 2026-09-17, así que la landing y la caja por fin prometen lo mismo en este punto.
+- El **chip NFC va incluido siempre**, sin importar la cantidad de vehículos: el chip no se cobra, solo el despacho, y se cobra **en cada envío**, no una sola vez. En Uso particular el despacho es **$3.000 por envío de 1 a 10 chips**. En los demás planes va por tramos con IVA incluido: **$2.000 hasta 2 chips, $5.000 de 3 a 50, $10.000 de 51 a 100**; sobre 100 se cotiza. La letra chica de la calculadora de Flotas muestra la cifra que corresponde a la cantidad elegida, en vez de una tabla. `app.tapcar.cl` dejó de cobrar el chip el 2026-09-17.
 - Las **alertas del panel son fijas**, no configurables por el usuario.
 - **No usar "en vivo" ni "tiempo real"** al describir el panel: se lee como GPS, que TapCar no ofrece.
-- Hay dos sistemas de precio, seleccionables con pills. **Uso particular** (1 a 10 vehículos) son **$2.500 por vehículo al mes** o **$22.000 al año**, IVA incluido. **Flotas** (desde 5 vehículos) cobran por vehículo **UF 0,057 al mes** o **UF 0,5 al año**, más cada cuenta de conductor a **UF 0,12 al mes** o **UF 1,05 al año**; esos valores van más IVA. Las tres tarifas dan **−27%** en anual. La calculadora saca todo el dinero de las cifras mensual y anual, nunca del equivalente mensual redondeado: 12 × $1.833 da $21.996, no $22.000. Los rangos **se solapan a propósito entre 5 y 10**: ahí manda el tipo de cuenta que elige el cliente, no la cantidad. Bajo 5 solo hay Particular; desde 11, solo Flotas. En la banda común Flotas cuesta algo más y se toma por lo que habilita —conductores con PIN, Tomar/Entregar, bitácora, alertas, reportes, equipo y cuentas de conductor—, no por precio, y cada tarjeta de la calculadora avisa de la otra. El plan Flotas **no tiene tope de vehículos**: el 100 es hasta dónde se contrata solo desde la web, y sobre eso la página manda a contacto.
+- Hay dos sistemas de precio, seleccionables con pills. **Uso particular** (1 a 10 vehículos) es **gratis con 1 vehículo** ($0, sin plazo) y su **plan completo** cuesta **$5.000 al año por cada vehículo, incluido el primero**, IVA incluido, **solo anual** con renovación automática. **Flotas** (desde 5 vehículos) cobran por vehículo **UF 0,057 al mes** o **UF 0,5 al año**, más cada cuenta de conductor a **UF 0,12 al mes** o **UF 1,05 al año**; esos valores van más IVA. Las dos tarifas de Flotas dan **−27%** en anual, y la calculadora saca todo de las cifras mensual y anual, nunca de un equivalente mensual redondeado. Los rangos **se solapan a propósito entre 5 y 10**: ahí manda el tipo de cuenta que elige el cliente, no la cantidad. Bajo 5 solo hay Particular; desde 11, solo Flotas. En la banda común Flotas cuesta algo más y se toma por lo que habilita —conductores con PIN, Tomar/Entregar, bitácora, alertas, reportes, equipo y cuentas de conductor—, no por precio, y cada tarjeta de la calculadora avisa de la otra. El plan Flotas **no tiene tope de vehículos**: el 100 es hasta dónde se contrata solo desde la web, y sobre eso la página manda a contacto.
 - Los **datos de empresa (RUT, razón social, giro) son opcionales**: una cuenta personal puede saltárselos.
 - La sociedad que opera el servicio es **IMPULSE AI SpA, RUT 78.479.762-7**. Se identifica en la sección 1 de `/terminos/` y en el `legalName` del schema; el pie lleva `© 2026 TapCar` y la pertenencia la comunica el lockup de Impulse AI, para no repetir la matriz dos veces en el mismo footer.
 - TapCar es **una empresa de Impulse AI**. El footer lleva el lockup oficial, versión *color*, enlazado a `https://www.impulseai.cl/`. No se recolorea: es la marca de otra empresa.
   **Se usa el PNG oficial, no el SVG.** En el SVG exportado la palabra "Impulse AI" es un `<text>` sin `font-family` ni fuente incrustada, así que el navegador la dibuja con la fuente por defecto: ocupa 77 unidades en vez de ~280 y el lockup se ve chico y descuadrado dentro de una viewBox medio vacía. `assets/impulse-ai.webp` sale del PNG recortado y reescalado a 3x (349×72) para mostrarse a 24px de alto. Si algún día entregan un SVG con la tipografía trazada, conviene volver al vector.
 - El correo de contacto es **contacto@tapcar.cl** (footer de las 6 páginas, los dos CTA secundarios de Planes, el CTA de Términos y la salida del formulario de Socios).
 - El hero declara **+600 vehículos operando**, la última medición real al 2026-09-24. Es una cifra escrita a mano en `index.html`, no viene de la app: hay que actualizarla cuando cambie o queda desfasada sin que nada avise.
-- **Uso particular no tiene conductores, PIN, Tomar/Entregar, bitácora, alertas, reportes ni equipo**: todo eso es de Flotas, y el sitio lo marca con la etiqueta `.plan-tag`. Lo que la auditoría de la app (2026-09-24) no asigna a Flotas —Carga inteligente, IA de vencimiento, fotos a PDF, categorías, copia sin conexión, autogestión del plan— se presenta como de los dos planes.
-- **No prometer**: que la IA analiza daños (solo lee km, bencina y limpieza); la pauta de mantención por km en Particular (ahí el km no se actualiza); que los envíos de gestoría avisan el vencimiento (llegan sin fecha); las notificaciones de un convenio a sus clientes, salvo como servicio adicional a conversar; una prueba gratis (terminó el 2026-09-01); chips o facturación manual para socios.
-- El **cobro es automático con tarjeta vía Flow**; al crear la cuenta se cobra el primer período. La factura electrónica del SII todavía no está.
+- **El plan gratis de Uso particular** trae los documentos de fiscalización (Permiso de Circulación, Revisión Técnica, SOAP, Padrón y Homologación), los avisos por correo, la ficha pública con un toque y la lectura con IA de la fecha de cada documento. **El plan completo** suma mantenciones, datos del vehículo, otros documentos, Carga inteligente, ficha sin conexión y cargas de combustible, y permite de 1 a 10 vehículos. En la app lo bloqueado se ve con candado, no se oculta.
+- **Uso particular no tiene conductores, PIN, Tomar/Entregar, bitácora, alertas, reportes ni equipo**: todo eso es de Flotas, y el sitio lo marca con la etiqueta `.plan-tag`. Flotas incluye todo lo del plan completo.
+- **No prometer**: que la IA analiza daños (solo lee km, bencina y limpieza); la pauta de mantención por km en Particular (ahí el km no se actualiza); que los envíos de gestoría avisan el vencimiento (llegan sin fecha); las notificaciones de un convenio a sus clientes, salvo como servicio adicional a conversar; un **período de prueba** del plan completo o de Flotas (el que había terminó el 2026-09-01; lo que existe ahora es un **plan gratis** permanente con 1 vehículo, que no es una prueba y no hay que confundirlos); chips o facturación manual para socios.
+- El **cobro es automático con tarjeta vía Flow**. El plan gratis no pide pago; el plan completo se cobra al año y se renueva solo; Flotas, al mes o al año. Sumar vehículos se paga con la diferencia prorrateada. La factura electrónica del SII todavía no está.
 - Los **perfiles del rubro** (automotoras, aseguradoras, gestorías) se piden al crear la cuenta con "Otra cosa" y los aprueba TapCar. Sus precios no se publican.
