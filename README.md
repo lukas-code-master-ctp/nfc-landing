@@ -67,17 +67,17 @@ Sírvela en vez de abrir el archivo si vas a probar la navegación: los enlaces 
 
 ## Diseño
 
-- Tipografías: **Geist** / **Geist Mono**; **Caveat** solo para la anotación manuscrita de Planes (Google Fonts)
+- Tipografías: **Geist** / **Geist Mono** (Google Fonts)
 - Color de marca: `#2952e6`
-- Componentes reproducidos del TapCar Design System: Button, Card, IconChip, StatusBadge, VehicleCard, DocumentRow
+- Tokens y componentes alineados con la app (`app/globals.css` y `docs/ui.md` del repo `nfc`): colores con estados `-texto`/`-suave`, radios, sombras, `ease-salir` y duraciones 120/200/320ms. Componentes: botón (`.btn`, alto mínimo 44px), tarjeta (`.card`), chip de ícono (`.icon-chip`), pill de estado (`.badge`, siempre con texto e ícono), placa de patente (`.placa`), VehicleCard y DocumentRow
 
 ### Comportamientos con JS
 
 Cada página lleva su script incrustado al final del `<body>`:
 
-- **Menú móvil** (las 6 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta" solo vive dentro del panel.
+- **Menú móvil** (las 6 páginas) — bajo 860px el nav pasa a un panel desplegable; marca el enlace activo comparando el `pathname`, y cierra con Escape, con clic fuera o al volver a escritorio. "Ingresar" se queda visible en la barra (no entra al panel) y "Crear cuenta gratis" solo vive dentro del panel.
 - **Rotor del hero** (home) — la palabra de "Tu _vehículo_ a un Tap." rota entre vehículo/flota/auto/moto/camioneta animando el ancho. El `h1` lleva un `aria-label` fijo con la frase completa y el rotor se desactiva con `prefers-reduced-motion`.
-- **Reveal on scroll** (home y ¿Cómo funciona?) — `IntersectionObserver` con retraso escalonado.
+- **Aparición al hacer scroll** (las 6 páginas, el mismo script que el menú) — un solo patrón: el HTML marca con `data-reveal` lo que aparece y sube 8px con fundido, 320ms, escalonado 40ms entre hermanos. Va con `animation` (no `transition`, que chocaba con el hover de las tarjetas) y solo bajo `prefers-reduced-motion: no-preference`: sin JS o con movimiento reducido todo se ve en su estado final.
 - **Contador del hero** (home) — el número de vehículos cuenta desde 0 al entrar en pantalla. La cifra vive en el HTML (`data-valor` y el texto del span, las dos), así que sin JS se ve igual, solo que sin animar. `data-prefijo` es lo que va pegado delante (hoy `+`).
 - **Calculadora** (planes) — dos sistemas de precio en pills (Uso particular y Flotas), toggle mensual/anual, slider de vehículos por plan, slider de cuentas de conductor en Flotas acotado al número de vehículos, ahorro anual, burbuja del slider y empujón al plan anual. Sobre 100 vehículos reemplaza el precio por un llamado a contacto.
 - **Formulario de flota grande** (planes) — en el tramo de más de 100 vehículos, envía la consulta por `fetch` a `/api/contacto`. Botón deshabilitado mientras viaja, confirmación con foco al terminar y, si falla, un mensaje de error. El enlace `mailto:` queda visible siempre, así que ni sin JavaScript ni con la función caída alguien se queda sin forma de escribir.
