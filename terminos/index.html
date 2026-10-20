@@ -322,9 +322,12 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   background: var(--azul); color: #fff; text-decoration: none;
   font-size: 14px; font-weight: 600; padding: 12px 16px;
   border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
-  transition: top var(--dur-base) var(--ease-salir);
 }
 .skip-link:focus { top: 12px; }
+/* Con movimiento reducido aparece de golpe, sin deslizarse. */
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link { transition: top var(--dur-base) var(--ease-salir); }
+}
 
 .nav__inner {
   max-width: var(--contenedor); margin: 0 auto; padding: 10px var(--gutter);
@@ -370,8 +373,14 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .nav__burger-bar {
   position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px;
   background: currentColor;
-  transition: transform var(--dur-base) var(--ease-salir),
-              opacity var(--dur-base) var(--ease-salir);
+}
+/* La X se arma igual con movimiento reducido; lo que se saca es el giro
+   animado entre las dos formas. */
+@media (prefers-reduced-motion: no-preference) {
+  .nav__burger-bar {
+    transition: transform var(--dur-base) var(--ease-salir),
+                opacity var(--dur-base) var(--ease-salir);
+  }
 }
 .nav__burger-bar:nth-child(1) { top: 0; }
 .nav__burger-bar:nth-child(2) { top: 6px; }
@@ -520,22 +529,26 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 
 /* ===================================================================
-   Landing — Hero
+   Inicio — Hero
+   Texto a la izquierda y la escena "Tap" a la derecha (debajo en
+   celular). Una sola acción primaria: "Ver planes" es un enlace.
    =================================================================== */
-.lp-hero { padding: 76px 0 92px; }
+.lp-hero { padding: 64px 0 76px; }
 .lp-hero__grid {
   max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
-  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  gap: 56px; align-items: center;
 }
 .lp-hero__badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--azul-50); color: var(--azul); font-size: 12px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center;
+  background: var(--azul-50); color: var(--azul); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 7px 14px; border-radius: var(--radius-pill);
 }
 .lp-hero__title {
-  margin: 20px 0 0; font-size: 50px; line-height: 1.06; letter-spacing: -0.03em;
-  font-weight: 700; color: var(--tinta); text-wrap: balance;
+  margin: 20px 0 0; font-size: 58px; line-height: 1.04; letter-spacing: -0.035em;
+  font-weight: 700; color: var(--tinta);
 }
+.lp-hero__tap { color: var(--azul); }
 
 /* Palabra rotatoria del hero ("Tu flota/auto/moto a un Tap").
    El ancho lo anima el JS midiendo la palabra siguiente; el overflow
@@ -562,56 +575,380 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   .rotor { transition: none; }
   .rotor__word { transition: none; }
 }
-.lp-hero__lead { margin: 22px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); max-width: 480px; }
-.lp-hero__actions { display: flex; gap: 12px; margin-top: 30px; }
-.lp-hero__trust { display: flex; align-items: center; gap: 20px; margin-top: 24px; font-size: 13px; color: var(--acero); }
-.lp-trust { display: inline-flex; align-items: center; gap: 6px; }
-
-/* Conteo de vehículos (prueba social del hero).
-   Colgado de una hairline que corta al ancho del lead: separa el dato de
-   los checks sin agregar una caja más a una columna que ya tiene cinco
-   bloques. El número es la única pieza grande, así que se lee solo. */
-.hero-conteo {
-  display: flex; align-items: baseline; gap: 9px;
-  max-width: 480px; margin-top: 26px; padding-top: 22px;
-  border-top: 1px solid var(--linea);
+.lp-hero__lead {
+  margin: 20px 0 0; font-size: 19px; line-height: 1.5; color: var(--acero);
+  max-width: 440px; text-wrap: pretty;
 }
-.hero-conteo__num {
-  font-size: 27px; font-weight: 700; line-height: 1;
-  letter-spacing: -0.025em; color: var(--azul);
+.lp-hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; margin-top: 32px; }
+.lp-hero__sec {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 0 4px;
+  font-size: 16px; font-weight: 600; color: var(--azul); text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.lp-hero__sec:hover { text-decoration: underline; text-underline-offset: 4px; }
+.lp-hero__micro {
+  display: flex; align-items: center; gap: 6px; margin: 14px 0 0;
+  font-size: 14px; color: var(--acero);
+}
+.lp-hero__micro svg { flex: 0 0 auto; color: var(--vigente-texto); }
+.lp-hero__escena { width: min(460px, 100%); justify-self: end; }
+
+/* Prueba social: una franja angosta bajo el hero. El número es la única
+   pieza grande, así que se lee solo. */
+.prueba { background: var(--superficie); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+.prueba__inner {
+  max-width: var(--contenedor); margin: 0 auto; padding: 22px var(--gutter);
+  display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 12px;
+  text-align: center;
+}
+.prueba__num {
+  font-size: 34px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--azul);
   /* Cifras de ancho fijo: sin esto el texto de al lado se corre en cada
      paso de la animación. */
   font-variant-numeric: tabular-nums;
 }
-.hero-conteo__txt { font-size: 14px; line-height: 1.45; color: var(--acero); }
+.prueba__txt { font-size: 17px; font-weight: 500; color: var(--acero); }
 
-/* Ficha preview (hero card) */
-.ficha-preview { position: relative; }
-.ficha-preview__tag {
-  position: absolute; top: -14px; right: 14px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 7px;
-  background: var(--tinta); color: #fff; font-size: 12px; font-weight: 600;
-  padding: 7px 12px; border-radius: var(--radius-pill); box-shadow: var(--shadow-lg);
+/* <escena-tap> ════════════════════════════════════════════════════════
+   Escena "Tap" del hero. Autónoma: todo con prefijo `tap-`.
+
+   Escala: el lienzo se dibuja en un espacio de 400 × 430 unidades y
+   1em = 10 unidades. El tamaño de letra del lienzo sale del ancho del
+   contenedor (`100cqw / 40`), así que TODO (celular, llavero, textos,
+   bordes) se achica junto, sin JS y sin saltos de layout: el alto lo
+   reserva `aspect-ratio`. A 460 px de ancho 1 unidad = 1,15 px (el texto
+   más chico de la pantalla, 10u, queda en 11,5 px).
+
+   Movimiento: el estado BASE de cada pieza es el estado FINAL (ficha
+   abierta, tres filas, llavero junto al celular). Las animaciones viven
+   solo dentro de `prefers-reduced-motion: no-preference`, así que con
+   movimiento reducido o sin soporte de animación se ve la escena
+   terminada y quieta. Solo `transform` y `opacity`.
+
+   Ciclo de 6 s (1 s = 16,67 %):
+     0,2 → 1,0 s  el llavero entra y toca (rebote al 0,84 s)
+     1,0 → 1,5 s  ping + ondas NFC
+     1,3 → 1,8 s  se abre la ficha: encabezado, placa, modelo
+     1,75 s       "Documentación · 1 por vencer"
+     2,1 / 2,35 / 2,6 s  las tres filas; cada pill aparece 0,3 s después
+     ~3,2 → 4,9 s todo quieto (pausa de lectura)
+     4,9 → 5,4 s  se desvanece (llavero se retira); vuelve el reposo
+ ═════════════════════════════════════════════════════════════════════ */
+.tap-escena {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 400 / 430;
+  pointer-events: none;
+  user-select: none;
 }
-.ficha-card {
-  background: var(--superficie); border: 1px solid var(--linea);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden;
+.tap-lienzo {
+  position: absolute;
+  inset: 0;
+  font-size: 11.5px;               /* respaldo sin container queries */
+  font-size: calc(100cqw / 40);    /* 1em = 10 unidades del lienzo */
+  font-family: var(--font-sans, 'Geist', system-ui, sans-serif);
+  color: var(--tinta, #16191f);
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
 }
-.ficha-card__head {
-  padding: 16px 18px; display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--linea);
+
+/* Halo de fondo, quieto. */
+.tap-halo {
+  position: absolute;
+  left: 1.5em; top: 6em;
+  width: 34em; height: 34em;
+  border-radius: 50%;
+  background: var(--azul-50, #eef2fe);
 }
-.ficha-card__head-label {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--acero);
+
+/* ── Celular ─────────────────────────────────────────────────────── */
+.tap-celular {
+  position: absolute;
+  left: 15em; top: .8em;
+  width: 24em; height: 41.4em;
+  border: .6em solid var(--tinta, #16191f);
+  border-radius: 3.8em;
+  background: var(--tinta, #16191f);
+  box-shadow:
+    0 2.4em 4em -1.6em rgb(22 25 31 / .28),
+    0 .6em 1.4em -.6em rgb(22 25 31 / .18);
 }
-.ficha-card__readonly { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--acero); }
-.ficha-card__body { background: var(--lienzo); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-.ficha-card__section {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--acero); margin: 4px 2px 0;
+.tap-pantalla {
+  position: absolute;
+  inset: 0;
+  border-radius: 3.2em;
+  overflow: hidden;
+  background: var(--lienzo, #f6f7f9);
 }
-.ficha-card__docs { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tap-isla {
+  position: absolute;
+  left: 50%; top: .8em;
+  width: 6.6em; height: 1.9em;
+  margin-left: -3.3em;
+  border-radius: 1em;
+  background: var(--tinta, #16191f);
+  z-index: 3;
+}
+.tap-barra-estado {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 3.5em;
+  padding: 0 2em 0 2.3em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--tinta, #16191f);
+  z-index: 2;
+}
+.tap-barra-estado svg { width: 3.6em; height: 1.1em; display: block; }
+.tap-indicador {
+  position: absolute;
+  left: 50%; bottom: .7em;
+  width: 8em; height: .45em;
+  margin-left: -4em;
+  border-radius: 1em;
+  background: var(--tinta, #16191f);
+  opacity: .85;
+  z-index: 2;
+}
+
+/* Reposo: lo que muestra el celular antes del tap. Queda DEBAJO de la
+   ficha, que es opaca: en el estado final no se ve. */
+.tap-reposo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  color: var(--acero, #5b6573);
+}
+.tap-reposo svg { width: 4.4em; height: 4.4em; display: block; color: var(--azul, #2952e6); }
+.tap-reposo p { margin: 0; font-size: 1.2em; font-weight: 500; text-align: center; line-height: 1.35; }
+
+/* ── Ficha pública ───────────────────────────────────────────────── */
+.tap-ficha {
+  position: absolute;
+  inset: 0;
+  padding: 3.9em 1.2em 2em;
+  background: var(--lienzo, #f6f7f9);
+  display: flex;
+  flex-direction: column;
+}
+.tap-cabecera { display: flex; flex-direction: column; align-items: flex-start; gap: .5em; }
+.tap-lockup { display: inline-flex; align-items: center; gap: .55em; }
+.tap-lockup svg { width: 2.4em; height: 2.4em; display: block; }
+.tap-marca { font-size: 1.55em; font-weight: 700; letter-spacing: -.025em; line-height: 1; }
+.tap-marca b { font-weight: 700; color: var(--azul, #2952e6); }
+.tap-rotulo {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--acero, #5b6573);
+}
+.tap-vehiculo {
+  margin-top: 1.1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .55em;
+}
+/* La patente como mini placa chilena (`components/ui/Placa.tsx`). */
+.tap-placa {
+  display: inline-flex;
+  align-items: center;
+  gap: .32em;
+  padding: .38em .62em;
+  border: .11em solid var(--tinta, #16191f);
+  border-radius: .4em;
+  background: var(--superficie, #fff);
+  box-shadow: inset 0 0 0 .11em var(--superficie, #fff), inset 0 0 0 .16em var(--linea, #e3e6ea);
+  font-family: var(--font-mono, 'Geist Mono', ui-monospace, monospace);
+  font-size: 1.85em;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+  color: var(--tinta, #16191f);
+  white-space: nowrap;
+}
+.tap-placa i { font-style: normal; font-weight: 400; letter-spacing: 0; color: var(--acero, #5b6573); }
+.tap-modelo { margin: 0; font-size: 1.3em; font-weight: 500; color: var(--acero, #5b6573); }
+
+.tap-resumen {
+  margin-top: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6em;
+  padding: 0 .2em;
+}
+.tap-resumen .tap-rotulo { font-size: 1.05em; }
+
+.tap-docs { list-style: none; margin: .65em 0 0; padding: 0; display: flex; flex-direction: column; gap: .5em; }
+.tap-doc {
+  display: flex;
+  flex-direction: column;
+  gap: .4em;
+  padding: .8em .9em .8em 1em;
+  border: .1em solid var(--linea, #e3e6ea);
+  border-radius: 1.2em;
+  background: var(--superficie, #fff);
+  box-shadow: 0 .1em .2em rgb(22 25 31 / .05);
+}
+.tap-doc__nombre { margin: 0; font-size: 1.3em; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.tap-doc__pie { display: flex; align-items: center; justify-content: space-between; gap: .6em; }
+.tap-doc__fecha { font-size: 1.05em; color: var(--acero, #5b6573); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Pill de estado (`StatusBadge`): color + ícono + texto, nunca solo color. */
+.tap-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  height: 2em;
+  padding: 0 .7em 0 .5em;
+  border-radius: 99em;
+  font-size: 1em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tap-pill svg { width: 1.1em; height: 1.1em; display: block; flex-shrink: 0; }
+.tap-pill--vigente { background: var(--vigente-suave, #e7f6ec); color: var(--vigente-texto, #157a3a); }
+.tap-pill--por-vencer { background: var(--por-vencer-suave, #fdf1dc); color: var(--por-vencer-texto, #a8500a); }
+
+/* ── Llavero NFC (`components/brand/Llavero.tsx`) ────────────────── */
+.tap-llavero {
+  position: absolute;
+  left: 3em; top: 19.4em;
+  width: 7.4em; height: 10.2em;
+  transform: rotate(-8deg);
+  transform-origin: 50% 12%;
+  filter: drop-shadow(0 .8em 1em rgb(22 25 31 / .22));
+}
+.tap-llavero svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* Ondas NFC entre el llavero y el celular. */
+.tap-ondas {
+  position: absolute;
+  left: 10em; top: 21.6em;
+  width: 4.2em; height: 6.4em;
+  overflow: visible;
+  color: var(--azul, #2952e6);
+}
+.tap-ondas path { transform-box: fill-box; transform-origin: 0% 50%; }
+.tap-ondas path:nth-child(2) { opacity: .7; }
+.tap-ondas path:nth-child(3) { opacity: .45; }
+/* Ping del contacto: invisible en reposo (no es parte del estado final). */
+.tap-ping {
+  position: absolute;
+  left: 11.4em; top: 21.3em;
+  width: 7.2em; height: 7.2em;
+  border-radius: 50%;
+  border: .2em solid var(--azul, #2952e6);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tap-escena * { animation-duration: 6s; animation-iteration-count: infinite; animation-timing-function: var(--ease-salir, cubic-bezier(.2, .8, .2, 1)); animation-fill-mode: backwards; }
+  .tap-escena.tap-pausada * { animation-play-state: paused; }
+
+  .tap-llavero { animation-name: tap-llavero; }
+  .tap-ping { animation-name: tap-ping; }
+  .tap-ondas path { animation-name: tap-onda; }
+  .tap-ondas path:nth-child(2) { animation-name: tap-onda-2; animation-delay: .1s; }
+  .tap-ondas path:nth-child(3) { animation-name: tap-onda-3; animation-delay: .2s; }
+  .tap-reposo { animation-name: tap-reposo; }
+  .tap-ficha { animation-name: tap-ficha; }
+  /* Las piezas de la ficha comparten un keyframe (entra a los 1,3 s) y se
+     escalonan con `animation-delay`. Es seguro en bucle porque el 0 % y el
+     100 % del keyframe son el mismo estado oculto, y la ficha (su padre)
+     ya está en opacidad 0 cuando cada una vuelve a ocultarse. */
+  .tap-cabecera { animation-name: tap-sube; }
+  .tap-placa { animation-name: tap-placa; animation-delay: .15s; }
+  .tap-modelo { animation-name: tap-sube; animation-delay: .25s; }
+  .tap-resumen { animation-name: tap-sube; animation-delay: .45s; }
+  .tap-resumen .tap-pill { animation-name: tap-pop; animation-delay: .7s; }
+  .tap-doc:nth-child(1) { animation-name: tap-sube; animation-delay: .8s; }
+  .tap-doc:nth-child(2) { animation-name: tap-sube; animation-delay: 1.05s; }
+  .tap-doc:nth-child(3) { animation-name: tap-sube; animation-delay: 1.3s; }
+  .tap-doc:nth-child(1) .tap-pill { animation-name: tap-pop; animation-delay: 1.1s; }
+  .tap-doc:nth-child(2) .tap-pill { animation-name: tap-pop; animation-delay: 1.35s; }
+  .tap-doc:nth-child(3) .tap-pill { animation-name: tap-pop; animation-delay: 1.6s; }
+}
+
+/* El llavero entra inclinado desde la izquierda y TOCA el borde del
+   celular (0,78 s, con un rebote corto como en `tc-tocar`, que se lee como
+   contacto); de ahí se aparta a su lugar de reposo (1,56 s) dejando a la
+   vista las ondas que nacieron en el contacto. Al final se retira con
+   `ease-entrar` (lo que sale acelera). */
+@keyframes tap-llavero {
+  0%, 3.3% { opacity: 0; transform: translateX(-4em) rotate(-22deg); }
+  13% { opacity: 1; transform: translateX(5.9em) rotate(2deg); }
+  16.7% { opacity: 1; transform: translateX(5.3em) rotate(0deg); }
+  26% { opacity: 1; transform: translateX(0) rotate(-8deg); }
+  81.7% { opacity: 1; transform: translateX(0) rotate(-8deg); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  90%, 100% { opacity: 0; transform: translateX(-3em) rotate(-16deg); }
+}
+@keyframes tap-ping {
+  0%, 16% { opacity: 0; transform: scale(.4); }
+  17% { opacity: .55; transform: scale(.5); }
+  30%, 100% { opacity: 0; transform: scale(1.7); }
+}
+@keyframes tap-onda {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: 1; transform: scale(1); }
+  81.7% { opacity: 1; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-onda-2 {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: .7; transform: scale(1); }
+  81.7% { opacity: .7; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-onda-3 {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: .45; transform: scale(1); }
+  81.7% { opacity: .45; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-reposo {
+  0%, 19% { opacity: 1; transform: none; }
+  23%, 92% { opacity: 0; transform: scale(.96); }
+  98%, 100% { opacity: 1; transform: none; }
+}
+@keyframes tap-ficha {
+  0%, 21.7% { opacity: 0; }
+  25% { opacity: 1; }
+  81.7% { opacity: 1; animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  90%, 100% { opacity: 0; }
+}
+@keyframes tap-sube {
+  0%, 21.7% { opacity: 0; transform: translateY(1em); }
+  28.4% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: translateY(1em); }
+}
+@keyframes tap-placa {
+  0%, 21.7% { opacity: 0; transform: translateY(.6em) scale(.92); }
+  29% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: translateY(.6em) scale(.92); }
+}
+/* La pill «marca» (como `tc-marcar`): aparece chica, se pasa y vuelve. */
+@keyframes tap-pop {
+  0%, 21.7% { opacity: 0; transform: scale(.5); }
+  25.5% { opacity: 1; transform: scale(1.1); }
+  28.5% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: scale(.5); }
+}
+/* </escena-tap> */
 
 /* ===================================================================
    Landing — Cómo funciona (pasos)
@@ -624,35 +961,47 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .step__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
-   Landing — Beneficios
+   Inicio — Así de simple, ¿Para quién es? y beneficios
    =================================================================== */
-.bn-head { max-width: 620px; }
-.bn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
-.bn-card__title { margin: 16px 0 0; font-size: 17px; font-weight: 600; }
-.bn-card__text { margin: 7px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
-.bn-badges { display: flex; gap: 6px; margin-top: 12px; }
-
-/* ===================================================================
-   Landing — Ficha showcase
-   =================================================================== */
-.fs-grid {
-  max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+.pasos {
+  list-style: none; margin: 48px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;
 }
-.fs-title { margin: 12px 0 0; font-size: 34px; line-height: 1.15; letter-spacing: -0.025em; font-weight: 700; }
-.fs-lead { margin: 16px 0 0; font-size: 17px; line-height: 1.55; color: var(--acero); }
-.fs-list { margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
-.fs-list__item { display: flex; gap: 12px; align-items: flex-start; }
-.fs-list__check { flex: 0 0 auto; margin-top: 1px; }
-.fs-list__text { font-size: 15px; line-height: 1.5; color: var(--tinta); }
-.fs-list__text strong { font-weight: 600; }
-.fs-list__text .muted { color: var(--acero); }
-.fs-panel { background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-lg); padding: 18px; }
-.fs-panel__head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 14px; }
-.fs-panel__url { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--acero); }
-.fs-panel__readonly { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--acero); }
-.fs-panel__body { display: flex; flex-direction: column; gap: 10px; }
-.fs-panel__docs { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.paso { padding: 16px 16px 24px; }
+.paso__ilus {
+  display: block; width: 100%; height: auto; aspect-ratio: 240 / 140;
+  background: var(--azul-50); border-radius: var(--radius-md);
+}
+.paso__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; margin: 20px 0 0 4px; border-radius: var(--radius-pill);
+  background: var(--tinta); color: #fff; font-size: 13px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.paso__title { margin: 12px 4px 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.paso__text { margin: 6px 4px 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+
+.quien { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 44px; }
+.quien__card { display: flex; flex-direction: column; padding: 24px; }
+.quien__title { margin: 16px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.quien__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.quien__link {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 18px;
+  font-size: 15px; font-weight: 600; color: var(--azul);
+}
+.quien__card:hover .quien__link { text-decoration: underline; text-underline-offset: 4px; }
+
+.beneficios {
+  /* La segunda columna es más ancha: lleva las tres pills en una fila. */
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 28px; margin-top: 48px;
+}
+.beneficio { display: block; color: inherit; text-decoration: none; border-radius: var(--radius-md); }
+.beneficio__title { margin: 14px 0 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.beneficio__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.beneficio__badges { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.beneficio__mas { display: block; margin-top: 4px; font-weight: 600; color: var(--azul); }
+.beneficio--link:hover .beneficio__mas { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ===================================================================
    Planes — Hero
@@ -764,10 +1113,14 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   -webkit-appearance: none; width: 22px; height: 22px; margin-top: -7px; border-radius: 50%;
   background: var(--azul); border: 4px solid #fff;
   box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
-  transition: transform var(--dur-base) var(--ease-salir);
 }
-.calc__slider:hover::-webkit-slider-thumb { transform: scale(1.1); }
-.calc__slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--azul-50), var(--shadow-md); }
+@media (prefers-reduced-motion: no-preference) {
+  .calc__slider::-webkit-slider-thumb { transition: transform var(--dur-base) var(--ease-salir); }
+  .calc__slider:hover::-webkit-slider-thumb { transform: scale(1.1); }
+}
+/* Foco: anillo azul por fuera del borde blanco del thumb (pasa 3:1 sobre
+   blanco). El halo azul-50 de antes casi no se veía. */
+.calc__slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__slider::-moz-range-track { height: 8px; border-radius: var(--radius-pill); background: #e8eaee; }
 .calc__slider::-moz-range-progress { height: 8px; border-radius: var(--radius-pill); background: var(--azul); }
 .calc__slider::-moz-range-thumb {
@@ -775,7 +1128,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   background: var(--azul); border: 4px solid #fff;
   box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
 }
-.calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(--azul-50), var(--shadow-md); }
+.calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--acero); margin-top: 10px; }
 .calc__divider { margin: 28px 0; height: 1px; background: var(--linea); }
 .calc__formula { font-size: 14px; color: var(--acero); }
@@ -859,19 +1212,10 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .faq__a { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
-   Landing — Un toque, toda la operación (bloque estrella)
+   Tarjetas de texto (¿Es legal?)
    =================================================================== */
-.op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
 .op-card__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
 .op-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
-
-/* Landing — Ficha: pestañas del menú (Tomar/Entregar · Documentos · Información) */
-.fs-tabs { display: flex; gap: 6px; padding: 0 4px 14px; flex-wrap: wrap; }
-.fs-tab {
-  font-size: 13px; font-weight: 600; color: var(--acero);
-  padding: 6px 12px; border-radius: var(--radius-pill); background: transparent;
-}
-.fs-tab.is-active { background: var(--azul); color: #fff; }
 
 /* Planes — Analogía de precio ("menos que un café") */
 .calc__cafe {
@@ -1130,17 +1474,14 @@ select.form__input {
 .hw-aside__link:hover { text-decoration: underline; }
 
 /* ===================================================================
-   Landing — ¿Para quién es? (personal / flota)
+   Tarjetas de audiencia (Socios) y etiqueta de plan
    =================================================================== */
-.aud { padding: 24px 0 76px; }
-.aud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
 .aud-card { display: flex; flex-direction: column; }
 .aud-card__title { margin: 16px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
 .aud-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .aud-card__list { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .aud-card__item { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--tinta); }
 .aud-card__check { flex: 0 0 auto; margin-top: 2px; }
-.aud-card__foot { margin-top: auto; padding-top: 20px; }
 .aud-card__link {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
@@ -1172,7 +1513,6 @@ select.form__input {
 .rubro__title { margin: 8px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
 .rubro__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .rubro__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-.rubro__tipos { display: flex; flex-wrap: wrap; gap: 8px; }
 /* Planes — la franja del rubro explica cada perfil en una línea. */
 .rubro-banda { max-width: var(--contenedor); margin: 24px auto 0; padding: 0 var(--gutter); }
 .rubro-banda .rubro { margin-top: 0; }
@@ -1227,9 +1567,6 @@ select.form__input {
    =================================================================== */
 .llavero { display: block; filter: drop-shadow(0 10px 18px rgba(22, 25, 31, 0.16)); }
 
-/* Home — paso 02: foto centrada bajo el texto de la card */
-.step__llavero { height: 108px; width: auto; margin: 18px auto 0; }
-
 /* Cómo funciona — paso 04: texto a la izquierda, foto a la derecha */
 .hw-step__cols { display: flex; align-items: center; gap: 20px; }
 .hw-step__cols > div { min-width: 0; flex: 1; }
@@ -1240,76 +1577,59 @@ select.form__input {
 .llavero--included { position: absolute; top: 26px; right: 30px; width: 76px; height: auto; transform: rotate(8deg); }
 .included--con-llavero .included__lead { padding-right: 92px; }
 
-/* Enlace "ver el paso a paso" bajo los pasos de la home */
-.steps-more { margin-top: 28px; text-align: center; }
-.steps-more__link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 15px; font-weight: 600; color: var(--azul); text-decoration: none;
-}
-.steps-more__link:hover { text-decoration: underline; }
-
 /* ===================================================================
-   Animaciones (home)
+   Animaciones (inicio)
    Todas bajo `prefers-reduced-motion: no-preference` y con el estado
    base como estado final: con movimiento reducido se ve todo armado y
    quieto. Solo transform y opacity.
+
+   Mini escenas de "Así de simple": se animan UNA vez, cuando el patrón
+   de aparición le pone `.is-visible` al paso. En escritorio los tres
+   pasos entran juntos, así que cada uno espera su turno (`--paso-t`):
+   nunca hay más de dos piezas moviéndose a la vez. En una columna cada
+   paso entra solo al hacer scroll y no espera.
    =================================================================== */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-9px); }
+.paso__ilus .i-cae, .paso__ilus .i-pop, .paso__ilus .i-onda,
+.paso__ilus .i-sube, .paso__ilus .i-ping { transform-box: fill-box; transform-origin: 50% 50%; }
+.paso__ilus .i-onda { transform-origin: 0% 50%; }
+@keyframes i-cae { from { opacity: 0; transform: translateY(-30px); } }
+@keyframes i-pop {
+  0% { opacity: 0; transform: scale(0.4); }
+  70% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: none; }
 }
-@keyframes ping-nfc {
-  0%   { transform: scale(1);    opacity: 0.55; }
-  70%  { transform: scale(1.55); opacity: 0; }
-  100% { transform: scale(1.55); opacity: 0; }
-}
-@keyframes wave-nfc {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 1; }
+@keyframes i-onda { from { opacity: 0; transform: scale(0.6); } }
+@keyframes i-sube { from { opacity: 0; transform: translateY(10px); } }
+/* El anillo del toque: su estado base es invisible (opacity 0 en el SVG),
+   así que con movimiento reducido simplemente no está. */
+@keyframes i-ping {
+  0% { opacity: 0.7; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(1.5); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Hero: entrada en cascada con el mismo `aparecer` del scroll. */
-  .lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
-  .hero-conteo {
-    animation: aparecer var(--dur-lenta) var(--ease-salir) backwards;
+  .paso { --paso-t: 150ms; }
+  .pasos > .paso:nth-child(2) { --paso-t: 850ms; }
+  .pasos > .paso:nth-child(3) { --paso-t: 1550ms; }
+  .paso.is-visible .i-cae  { animation: i-cae 560ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-pop  { animation: i-pop 420ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-onda { animation: i-onda 360ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-sube { animation: i-sube 360ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-ping { animation: i-ping 900ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-cae, .paso.is-visible .i-pop, .paso.is-visible .i-onda,
+  .paso.is-visible .i-sube, .paso.is-visible .i-ping {
+    animation-delay: calc(var(--paso-t) + var(--d, 0ms));
   }
-  .lp-hero__title   { animation-delay: 40ms; }
-  .lp-hero__lead    { animation-delay: 80ms; }
-  .lp-hero__actions { animation-delay: 120ms; }
-  .lp-hero__trust   { animation-delay: 160ms; }
-  .hero-conteo      { animation-delay: 200ms; }
 
-  /* Ficha del hero: entra, luego flota; el tag emite ondas NFC. */
-  .ficha-preview {
-    animation: aparecer var(--dur-lenta) var(--ease-salir) 120ms backwards,
-               float 7s ease-in-out 1.4s infinite;
-  }
-  .ficha-preview__tag::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 2px solid var(--azul);
-    animation: ping-nfc 2.6s var(--ease-salir) 1.6s infinite;
-    pointer-events: none;
-  }
-  .ficha-preview__tag svg path { animation: wave-nfc 2.6s ease-in-out 1.6s infinite; }
-  .ficha-preview__tag svg path:last-child { animation-delay: 1.9s; }
-
-  /* Hover lift en tarjetas de la home */
-  .steps-grid .card, .op-grid .card, .bn-grid .card, .aud-grid .card {
+  /* Hover lift en tarjetas */
+  .steps-grid .card, .quien__card {
     transition: box-shadow var(--dur-base) var(--ease-salir),
+                border-color var(--dur-base) var(--ease-salir),
                 transform var(--dur-base) var(--ease-salir);
   }
-  .steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover, .aud-grid .card:hover {
-    transform: translateY(-2px);
-  }
+  .steps-grid .card:hover, .quien__card:hover { transform: translateY(-2px); }
 }
-.steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover, .aud-grid .card:hover {
-  box-shadow: var(--shadow-md);
-}
-
+.steps-grid .card:hover { box-shadow: var(--shadow-md); }
 
 /* ===================================================================
    Responsive
@@ -1326,14 +1646,22 @@ select.form__input {
 @media (max-width: 980px) {
   /* minmax(0,1fr) y no 1fr: si no, las fichas con texto que no envuelve
      (patentes, documentos) estiran la columna y aparece scroll lateral. */
-  .op-grid { grid-template-columns: minmax(0, 1fr); }
-  .aud-grid { grid-template-columns: minmax(0, 1fr); }
   .socios-grid { grid-template-columns: minmax(0, 1fr); }
+  /* Hero: la escena pasa debajo del texto, centrada. */
+  .lp-hero { padding: 48px 0 60px; }
   .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  .lp-hero__title { font-size: 40px; }
-  .fs-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .lp-hero__title { font-size: 48px; }
+  .lp-hero__escena { justify-self: center; }
+  .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .steps-grid { grid-template-columns: minmax(0, 1fr); }
-  .bn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  /* Pasos y audiencias: una columna, sin estirarse de más en tablet. */
+  .pasos, .quien { grid-template-columns: minmax(0, 1fr); max-width: 480px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  /* En una columna cada paso entra solo al hacer scroll: no espera turno. */
+  .pasos > .paso:nth-child(n) { --paso-t: 150ms; }
 }
 @media (max-width: 860px) {
   .pricing__grid { grid-template-columns: minmax(0, 1fr); }
@@ -1372,31 +1700,35 @@ select.form__input {
   /* Gutter de celular: 16px a cada lado, como la app. */
   :root { --gutter: 16px; }
   /* Hero */
-  .lp-hero { padding: 40px 0 48px; }
-  .lp-hero__title { font-size: 32px; }
+  .lp-hero { padding: 32px 0 44px; }
+  .lp-hero__badge { font-size: 12px; padding: 6px 12px; }
+  .lp-hero__title { margin-top: 16px; font-size: 38px; }
   .lp-hero__nl { display: inline; }
-  .lp-hero__lead { margin-top: 16px; font-size: 17px; }
-  .lp-hero__actions { flex-direction: column; margin-top: 24px; }
+  .lp-hero__lead { margin-top: 14px; font-size: 17px; }
+  .lp-hero__actions { flex-direction: column; align-items: stretch; gap: 4px; margin-top: 24px; }
   .lp-hero__actions .btn { width: 100%; }
-  .lp-hero__trust { flex-direction: column; align-items: flex-start; gap: 10px; }
-  /* El número sube a su propia línea: al lado del texto no cabe sin
-     partirlo en dos renglones desalineados. */
-  .hero-conteo { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 22px; padding-top: 20px; }
-  .hero-conteo__num { font-size: 30px; }
+  .lp-hero__sec { justify-content: center; }
+  .lp-hero__micro { justify-content: center; margin-top: 8px; }
+  .lp-hero__grid { gap: 32px; }
+  .prueba__inner { padding: 18px var(--gutter); }
+  .prueba__num { font-size: 30px; }
+  .prueba__txt { font-size: 16px; }
   /* Índice del documento legal: a dos columnas los títulos se parten */
   .doc__toc-list { grid-template-columns: minmax(0, 1fr); }
   .doc__sec-title { font-size: 19px; }
 
   /* Secciones: mismo aire para todas, no solo para .section */
   .section { padding: 52px 0; }
-  .section__title, .fs-title { font-size: 27px; }
-  .section__lead, .fs-lead { margin-top: 12px; font-size: 16px; }
+  .section__title { font-size: 27px; }
+  .section__lead { margin-top: 12px; font-size: 16px; }
   .steps-grid { margin-top: 30px; }
-  .op-grid, .bn-grid { grid-template-columns: minmax(0, 1fr); margin-top: 28px; }
-  .aud { padding: 8px 0 48px; }
-  .aud-grid { margin-top: 28px; }
-  .steps-more { margin-top: 22px; }
-  .fs-list { margin-top: 20px; }
+  .pasos, .quien { margin-top: 28px; gap: 16px; }
+  .quien__card { padding: 20px; }
+  /* Beneficios en lista: ícono a la izquierda, texto a la derecha. */
+  .beneficios { grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 28px; }
+  .beneficio { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; }
+  .beneficio > .icon-chip { grid-row: 1 / span 2; }
+  .beneficio__title { margin-top: 0; align-self: center; }
   .card--p28 { padding: 22px; }
 
   /* CTA y FAQ tenían el padding de escritorio */
@@ -1431,7 +1763,6 @@ select.form__input {
   .form__input--corto { max-width: none; }
 
   /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
-  .step__llavero { height: 90px; }
   .hw-step__cols { flex-direction: column; align-items: stretch; gap: 14px; }
   .llavero--paso { width: 84px; align-self: center; }
   .llavero--included { width: 58px; top: 20px; right: 20px; }
@@ -1764,7 +2095,7 @@ select.form__input {
         <nav aria-label="Empresa">
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
-            <a href="/socios/" class="footer__link">Para empresas del rubro</a>
+            <a href="/socios/" class="footer__link">Socios</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
             <a href="/terminos/" class="footer__link">Términos y privacidad</a>

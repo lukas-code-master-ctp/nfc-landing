@@ -322,9 +322,12 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   background: var(--azul); color: #fff; text-decoration: none;
   font-size: 14px; font-weight: 600; padding: 12px 16px;
   border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
-  transition: top var(--dur-base) var(--ease-salir);
 }
 .skip-link:focus { top: 12px; }
+/* Con movimiento reducido aparece de golpe, sin deslizarse. */
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link { transition: top var(--dur-base) var(--ease-salir); }
+}
 
 .nav__inner {
   max-width: var(--contenedor); margin: 0 auto; padding: 10px var(--gutter);
@@ -370,8 +373,14 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .nav__burger-bar {
   position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px;
   background: currentColor;
-  transition: transform var(--dur-base) var(--ease-salir),
-              opacity var(--dur-base) var(--ease-salir);
+}
+/* La X se arma igual con movimiento reducido; lo que se saca es el giro
+   animado entre las dos formas. */
+@media (prefers-reduced-motion: no-preference) {
+  .nav__burger-bar {
+    transition: transform var(--dur-base) var(--ease-salir),
+                opacity var(--dur-base) var(--ease-salir);
+  }
 }
 .nav__burger-bar:nth-child(1) { top: 0; }
 .nav__burger-bar:nth-child(2) { top: 6px; }
@@ -520,22 +529,26 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 
 /* ===================================================================
-   Landing — Hero
+   Inicio — Hero
+   Texto a la izquierda y la escena "Tap" a la derecha (debajo en
+   celular). Una sola acción primaria: "Ver planes" es un enlace.
    =================================================================== */
-.lp-hero { padding: 76px 0 92px; }
+.lp-hero { padding: 64px 0 76px; }
 .lp-hero__grid {
   max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
-  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  gap: 56px; align-items: center;
 }
 .lp-hero__badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--azul-50); color: var(--azul); font-size: 12px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center;
+  background: var(--azul-50); color: var(--azul); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 7px 14px; border-radius: var(--radius-pill);
 }
 .lp-hero__title {
-  margin: 20px 0 0; font-size: 50px; line-height: 1.06; letter-spacing: -0.03em;
-  font-weight: 700; color: var(--tinta); text-wrap: balance;
+  margin: 20px 0 0; font-size: 58px; line-height: 1.04; letter-spacing: -0.035em;
+  font-weight: 700; color: var(--tinta);
 }
+.lp-hero__tap { color: var(--azul); }
 
 /* Palabra rotatoria del hero ("Tu flota/auto/moto a un Tap").
    El ancho lo anima el JS midiendo la palabra siguiente; el overflow
@@ -562,56 +575,380 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   .rotor { transition: none; }
   .rotor__word { transition: none; }
 }
-.lp-hero__lead { margin: 22px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); max-width: 480px; }
-.lp-hero__actions { display: flex; gap: 12px; margin-top: 30px; }
-.lp-hero__trust { display: flex; align-items: center; gap: 20px; margin-top: 24px; font-size: 13px; color: var(--acero); }
-.lp-trust { display: inline-flex; align-items: center; gap: 6px; }
-
-/* Conteo de vehículos (prueba social del hero).
-   Colgado de una hairline que corta al ancho del lead: separa el dato de
-   los checks sin agregar una caja más a una columna que ya tiene cinco
-   bloques. El número es la única pieza grande, así que se lee solo. */
-.hero-conteo {
-  display: flex; align-items: baseline; gap: 9px;
-  max-width: 480px; margin-top: 26px; padding-top: 22px;
-  border-top: 1px solid var(--linea);
+.lp-hero__lead {
+  margin: 20px 0 0; font-size: 19px; line-height: 1.5; color: var(--acero);
+  max-width: 440px; text-wrap: pretty;
 }
-.hero-conteo__num {
-  font-size: 27px; font-weight: 700; line-height: 1;
-  letter-spacing: -0.025em; color: var(--azul);
+.lp-hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; margin-top: 32px; }
+.lp-hero__sec {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 0 4px;
+  font-size: 16px; font-weight: 600; color: var(--azul); text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.lp-hero__sec:hover { text-decoration: underline; text-underline-offset: 4px; }
+.lp-hero__micro {
+  display: flex; align-items: center; gap: 6px; margin: 14px 0 0;
+  font-size: 14px; color: var(--acero);
+}
+.lp-hero__micro svg { flex: 0 0 auto; color: var(--vigente-texto); }
+.lp-hero__escena { width: min(460px, 100%); justify-self: end; }
+
+/* Prueba social: una franja angosta bajo el hero. El número es la única
+   pieza grande, así que se lee solo. */
+.prueba { background: var(--superficie); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+.prueba__inner {
+  max-width: var(--contenedor); margin: 0 auto; padding: 22px var(--gutter);
+  display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 12px;
+  text-align: center;
+}
+.prueba__num {
+  font-size: 34px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--azul);
   /* Cifras de ancho fijo: sin esto el texto de al lado se corre en cada
      paso de la animación. */
   font-variant-numeric: tabular-nums;
 }
-.hero-conteo__txt { font-size: 14px; line-height: 1.45; color: var(--acero); }
+.prueba__txt { font-size: 17px; font-weight: 500; color: var(--acero); }
 
-/* Ficha preview (hero card) */
-.ficha-preview { position: relative; }
-.ficha-preview__tag {
-  position: absolute; top: -14px; right: 14px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 7px;
-  background: var(--tinta); color: #fff; font-size: 12px; font-weight: 600;
-  padding: 7px 12px; border-radius: var(--radius-pill); box-shadow: var(--shadow-lg);
+/* <escena-tap> ════════════════════════════════════════════════════════
+   Escena "Tap" del hero. Autónoma: todo con prefijo `tap-`.
+
+   Escala: el lienzo se dibuja en un espacio de 400 × 430 unidades y
+   1em = 10 unidades. El tamaño de letra del lienzo sale del ancho del
+   contenedor (`100cqw / 40`), así que TODO (celular, llavero, textos,
+   bordes) se achica junto, sin JS y sin saltos de layout: el alto lo
+   reserva `aspect-ratio`. A 460 px de ancho 1 unidad = 1,15 px (el texto
+   más chico de la pantalla, 10u, queda en 11,5 px).
+
+   Movimiento: el estado BASE de cada pieza es el estado FINAL (ficha
+   abierta, tres filas, llavero junto al celular). Las animaciones viven
+   solo dentro de `prefers-reduced-motion: no-preference`, así que con
+   movimiento reducido o sin soporte de animación se ve la escena
+   terminada y quieta. Solo `transform` y `opacity`.
+
+   Ciclo de 6 s (1 s = 16,67 %):
+     0,2 → 1,0 s  el llavero entra y toca (rebote al 0,84 s)
+     1,0 → 1,5 s  ping + ondas NFC
+     1,3 → 1,8 s  se abre la ficha: encabezado, placa, modelo
+     1,75 s       "Documentación · 1 por vencer"
+     2,1 / 2,35 / 2,6 s  las tres filas; cada pill aparece 0,3 s después
+     ~3,2 → 4,9 s todo quieto (pausa de lectura)
+     4,9 → 5,4 s  se desvanece (llavero se retira); vuelve el reposo
+ ═════════════════════════════════════════════════════════════════════ */
+.tap-escena {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 400 / 430;
+  pointer-events: none;
+  user-select: none;
 }
-.ficha-card {
-  background: var(--superficie); border: 1px solid var(--linea);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden;
+.tap-lienzo {
+  position: absolute;
+  inset: 0;
+  font-size: 11.5px;               /* respaldo sin container queries */
+  font-size: calc(100cqw / 40);    /* 1em = 10 unidades del lienzo */
+  font-family: var(--font-sans, 'Geist', system-ui, sans-serif);
+  color: var(--tinta, #16191f);
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
 }
-.ficha-card__head {
-  padding: 16px 18px; display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--linea);
+
+/* Halo de fondo, quieto. */
+.tap-halo {
+  position: absolute;
+  left: 1.5em; top: 6em;
+  width: 34em; height: 34em;
+  border-radius: 50%;
+  background: var(--azul-50, #eef2fe);
 }
-.ficha-card__head-label {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--acero);
+
+/* ── Celular ─────────────────────────────────────────────────────── */
+.tap-celular {
+  position: absolute;
+  left: 15em; top: .8em;
+  width: 24em; height: 41.4em;
+  border: .6em solid var(--tinta, #16191f);
+  border-radius: 3.8em;
+  background: var(--tinta, #16191f);
+  box-shadow:
+    0 2.4em 4em -1.6em rgb(22 25 31 / .28),
+    0 .6em 1.4em -.6em rgb(22 25 31 / .18);
 }
-.ficha-card__readonly { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--acero); }
-.ficha-card__body { background: var(--lienzo); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-.ficha-card__section {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--acero); margin: 4px 2px 0;
+.tap-pantalla {
+  position: absolute;
+  inset: 0;
+  border-radius: 3.2em;
+  overflow: hidden;
+  background: var(--lienzo, #f6f7f9);
 }
-.ficha-card__docs { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tap-isla {
+  position: absolute;
+  left: 50%; top: .8em;
+  width: 6.6em; height: 1.9em;
+  margin-left: -3.3em;
+  border-radius: 1em;
+  background: var(--tinta, #16191f);
+  z-index: 3;
+}
+.tap-barra-estado {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 3.5em;
+  padding: 0 2em 0 2.3em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--tinta, #16191f);
+  z-index: 2;
+}
+.tap-barra-estado svg { width: 3.6em; height: 1.1em; display: block; }
+.tap-indicador {
+  position: absolute;
+  left: 50%; bottom: .7em;
+  width: 8em; height: .45em;
+  margin-left: -4em;
+  border-radius: 1em;
+  background: var(--tinta, #16191f);
+  opacity: .85;
+  z-index: 2;
+}
+
+/* Reposo: lo que muestra el celular antes del tap. Queda DEBAJO de la
+   ficha, que es opaca: en el estado final no se ve. */
+.tap-reposo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  color: var(--acero, #5b6573);
+}
+.tap-reposo svg { width: 4.4em; height: 4.4em; display: block; color: var(--azul, #2952e6); }
+.tap-reposo p { margin: 0; font-size: 1.2em; font-weight: 500; text-align: center; line-height: 1.35; }
+
+/* ── Ficha pública ───────────────────────────────────────────────── */
+.tap-ficha {
+  position: absolute;
+  inset: 0;
+  padding: 3.9em 1.2em 2em;
+  background: var(--lienzo, #f6f7f9);
+  display: flex;
+  flex-direction: column;
+}
+.tap-cabecera { display: flex; flex-direction: column; align-items: flex-start; gap: .5em; }
+.tap-lockup { display: inline-flex; align-items: center; gap: .55em; }
+.tap-lockup svg { width: 2.4em; height: 2.4em; display: block; }
+.tap-marca { font-size: 1.55em; font-weight: 700; letter-spacing: -.025em; line-height: 1; }
+.tap-marca b { font-weight: 700; color: var(--azul, #2952e6); }
+.tap-rotulo {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--acero, #5b6573);
+}
+.tap-vehiculo {
+  margin-top: 1.1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .55em;
+}
+/* La patente como mini placa chilena (`components/ui/Placa.tsx`). */
+.tap-placa {
+  display: inline-flex;
+  align-items: center;
+  gap: .32em;
+  padding: .38em .62em;
+  border: .11em solid var(--tinta, #16191f);
+  border-radius: .4em;
+  background: var(--superficie, #fff);
+  box-shadow: inset 0 0 0 .11em var(--superficie, #fff), inset 0 0 0 .16em var(--linea, #e3e6ea);
+  font-family: var(--font-mono, 'Geist Mono', ui-monospace, monospace);
+  font-size: 1.85em;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+  color: var(--tinta, #16191f);
+  white-space: nowrap;
+}
+.tap-placa i { font-style: normal; font-weight: 400; letter-spacing: 0; color: var(--acero, #5b6573); }
+.tap-modelo { margin: 0; font-size: 1.3em; font-weight: 500; color: var(--acero, #5b6573); }
+
+.tap-resumen {
+  margin-top: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6em;
+  padding: 0 .2em;
+}
+.tap-resumen .tap-rotulo { font-size: 1.05em; }
+
+.tap-docs { list-style: none; margin: .65em 0 0; padding: 0; display: flex; flex-direction: column; gap: .5em; }
+.tap-doc {
+  display: flex;
+  flex-direction: column;
+  gap: .4em;
+  padding: .8em .9em .8em 1em;
+  border: .1em solid var(--linea, #e3e6ea);
+  border-radius: 1.2em;
+  background: var(--superficie, #fff);
+  box-shadow: 0 .1em .2em rgb(22 25 31 / .05);
+}
+.tap-doc__nombre { margin: 0; font-size: 1.3em; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.tap-doc__pie { display: flex; align-items: center; justify-content: space-between; gap: .6em; }
+.tap-doc__fecha { font-size: 1.05em; color: var(--acero, #5b6573); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Pill de estado (`StatusBadge`): color + ícono + texto, nunca solo color. */
+.tap-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  height: 2em;
+  padding: 0 .7em 0 .5em;
+  border-radius: 99em;
+  font-size: 1em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tap-pill svg { width: 1.1em; height: 1.1em; display: block; flex-shrink: 0; }
+.tap-pill--vigente { background: var(--vigente-suave, #e7f6ec); color: var(--vigente-texto, #157a3a); }
+.tap-pill--por-vencer { background: var(--por-vencer-suave, #fdf1dc); color: var(--por-vencer-texto, #a8500a); }
+
+/* ── Llavero NFC (`components/brand/Llavero.tsx`) ────────────────── */
+.tap-llavero {
+  position: absolute;
+  left: 3em; top: 19.4em;
+  width: 7.4em; height: 10.2em;
+  transform: rotate(-8deg);
+  transform-origin: 50% 12%;
+  filter: drop-shadow(0 .8em 1em rgb(22 25 31 / .22));
+}
+.tap-llavero svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* Ondas NFC entre el llavero y el celular. */
+.tap-ondas {
+  position: absolute;
+  left: 10em; top: 21.6em;
+  width: 4.2em; height: 6.4em;
+  overflow: visible;
+  color: var(--azul, #2952e6);
+}
+.tap-ondas path { transform-box: fill-box; transform-origin: 0% 50%; }
+.tap-ondas path:nth-child(2) { opacity: .7; }
+.tap-ondas path:nth-child(3) { opacity: .45; }
+/* Ping del contacto: invisible en reposo (no es parte del estado final). */
+.tap-ping {
+  position: absolute;
+  left: 11.4em; top: 21.3em;
+  width: 7.2em; height: 7.2em;
+  border-radius: 50%;
+  border: .2em solid var(--azul, #2952e6);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tap-escena * { animation-duration: 6s; animation-iteration-count: infinite; animation-timing-function: var(--ease-salir, cubic-bezier(.2, .8, .2, 1)); animation-fill-mode: backwards; }
+  .tap-escena.tap-pausada * { animation-play-state: paused; }
+
+  .tap-llavero { animation-name: tap-llavero; }
+  .tap-ping { animation-name: tap-ping; }
+  .tap-ondas path { animation-name: tap-onda; }
+  .tap-ondas path:nth-child(2) { animation-name: tap-onda-2; animation-delay: .1s; }
+  .tap-ondas path:nth-child(3) { animation-name: tap-onda-3; animation-delay: .2s; }
+  .tap-reposo { animation-name: tap-reposo; }
+  .tap-ficha { animation-name: tap-ficha; }
+  /* Las piezas de la ficha comparten un keyframe (entra a los 1,3 s) y se
+     escalonan con `animation-delay`. Es seguro en bucle porque el 0 % y el
+     100 % del keyframe son el mismo estado oculto, y la ficha (su padre)
+     ya está en opacidad 0 cuando cada una vuelve a ocultarse. */
+  .tap-cabecera { animation-name: tap-sube; }
+  .tap-placa { animation-name: tap-placa; animation-delay: .15s; }
+  .tap-modelo { animation-name: tap-sube; animation-delay: .25s; }
+  .tap-resumen { animation-name: tap-sube; animation-delay: .45s; }
+  .tap-resumen .tap-pill { animation-name: tap-pop; animation-delay: .7s; }
+  .tap-doc:nth-child(1) { animation-name: tap-sube; animation-delay: .8s; }
+  .tap-doc:nth-child(2) { animation-name: tap-sube; animation-delay: 1.05s; }
+  .tap-doc:nth-child(3) { animation-name: tap-sube; animation-delay: 1.3s; }
+  .tap-doc:nth-child(1) .tap-pill { animation-name: tap-pop; animation-delay: 1.1s; }
+  .tap-doc:nth-child(2) .tap-pill { animation-name: tap-pop; animation-delay: 1.35s; }
+  .tap-doc:nth-child(3) .tap-pill { animation-name: tap-pop; animation-delay: 1.6s; }
+}
+
+/* El llavero entra inclinado desde la izquierda y TOCA el borde del
+   celular (0,78 s, con un rebote corto como en `tc-tocar`, que se lee como
+   contacto); de ahí se aparta a su lugar de reposo (1,56 s) dejando a la
+   vista las ondas que nacieron en el contacto. Al final se retira con
+   `ease-entrar` (lo que sale acelera). */
+@keyframes tap-llavero {
+  0%, 3.3% { opacity: 0; transform: translateX(-4em) rotate(-22deg); }
+  13% { opacity: 1; transform: translateX(5.9em) rotate(2deg); }
+  16.7% { opacity: 1; transform: translateX(5.3em) rotate(0deg); }
+  26% { opacity: 1; transform: translateX(0) rotate(-8deg); }
+  81.7% { opacity: 1; transform: translateX(0) rotate(-8deg); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  90%, 100% { opacity: 0; transform: translateX(-3em) rotate(-16deg); }
+}
+@keyframes tap-ping {
+  0%, 16% { opacity: 0; transform: scale(.4); }
+  17% { opacity: .55; transform: scale(.5); }
+  30%, 100% { opacity: 0; transform: scale(1.7); }
+}
+@keyframes tap-onda {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: 1; transform: scale(1); }
+  81.7% { opacity: 1; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-onda-2 {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: .7; transform: scale(1); }
+  81.7% { opacity: .7; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-onda-3 {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: .45; transform: scale(1); }
+  81.7% { opacity: .45; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-reposo {
+  0%, 19% { opacity: 1; transform: none; }
+  23%, 92% { opacity: 0; transform: scale(.96); }
+  98%, 100% { opacity: 1; transform: none; }
+}
+@keyframes tap-ficha {
+  0%, 21.7% { opacity: 0; }
+  25% { opacity: 1; }
+  81.7% { opacity: 1; animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  90%, 100% { opacity: 0; }
+}
+@keyframes tap-sube {
+  0%, 21.7% { opacity: 0; transform: translateY(1em); }
+  28.4% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: translateY(1em); }
+}
+@keyframes tap-placa {
+  0%, 21.7% { opacity: 0; transform: translateY(.6em) scale(.92); }
+  29% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: translateY(.6em) scale(.92); }
+}
+/* La pill «marca» (como `tc-marcar`): aparece chica, se pasa y vuelve. */
+@keyframes tap-pop {
+  0%, 21.7% { opacity: 0; transform: scale(.5); }
+  25.5% { opacity: 1; transform: scale(1.1); }
+  28.5% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: scale(.5); }
+}
+/* </escena-tap> */
 
 /* ===================================================================
    Landing — Cómo funciona (pasos)
@@ -624,35 +961,47 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .step__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
-   Landing — Beneficios
+   Inicio — Así de simple, ¿Para quién es? y beneficios
    =================================================================== */
-.bn-head { max-width: 620px; }
-.bn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
-.bn-card__title { margin: 16px 0 0; font-size: 17px; font-weight: 600; }
-.bn-card__text { margin: 7px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
-.bn-badges { display: flex; gap: 6px; margin-top: 12px; }
-
-/* ===================================================================
-   Landing — Ficha showcase
-   =================================================================== */
-.fs-grid {
-  max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+.pasos {
+  list-style: none; margin: 48px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;
 }
-.fs-title { margin: 12px 0 0; font-size: 34px; line-height: 1.15; letter-spacing: -0.025em; font-weight: 700; }
-.fs-lead { margin: 16px 0 0; font-size: 17px; line-height: 1.55; color: var(--acero); }
-.fs-list { margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
-.fs-list__item { display: flex; gap: 12px; align-items: flex-start; }
-.fs-list__check { flex: 0 0 auto; margin-top: 1px; }
-.fs-list__text { font-size: 15px; line-height: 1.5; color: var(--tinta); }
-.fs-list__text strong { font-weight: 600; }
-.fs-list__text .muted { color: var(--acero); }
-.fs-panel { background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-lg); padding: 18px; }
-.fs-panel__head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 14px; }
-.fs-panel__url { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--acero); }
-.fs-panel__readonly { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--acero); }
-.fs-panel__body { display: flex; flex-direction: column; gap: 10px; }
-.fs-panel__docs { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.paso { padding: 16px 16px 24px; }
+.paso__ilus {
+  display: block; width: 100%; height: auto; aspect-ratio: 240 / 140;
+  background: var(--azul-50); border-radius: var(--radius-md);
+}
+.paso__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; margin: 20px 0 0 4px; border-radius: var(--radius-pill);
+  background: var(--tinta); color: #fff; font-size: 13px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.paso__title { margin: 12px 4px 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.paso__text { margin: 6px 4px 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+
+.quien { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 44px; }
+.quien__card { display: flex; flex-direction: column; padding: 24px; }
+.quien__title { margin: 16px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.quien__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.quien__link {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 18px;
+  font-size: 15px; font-weight: 600; color: var(--azul);
+}
+.quien__card:hover .quien__link { text-decoration: underline; text-underline-offset: 4px; }
+
+.beneficios {
+  /* La segunda columna es más ancha: lleva las tres pills en una fila. */
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 28px; margin-top: 48px;
+}
+.beneficio { display: block; color: inherit; text-decoration: none; border-radius: var(--radius-md); }
+.beneficio__title { margin: 14px 0 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.beneficio__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.beneficio__badges { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.beneficio__mas { display: block; margin-top: 4px; font-weight: 600; color: var(--azul); }
+.beneficio--link:hover .beneficio__mas { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ===================================================================
    Planes — Hero
@@ -764,10 +1113,14 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   -webkit-appearance: none; width: 22px; height: 22px; margin-top: -7px; border-radius: 50%;
   background: var(--azul); border: 4px solid #fff;
   box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
-  transition: transform var(--dur-base) var(--ease-salir);
 }
-.calc__slider:hover::-webkit-slider-thumb { transform: scale(1.1); }
-.calc__slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--azul-50), var(--shadow-md); }
+@media (prefers-reduced-motion: no-preference) {
+  .calc__slider::-webkit-slider-thumb { transition: transform var(--dur-base) var(--ease-salir); }
+  .calc__slider:hover::-webkit-slider-thumb { transform: scale(1.1); }
+}
+/* Foco: anillo azul por fuera del borde blanco del thumb (pasa 3:1 sobre
+   blanco). El halo azul-50 de antes casi no se veía. */
+.calc__slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__slider::-moz-range-track { height: 8px; border-radius: var(--radius-pill); background: #e8eaee; }
 .calc__slider::-moz-range-progress { height: 8px; border-radius: var(--radius-pill); background: var(--azul); }
 .calc__slider::-moz-range-thumb {
@@ -775,7 +1128,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   background: var(--azul); border: 4px solid #fff;
   box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
 }
-.calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(--azul-50), var(--shadow-md); }
+.calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--acero); margin-top: 10px; }
 .calc__divider { margin: 28px 0; height: 1px; background: var(--linea); }
 .calc__formula { font-size: 14px; color: var(--acero); }
@@ -859,19 +1212,10 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .faq__a { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
-   Landing — Un toque, toda la operación (bloque estrella)
+   Tarjetas de texto (¿Es legal?)
    =================================================================== */
-.op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
 .op-card__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
 .op-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
-
-/* Landing — Ficha: pestañas del menú (Tomar/Entregar · Documentos · Información) */
-.fs-tabs { display: flex; gap: 6px; padding: 0 4px 14px; flex-wrap: wrap; }
-.fs-tab {
-  font-size: 13px; font-weight: 600; color: var(--acero);
-  padding: 6px 12px; border-radius: var(--radius-pill); background: transparent;
-}
-.fs-tab.is-active { background: var(--azul); color: #fff; }
 
 /* Planes — Analogía de precio ("menos que un café") */
 .calc__cafe {
@@ -1130,17 +1474,14 @@ select.form__input {
 .hw-aside__link:hover { text-decoration: underline; }
 
 /* ===================================================================
-   Landing — ¿Para quién es? (personal / flota)
+   Tarjetas de audiencia (Socios) y etiqueta de plan
    =================================================================== */
-.aud { padding: 24px 0 76px; }
-.aud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
 .aud-card { display: flex; flex-direction: column; }
 .aud-card__title { margin: 16px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
 .aud-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .aud-card__list { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .aud-card__item { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--tinta); }
 .aud-card__check { flex: 0 0 auto; margin-top: 2px; }
-.aud-card__foot { margin-top: auto; padding-top: 20px; }
 .aud-card__link {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
@@ -1172,7 +1513,6 @@ select.form__input {
 .rubro__title { margin: 8px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
 .rubro__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .rubro__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-.rubro__tipos { display: flex; flex-wrap: wrap; gap: 8px; }
 /* Planes — la franja del rubro explica cada perfil en una línea. */
 .rubro-banda { max-width: var(--contenedor); margin: 24px auto 0; padding: 0 var(--gutter); }
 .rubro-banda .rubro { margin-top: 0; }
@@ -1227,9 +1567,6 @@ select.form__input {
    =================================================================== */
 .llavero { display: block; filter: drop-shadow(0 10px 18px rgba(22, 25, 31, 0.16)); }
 
-/* Home — paso 02: foto centrada bajo el texto de la card */
-.step__llavero { height: 108px; width: auto; margin: 18px auto 0; }
-
 /* Cómo funciona — paso 04: texto a la izquierda, foto a la derecha */
 .hw-step__cols { display: flex; align-items: center; gap: 20px; }
 .hw-step__cols > div { min-width: 0; flex: 1; }
@@ -1240,76 +1577,59 @@ select.form__input {
 .llavero--included { position: absolute; top: 26px; right: 30px; width: 76px; height: auto; transform: rotate(8deg); }
 .included--con-llavero .included__lead { padding-right: 92px; }
 
-/* Enlace "ver el paso a paso" bajo los pasos de la home */
-.steps-more { margin-top: 28px; text-align: center; }
-.steps-more__link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 15px; font-weight: 600; color: var(--azul); text-decoration: none;
-}
-.steps-more__link:hover { text-decoration: underline; }
-
 /* ===================================================================
-   Animaciones (home)
+   Animaciones (inicio)
    Todas bajo `prefers-reduced-motion: no-preference` y con el estado
    base como estado final: con movimiento reducido se ve todo armado y
    quieto. Solo transform y opacity.
+
+   Mini escenas de "Así de simple": se animan UNA vez, cuando el patrón
+   de aparición le pone `.is-visible` al paso. En escritorio los tres
+   pasos entran juntos, así que cada uno espera su turno (`--paso-t`):
+   nunca hay más de dos piezas moviéndose a la vez. En una columna cada
+   paso entra solo al hacer scroll y no espera.
    =================================================================== */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-9px); }
+.paso__ilus .i-cae, .paso__ilus .i-pop, .paso__ilus .i-onda,
+.paso__ilus .i-sube, .paso__ilus .i-ping { transform-box: fill-box; transform-origin: 50% 50%; }
+.paso__ilus .i-onda { transform-origin: 0% 50%; }
+@keyframes i-cae { from { opacity: 0; transform: translateY(-30px); } }
+@keyframes i-pop {
+  0% { opacity: 0; transform: scale(0.4); }
+  70% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: none; }
 }
-@keyframes ping-nfc {
-  0%   { transform: scale(1);    opacity: 0.55; }
-  70%  { transform: scale(1.55); opacity: 0; }
-  100% { transform: scale(1.55); opacity: 0; }
-}
-@keyframes wave-nfc {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 1; }
+@keyframes i-onda { from { opacity: 0; transform: scale(0.6); } }
+@keyframes i-sube { from { opacity: 0; transform: translateY(10px); } }
+/* El anillo del toque: su estado base es invisible (opacity 0 en el SVG),
+   así que con movimiento reducido simplemente no está. */
+@keyframes i-ping {
+  0% { opacity: 0.7; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(1.5); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Hero: entrada en cascada con el mismo `aparecer` del scroll. */
-  .lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
-  .hero-conteo {
-    animation: aparecer var(--dur-lenta) var(--ease-salir) backwards;
+  .paso { --paso-t: 150ms; }
+  .pasos > .paso:nth-child(2) { --paso-t: 850ms; }
+  .pasos > .paso:nth-child(3) { --paso-t: 1550ms; }
+  .paso.is-visible .i-cae  { animation: i-cae 560ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-pop  { animation: i-pop 420ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-onda { animation: i-onda 360ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-sube { animation: i-sube 360ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-ping { animation: i-ping 900ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-cae, .paso.is-visible .i-pop, .paso.is-visible .i-onda,
+  .paso.is-visible .i-sube, .paso.is-visible .i-ping {
+    animation-delay: calc(var(--paso-t) + var(--d, 0ms));
   }
-  .lp-hero__title   { animation-delay: 40ms; }
-  .lp-hero__lead    { animation-delay: 80ms; }
-  .lp-hero__actions { animation-delay: 120ms; }
-  .lp-hero__trust   { animation-delay: 160ms; }
-  .hero-conteo      { animation-delay: 200ms; }
 
-  /* Ficha del hero: entra, luego flota; el tag emite ondas NFC. */
-  .ficha-preview {
-    animation: aparecer var(--dur-lenta) var(--ease-salir) 120ms backwards,
-               float 7s ease-in-out 1.4s infinite;
-  }
-  .ficha-preview__tag::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 2px solid var(--azul);
-    animation: ping-nfc 2.6s var(--ease-salir) 1.6s infinite;
-    pointer-events: none;
-  }
-  .ficha-preview__tag svg path { animation: wave-nfc 2.6s ease-in-out 1.6s infinite; }
-  .ficha-preview__tag svg path:last-child { animation-delay: 1.9s; }
-
-  /* Hover lift en tarjetas de la home */
-  .steps-grid .card, .op-grid .card, .bn-grid .card, .aud-grid .card {
+  /* Hover lift en tarjetas */
+  .steps-grid .card, .quien__card {
     transition: box-shadow var(--dur-base) var(--ease-salir),
+                border-color var(--dur-base) var(--ease-salir),
                 transform var(--dur-base) var(--ease-salir);
   }
-  .steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover, .aud-grid .card:hover {
-    transform: translateY(-2px);
-  }
+  .steps-grid .card:hover, .quien__card:hover { transform: translateY(-2px); }
 }
-.steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover, .aud-grid .card:hover {
-  box-shadow: var(--shadow-md);
-}
-
+.steps-grid .card:hover { box-shadow: var(--shadow-md); }
 
 /* ===================================================================
    Responsive
@@ -1326,14 +1646,22 @@ select.form__input {
 @media (max-width: 980px) {
   /* minmax(0,1fr) y no 1fr: si no, las fichas con texto que no envuelve
      (patentes, documentos) estiran la columna y aparece scroll lateral. */
-  .op-grid { grid-template-columns: minmax(0, 1fr); }
-  .aud-grid { grid-template-columns: minmax(0, 1fr); }
   .socios-grid { grid-template-columns: minmax(0, 1fr); }
+  /* Hero: la escena pasa debajo del texto, centrada. */
+  .lp-hero { padding: 48px 0 60px; }
   .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  .lp-hero__title { font-size: 40px; }
-  .fs-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .lp-hero__title { font-size: 48px; }
+  .lp-hero__escena { justify-self: center; }
+  .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .steps-grid { grid-template-columns: minmax(0, 1fr); }
-  .bn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  /* Pasos y audiencias: una columna, sin estirarse de más en tablet. */
+  .pasos, .quien { grid-template-columns: minmax(0, 1fr); max-width: 480px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  /* En una columna cada paso entra solo al hacer scroll: no espera turno. */
+  .pasos > .paso:nth-child(n) { --paso-t: 150ms; }
 }
 @media (max-width: 860px) {
   .pricing__grid { grid-template-columns: minmax(0, 1fr); }
@@ -1372,31 +1700,35 @@ select.form__input {
   /* Gutter de celular: 16px a cada lado, como la app. */
   :root { --gutter: 16px; }
   /* Hero */
-  .lp-hero { padding: 40px 0 48px; }
-  .lp-hero__title { font-size: 32px; }
+  .lp-hero { padding: 32px 0 44px; }
+  .lp-hero__badge { font-size: 12px; padding: 6px 12px; }
+  .lp-hero__title { margin-top: 16px; font-size: 38px; }
   .lp-hero__nl { display: inline; }
-  .lp-hero__lead { margin-top: 16px; font-size: 17px; }
-  .lp-hero__actions { flex-direction: column; margin-top: 24px; }
+  .lp-hero__lead { margin-top: 14px; font-size: 17px; }
+  .lp-hero__actions { flex-direction: column; align-items: stretch; gap: 4px; margin-top: 24px; }
   .lp-hero__actions .btn { width: 100%; }
-  .lp-hero__trust { flex-direction: column; align-items: flex-start; gap: 10px; }
-  /* El número sube a su propia línea: al lado del texto no cabe sin
-     partirlo en dos renglones desalineados. */
-  .hero-conteo { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 22px; padding-top: 20px; }
-  .hero-conteo__num { font-size: 30px; }
+  .lp-hero__sec { justify-content: center; }
+  .lp-hero__micro { justify-content: center; margin-top: 8px; }
+  .lp-hero__grid { gap: 32px; }
+  .prueba__inner { padding: 18px var(--gutter); }
+  .prueba__num { font-size: 30px; }
+  .prueba__txt { font-size: 16px; }
   /* Índice del documento legal: a dos columnas los títulos se parten */
   .doc__toc-list { grid-template-columns: minmax(0, 1fr); }
   .doc__sec-title { font-size: 19px; }
 
   /* Secciones: mismo aire para todas, no solo para .section */
   .section { padding: 52px 0; }
-  .section__title, .fs-title { font-size: 27px; }
-  .section__lead, .fs-lead { margin-top: 12px; font-size: 16px; }
+  .section__title { font-size: 27px; }
+  .section__lead { margin-top: 12px; font-size: 16px; }
   .steps-grid { margin-top: 30px; }
-  .op-grid, .bn-grid { grid-template-columns: minmax(0, 1fr); margin-top: 28px; }
-  .aud { padding: 8px 0 48px; }
-  .aud-grid { margin-top: 28px; }
-  .steps-more { margin-top: 22px; }
-  .fs-list { margin-top: 20px; }
+  .pasos, .quien { margin-top: 28px; gap: 16px; }
+  .quien__card { padding: 20px; }
+  /* Beneficios en lista: ícono a la izquierda, texto a la derecha. */
+  .beneficios { grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 28px; }
+  .beneficio { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; }
+  .beneficio > .icon-chip { grid-row: 1 / span 2; }
+  .beneficio__title { margin-top: 0; align-self: center; }
   .card--p28 { padding: 22px; }
 
   /* CTA y FAQ tenían el padding de escritorio */
@@ -1431,7 +1763,6 @@ select.form__input {
   .form__input--corto { max-width: none; }
 
   /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
-  .step__llavero { height: 90px; }
   .hw-step__cols { flex-direction: column; align-items: stretch; gap: 14px; }
   .llavero--paso { width: 84px; align-self: center; }
   .llavero--included { width: 58px; top: 20px; right: 20px; }
@@ -1734,456 +2065,325 @@ select.form__input {
   <!-- ============ HERO ============ -->
   <section class="lp-hero">
     <div class="lp-hero__grid">
-      <div>
-        <div class="lp-hero__badge">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-          Para autos, motos y flotas
-        </div>
-        <h1 class="lp-hero__title" aria-label="Tus vehículos a un Tap."><span aria-hidden="true">Tu <span class="rotor" data-rotor><span class="rotor__word">vehículo</span></span><br class="lp-hero__nl"> a un <span style="color:var(--azul);">Tap</span>.</span></h1>
-        <p class="lp-hero__lead">Opera todos tus vehículos con un toque: documentos, mantenciones y, en flotas, quién usa cada uno y en qué estado lo entrega. La fiscalización en ruta es solo una de las cosas que resuelve.</p>
+      <div class="lp-hero__texto">
+        <span class="lp-hero__badge">Gratis con 1 auto</span>
+        <h1 class="lp-hero__title" aria-label="Tus vehículos a un Tap."><span aria-hidden="true">Tu <span class="rotor" data-rotor><span class="rotor__word">vehículo</span></span><br class="lp-hero__nl"> a un <span class="lp-hero__tap">Tap</span>.</span></h1>
+        <p class="lp-hero__lead">Acerca el celular al chip y muestra los documentos del auto en cualquier control.</p>
         <div class="lp-hero__actions">
-          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
-          <a href="/planes/" class="btn btn--secondary btn--lg">Ver planes</a>
+          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
+          <a href="/planes/" class="lp-hero__sec">Ver planes
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
-        <div class="lp-hero__trust">
-          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin apps que instalar</span>
-          <span class="lp-trust"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Desde un auto hasta una flota completa</span>
-        </div>
-
-        <!-- Conteo de vehículos. Para actualizarlo, cambia la cifra en
-             data-valor y en el texto del span (las dos, porque sin JS se
-             muestra el texto tal cual). data-prefijo es lo que va pegado
-             delante del número; el punto de miles lo pone el script solo
-             al pasar de 999.
-             Última medición: +600, el 2026-09-24. -->
-        <p class="hero-conteo">
-          <span class="hero-conteo__num" data-conteo data-valor="600" data-prefijo="+">+600</span>
-          <span class="hero-conteo__txt">vehículos ya operan con un Tap</span>
-        </p>
+        <p class="lp-hero__micro"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin apps que instalar</p>
       </div>
 
-      <!-- ficha preview -->
-      <div class="ficha-preview">
-        <div class="ficha-preview__tag">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6f93ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-          Abierto con un toque
-        </div>
-        <div class="ficha-card">
-          <div class="ficha-card__head">
-            <span class="ficha-card__head-label">Ficha pública</span>
-            <span class="ficha-card__readonly"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Solo lectura</span>
-          </div>
-          <div class="ficha-card__body">
-            <!-- VehicleCard -->
-            <div class="vehicle-card">
-              <span class="icon-chip">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
-              </span>
-              <span class="vehicle-card__body">
-                <p class="vehicle-card__title">Toyota Hilux · GJ KP 47</p>
-                <p class="vehicle-card__meta">Documentación · 4 archivos</p>
-              </span>
-              <span class="badge badge--al_dia">Al día</span>
+      <!-- Escena "Tap": decorativa (aria-hidden); el subtítulo ya dice lo
+           mismo en texto. Con movimiento reducido se ve la ficha completa
+           y quieta. Se pausa fuera de pantalla (script del final). -->
+      <div class="lp-hero__escena">
+        <!-- <escena-tap> ════════════════════════════════════════════════════════ -->
+        <div class="tap-escena" aria-hidden="true">
+          <div class="tap-lienzo">
+            <div class="tap-halo"></div>
+
+            <div class="tap-celular">
+              <div class="tap-pantalla">
+                <div class="tap-isla"></div>
+                <div class="tap-barra-estado">
+                  <span>9:41</span>
+                  <svg viewBox="0 0 36 11" fill="currentColor">
+                    <rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/>
+                    <rect x="21" y=".5" width="13" height="10" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><rect x="22.8" y="2.3" width="8.4" height="6.4" rx="1.4"/><rect x="34.6" y="3.8" width="1.4" height="3.4" rx=".7" opacity=".5"/>
+                  </svg>
+                </div>
+
+                <div class="tap-reposo">
+                  <!-- Lucide "smartphone-nfc" -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="7" height="12" x="2" y="6" rx="1"/><path d="M13 8.32a7.43 7.43 0 0 1 0 7.36"/><path d="M16.46 6.21a11.76 11.76 0 0 1 0 11.58"/><path d="M19.91 4.1a15.91 15.91 0 0 1 .01 15.8"/>
+                  </svg>
+                  <p>Acerca el celular<br>al chip</p>
+                </div>
+
+                <div class="tap-ficha">
+                  <div class="tap-cabecera">
+                    <span class="tap-lockup">
+                      <!-- Isotipo (`components/brand/Logo.tsx`) -->
+                      <svg viewBox="0 0 72 72" fill="none">
+                        <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none">
+                          <path d="M44 22 A 14 14 0 0 1 58 36"/>
+                          <path d="M44 14 A 22 22 0 0 1 66 36"/>
+                        </g>
+                        <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
+                        <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#ffffff"/>
+                        <path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#ffffff"/>
+                        <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#ffffff"/>
+                        <circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#ffffff"/>
+                      </svg>
+                      <span class="tap-marca">Tap<b>Car</b></span>
+                    </span>
+                    <p class="tap-rotulo">Ficha pública · Solo lectura</p>
+                  </div>
+
+                  <div class="tap-vehiculo">
+                    <span class="tap-placa"><span>GJ</span><i>·</i><span>KP</span><i>·</i><span>47</span></span>
+                    <p class="tap-modelo">Toyota Hilux · 2022</p>
+                  </div>
+
+                  <div class="tap-resumen">
+                    <span class="tap-rotulo">Documentación</span>
+                    <span class="tap-pill tap-pill--por-vencer">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>1 por vencer
+                    </span>
+                  </div>
+
+                  <ul class="tap-docs">
+                    <li class="tap-doc">
+                      <p class="tap-doc__nombre">Permiso de Circulación</p>
+                      <div class="tap-doc__pie">
+                        <span class="tap-doc__fecha">Vence 31 mar 2027</span>
+                        <span class="tap-pill tap-pill--vigente">
+                          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8.5 3 3 6-7"/></svg>Vigente
+                        </span>
+                      </div>
+                    </li>
+                    <li class="tap-doc">
+                      <p class="tap-doc__nombre">Revisión Técnica</p>
+                      <div class="tap-doc__pie">
+                        <span class="tap-doc__fecha">Vence 12 nov 2026</span>
+                        <span class="tap-pill tap-pill--por-vencer">
+                          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>Por vencer
+                        </span>
+                      </div>
+                    </li>
+                    <li class="tap-doc">
+                      <p class="tap-doc__nombre">SOAP</p>
+                      <div class="tap-doc__pie">
+                        <span class="tap-doc__fecha">Vence 31 mar 2027</span>
+                        <span class="tap-pill tap-pill--vigente">
+                          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8.5 3 3 6-7"/></svg>Vigente
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="tap-indicador"></div>
+              </div>
             </div>
-            <span class="ficha-card__section">Documentación</span>
-            <ul class="ficha-card__docs">
-              <li class="doc-row">
-                <div class="doc-row__top">
-                  <div style="min-width:0;">
-                    <p class="doc-row__label">Permiso de Circulación</p>
-                    <p class="doc-row__vence">Vence el 31 mar 2027</p>
-                  </div>
-                  <span class="badge badge--al_dia">Vigente</span>
-                </div>
-                <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-              </li>
-              <li class="doc-row">
-                <div class="doc-row__top">
-                  <div style="min-width:0;">
-                    <p class="doc-row__label">Revisión Técnica</p>
-                    <p class="doc-row__vence">Vence el 31 oct 2026</p>
-                  </div>
-                  <span class="badge badge--por_vencer">Por vencer</span>
-                </div>
-                <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-              </li>
-              <li class="doc-row">
-                <div class="doc-row__top">
-                  <div style="min-width:0;">
-                    <p class="doc-row__label">SOAP</p>
-                    <p class="doc-row__vence">Vence el 31 mar 2027</p>
-                  </div>
-                  <span class="badge badge--al_dia">Vigente</span>
-                </div>
-                <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-              </li>
-            </ul>
+
+            <div class="tap-ping"></div>
+            <svg class="tap-ondas" viewBox="0 0 42 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+              <path d="M8 22 a12 12 0 0 1 0 20"/>
+              <path d="M17 13 a22 22 0 0 1 0 38"/>
+              <path d="M26 4 a32 32 0 0 1 0 56"/>
+            </svg>
+
+            <div class="tap-llavero">
+              <!-- Llavero TapCar (`components/brand/Llavero.tsx`), copia fiel. -->
+              <svg viewBox="0 0 64 88">
+                <circle cx="23" cy="10" r="8.5" fill="none" stroke="rgb(91 101 115 / .7)" stroke-width="2.5"/>
+                <path d="M32 4 C44 7 56 22 56 44 A24 24 0 1 1 8 44 C8 22 20 7 32 4 Z" fill="#1e3dae"/>
+                <circle cx="32" cy="15" r="4.5" fill="#f6f7f9"/>
+                <ellipse cx="18" cy="29" rx="6.5" ry="2.4" transform="rotate(-33 18 29)" fill="rgb(22 25 31 / .3)"/>
+                <ellipse cx="46" cy="29" rx="6.5" ry="2.4" transform="rotate(33 46 29)" fill="rgb(22 25 31 / .3)"/>
+                <circle cx="32" cy="47" r="17.5" fill="#2952e6"/>
+                <g transform="translate(23.5 33) scale(0.72)" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+                  <circle cx="7" cy="17" r="2"/>
+                  <path d="M9 17h6"/>
+                  <circle cx="17" cy="17" r="2"/>
+                </g>
+                <path d="M37.5 36.5 a3.5 3.5 0 0 1 3 3.2" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M38.8 33.6 a6.3 6.3 0 0 1 5.4 5.8" fill="none" stroke="rgb(255 255 255 / .7)" stroke-width="1.5" stroke-linecap="round"/>
+                <text x="32" y="57" text-anchor="middle" fill="#fff" style="font-family: Geist, system-ui, sans-serif; font-size: 6.5px; font-weight: 600; letter-spacing: -.02em">TapCar</text>
+              </svg>
+            </div>
           </div>
         </div>
+        <!-- </escena-tap> ═══════════════════════════════════════════════════════ -->
       </div>
+    </div>
+  </section>
+
+  <!-- ============ PRUEBA SOCIAL ============ -->
+  <!-- Conteo de vehículos. Para actualizarlo, cambia la cifra en
+       data-valor y en el texto del span (las dos, porque sin JS se
+       muestra el texto tal cual). data-prefijo es lo que va pegado
+       delante del número; el punto de miles lo pone el script solo
+       al pasar de 999.
+       Última medición: +600, el 2026-09-24. -->
+  <section class="prueba" aria-label="Vehículos en TapCar">
+    <p class="prueba__inner">
+      <span class="prueba__num" data-conteo data-valor="600" data-prefijo="+">+600</span>
+      <span class="prueba__txt">vehículos ya operan con un Tap</span>
+    </p>
+  </section>
+
+  <!-- ============ ASÍ DE SIMPLE ============ -->
+  <!-- Cada paso lleva una mini escena que se anima UNA vez al entrar en
+       pantalla (cuando el patrón de aparición le pone .is-visible). El
+       dibujo base es el estado final. -->
+  <section id="como" class="section">
+    <div class="container">
+      <div data-reveal class="section__head">
+        <span class="eyebrow">Así de simple</span>
+        <h2 class="section__title">Tus documentos a un toque, en tres pasos.</h2>
+      </div>
+      <ol class="pasos">
+
+        <li data-reveal class="card paso">
+          <svg class="paso__ilus" viewBox="0 0 240 140" aria-hidden="true">
+            <rect x="62" y="50" width="116" height="80" rx="12" fill="#fff" stroke="#cfd4db" stroke-width="1.5"/>
+            <rect x="76" y="80" width="54" height="6" rx="3" fill="#e3e6ea"/>
+            <rect x="76" y="98" width="42" height="6" rx="3" fill="#e3e6ea"/>
+            <g class="i-pop" style="--d:760ms"><rect x="140" y="77" width="26" height="12" rx="6" fill="#e7f6ec"/><circle cx="148" cy="83" r="2.6" fill="#16a34a"/></g>
+            <g class="i-pop" style="--d:880ms"><rect x="140" y="95" width="26" height="12" rx="6" fill="#fdf1dc"/><circle cx="148" cy="101" r="2.6" fill="#f59e0b"/></g>
+            <g class="i-cae" style="--d:0ms">
+              <g transform="rotate(-9 101 38)"><rect x="84" y="16" width="34" height="44" rx="5" fill="#fff" stroke="#2952e6" stroke-width="2"/><rect x="91" y="26" width="20" height="3.5" rx="1.75" fill="#dde5fd"/><rect x="91" y="34" width="14" height="3.5" rx="1.75" fill="#dde5fd"/><rect x="91" y="42" width="18" height="3.5" rx="1.75" fill="#dde5fd"/></g>
+            </g>
+            <g class="i-cae" style="--d:240ms">
+              <g transform="rotate(8 139 36)"><rect x="122" y="14" width="34" height="44" rx="5" fill="#fff" stroke="#2952e6" stroke-width="2"/><rect x="129" y="24" width="20" height="3.5" rx="1.75" fill="#dde5fd"/><rect x="129" y="32" width="14" height="3.5" rx="1.75" fill="#dde5fd"/><rect x="129" y="40" width="18" height="3.5" rx="1.75" fill="#dde5fd"/></g>
+            </g>
+          </svg>
+          <span class="paso__num">1</span>
+          <h3 class="paso__title">Sube tus documentos</h3>
+          <p class="paso__text">Una foto o un PDF de cada uno.</p>
+        </li>
+
+        <li data-reveal class="card paso">
+          <svg class="paso__ilus" viewBox="0 0 240 140" aria-hidden="true">
+            <rect x="48" y="16" width="62" height="112" rx="13" fill="#16191f"/>
+            <rect x="53" y="21" width="52" height="102" rx="9" fill="#f6f7f9"/>
+            <rect x="69" y="26" width="20" height="5" rx="2.5" fill="#16191f"/>
+            <rect x="62" y="52" width="34" height="5" rx="2.5" fill="#dde5fd"/>
+            <rect x="62" y="63" width="24" height="5" rx="2.5" fill="#dde5fd"/>
+            <rect x="62" y="96" width="34" height="14" rx="5" fill="#2952e6"/>
+            <g fill="none" stroke="#2952e6" stroke-width="3" stroke-linecap="round">
+              <path class="i-onda" style="--d:0ms" d="M124 62 a12 12 0 0 1 0 20"/>
+              <path class="i-onda" style="--d:140ms" d="M133 54 a22 22 0 0 1 0 36" opacity=".7"/>
+              <path class="i-onda" style="--d:280ms" d="M142 46 a32 32 0 0 1 0 52" opacity=".45"/>
+            </g>
+            <circle cx="184" cy="72" r="26" fill="#2952e6"/>
+            <circle cx="184" cy="72" r="18" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+            <g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M180 66 a8 8 0 0 1 0 12"/><path d="M186 62 a14 14 0 0 1 0 20"/></g>
+            <g class="i-pop" style="--d:520ms"><circle cx="204" cy="50" r="11" fill="#16a34a" stroke="#fff" stroke-width="2.5"/><path d="m199.5 50.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+          </svg>
+          <span class="paso__num">2</span>
+          <h3 class="paso__title">Graba el chip</h3>
+          <p class="paso__text">Con tu celular, para el parabrisas o el llavero.</p>
+        </li>
+
+        <li data-reveal class="card paso">
+          <svg class="paso__ilus" viewBox="0 0 240 140" aria-hidden="true">
+            <rect x="86" y="8" width="84" height="128" rx="14" fill="#16191f"/>
+            <rect x="91" y="13" width="74" height="118" rx="10" fill="#f6f7f9"/>
+            <rect x="108" y="26" width="40" height="13" rx="3" fill="#fff" stroke="#16191f" stroke-width="1.5"/>
+            <rect x="114" y="31" width="28" height="3" rx="1.5" fill="#16191f"/>
+            <g class="i-sube" style="--d:200ms"><rect x="97" y="50" width="62" height="20" rx="6" fill="#fff" stroke="#e3e6ea"/><rect x="103" y="58" width="26" height="4" rx="2" fill="#e3e6ea"/><rect x="137" y="55" width="16" height="10" rx="5" fill="#e7f6ec"/><circle cx="142" cy="60" r="2.2" fill="#16a34a"/></g>
+            <g class="i-sube" style="--d:320ms"><rect x="97" y="76" width="62" height="20" rx="6" fill="#fff" stroke="#e3e6ea"/><rect x="103" y="84" width="22" height="4" rx="2" fill="#e3e6ea"/><rect x="137" y="81" width="16" height="10" rx="5" fill="#fdf1dc"/><circle cx="142" cy="86" r="2.2" fill="#f59e0b"/></g>
+            <g class="i-sube" style="--d:440ms"><rect x="97" y="102" width="62" height="20" rx="6" fill="#fff" stroke="#e3e6ea"/><rect x="103" y="110" width="18" height="4" rx="2" fill="#e3e6ea"/><rect x="137" y="107" width="16" height="10" rx="5" fill="#e7f6ec"/><circle cx="142" cy="112" r="2.2" fill="#16a34a"/></g>
+            <circle class="i-ping" cx="74" cy="96" r="22" fill="none" stroke="#2952e6" stroke-width="2" opacity="0"/>
+            <g transform="rotate(-10 60 100)">
+              <circle cx="60" cy="74" r="6" fill="none" stroke="#8b94a1" stroke-width="2"/>
+              <path d="M60 78 C70 80 78 90 78 102 A18 18 0 1 1 42 102 C42 90 50 80 60 78 Z" fill="#1e3dae"/>
+              <circle cx="60" cy="104" r="12" fill="#2952e6"/>
+              <g fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M58 100 a5 5 0 0 1 0 8"/><path d="M62 97 a9 9 0 0 1 0 14"/></g>
+            </g>
+          </svg>
+          <span class="paso__num">3</span>
+          <h3 class="paso__title">Muéstralo con un toque</h3>
+          <p class="paso__text">En un control, el chip abre la ficha al instante.</p>
+        </li>
+
+      </ol>
     </div>
   </section>
 
   <!-- ============ ¿PARA QUIÉN ES? ============ -->
-  <section id="para-quien" class="section aud">
+  <section id="para-quien" class="section section--surface">
     <div class="container">
       <div data-reveal class="section__head">
         <span class="eyebrow">¿Para quién es?</span>
-        <h2 class="section__title">Dos autos o cincuenta: hay un plan para cada caso.</h2>
-        <p class="section__lead">TapCar se cobra por vehículo, en dos planes: Uso particular para los autos de tu casa, y Flotas cuando hay conductores y equipo de por medio.</p>
+        <h2 class="section__title">Un auto, una flota o tu negocio.</h2>
       </div>
-      <div class="aud-grid">
+      <div class="quien">
 
-        <div data-reveal class="card card--p28 aud-card">
-          <div class="tag-row">
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
-            </span>
-            <span class="plan-tag">Uso particular</span>
-          </div>
-          <h3 class="aud-card__title">Tu auto, o los de tu familia</h3>
-          <p class="aud-card__text">No necesitas una empresa para usar TapCar. Registra de 1 a 10 vehículos y ten sus documentos y mantenciones al día, a un toque.</p>
-          <ul class="aud-card__list">
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Permiso de Circulación, Revisión Técnica, SOAP y más, siempre contigo</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un toque y muestras todo en la fiscalización</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de cada vencimiento y de cada mantención</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Si vendes el auto, se lo transfieres al comprador con sus documentos</li>
-          </ul>
-          <div class="aud-card__foot">
-            <a href="/planes/" class="aud-card__link">Ver el precio por vehículo
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <div data-reveal class="card card--p28 aud-card">
-          <div class="tag-row">
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </span>
-            <span class="plan-tag">Flotas</span>
-          </div>
-          <h3 class="aud-card__title">La flota de tu empresa</h3>
-          <p class="aud-card__text">Cuando hay conductores de por medio, el mismo Tap además controla quién usa cada vehículo y en qué estado lo entrega.</p>
-          <ul class="aud-card__list">
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cada conductor se identifica con su PIN, sin apps ni cuentas</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fotos de entrega y reporte de daños</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alertas, bitácora y reportes en Excel y PDF</li>
-            <li class="aud-card__item"><svg class="aud-card__check" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tu equipo de hasta 5 personas, cada una con su rol</li>
-          </ul>
-          <div class="aud-card__foot">
-            <a href="/como-funciona/" class="aud-card__link">Ver el paso a paso
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-
-      </div>
-      <div data-reveal class="card card--p28 rubro">
-        <div>
-          <span class="rubro__eyebrow">Para empresas del rubro</span>
-          <h3 class="rubro__title">Automotoras, aseguradoras y gestorías</h3>
-          <p class="rubro__text">Regálale TapCar a quien te compra un auto o a tus asegurados con códigos de un solo uso, o manda los documentos que tramitaste directo a la cuenta de tu cliente. Son perfiles aparte: se piden al crear la cuenta y los aprobamos nosotros.</p>
-        </div>
-        <div class="rubro__lado">
-          <div class="rubro__tipos">
-            <span class="hw-chip">Automotoras</span>
-            <span class="hw-chip">Aseguradoras</span>
-            <span class="hw-chip">Gestorías</span>
-          </div>
-          <a href="/socios/" class="aud-card__link">Conoce los convenios y envíos
+        <a data-reveal href="/planes/" class="card quien__card">
+          <span class="icon-chip icon-chip--azul">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+          </span>
+          <h3 class="quien__title">Uso particular</h3>
+          <p class="quien__text">Gratis con 1 auto: documentos y avisos de vencimiento.</p>
+          <span class="quien__link">Ver planes
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CÓMO FUNCIONA ============ -->
-  <section id="como" class="section section--surface">
-    <div class="container">
-      <div data-reveal class="section__head">
-        <span class="eyebrow">Cómo funciona</span>
-        <h2 class="section__title">Tres pasos. Listo.</h2>
-        <p class="section__lead">Del registro al control diario, sin instalar nada en el teléfono de tus conductores ni de quien fiscaliza.</p>
-      </div>
-      <div class="steps-grid">
-
-        <div data-reveal class="step">
-          <div class="card card--p28 card--fill">
-            <span class="step__num">01</span>
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>
-            </span>
-            <h3 class="step__title">Carga tus vehículos con IA</h3>
-            <p class="step__text">Suelta hasta 40 PDF o fotos de tus documentos: la IA detecta el tipo, la patente, el vencimiento y los datos del auto, agrupa por patente y te propone qué crear. Tú revisas antes de importar.</p>
-          </div>
-        </div>
-
-        <div data-reveal class="step">
-          <div class="card card--p28 card--fill">
-            <span class="step__num">02</span>
-            <span class="icon-chip icon-chip--azul">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3" width="9.5" height="18" rx="2.2"/><line x1="6.5" y1="18.4" x2="10" y2="18.4"/><path d="M16.5 9.5a5 5 0 0 1 0 5"/><path d="M19.2 7.3a9 9 0 0 1 0 9.4"/></svg>
-            </span>
-            <h3 class="step__title">Graba el chip NFC del vehículo</h3>
-            <p class="step__text">Cada vehículo recibe una URL única. Grábala en su chip NFC —pegado al parabrisas o de llavero— desde tu propio celular si es Android, o con NFC Tools y nuestra guía si es iPhone.</p>
-            <img src="/assets/chip-llavero.webp" class="llavero step__llavero" alt="Llavero con el chip NFC de TapCar" loading="lazy" width="345" height="400">
-          </div>
-        </div>
-
-        <div data-reveal class="step">
-          <div class="card card--p28 card--fill">
-            <span class="step__num">03</span>
-            <span class="icon-chip icon-chip--vigente">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            </span>
-            <h3 class="step__title">Un toque: fiscaliza, toma/entrega y controla</h3>
-            <p class="step__text">El mismo Tap abre la ficha para fiscalizar en ruta. En Flotas, además registra quién toma y entrega el vehículo, y mantiene tu panel al día.</p>
-          </div>
-        </div>
-
-      </div>
-      <div class="steps-more">
-        <a href="/como-funciona/" class="steps-more__link">Ver el paso a paso completo
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
         </a>
-      </div>
-    </div>
-  </section>
 
-  <!-- ============ UN TOQUE, TODA LA OPERACIÓN ============ -->
-  <section id="operacion" class="section">
-    <div class="container">
-      <div data-reveal class="section__head">
-        <span class="eyebrow">Flotas: toda la operación</span>
-        <h2 class="section__title">Con conductores, el mismo Tap controla toda la operación.</h2>
-        <p class="section__lead">En el plan Flotas, TapCar pasa de guardar documentos a operar tus vehículos: quién usa cada uno, en qué estado lo entrega y cuánto se usa. Todo parte del mismo gesto.</p>
-      </div>
-      <div class="op-grid">
-
-        <div data-reveal class="card card--p28">
+        <a data-reveal href="/como-funciona/" class="card quien__card">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </span>
-          <h3 class="op-card__title">Custodia con PIN</h3>
-          <p class="op-card__text">Cada conductor toma el vehículo con un Tap y su PIN de 4 dígitos, y lo entrega al terminar. Queda registrado quién lo usó y cuándo — sin cuentas ni apps que instalar.</p>
-        </div>
+          <h3 class="quien__title">Flotas</h3>
+          <p class="quien__text">Conductores con PIN, fotos de entrega y reportes.</p>
+          <span class="quien__link">Cómo funciona
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
 
-        <div data-reveal class="card card--p28">
+        <a data-reveal href="/socios/" class="card quien__card">
           <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
           </span>
-          <h3 class="op-card__title">Fotos de entrega leídas por IA</h3>
-          <p class="op-card__text">Al entregar, el conductor sube las fotos que tú defines —por ejemplo, el tablero y la cabina— y puede reportar daños. La IA lee el kilometraje, la bencina y la limpieza; tú confirmas o corriges con un clic. Los daños los informa el conductor: la IA no los analiza.</p>
-        </div>
-
-        <div data-reveal class="card card--p28">
-          <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <h3 class="quien__title">Empresas del rubro</h3>
+          <p class="quien__text">Automotoras, aseguradoras y gestorías.</p>
+          <span class="quien__link">Ver socios
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </span>
-          <h3 class="op-card__title">Panel con el estado de tu flota</h3>
-          <p class="op-card__text">Ve qué vehículo está disponible y cuál está en uso, y por quién, en este momento. Una bandeja de alertas te avisa cuando hay un daño reportado o un uso sin entrega formal, y los daños y las incidencias al tomar un vehículo también te llegan por correo.</p>
-        </div>
-
-        <div data-reveal class="card card--p28">
-          <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
-          </span>
-          <h3 class="op-card__title">Reportes para descargar</h3>
-          <p class="op-card__text">Responsabilidad por conductor y bitácora filtrable por conductor, vehículo y fecha. Descárgalos en un Excel de 4 hojas —conductores, vehículos, uso por vehículo y vencimientos próximos— o en un PDF de resumen ejecutivo, y sigue la evolución de km, usos u horas por vehículo o conductor, por día, semana o mes.</p>
-        </div>
-
-        <div data-reveal class="card card--p28">
-          <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
-          </span>
-          <h3 class="op-card__title">Control de la entrega</h3>
-          <p class="op-card__text">TapCar marca «Revisar consumo» cuando un uso gastó más de lo esperado según el rendimiento y el estanque que configuraste, detecta si la foto del odómetro es antigua o reenviada y te avisa si un uso pasa de 12 horas —o del plazo que elijas—. Si uno quedó abierto, lo cierras tú.</p>
-        </div>
-
-        <div data-reveal class="card card--p28">
-          <span class="icon-chip icon-chip--azul">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
-          </span>
-          <h3 class="op-card__title">Conductor fijo con cuenta propia</h3>
-          <p class="op-card__text">El titular de un vehículo puede entrar con su propio usuario: ve solo su vehículo, sube documentos y mantenciones, y recibe los avisos y un resumen propio por correo. No ve la flota ni a sus compañeros. La cuenta se cobra aparte.</p>
-        </div>
+        </a>
 
       </div>
     </div>
   </section>
 
   <!-- ============ BENEFICIOS ============ -->
-  <section id="beneficios" class="section section--surface">
+  <section id="beneficios" class="section">
     <div class="container">
-      <div data-reveal class="bn-head">
+      <div data-reveal class="section__head">
         <span class="eyebrow">Por qué TapCar</span>
-        <h2 class="section__title">Todo en regla y bajo control, sin perseguir papeles.</h2>
-        <p class="section__lead">Todo esto viene en los dos planes, salvo lo marcado como Flotas.</p>
+        <h2 class="section__title">Todo en regla, sin perseguir papeles.</h2>
       </div>
-      <div class="bn-grid">
+      <div class="beneficios">
 
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg></span>
-          <h3 class="bn-card__title">Carga inteligente con IA</h3>
-          <p class="bn-card__text">Suelta hasta 40 PDF o fotos de tus documentos. La IA detecta el tipo, la patente, el vencimiento, la marca, el modelo, el año y el color, agrupa por patente y te propone qué crear. Tú revisas antes de importar.</p>
-        </div>
-
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
-          <h3 class="bn-card__title">Documentos desde fotos</h3>
-          <p class="bn-card__text">Fotografía hasta 10 hojas por documento, recórtalas y TapCar las junta en un PDF. Al subirlo, la IA te sugiere la fecha de vencimiento; tú la confirmas.</p>
-        </div>
-
-        <div data-reveal class="card card--p24">
+        <div data-reveal class="beneficio">
           <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
-          <h3 class="bn-card__title">Recordatorios de vencimiento</h3>
-          <p class="bn-card__text">Te llega un correo antes de que venza cada documento, con botón para renovar, para que la fecha no te pille desprevenido.</p>
+          <h3 class="beneficio__title">Avisos antes de que venza</h3>
+          <p class="beneficio__text">Un correo antes de cada vencimiento.</p>
         </div>
 
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--por_vencer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg></span>
-          <h3 class="bn-card__title">Estados claros</h3>
-          <p class="bn-card__text">Vigente, Por vencer o Vencido. El color habla por ti, de un vistazo.</p>
-          <div class="bn-badges">
+        <div data-reveal class="beneficio">
+          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>
+          <h3 class="beneficio__title">Estados claros</h3>
+          <p class="beneficio__badges">
             <span class="badge badge--al_dia">Vigente</span>
             <span class="badge badge--por_vencer">Por vencer</span>
             <span class="badge badge--vencido">Vencido</span>
-          </div>
+          </p>
         </div>
 
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
-          <h3 class="bn-card__title">Mantenciones al día</h3>
-          <p class="bn-card__text">Pauta por meses —y en Flotas también por kilómetros—, con estado al día, próxima o vencida. Registras cada una con la foto de la constancia, la IA lee la fecha y el km, y te avisamos por correo.</p>
+        <div data-reveal class="beneficio">
+          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg></span>
+          <h3 class="beneficio__title">Lectura con IA</h3>
+          <p class="beneficio__text">Te sugiere el vencimiento; tú lo confirmas.</p>
         </div>
 
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--por_vencer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 12v3"/><path d="M12 18h.01"/></svg></span>
-          <h3 class="bn-card__title">Documentos que faltan</h3>
-          <p class="bn-card__text">Si a un vehículo le falta un documento obligatorio, lo ves marcado en el panel y te lo recordamos por correo una vez al mes.</p>
-        </div>
+        <a data-reveal href="/legal/" class="beneficio beneficio--link">
+          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3 class="beneficio__title">Válido en Chile</h3>
+          <p class="beneficio__text">Sin papeles impresos. <span class="beneficio__mas">Ver la base legal</span></p>
+        </a>
 
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <h3 class="bn-card__title">Ficha pública de solo lectura</h3>
-          <p class="bn-card__text">Quien la abre solo ve: documentos, mantenciones, datos del vehículo y el aviso de daño si hay uno activo. Sin login ni acceso a tu cuenta, y la puedes guardar en tu teléfono para abrirla sin conexión durante 7 días.</p>
-        </div>
-
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg></span>
-          <h3 class="bn-card__title">Transferir un vehículo</h3>
-          <p class="bn-card__text">¿Vendes o cedes un auto? Lo transfieres a otra cuenta con sus documentos y mantenciones, y el otro acepta por correo aunque no tenga cuenta. Después vuelves a grabar el chip, porque el enlace cambia.</p>
-        </div>
-
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.34 19a10 10 0 1 1 17.32 0"/><path d="m12 14 4-4"/></svg></span>
-          <h3 class="bn-card__title">Datos útiles del vehículo</h3>
-          <p class="bn-card__text">Combustible, presión y medida de neumáticos, transmisión, aceite y notas. Quien maneja lo abre con el mismo Tap.</p>
-        </div>
-
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
-          <h3 class="bn-card__title">Todo ordenado</h3>
-          <p class="bn-card__text">Agrupa tus vehículos en categorías y encuentra cualquiera con el buscador y los filtros del panel.</p>
-        </div>
-
-        <div data-reveal class="card card--p24">
-          <span class="icon-chip icon-chip--azul"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
-          <h3 class="bn-card__title">Tu plan, a tu manera</h3>
-          <p class="bn-card__text">Sube o baja vehículos con prorrateo, pasa de mensual a anual, usa códigos promocionales y revisa tu historial de pagos. Si das de baja, se agenda al cierre del ciclo y la puedes deshacer.</p>
-        </div>
-
-        <div data-reveal class="card card--p24">
-          <div class="tag-row">
-            <span class="icon-chip icon-chip--vigente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></svg></span>
-            <span class="plan-tag">Flotas</span>
-          </div>
-          <h3 class="bn-card__title">Equipo con roles</h3>
-          <p class="bn-card__text">Administrador, Editor y Visor comparten la flota según su rol. Invitaciones por correo, hasta 5 miembros por empresa.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ LA FICHA NFC ============ -->
-  <section id="ficha" class="section">
-    <div class="fs-grid">
-      <div data-reveal>
-        <span class="eyebrow">La ficha NFC</span>
-        <h2 class="fs-title">Una ficha, un menú, todo con el mismo toque.</h2>
-        <p class="fs-lead">La página que se abre con el Tap no es solo documentos: tiene un menú para ver la documentación, las mantenciones y la información del auto y, en Flotas, para tomar o entregar el vehículo. Para fiscalizar, el carabinero mira la pestaña de documentos y su estado — sin login, sin instalar nada.</p>
-        <ul class="fs-list">
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Documentos con su vencimiento</strong> <span class="muted">— Permiso de Circulación, Revisión Técnica, SOAP, Certificado de Homologación (C.H.I.-e) y Padrón.</span></span>
-          </li>
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Mantenciones y aviso de daño</strong> <span class="muted">— el estado de cada mantención y el aviso de daño, si hay uno activo.</span></span>
-          </li>
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Información del vehículo</strong> <span class="muted">— combustible, neumáticos, transmisión y más, para quien lo conduce.</span></span>
-          </li>
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Tomar / Entregar</strong> <span class="muted">— en Flotas, el conductor registra el uso con su PIN, con fotos y reporte de daños.</span></span>
-          </li>
-          <li class="fs-list__item">
-            <svg class="fs-list__check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-            <span class="fs-list__text"><strong>Sin conexión</strong> <span class="muted">— guárdala en tu teléfono y ábrela sin señal durante 7 días.</span></span>
-          </li>
-        </ul>
-      </div>
-
-      <div data-reveal class="fs-panel">
-        <div class="fs-panel__head">
-          <span class="fs-panel__url">tapcar.cl/v/8f3a2c9b</span>
-          <span class="fs-panel__readonly"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Solo lectura</span>
-        </div>
-        <div class="fs-tabs">
-          <span class="fs-tab">Tomar / Entregar</span>
-          <span class="fs-tab is-active">Documentos</span>
-          <span class="fs-tab">Información</span>
-        </div>
-        <div class="fs-panel__body">
-          <div class="vehicle-card">
-            <span class="icon-chip">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
-            </span>
-            <span class="vehicle-card__body">
-              <p class="vehicle-card__title">Mercedes-Benz Sprinter · RT LB 09</p>
-              <p class="vehicle-card__meta">Documentación · 5 archivos</p>
-            </span>
-            <span class="badge badge--por_vencer">Documentos por vencer</span>
-          </div>
-          <ul class="fs-panel__docs">
-            <li class="doc-row">
-              <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">Permiso de Circulación</p><p class="doc-row__vence">Vence el 31 mar 2027</p></div>
-                <span class="badge badge--al_dia">Vigente</span>
-              </div>
-              <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-            </li>
-            <li class="doc-row">
-              <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">Revisión Técnica</p><p class="doc-row__vence">Vence el 02 jul 2026</p></div>
-                <span class="badge badge--por_vencer">Por vencer</span>
-              </div>
-              <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-            </li>
-            <li class="doc-row">
-              <div class="doc-row__top">
-                <div style="min-width:0;"><p class="doc-row__label">Padrón</p><p class="doc-row__vence">Sin vencimiento</p></div>
-                <span class="badge badge--neutro">Sin vencimiento</span>
-              </div>
-              <div class="doc-row__foot"><span class="doc-row__action">Ver archivo</span></div>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </section>
@@ -2191,18 +2391,16 @@ select.form__input {
   <!-- ============ CTA ============ -->
   <section class="cta cta--lg">
     <div data-reveal class="cta__inner">
-      <h2 class="cta__title">Empieza a operar tus vehículos con un Tap.</h2>
-      <p class="cta__lead">Registra tus vehículos, graba los chips y controla todo desde un panel. Sin apps que instalar — pagas solo por los vehículos que registres.</p>
+      <h2 class="cta__title">Empieza gratis con 1 auto.</h2>
+      <p class="cta__lead">Crea tu cuenta y ten sus documentos a un toque.</p>
       <div class="cta__actions">
-        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
+        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta gratis
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="/planes/" class="cta__secondary">Ver planes</a>
       </div>
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
   </main>
 
   <footer class="footer">
@@ -2233,7 +2431,7 @@ select.form__input {
         <nav aria-label="Empresa">
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
-            <a href="/socios/" class="footer__link">Para empresas del rubro</a>
+            <a href="/socios/" class="footer__link">Socios</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
             <a href="/terminos/" class="footer__link">Términos y privacidad</a>
@@ -2326,6 +2524,21 @@ select.form__input {
       }, { threshold: 0.5 });
       io.observe(el);
     })();
+
+    /* <escena-tap> — pausa la escena fuera de pantalla y la reanuda al volver.
+       Sin JS (o sin IntersectionObserver) la escena simplemente sigue corriendo. */
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+      var escenas = document.querySelectorAll('.tap-escena');
+      if (!escenas.length) return;
+      var io = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) {
+          e.target.classList.toggle('tap-pausada', !e.isIntersecting);
+        });
+      }, { threshold: 0 });
+      escenas.forEach(function (el) { io.observe(el); });
+    })();
+    /* </escena-tap> */
   </script>
 
   <script>
