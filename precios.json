@@ -14,7 +14,7 @@
     "Tras editarlo:  python tools/precios.py --generar && python tools/schema.py",
     "Para comprobar que el sitio calza:  python tools/precios.py"
   ],
-  "actualizado": "2026-09-17",
+  "actualizado": "2026-10-20",
 
   "planes": {
     "_comentario": [
@@ -30,11 +30,17 @@
       "eso se cotiza con el equipo, que es lo que dice sobre_el_maximo."
     ],
     "particular": {
+      "_comentario": [
+        "Desde el 2026-10-20 Uso particular es gratis con 1 vehiculo (solo los",
+        "documentos de fiscalizacion y los avisos por correo). El plan de pago",
+        "cobra CADA vehiculo, incluido el primero, y es SOLO anual: no hay `mes`."
+      ],
       "nombre": "Uso particular",
       "vehiculos": { "min": 1, "max": 10 },
       "moneda": "CLP",
       "iva_incluido": true,
-      "vehiculo": { "mes": 2500, "anio": 22000 }
+      "gratis": { "vehiculos": 1 },
+      "vehiculo": { "anio": 5000 }
     },
     "flota": {
       "nombre": "Flotas",
@@ -48,9 +54,10 @@
   },
 
   "envio_chips": {
-    "_comentario": "El chip no se cobra; solo el despacho, y se cobra en cada envio, no una sola vez. Los tramos son por cantidad de chips despachados y no calzan con los del plan: son otro eje.",
+    "_comentario": "El chip no se cobra; solo el despacho, y se cobra en cada envio, no una sola vez. Los tramos son por cantidad de chips despachados y no calzan con los del plan: son otro eje. Uso particular tiene su propio despacho (particular, de 1 a 10 chips); los tramos son para los demas tipos de cuenta.",
     "moneda": "CLP",
     "iva_incluido": true,
+    "particular": { "hasta": 10, "precio": 3000 },
     "tramos": [
       { "hasta": 2, "precio": 2000 },
       { "hasta": 50, "precio": 5000 },
