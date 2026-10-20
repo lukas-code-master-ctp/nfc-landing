@@ -1498,14 +1498,14 @@ select.form__input {
    celular). Cada paso: ícono, número y etiqueta de plan arriba; título y un
    párrafo corto. tools/schema.py lee .hw-step, .hw-step__title,
    .hw-step__text y la .plan-tag de cada uno para el HowTo. */
-/* align-items: start y no stretch: estiradas, la tarjeta corta de cada fila
-   (la 01 junto a la de las pills de estado, la 03 junto a la del despacho)
-   quedaba con 60–80px de blanco abajo, que se leía como contenido que
-   faltaba. Arriba alineadas, cada una mide lo que dice. */
+/* Las tarjetas de una misma fila miden lo mismo (stretch). Se probo
+   alinearlas arriba para que cada una midiera lo que dice, pero la grilla se
+   veia dispareja: cuatro cajas de alto distinto leen como un error, y el
+   blanco al pie de la tarjeta corta molesta menos. */
 .hw-steps {
   margin: 24px 0 0; padding: 0; list-style: none;
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;
-  align-items: start;
+  align-items: stretch;
 }
 .hw-step { display: flex; flex-direction: column; padding: 24px; }
 .hw-step__top { display: flex; align-items: center; gap: 12px; min-height: 44px; }
@@ -2712,6 +2712,12 @@ select.form__input {
         var x = thumb / 2 + p * (track - thumb);
         var half = bubble.offsetWidth / 2;
         var left = Math.min(Math.max(x, half), track - half);
+        // En los extremos (1 o 10) la burbuja se topa con el borde y la
+        // flecha quedaba en la esquina redondeada, medio afuera de la pastilla.
+        // Se deja la flecha a 16px del borde como minimo, aunque la burbuja
+        // sobresalga unos pixeles del riel.
+        var margen = 16;
+        left = Math.min(Math.max(left, x - half + margen), x + half - margen);
         bubble.style.left = left + 'px';
         bubble.style.setProperty('--arrow', (x - left + half) + 'px');
       }
