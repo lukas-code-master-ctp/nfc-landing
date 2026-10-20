@@ -58,6 +58,27 @@ ESCRITOS_POR_JS = re.compile(
 # tragarse el punto que cierra la oracion.
 PATRON = re.compile(r'\$\s?\d[\d.]*\d|\$\s?\d|UF\s\d+(?:,\d+)?|\d{1,3}%')
 
+# Cifras ancladas a SU nodo. Que una cifra aparezca en el archivo no prueba
+# que este donde se promete: $5.000 es tambien el tramo de 3 a 50 chips y
+# $10.000 el total de 2 vehiculos, asi que con la tarjeta del plan completo
+# diciendo $10.000 (o sin precio) el archivo seguia "teniendo" las dos cifras
+# y la revision pasaba. Lo mismo con el $3.000 del despacho: $2.000 es un
+# tramo valido. Cada ancla es (archivo, que es, regex con UN grupo que captura
+# el texto del nodo, funcion que da la cifra esperada desde precios.json).
+# La regex tiene que encontrar el nodo EXACTAMENTE una vez: cero es que alguien
+# cambio la clase o el atributo (y el ancla dejo de mirar), dos es ambiguo.
+ANCLAS = [
+    ('planes/index.html', 'monto de la tarjeta Gratis',
+     r'<article class="card plan-card">.*?<span class="plan-card__monto">([^<]*)</span>',
+     lambda p: clp(0)),
+    ('planes/index.html', 'monto de la tarjeta Plan completo',
+     r'<article class="card plan-card plan-card--pro">.*?<span class="plan-card__monto">([^<]*)</span>',
+     lambda p: clp(p['planes']['particular']['vehiculo']['anio'])),
+    ('planes/index.html', 'despacho de Uso particular [data-envio-part]',
+     r'<[^>]*\bdata-envio-part\b[^>]*>([^<]*)<',
+     lambda p: clp(p['envio_chips']['particular']['precio'])),
+]
+
 MARCA_INI = '      // <precios>'
 MARCA_FIN = '      // </precios>'
 
@@ -118,22 +139,58 @@ def esperados(p):
             set('%d%%' % n for n in pct))
 
 
+def blanquear(m):
+    return chr(10) * m.group(0).count(chr(10))
+
+
 def texto_visible(ruta, crudo):
     """Saca lo generado y lo que no es prosa, para no revisarlo dos veces.
 
-    Lo recortado se reemplaza por lineas en blanco en vez de borrarse, para que
-    el numero de linea que se reporta sea el del archivo y no el del recorte.
-    """
-    def blanquear(m):
-        return chr(10) * m.group(0).count(chr(10))
+    Devuelve (cabeza, cuerpo): dos textos del MISMO largo en lineas que el
+    archivo, cada uno con la otra parte en blanco. Lo recortado se reemplaza
+    por lineas en blanco en vez de borrarse, para que el numero de linea que
+    se reporta sea el del archivo y no el del recorte.
 
-    if ruta.endswith('.html'):
-        crudo = re.sub(r'<style>.*?</style>', blanquear, crudo, flags=re.S)
-        crudo = re.sub(r'<script type="application/ld\+json".*?</script>',
-                       blanquear, crudo, flags=re.S)
-        crudo = re.sub(re.escape(MARCA_INI) + r'.*?' + re.escape(MARCA_FIN),
-                       blanquear, crudo, flags=re.S)
-    return crudo
+    El <head> va aparte a proposito. Sus cifras SI se revisan (un $ viejo en
+    la meta description es igual de falso que en el cuerpo, y es lo que sale
+    en Google), pero NO cuentan como "el archivo dice esta cifra": el title y
+    las metas no los ve nadie que este en la pagina, asi que no pueden cubrir
+    a la tarjeta de precio que se borro. Para los .txt/.md todo es cuerpo.
+    """
+    if not ruta.endswith('.html'):
+        return '', crudo
+    crudo = re.sub(r'<style>.*?</style>', blanquear, crudo, flags=re.S)
+    crudo = re.sub(r'<script type="application/ld\+json".*?</script>',
+                   blanquear, crudo, flags=re.S)
+    crudo = re.sub(re.escape(MARCA_INI) + r'.*?' + re.escape(MARCA_FIN),
+                   blanquear, crudo, flags=re.S)
+    m = re.search(r'<head\b.*?</head>', crudo, flags=re.S)
+    if not m:
+        return '', crudo
+    antes, head, despues = crudo[:m.start()], m.group(0), crudo[m.end():]
+    en_blanco = blanquear(m)
+    cabeza = re.sub(r'[^\n]', '', antes) + head + re.sub(r'[^\n]', '', despues)
+    cuerpo = antes + en_blanco + despues
+    return cabeza, cuerpo
+
+
+def revisar_anclas(p):
+    """Cada ancla: su nodo existe una sola vez y dice exactamente su cifra."""
+    problemas = []
+    for ruta, que, regex, esperada in ANCLAS:
+        with io.open(os.path.join(RAIZ, ruta), encoding='utf-8') as f:
+            _, cuerpo = texto_visible(ruta, f.read())
+        hallados = re.findall(regex, cuerpo, flags=re.S)
+        if len(hallados) != 1:
+            problemas.append('  %s  %s: el nodo aparece %d veces (tiene que '
+                             'ser 1; si cambiaste la clase, actualiza ANCLAS)'
+                             % (ruta, que, len(hallados)))
+            continue
+        dice = ' '.join(hallados[0].split()).replace('$ ', '$')
+        if dice != esperada(p):
+            problemas.append('  %s  %s dice "%s" y precios.json dice "%s"'
+                             % (ruta, que, dice, esperada(p)))
+    return problemas
 
 
 def revisar(p):
@@ -148,24 +205,27 @@ def revisar(p):
         if not os.path.exists(fs):
             continue
         with io.open(fs, encoding='utf-8') as f:
-            texto = texto_visible(ruta, f.read())
-        for linea_n, linea in enumerate(texto.split('\n'), 1):
-            # Si el JS reescribe la linea, su cifra es un ejemplo del valor
-            # inicial del slider, no una promesa del sitio.
-            if ESCRITOS_POR_JS.search(linea):
-                continue
-            for m in re.finditer(PATRON, linea):
-                cifra = m.group(0).replace('$ ', '$')
-                # El README es documentacion: sus porcentajes pueden ser de
-                # cualquier cosa, como un text-size-adjust.
-                if cifra.endswith('%') and ruta == 'README.md':
+            cabeza, cuerpo = texto_visible(ruta, f.read())
+        for es_cabeza, texto in ((True, cabeza), (False, cuerpo)):
+            for linea_n, linea in enumerate(texto.split('\n'), 1):
+                # Si el JS reescribe la linea, su cifra es un ejemplo del valor
+                # inicial del slider, no una promesa del sitio.
+                if ESCRITOS_POR_JS.search(linea):
                     continue
-                if cifra in conocidas or cifra in ajenas:
-                    vistas.setdefault(ruta, set()).add(cifra)
-                else:
-                    problemas.append(
-                        '  %s:%d  %s  <- precios.json no explica esta cifra'
-                        % (ruta, linea_n, cifra))
+                for m in re.finditer(PATRON, linea):
+                    cifra = m.group(0).replace('$ ', '$')
+                    # El README es documentacion: sus porcentajes pueden ser de
+                    # cualquier cosa, como un text-size-adjust.
+                    if cifra.endswith('%') and ruta == 'README.md':
+                        continue
+                    if cifra not in conocidas and cifra not in ajenas:
+                        problemas.append(
+                            '  %s:%d  %s  <- precios.json no explica esta cifra%s'
+                            % (ruta, linea_n, cifra,
+                               ' (en el <head>)' if es_cabeza else ''))
+                    elif not es_cabeza:
+                        # Solo el cuerpo cuenta como "el archivo la dice".
+                        vistas.setdefault(ruta, set()).add(cifra)
 
     # Solo se exige que aparezcan las canonicas: las tarifas que alguien tiene
     # que poder leer en el sitio sin mover un slider. Las derivadas (el total
@@ -176,11 +236,14 @@ def revisar(p):
     # borrar todos los $5.000 de Planes no avisaba: $5.000 es tambien el tramo
     # de 3 a 50 chips, y cualquier otro archivo (llms.txt, el FAQ) lo seguia
     # diciendo.
+    #
+    # Y aun en su archivo no basta: las tres cifras que mas importan (los dos
+    # montos de las tarjetas y el despacho) se exigen en SU nodo, ver ANCLAS.
     faltan = []
     for ruta, cifras in sorted(canonicas_por_archivo(p).items()):
         for cifra in sorted(cifras - vistas.get(ruta, set())):
             faltan.append('%s  %s' % (ruta, cifra))
-    return problemas, faltan
+    return problemas + revisar_anclas(p), faltan
 
 
 def canonicas_por_archivo(p):

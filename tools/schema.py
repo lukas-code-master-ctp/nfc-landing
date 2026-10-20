@@ -111,13 +111,19 @@ def producto():
             'entrega.'
         ),
         'featureList': [
-            'Carga inteligente: una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos',
+            # Lo que solo trae el plan de pago de Uso particular va marcado
+            # "Plan completo:", igual que lo de Flotas: sin la marca, un
+            # buscador lee la Carga inteligente o la ficha sin conexión como
+            # parte del plan gratis.
             'Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido',
-            'Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días',
+            'Ficha pública de solo lectura que se abre con un chip NFC',
             'Recordatorios por correo antes de cada vencimiento',
-            'Mantenciones con estado y avisos por correo',
             'Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones',
-            'Datos del vehículo: combustible, neumáticos, transmisión y aceite',
+            'Plan completo: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos',
+            'Plan completo: ficha pública guardada sin conexión durante 7 días',
+            'Plan completo: mantenciones con estado y avisos por correo',
+            'Plan completo: datos del vehículo, como combustible, neumáticos, transmisión y aceite',
+            'Plan completo: otros documentos, además de los de fiscalización',
             'Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas',
             'Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza',
             'Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF',

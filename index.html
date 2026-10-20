@@ -334,9 +334,11 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   min-height: 64px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
+/* min-height: el logo es el enlace al inicio y en celular es el blanco que
+   más se toca; con solo el SVG (32px) quedaba corto de los 44px. */
 .brand {
   display: flex; align-items: center; gap: 8px; text-decoration: none;
-  border-radius: var(--radius-sm);
+  min-height: 44px; border-radius: var(--radius-sm);
 }
 .brand svg { flex: 0 0 auto; }
 .brand__name { font-weight: 700; letter-spacing: -0.03em; font-size: 20px; color: var(--tinta); }
@@ -470,8 +472,9 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   margin: 14px 0 0; font-size: 13px; color: var(--acero);
   display: flex; align-items: center; flex-wrap: wrap; gap: 7px;
 }
+/* 44px de blanco táctil con -10px de margen: la línea del footer no crece. */
 .footer__matriz-link {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: -10px 0;
   text-decoration: none; color: var(--acero); border-radius: 4px;
   opacity: 1; transition: opacity var(--dur-base) var(--ease-salir);
 }
@@ -488,10 +491,12 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   text-transform: uppercase; color: var(--tinta);
 }
 .footer__links { display: flex; flex-direction: column; }
-/* 36px de alto por enlace: lista vertical de blancos táctiles sin que el
-   footer crezca de más. */
+/* 44px de blanco táctil por enlace, con -4px de margen arriba y abajo: la
+   lista se ve con el mismo paso de 36px que antes, pero el área que recibe
+   el toque llega a los 44px (los blancos vecinos se solapan 8px, que es
+   espacio muerto entre dos textos). */
 .footer__link {
-  display: inline-flex; align-items: center; min-height: 36px; align-self: flex-start;
+  display: inline-flex; align-items: center; min-height: 44px; margin: -4px 0; align-self: flex-start;
   font-size: 14px; color: var(--acero); text-decoration: none; border-radius: 4px;
   transition: color var(--dur-base) var(--ease-salir);
 }
@@ -583,10 +588,8 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .lp-hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; margin-top: 32px; }
 .lp-hero__sec {
   display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 0 4px;
-  font-size: 16px; font-weight: 600; color: var(--azul); text-decoration: none;
-  border-radius: var(--radius-sm);
+  font-size: 16px; border-radius: var(--radius-sm);
 }
-.lp-hero__sec:hover { text-decoration: underline; text-underline-offset: 4px; }
 .lp-hero__micro {
   display: flex; align-items: center; gap: 6px; margin: 14px 0 0;
   font-size: 14px; color: var(--acero);
@@ -965,7 +968,13 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
 .step { position: relative; }
 .step .card { position: relative; }
-.step__num { position: absolute; top: 24px; right: 26px; font-size: 13px; font-weight: 700; color: var(--linea); }
+/* El número va como el de ¿Cómo funciona? (.hw-step__num): mono y en acero.
+   En --linea quedaba a 1,2:1 sobre blanco, o sea, invisible para muchos. */
+.step__num {
+  position: absolute; top: 24px; right: 26px;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  color: var(--acero); font-variant-numeric: tabular-nums;
+}
 .step__title { margin: 18px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
 .step__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
@@ -996,9 +1005,10 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .quien__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
 .quien__link {
   display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 18px;
-  font-size: 15px; font-weight: 600; color: var(--azul);
+  font-size: 15px;
 }
-.quien__card:hover .quien__link { text-decoration: underline; text-underline-offset: 4px; }
+/* El hover de los enlaces de texto con flecha vive junto, en "Enlaces de
+   texto", para que las seis páginas subrayen igual. */
 
 .beneficios {
   /* La segunda columna es más ancha: lleva las tres pills en una fila. */
@@ -1025,7 +1035,8 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
    Mismo lenguaje visual que el toggle de facturación de Flotas: los dos son
    controles del mismo precio y tienen que leerse como una familia. Las
    opciones miden 44px de alto: es el objetivo táctil mínimo. */
-.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 32px; padding: 0 var(--gutter); }
+/* scroll-margin: /planes/#flotas salta acá, y sin él el nav sticky tapa las pills. */
+.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 32px; padding: 0 var(--gutter); scroll-margin-top: 88px; }
 .plan-pills {
   display: inline-flex; align-items: center; gap: 4px; padding: 5px;
   background: var(--superficie); border: 1px solid var(--linea);
@@ -1098,9 +1109,13 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   content: ''; position: absolute; bottom: -4px; left: var(--arrow, 50%); margin-left: -4px;
   width: 8px; height: 8px; background: var(--azul); transform: rotate(45deg); border-radius: 1px;
 }
+/* 44px de alto para el dedo, con -11px de margen arriba y abajo: ocupa en
+   el flujo los mismos 22px de antes, así que la burbuja y la escala no se
+   mueven. El riel visible sigue siendo de 8px (lo dibuja el track, centrado
+   en la caja). */
 .calc__slider {
   -webkit-appearance: none; appearance: none; display: block;
-  width: 100%; height: 22px; margin: 0; background: transparent; cursor: pointer;
+  width: 100%; height: 44px; margin: -11px 0; background: transparent; cursor: pointer;
 }
 .calc__slider:focus { outline: none; }
 .calc__slider::-webkit-slider-runnable-track {
@@ -1152,10 +1167,9 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .calc__nudge__btn, .calc__bridge__btn {
   display: block; min-height: 44px; margin: 2px 0 -8px; padding: 10px 0;
   border: 0; background: none; cursor: pointer; text-align: left; line-height: 1.5;
-  font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--azul);
-  border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 14px; border-radius: var(--radius-sm);
 }
-.calc__nudge__btn:hover, .calc__bridge__btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* (El hover va en "Enlaces de texto", con los demás.) */
 .calc__nudge__btn svg, .calc__bridge__btn svg { display: inline-block; vertical-align: -3px; margin-left: 4px; }
 
 
@@ -1201,6 +1215,11 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 .faq__item:last-child { border-bottom: 1px solid var(--linea); }
 .faq__q { margin: 0; font-size: 17px; font-weight: 600; }
 .faq__a { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+/* Socios: el FAQ viene justo después de una sección blanca con borde. Con su
+   margen de 48px quedaba entre las dos una franja gris del lienzo que no
+   separaba nada. Hoy es la única página con ese orden; Planes y ¿Cómo
+   funciona? tienen otra sección entre medio y no los toca. */
+.section--surface + .faq { margin-top: 0; border-top: 0; }
 
 /* ===================================================================
    Tarjetas de texto (¿Es legal?)
@@ -1261,6 +1280,9 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   font-variant-numeric: tabular-nums;
 }
 .plan-calc__fino { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+/* Secundario: el primario de la página es el de la tarjeta, y dos azules
+   llenos uno sobre otro competirían. */
+.plan-calc__cta { margin-top: 14px; }
 .plan-calc .calc__bridge { margin-top: 20px; background: var(--superficie); }
 .planes-nota {
   margin: 24px 0 0; display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -1446,10 +1468,9 @@ select.form__input {
 .legal-ref__title { margin: 0; font-size: 15px; font-weight: 600; color: var(--tinta); }
 .legal-ref__meta { margin: 4px 0 0; font-size: 13px; line-height: 1.55; color: var(--acero); }
 .legal-ref__link {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 10px;
-  font-size: 13px; font-weight: 600; color: var(--azul); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: -2px 0 -12px;
+  font-size: 13px;
 }
-.legal-ref__link:hover { text-decoration: underline; }
 .legal-disclaimer {
   max-width: 760px; margin: 28px auto 0; padding: 16px 20px;
   border: 1px dashed var(--linea); border-radius: var(--radius-md);
@@ -1477,9 +1498,14 @@ select.form__input {
    celular). Cada paso: ícono, número y etiqueta de plan arriba; título y un
    párrafo corto. tools/schema.py lee .hw-step, .hw-step__title,
    .hw-step__text y la .plan-tag de cada uno para el HowTo. */
+/* align-items: start y no stretch: estiradas, la tarjeta corta de cada fila
+   (la 01 junto a la de las pills de estado, la 03 junto a la del despacho)
+   quedaba con 60–80px de blanco abajo, que se leía como contenido que
+   faltaba. Arriba alineadas, cada una mide lo que dice. */
 .hw-steps {
   margin: 24px 0 0; padding: 0; list-style: none;
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;
+  align-items: start;
 }
 .hw-step { display: flex; flex-direction: column; padding: 24px; }
 .hw-step__top { display: flex; align-items: center; gap: 12px; min-height: 44px; }
@@ -1501,9 +1527,11 @@ select.form__input {
 }
 .op-item__title { margin: 14px 0 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
 .op-item__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
-.op-mas { margin: 36px 0 0; text-align: center; }
-.op-mas .quien__link { padding-top: 0; text-decoration: none; }
-.op-mas .quien__link:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* Acá .quien__link sí es un <a> suelto (en el inicio es un span dentro de
+   una tarjeta-enlace): lleva sus 44px de alto, y el margen baja lo mismo que
+   crece la caja (44 − 22 de línea) para que el texto quede donde estaba. */
+.op-mas { margin: 25px 0 0; text-align: center; }
+.op-mas .quien__link { padding-top: 0; min-height: 44px; }
 
 .section--aside { padding: 56px 0 0; }
 .hw-aside {
@@ -1515,11 +1543,28 @@ select.form__input {
 .hw-aside .icon-chip { background: var(--superficie); }
 .hw-aside__title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
 .hw-aside__text { margin: 7px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+/* 44px de alto con márgenes negativos: el texto queda donde estaba y la caja
+   del aviso no crece, pero el blanco táctil llega a los 44px. */
 .hw-aside__link {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 12px;
-  font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: 1px 0 -12px;
+  font-size: 15px;
 }
-.hw-aside__link:hover { text-decoration: underline; }
+
+/* ===================================================================
+   Enlaces de texto (con flecha o sin ella)
+   Mismo peso, color y subrayado al pasar en las seis páginas. El tamaño
+   sí cambia con el contexto (16px en el hero, 13px en una referencia). Si
+   agregas uno nuevo, súmalo acá en vez de repetir las tres propiedades.
+   =================================================================== */
+.lp-hero__sec, .quien__link, .hw-aside__link, .legal-ref__link,
+.calc__nudge__btn, .calc__bridge__btn {
+  font-weight: 600; color: var(--azul); text-decoration: none;
+}
+.lp-hero__sec:hover, a.quien__link:hover, .quien__card:hover .quien__link,
+.hw-aside__link:hover, .legal-ref__link:hover,
+.calc__nudge__btn:hover, .calc__bridge__btn:hover {
+  text-decoration: underline; text-underline-offset: 4px;
+}
 
 /* ===================================================================
    Tarjetas de audiencia (Socios) y etiqueta de plan
@@ -1608,7 +1653,15 @@ select.form__input {
 /* Cómo funciona — paso 04: la foto del llavero en la esquina, donde los
    pasos de Flotas llevan su etiqueta. Se monta sobre el borde de arriba
    para no estirar la fila. */
-.llavero--paso { width: 52px; height: auto; flex: 0 0 auto; margin: -14px 0 -18px; transform: rotate(8deg); }
+/* Va enmarcada como una miniatura de 44px, a la altura del ícono y en el
+   lugar donde los pasos de Flotas llevan su etiqueta. Antes se montaba sobre
+   el borde de la tarjeta con márgenes negativos y parecía un recorte mal
+   hecho; suelta y chica, sin marco, se leía como una mancha azul. */
+.llavero--paso {
+  width: 44px; height: 44px; flex: 0 0 auto; box-sizing: border-box;
+  padding: 3px; object-fit: contain; filter: none;
+  background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-md);
+}
 
 /* Planes — esquina del panel "Todo incluido" */
 .included { position: relative; }
@@ -1967,13 +2020,15 @@ select.form__input {
       "inLanguage": "es-CL",
       "description": "Plataforma chilena para tener la documentación y las mantenciones de tus vehículos al día y mostrarlas en una fiscalización con un toque a un chip NFC. Guarda el Permiso de Circulación, la Revisión Técnica, el SOAP, el Certificado de Homologación y el Padrón con su fecha de vencimiento y avisa por correo antes de que venzan. En el plan Flotas, además registra con un PIN quién usa cada vehículo y en qué estado lo entrega.",
       "featureList": [
-        "Carga inteligente: una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos",
         "Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido",
-        "Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días",
+        "Ficha pública de solo lectura que se abre con un chip NFC",
         "Recordatorios por correo antes de cada vencimiento",
-        "Mantenciones con estado y avisos por correo",
         "Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones",
-        "Datos del vehículo: combustible, neumáticos, transmisión y aceite",
+        "Plan completo: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos",
+        "Plan completo: ficha pública guardada sin conexión durante 7 días",
+        "Plan completo: mantenciones con estado y avisos por correo",
+        "Plan completo: datos del vehículo, como combustible, neumáticos, transmisión y aceite",
+        "Plan completo: otros documentos, además de los de fiscalización",
         "Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas",
         "Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza",
         "Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF"
