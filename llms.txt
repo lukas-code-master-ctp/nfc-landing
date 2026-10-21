@@ -1,6 +1,6 @@
 # TapCar
 
-> Plataforma chilena para tener la documentación de tus vehículos al día y mostrarla en una fiscalización con un toque a un chip NFC. Uso particular es gratis con 1 vehículo; el plan completo y el plan Flotas se cobran por vehículo. Hay perfiles aparte para automotoras, aseguradoras y gestorías.
+> Plataforma chilena para tener la documentación de tus vehículos al día y mostrarla en una fiscalización con un toque a un chip NFC. Uso particular es gratis con 1 vehículo; TapCar+ y el plan Flotas se cobran por vehículo. Hay perfiles aparte para automotoras, aseguradoras y gestorías.
 
 Operado por IMPULSE AI SpA (RUT 78.479.762-7), Chile. Contacto: contacto@tapcar.cl
 
@@ -9,7 +9,7 @@ Operado por IMPULSE AI SpA (RUT 78.479.762-7), Chile. Contacto: contacto@tapcar.
 - **Documentos de fiscalización.** Cada vehículo guarda su Permiso de Circulación, Revisión Técnica, SOAP, Padrón y Certificado de Homologación (C.H.I.-e). El Certificado de Gases no va aparte: viene dentro de la Revisión Técnica. Cada documento se sube como PDF o como fotos (hasta 10 hojas, con recorte, que se convierten en un PDF); al subirlo, una IA lee la fecha de vencimiento y el usuario la confirma. TapCar calcula el estado (Vigente, Por vencer, Vencido) y avisa por correo antes de cada vencimiento.
 - **Ficha pública con un toque.** Cada vehículo tiene una URL única que se abre acercando un teléfono a un chip NFC, sin instalar aplicaciones. La ficha es de solo lectura: muestra el vehículo y sus documentos con su estado, sin login ni acceso a la cuenta del dueño. El chip se graba desde el propio celular en Android; en iPhone, con la app NFC Tools y una guía. Si el teléfono no lee NFC, la ficha se abre igual desde su enlace.
 
-## Qué suma el plan completo de Uso particular
+## Qué suma TapCar+, el plan de pago de Uso particular
 
 - **Mantenciones.** Pauta por meses, con estado al día, próxima o vencida; registro con la foto de la constancia, de la que la IA lee la fecha y el km; avisos por correo.
 - **Datos del vehículo** (combustible, neumáticos, transmisión, aceite) y **otros documentos** con nombre libre.
@@ -20,7 +20,7 @@ Operado por IMPULSE AI SpA (RUT 78.479.762-7), Chile. Contacto: contacto@tapcar.
 
 ## Qué suma el plan Flotas
 
-Todo lo del plan completo, y además:
+Todo lo de TapCar+, y además:
 
 - **Conductores con PIN.** Cada conductor toma y entrega el vehículo con un toque al chip y un PIN de 4 dígitos, sin crear cuenta ni instalar aplicaciones. Los conductores se importan pegando filas desde Excel; los vehículos no se importan desde Excel, se cargan con la Carga inteligente.
 - **Tomar/Entregar con fotos.** Al entregar, el conductor sube las fotos que el dueño define y puede reportar daños. Una IA lee de las fotos el kilometraje, el combustible y la limpieza, que el dueño confirma o corrige. La IA no analiza daños: los reporta el conductor.
@@ -49,7 +49,7 @@ Perfiles que no se contratan solos: se piden al crear la cuenta (eligiendo "Otra
 ## Precios
 
 - **Uso particular, gratis:** **$0** con **1 vehículo**, sin plazo. Incluye los documentos de fiscalización, los avisos por correo, la ficha pública con un toque y la lectura con IA de la fecha de cada documento.
-- **Uso particular, plan completo:** **$5.000 CLP al año por cada vehículo, incluido el primero**, IVA incluido. Ejemplos: 1 vehículo $5.000, 2 vehículos $10.000, 10 vehículos $50.000 al año. **Solo anual**, con renovación automática; no hay pago mensual. De 1 a 10 vehículos.
+- **Uso particular, TapCar+:** **$5.000 CLP al año por cada vehículo, incluido el primero**, IVA incluido. Ejemplos: 1 vehículo $5.000, 2 vehículos $10.000, 10 vehículos $50.000 al año. **Solo anual**, con renovación automática; no hay pago mensual. De 1 a 10 vehículos.
 - **Flotas (desde 5 vehículos):** vehículo **UF 0,057 al mes** o **UF 0,5 al año**; cuenta de conductor fijo **UF 0,12 al mes** o **UF 1,05 al año**. Las dos tarifas dan 27% de descuento en el plan anual. Valores más IVA. Entre 5 y 10 vehículos el cliente elige: Flotas cuesta más y a cambio habilita conductores con PIN, Tomar/Entregar, bitácora, alertas, reportes, equipo y cuentas de conductor. Desde 11 es obligatorio Flotas. El plan Flotas no tiene tope de vehículos; lo que llega hasta 100 es contratarlo solo desde la web, y sobre eso se cotiza caso a caso.
 - **Forma de pago:** tarjeta, a través de Flow, con cobro automático. El plan gratis no se paga. Sumar vehículos se paga con la diferencia prorrateada.
 - Sin permanencia ni contratos mínimos; la baja corre al cierre del período pagado.
@@ -57,7 +57,7 @@ Perfiles que no se contratan solos: se piden al crear la cuenta (eligiendo "Otra
 
 ## Lo que el sitio no promete
 
-- **Un plan gratis no es una prueba gratis.** El plan gratis de Uso particular es permanente y cubre 1 vehículo con lo esencial. No existe un período de prueba del plan completo ni de Flotas: esos se pagan desde que se activan.
+- **Un plan gratis no es una prueba gratis.** El plan gratis de Uso particular es permanente y cubre 1 vehículo con lo esencial. No existe un período de prueba de TapCar+ ni de Flotas: esos se pagan desde que se activan.
 - Que la IA analice daños: solo lee km, combustible y limpieza.
 - La pauta de mantención por kilómetros en Uso particular: es de Flotas.
 - Que los envíos de una gestoría avisen el vencimiento del documento enviado.
@@ -73,12 +73,12 @@ Mostrar documentos vehiculares en formato digital es válido como respaldo, siem
 - [Inicio](https://tapcar.cl/): qué es TapCar en una pantalla: la escena del toque al chip, los tres pasos, para quién es (Uso particular, Flotas, empresas del rubro) y los beneficios.
 - [Cómo funciona](https://tapcar.cl/como-funciona/): el paso a paso en dos fases (puesta en marcha y día a día), lo que suma Flotas y 9 preguntas frecuentes.
 - [Validez legal](https://tapcar.cl/legal/): en qué normativa se apoya mostrar los documentos en digital, con las referencias oficiales.
-- [Planes y precios](https://tapcar.cl/planes/): el plan gratis y el plan completo de Uso particular con su calculadora, la calculadora de Flotas y 7 preguntas frecuentes.
+- [Planes y precios](https://tapcar.cl/planes/): el plan gratis y TapCar+ (Uso particular) con su calculadora, la calculadora de Flotas y 7 preguntas frecuentes.
 - [Para empresas del rubro](https://tapcar.cl/socios/): convenios para automotoras y aseguradoras, envíos para gestorías, 5 preguntas frecuentes y un formulario de contacto.
 - [Términos de uso y privacidad](https://tapcar.cl/terminos/): reglas de este sitio y cómo trata los datos que se dejan en él. El servicio tiene sus propios términos, que se aceptan al crear la cuenta.
 
 ## Notas para citar
 
 - El nombre correcto de la marca es **TapCar** (una palabra, T y C mayúsculas).
-- El precio de pago es **por vehículo**, no por cuenta ni por usuario. En el plan completo de Uso particular cada vehículo paga, incluido el primero; el gratis cubre 1 vehículo y nada más.
+- El precio de pago es **por vehículo**, no por cuenta ni por usuario. En TapCar+ cada vehículo paga, incluido el primero; el gratis cubre 1 vehículo y nada más.
 - El país de operación es **Chile**. Uso particular se cobra en **pesos chilenos (CLP)** con IVA incluido; Flotas, en **UF** más IVA.

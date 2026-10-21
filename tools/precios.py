@@ -60,7 +60,7 @@ PATRON = re.compile(r'\$\s?\d[\d.]*\d|\$\s?\d|UF\s\d+(?:,\d+)?|\d{1,3}%')
 
 # Cifras ancladas a SU nodo. Que una cifra aparezca en el archivo no prueba
 # que este donde se promete: $5.000 es tambien el tramo de 3 a 50 chips y
-# $10.000 el total de 2 vehiculos, asi que con la tarjeta del plan completo
+# $10.000 el total de 2 vehiculos, asi que con la tarjeta de TapCar+
 # diciendo $10.000 (o sin precio) el archivo seguia "teniendo" las dos cifras
 # y la revision pasaba. Lo mismo con el $3.000 del despacho: $2.000 es un
 # tramo valido. Cada ancla es (archivo, que es, regex con UN grupo que captura
@@ -71,7 +71,7 @@ ANCLAS = [
     ('planes/index.html', 'monto de la tarjeta Gratis',
      r'<article class="card plan-card">.*?<span class="plan-card__monto">([^<]*)</span>',
      lambda p: clp(0)),
-    ('planes/index.html', 'monto de la tarjeta Plan completo',
+    ('planes/index.html', 'monto de la tarjeta TapCar+',
      r'<article class="card plan-card plan-card--pro">.*?<span class="plan-card__monto">([^<]*)</span>',
      lambda p: clp(p['planes']['particular']['vehiculo']['anio'])),
     ('planes/index.html', 'despacho de Uso particular [data-envio-part]',

@@ -1270,7 +1270,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
 
-/* Planes — Uso particular: dos tarjetas (Gratis / Plan completo) lado a
+/* Planes — Uso particular: dos tarjetas (Gratis / TapCar+) lado a
    lado, apiladas en celular, con las mismas piezas en el mismo orden para
    que se comparen fila a fila. El slider del total va en una franja a lo
    ancho debajo (.plan-calc): dentro de la tarjeta de pago la estiraba y la
@@ -1303,7 +1303,7 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
    de arriba, porque lo de arriba puede estar oculto (el puente a Flotas). */
 .plan-card__pie { margin-top: auto; padding-top: 28px; }
 .plan-card__pie .btn { width: 100%; }
-/* Franja "Calcula tu plan completo": slider a la izquierda, total a la
+/* Franja "Calcula tu TapCar+": slider a la izquierda, total a la
    derecha; en celular se apilan. El título va dentro de la columna del
    slider para que la burbuja (que flota 38 px sobre el riel) tenga su aire
    debajo del título y no encima de la tarjeta. */
@@ -2071,11 +2071,11 @@ select.form__input {
         "Ficha pública de solo lectura que se abre con un chip NFC",
         "Recordatorios por correo antes de cada vencimiento",
         "Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones",
-        "Plan completo: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos",
-        "Plan completo: ficha pública guardada sin conexión durante 7 días",
-        "Plan completo: mantenciones con estado y avisos por correo",
-        "Plan completo: datos del vehículo, como combustible, neumáticos, transmisión y aceite",
-        "Plan completo: otros documentos, además de los de fiscalización",
+        "TapCar+: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos",
+        "TapCar+: ficha pública guardada sin conexión durante 7 días",
+        "TapCar+: mantenciones con estado y avisos por correo",
+        "TapCar+: datos del vehículo, como combustible, neumáticos, transmisión y aceite",
+        "TapCar+: otros documentos, además de los de fiscalización",
         "Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas",
         "Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza",
         "Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF"
@@ -2106,7 +2106,7 @@ select.form__input {
           },
           {
             "@type": "Offer",
-            "name": "Uso particular — plan completo",
+            "name": "Uso particular — TapCar+",
             "description": "$5.000 al año por cada vehículo, incluido el primero, hasta 10 vehículos. IVA incluido.",
             "price": "5000",
             "priceCurrency": "CLP",
@@ -2196,7 +2196,7 @@ select.form__input {
           "name": "¿Cuánto cuesta?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Uso particular es gratis con 1 vehículo. El plan completo cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA."
+            "text": "Uso particular es gratis con 1 vehículo. TapCar+ cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA."
           }
         },
         {
@@ -2228,7 +2228,7 @@ select.form__input {
           "name": "¿Cómo se paga?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Con tarjeta, vía Flow. El plan completo se cobra al año y se renueva solo; Flotas, mensual o anual."
+            "text": "Con tarjeta, vía Flow. TapCar+ se cobra al año y se renueva solo; Flotas, mensual o anual."
           }
         },
         {
@@ -2343,7 +2343,7 @@ select.form__input {
 
         <article class="card plan-card plan-card--pro">
           <div class="tag-row">
-            <h2 class="plan-card__name">Plan completo</h2>
+            <h2 class="plan-card__name">TapCar+</h2>
             <span class="plan-tag">Anual</span>
           </div>
           <p class="plan-card__precio"><span class="plan-card__monto">$5.000</span><span class="plan-card__per">al año por vehículo</span></p>
@@ -2358,7 +2358,7 @@ select.form__input {
           </ul>
 
           <div class="plan-card__pie">
-            <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Empezar con el plan completo</a>
+            <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Empezar con TapCar+</a>
           </div>
         </article>
 
@@ -2371,7 +2371,7 @@ select.form__input {
       <section class="card plan-calc" aria-labelledby="calc-part-titulo">
         <div class="plan-calc__fila">
           <div class="plan-calc__control">
-            <h2 class="plan-calc__title" id="calc-part-titulo">Calcula tu plan completo</h2>
+            <h2 class="plan-calc__title" id="calc-part-titulo">Calcula tu TapCar+</h2>
             <div class="calc__slider-wrap">
               <span class="calc__bubble" data-bubble>2 vehículos</span>
               <input type="range" min="1" max="10" value="2" step="1" class="calc__slider" data-slider
@@ -2382,7 +2382,7 @@ select.form__input {
           <div class="plan-calc__resultado">
             <p class="plan-calc__total" aria-live="polite">Total: <strong data-total>$10.000</strong> al año</p>
             <p class="plan-calc__fino"><span data-formula>2 vehículos × $5.000</span>. IVA incluido.</p>
-            <a href="https://app.tapcar.cl" class="btn btn--secondary btn--md plan-calc__cta">Empezar con el plan completo</a>
+            <a href="https://app.tapcar.cl" class="btn btn--secondary btn--md plan-calc__cta">Empezar con TapCar+</a>
           </div>
         </div>
         <div class="calc__bridge" data-bridge hidden>
@@ -2548,7 +2548,7 @@ select.form__input {
       <div class="included included--con-llavero">
         <img src="/assets/chip-llavero.webp" class="llavero llavero--included" alt="Llavero con el chip NFC de TapCar" loading="lazy" width="345" height="400">
         <span class="included__eyebrow">Todo incluido</span>
-        <p class="included__lead">Todo lo del plan completo de Uso particular, más:</p>
+        <p class="included__lead">Todo lo de TapCar+, más:</p>
         <ul class="included__list">
           <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Conductores con PIN que toman y entregan con un Tap</li>
           <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fotos de entrega: la IA anota kilometraje, combustible y limpieza</li>
@@ -2591,7 +2591,7 @@ select.form__input {
       <div class="faq__list">
         <div class="faq__item">
           <h3 class="faq__q">¿Cuánto cuesta?</h3>
-          <p class="faq__a">Uso particular es gratis con 1 vehículo. El plan completo cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA.</p>
+          <p class="faq__a">Uso particular es gratis con 1 vehículo. TapCar+ cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Qué plan me toca?</h3>
@@ -2607,7 +2607,7 @@ select.form__input {
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo se paga?</h3>
-          <p class="faq__a">Con tarjeta, vía Flow. El plan completo se cobra al año y se renueva solo; Flotas, mensual o anual.</p>
+          <p class="faq__a">Con tarjeta, vía Flow. TapCar+ se cobra al año y se renueva solo; Flotas, mensual o anual.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Y si sumo vehículos?</h3>

@@ -112,18 +112,18 @@ def producto():
         ),
         'featureList': [
             # Lo que solo trae el plan de pago de Uso particular va marcado
-            # "Plan completo:", igual que lo de Flotas: sin la marca, un
+            # "TapCar+:", igual que lo de Flotas: sin la marca, un
             # buscador lee la Carga inteligente o la ficha sin conexión como
             # parte del plan gratis.
             'Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido',
             'Ficha pública de solo lectura que se abre con un chip NFC',
             'Recordatorios por correo antes de cada vencimiento',
             'Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones',
-            'Plan completo: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos',
-            'Plan completo: ficha pública guardada sin conexión durante 7 días',
-            'Plan completo: mantenciones con estado y avisos por correo',
-            'Plan completo: datos del vehículo, como combustible, neumáticos, transmisión y aceite',
-            'Plan completo: otros documentos, además de los de fiscalización',
+            'TapCar+: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos',
+            'TapCar+: ficha pública guardada sin conexión durante 7 días',
+            'TapCar+: mantenciones con estado y avisos por correo',
+            'TapCar+: datos del vehículo, como combustible, neumáticos, transmisión y aceite',
+            'TapCar+: otros documentos, además de los de fiscalización',
             'Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas',
             'Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza',
             'Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF',
@@ -158,7 +158,7 @@ def producto():
                 },
                 {
                     '@type': 'Offer',
-                    'name': 'Uso particular — plan completo',
+                    'name': 'Uso particular — TapCar+',
                     'description': '$%s al año por cada vehículo, incluido el primero, hasta %d vehículos. IVA incluido.'
                                    % (_clp(_PART['vehiculo']['anio']), _PART['vehiculos']['max']),
                     'price': str(_PART['vehiculo']['anio']),
