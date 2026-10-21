@@ -621,6 +621,47 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
 }
 .prueba__txt { font-size: 17px; font-weight: 500; color: var(--acero); }
 
+/* Banda de clientes bajo el contador. Los logos vienen procesados a gris y
+   a la misma superficie visual (assets/cliente-*.webp): normalizarlos por
+   alto dejaba enormes a los casi cuadrados y diminutos a los muy anchos.
+   La cinta lleva el set dos veces y se desplaza -50%: cuando termina, la
+   segunda mitad está exactamente donde empezó la primera, así que el bucle
+   no salta. Con movimiento reducido no hay cinta: se ve un solo set quieto
+   y centrado (la copia se oculta). */
+.clientes { max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter) 26px; }
+.clientes__titulo {
+  margin: 0 0 14px; text-align: center; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--acero);
+}
+.clientes__ventana { overflow: hidden; }
+.clientes__cinta {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px 56px;
+}
+.clientes__item { flex: none; display: flex; align-items: center; height: 52px; }
+/* El ancho de cada logo viene en --w (el mismo del atributo width): con
+   width/height en auto el navegador usaba el tamaño intrínseco, que es 2x. */
+.clientes__item img { display: block; width: var(--w); height: auto; opacity: .75; }
+.clientes__item:nth-child(n+5) { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .clientes__ventana {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .clientes__cinta {
+    flex-wrap: nowrap; justify-content: flex-start; gap: 0; width: max-content;
+    animation: clientes-cinta 40s linear infinite;
+  }
+  .clientes__item:nth-child(n+5) { display: flex; }
+  .clientes__item { padding-right: 64px; }
+  .clientes__ventana:hover .clientes__cinta { animation-play-state: paused; }
+}
+@keyframes clientes-cinta { to { transform: translateX(-50%); } }
+@media (max-width: 560px) {
+  .clientes__item img { width: calc(var(--w) * .8); }
+  .clientes__item { padding-right: 44px; }
+}
+
 /* <escena-tap> ════════════════════════════════════════════════════════
    Escena "Tap" del hero. Autónoma: todo con prefijo `tap-`.
 
@@ -2346,6 +2387,29 @@ select.form__input {
       <span class="prueba__num" data-conteo data-valor="600" data-prefijo="+">+600</span>
       <span class="prueba__txt">vehículos ya operan con un Tap</span>
     </p>
+    <div class="clientes" data-clientes>
+      <p class="clientes__titulo">Confían en TapCar</p>
+      <div class="clientes__ventana">
+        <ul class="clientes__cinta" role="list">
+          <li class="clientes__item"><img src="/assets/cliente-compratuparcela.webp" alt="CompraTuParcela" width="182" height="33" style="--w:182px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-transmac.webp" alt="Transmac" width="124" height="48" style="--w:124px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-automillas.webp" alt="Automillas" width="210" height="18" style="--w:210px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-fullpickup.webp" alt="Full Pickup" width="134" height="45" style="--w:134px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-compratuparcela.webp" alt="" width="182" height="33" style="--w:182px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-transmac.webp" alt="" width="124" height="48" style="--w:124px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-automillas.webp" alt="" width="210" height="18" style="--w:210px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-fullpickup.webp" alt="" width="134" height="45" style="--w:134px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-compratuparcela.webp" alt="" width="182" height="33" style="--w:182px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-transmac.webp" alt="" width="124" height="48" style="--w:124px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-automillas.webp" alt="" width="210" height="18" style="--w:210px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-fullpickup.webp" alt="" width="134" height="45" style="--w:134px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-compratuparcela.webp" alt="" width="182" height="33" style="--w:182px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-transmac.webp" alt="" width="124" height="48" style="--w:124px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-automillas.webp" alt="" width="210" height="18" style="--w:210px" loading="lazy" decoding="async"></li>
+          <li class="clientes__item"><img src="/assets/cliente-fullpickup.webp" alt="" width="134" height="45" style="--w:134px" loading="lazy" decoding="async"></li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <!-- ============ ASÍ DE SIMPLE ============ -->
