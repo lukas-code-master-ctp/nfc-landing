@@ -25,8 +25,6 @@ with io.open(os.path.join(RAIZ, 'precios.json'), encoding='utf-8') as _f:
     PRECIOS = json.load(_f)
 _PART = PRECIOS['planes']['particular']
 _FLOTA = PRECIOS['planes']['flota']
-_DESC = int(round((1 - _PART['vehiculo']['anio'] /
-                   (_PART['vehiculo']['mes'] * 12.0)) * 100))
 
 
 def _clp(n):
@@ -113,13 +111,19 @@ def producto():
             'entrega.'
         ),
         'featureList': [
-            'Carga inteligente: una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos',
+            # Lo que solo trae el plan de pago de Uso particular va marcado
+            # "TapCar+:", igual que lo de Flotas: sin la marca, un
+            # buscador lee la Carga inteligente o la ficha sin conexión como
+            # parte del plan gratis.
             'Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido',
-            'Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días',
+            'Ficha pública de solo lectura que se abre con un chip NFC',
             'Recordatorios por correo antes de cada vencimiento',
-            'Mantenciones con pauta, estado y avisos por correo',
             'Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones',
-            'Datos del vehículo: combustible, neumáticos, transmisión y aceite',
+            'TapCar+: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos',
+            'TapCar+: ficha pública guardada sin conexión durante 7 días',
+            'TapCar+: mantenciones con estado y avisos por correo',
+            'TapCar+: datos del vehículo, como combustible, neumáticos, transmisión y aceite',
+            'TapCar+: otros documentos, además de los de fiscalización',
             'Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas',
             'Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza',
             'Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF',
@@ -127,47 +131,44 @@ def producto():
         'provider': {'@id': ORG},
         # El AggregateOffer admite una sola priceCurrency, y acá conviven pesos
         # (Particular) y UF (Flotas). Se deja en CLP con el rango de Particular
-        # en lowPrice/highPrice, y cada oferta de Flotas declara su propia
+        # (del plan gratis al precio anual por vehículo) en lowPrice/highPrice, y cada oferta de Flotas declara su propia
         # priceCurrency CLF, que es el codigo ISO 4217 de la Unidad de Fomento.
         # Es lo mas cerca de la verdad que permite el vocabulario.
         'offers': {
             '@type': 'AggregateOffer',
             'priceCurrency': 'CLP',
-            'lowPrice': str(_PART['vehiculo']['mes']),
+            # Uso particular es gratis con 1 vehiculo y su plan de pago es solo
+            # anual (desde el 2026-10-20): ya no hay oferta mensual.
+            'lowPrice': '0',
             'highPrice': str(_PART['vehiculo']['anio']),
             'offerCount': 4,
             'offers': [
                 {
                     '@type': 'Offer',
-                    'name': 'Uso particular — plan mensual',
-                    'description': '$%s por vehículo al mes, hasta %d vehículos, sin permanencia.'
-                                   % (_clp(_PART['vehiculo']['mes']), _PART['vehiculos']['max']),
-                    'price': str(_PART['vehiculo']['mes']),
+                    'name': 'Uso particular — gratis',
+                    'description': 'Gratis con %d vehículo: documentos de fiscalización, avisos por correo y ficha pública con un toque.'
+                                   % _PART['gratis']['vehiculos'],
+                    'price': '0',
                     'priceCurrency': 'CLP',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
-                    'priceSpecification': {
-                        '@type': 'UnitPriceSpecification',
-                        'price': str(_PART['vehiculo']['mes']),
-                        'priceCurrency': 'CLP',
-                        'valueAddedTaxIncluded': True,
-                        'unitText': 'vehículo',
-                        'billingIncrement': 1,
-                        'billingDuration': 1,
-                        'referenceQuantity': {
-                            '@type': 'QuantitativeValue', 'value': 1, 'unitCode': 'MON'
-                        },
+                    'eligibleQuantity': {
+                        '@type': 'QuantitativeValue', 'maxValue': _PART['gratis']['vehiculos'], 'unitText': 'vehículo'
                     },
                 },
                 {
                     '@type': 'Offer',
-                    'name': 'Uso particular — plan anual',
-                    'description': '$%s por vehículo al año, un %d%% menos que pagando mes a mes.'
-                                   % (_clp(_PART['vehiculo']['anio']), _DESC),
+                    'name': 'Uso particular — TapCar+',
+                    'description': '$%s al año por cada vehículo, incluido el primero, hasta %d vehículos. IVA incluido.'
+                                   % (_clp(_PART['vehiculo']['anio']), _PART['vehiculos']['max']),
                     'price': str(_PART['vehiculo']['anio']),
                     'priceCurrency': 'CLP',
                     'availability': 'https://schema.org/InStock',
                     'url': SITIO + '/planes/',
+                    'eligibleQuantity': {
+                        '@type': 'QuantitativeValue', 'minValue': _PART['vehiculos']['min'],
+                        'maxValue': _PART['vehiculos']['max'], 'unitText': 'vehículo'
+                    },
                     'priceSpecification': {
                         '@type': 'UnitPriceSpecification',
                         'price': str(_PART['vehiculo']['anio']),

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Precios TapCar: $2.500 por vehículo al mes, sin permanencia</title>
-  <meta name="description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
+  <title>Precios TapCar: gratis con 1 auto, $5.000 al año por vehículo</title>
+  <meta name="description" content="Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.">
   <link rel="canonical" href="https://tapcar.cl/planes/">
 
   <!-- Tarjeta al compartir (WhatsApp, LinkedIn, X). La imagen es absoluta
@@ -13,52 +13,65 @@
   <meta property="og:site_name" content="TapCar">
   <meta property="og:locale" content="es_CL">
   <meta property="og:url" content="https://tapcar.cl/planes/">
-  <meta property="og:title" content="Precios TapCar: $2.500 por vehículo al mes, sin permanencia">
-  <meta property="og:description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
+  <meta property="og:title" content="Precios TapCar: gratis con 1 auto, $5.000 al año por vehículo">
+  <meta property="og:description" content="Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.">
   <meta property="og:image" content="https://tapcar.cl/assets/og-tapcar.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="TapCar — tus vehículos a un Tap">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Precios TapCar: $2.500 por vehículo al mes, sin permanencia">
-  <meta name="twitter:description" content="$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.">
+  <meta name="twitter:title" content="Precios TapCar: gratis con 1 auto, $5.000 al año por vehículo">
+  <meta name="twitter:description" content="Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.">
   <meta name="twitter:image" content="https://tapcar.cl/assets/og-tapcar.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="theme-color" content="#2952e6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Caveat:wght@700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap">
   <style>
 /* ===================================================================
-   TapCar — Sitio (Landing + Planes)
-   Design System (tokens + componentes) reproducido del
-   TapCar Design System, más los estilos de cada página.
-   Esta hoja se incrusta en cada HTML para que funcione de forma
-   autónoma; este archivo es la fuente editable.
+   TapCar — Sitio (Inicio, ¿Cómo funciona?, Planes, Socios, ¿Es legal?,
+   Términos)
+   Sistema visual tomado de la app (repo nfc: app/globals.css y
+   docs/ui.md): mismos tokens, mismos componentes, misma regla de
+   movimiento. Esta hoja se incrusta en cada HTML para que funcione de
+   forma autónoma; este archivo es la fuente editable.
    =================================================================== */
 
 :root {
-  /* ── Neutros ─────────────────────────────────────────────────── */
-  --tinta: #16191f;
-  --acero: #5b6573;
-  --linea: #e3e6ea;
-  --lienzo: #f6f7f9;
-  --superficie: #ffffff;
+  /* ── Neutros · base de la interfaz ───────────────────────────── */
+  --tinta: #16191f;        /* texto / encabezados */
+  --acero: #5b6573;        /* texto secundario */
+  --linea: #e3e6ea;        /* bordes / divisores */
+  /* Borde de controles y tarjetas que tienen que verse al sol: `linea`
+     casi desaparece sobre blanco con el brillo al máximo. No es para
+     texto (1,5:1). */
+  --linea-fuerte: #cfd4db;
+  --lienzo: #f6f7f9;       /* fondo de la página */
+  --superficie: #ffffff;   /* tarjetas / paneles */
+  --neutro-suave: #eef0f3; /* pill gris, bloques internos planos */
 
-  /* ── Marca ───────────────────────────────────────────────────── */
-  --azul: #2952e6;
-  --azul-press: #1e3dae;
-  --azul-soft: #eaeefc;
-  --ambar: #f59e0b;
-  --text-on-accent: #ffffff;
+  /* ── Marca · acentos ─────────────────────────────────────────── */
+  --azul: #2952e6;         /* primario · CTAs · enlaces */
+  --azul-press: #1e3dae;   /* hover · active */
+  --azul-50: #eef2fe;      /* fondo de selección, bloques de acento */
+  --azul-100: #dde5fd;     /* ícono del vehículo, hover de selección */
+  --ambar: #f59e0b;        /* acento cálido */
 
-  /* ── Estados (vencimiento) ───────────────────────────────────── */
+  /* ── Estados · vencimiento de documentos ─────────────────────────
+     El color base sirve para puntos, barras y bordes (ahí 3:1 alcanza),
+     pero como TEXTO no se lee: `vigente` da 3,3:1 sobre blanco y
+     `por-vencer` 2,1:1. Las variantes `-texto` pasan 4,5:1 sobre blanco
+     Y sobre su propio fondo `-suave` (la pill). Regla de la app: un color
+     de estado nunca va solo (siempre con texto o ícono) y, como texto,
+     siempre la variante `-texto`. */
   --vigente: #16a34a;
-  --estado-vigente-bg: #e7f6ec;     --estado-vigente-fg: #15803d;
-  --estado-por-vencer-bg: #fdf1dc;  --estado-por-vencer-fg: #b45309;
-  --estado-vencido-bg: #fce7e7;     --estado-vencido-fg: #c81e1e;
-  --estado-neutro-bg: #eef0f3;      --estado-neutro-fg: #5b6573;
+  --vigente-texto: #157a3a;     --vigente-suave: #e7f6ec;
+  --por-vencer: #f59e0b;
+  --por-vencer-texto: #a8500a;  --por-vencer-suave: #fdf1dc;
+  --vencido: #dc2626;
+  --vencido-texto: #b91c1c;     --vencido-suave: #fce7e7;
 
   /* ── Tipografía ──────────────────────────────────────────────── */
   --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -71,22 +84,34 @@
   --text-sm: 0.875rem;
   --text-base: 1rem;
 
-  /* ── Espaciado / radios ──────────────────────────────────────── */
+  /* ── Layout ──────────────────────────────────────────────────── */
+  --contenedor: 1120px;
+  --gutter: 24px;          /* 16px en celular (ver Responsive) */
+
+  /* ── Espaciado / radios (los de Tailwind que usa la app) ─────── */
   --space-4: 1rem;
   --space-5: 1.25rem;
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
+  --radius-sm: 0.5rem;     /* rounded-lg: botones, campos */
+  --radius-md: 0.75rem;    /* rounded-xl: chips de ícono, avisos */
+  --radius-lg: 1rem;       /* rounded-2xl: tarjetas */
   --radius-pill: 9999px;
 
-  /* ── Sombras ─────────────────────────────────────────────────── */
-  --shadow-sm: 0 1px 2px 0 rgba(22, 25, 31, 0.05);
-  --shadow-md: 0 4px 12px -2px rgba(22, 25, 31, 0.10);
-  --shadow-lg: 0 12px 28px -6px rgba(22, 25, 31, 0.16);
+  /* ── Sombras (shadow-sm / md / lg de Tailwind, en tinta) ─────── */
+  --shadow-sm: 0 1px 3px 0 rgba(22, 25, 31, 0.08), 0 1px 2px -1px rgba(22, 25, 31, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(22, 25, 31, 0.08), 0 2px 4px -2px rgba(22, 25, 31, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(22, 25, 31, 0.10), 0 4px 6px -4px rgba(22, 25, 31, 0.10);
 
-  /* ── Movimiento ──────────────────────────────────────────────── */
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-base: 200ms;
+  /* ── Movimiento ──────────────────────────────────────────────────
+       rapida 120ms  respuesta al tocar
+       base   200ms  estado, hover
+       lenta  320ms  aparición
+     `ease-salir` es para lo que ENTRA (desacelera al llegar);
+     `ease-entrar` para lo que se va. */
+  --dur-rapida: 120ms;
+  --dur-base: 200ms;
+  --dur-lenta: 320ms;
+  --ease-salir: cubic-bezier(.2, .8, .2, 1);
+  --ease-entrar: cubic-bezier(.4, 0, 1, 1);
 }
 
 /* ── Reset ─────────────────────────────────────────────────────── */
@@ -110,67 +135,136 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; }
-.container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+/* Un solo anillo de foco para todo lo que se enfoca con teclado, como el
+   `ring-2 ring-azul ring-offset-2` de la app. Los campos de formulario
+   llevan el suyo propio (borde + halo). */
+:focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+.container { max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter); }
 .eyebrow {
   font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--azul);
 }
 
 /* ===================================================================
-   Componentes del Design System
+   Componentes (los de la app: botones, tarjeta, pill, placa, chip)
    =================================================================== */
 
-/* Botón */
+/* Botón — `ui/botones.ts` de la app. Alto MÍNIMO y no fijo: un botón de
+   ancho completo con un texto largo envuelve y crece en vez de desbordar
+   a 360px. 44px en todos los tamaños: el área táctil no se negocia. */
 .btn {
+  position: relative;
   display: inline-flex; align-items: center; justify-content: center;
-  gap: 6px; font-family: var(--font-sans); font-weight: var(--weight-semibold);
-  line-height: 1; border: 1px solid transparent; border-radius: var(--radius-sm);
-  cursor: pointer; white-space: nowrap; text-decoration: none;
-  transition: background-color var(--duration-base) var(--ease-standard),
-              color var(--duration-base) var(--ease-standard),
-              border-color var(--duration-base) var(--ease-standard);
+  gap: 8px; font-family: var(--font-sans); font-weight: var(--weight-semibold);
+  line-height: 1.25; border: 1px solid transparent; border-radius: var(--radius-sm);
+  cursor: pointer; white-space: nowrap; text-decoration: none; text-align: center;
+  touch-action: manipulation; user-select: none;
+  transition: background-color var(--dur-rapida) var(--ease-salir),
+              border-color var(--dur-rapida) var(--ease-salir),
+              color var(--dur-rapida) var(--ease-salir),
+              transform var(--dur-rapida) var(--ease-salir);
 }
-.btn--md { padding: 10px 16px; min-height: 40px; font-size: var(--text-sm); gap: 6px; }
-.btn--lg { padding: 12px 18px; min-height: 46px; font-size: var(--text-base); gap: 8px; }
-.btn--primary { background: var(--azul); color: var(--text-on-accent); }
+.btn--md { padding: 10px 16px; min-height: 44px; font-size: var(--text-sm); }
+.btn--lg { padding: 12px 20px; min-height: 48px; font-size: var(--text-base); }
+.btn--primary { background: var(--azul); color: #fff; }
 .btn--primary:hover { background: var(--azul-press); }
-.btn--secondary { background: var(--superficie); color: var(--tinta); border-color: var(--linea); }
-.btn--secondary:hover { background: var(--lienzo); }
+.btn--secondary { background: var(--superficie); color: var(--tinta); border-color: var(--linea-fuerte); }
+.btn--secondary:hover { background: var(--neutro-suave); }
+.btn--ghost { background: transparent; color: var(--azul); padding-left: 10px; padding-right: 10px; }
+.btn--ghost:hover { background: var(--azul-50); }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+/* El hundido al tocar va solo en el botón (hoja del árbol): un transform
+   en un contenedor crea un contexto de apilamiento. */
+@media (prefers-reduced-motion: no-preference) {
+  .btn:not([disabled]):not([aria-disabled="true"]):active { transform: scale(0.97); }
+}
 
-/* Card */
+/* Tarjeta — `rounded-2xl border border-linea bg-superficie shadow-sm`. */
 .card {
   display: block; background: var(--superficie);
   border: 1px solid var(--linea); border-radius: var(--radius-lg);
   padding: var(--space-5); box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--duration-base) var(--ease-standard);
+  transition: box-shadow var(--dur-base) var(--ease-salir),
+              border-color var(--dur-base) var(--ease-salir);
   color: inherit; text-decoration: none;
 }
+a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); }
 .card--p28 { padding: 28px; }
 .card--p24 { padding: 24px; }
 .card--fill { height: 100%; }
 
-/* IconChip */
+/* Chip de ícono — el cuadro con tono de las tiles de la app. */
 .icon-chip {
   display: inline-flex; align-items: center; justify-content: center;
   flex-shrink: 0; width: 44px; height: 44px; border-radius: var(--radius-md);
-  background: var(--azul-soft); color: var(--azul);
+  background: var(--azul-50); color: var(--azul);
 }
-.icon-chip--azul      { background: var(--azul-soft); color: var(--azul); }
-.icon-chip--vigente   { background: var(--estado-vigente-bg); color: var(--estado-vigente-fg); }
-.icon-chip--por_vencer{ background: var(--estado-por-vencer-bg); color: var(--estado-por-vencer-fg); }
-.icon-chip--vencido   { background: var(--estado-vencido-bg); color: var(--estado-vencido-fg); }
+.icon-chip--azul      { background: var(--azul-50); color: var(--azul); }
+.icon-chip--vigente   { background: var(--vigente-suave); color: var(--vigente-texto); }
+.icon-chip--por_vencer{ background: var(--por-vencer-suave); color: var(--por-vencer-texto); }
+.icon-chip--vencido   { background: var(--vencido-suave); color: var(--vencido-texto); }
+.icon-chip--neutro    { background: var(--neutro-suave); color: var(--acero); }
+.icon-chip--sm { width: 32px; height: 32px; border-radius: var(--radius-sm); }
+.icon-chip--sm svg { width: 18px; height: 18px; }
 
-/* StatusBadge */
+/* Pill de estado — `StatusBadge` de la app. Siempre lleva texto ("Vigente",
+   "Por vencer", "Vencido") y además un ícono por forma (check, reloj,
+   equis): quien no distingue rojo de verde, o la lee al sol, tiene la
+   forma. El ícono es una máscara con currentColor, así que no hay que
+   tocar el HTML de ninguna pill. */
 .badge {
-  display: inline-flex; align-items: center; flex-shrink: 0;
-  border-radius: var(--radius-pill); padding: 4px 10px;
+  display: inline-flex; align-items: center; flex-shrink: 0; gap: 4px;
+  border-radius: var(--radius-pill); padding: 4px 10px 4px 8px;
   font-family: var(--font-sans); font-size: var(--text-xs);
-  font-weight: var(--weight-semibold); line-height: 1.2;
+  font-weight: var(--weight-semibold); line-height: 1.2; white-space: nowrap;
 }
-.badge--al_dia      { background: var(--estado-vigente-bg); color: var(--estado-vigente-fg); }
-.badge--por_vencer  { background: var(--estado-por-vencer-bg); color: var(--estado-por-vencer-fg); }
-.badge--vencido     { background: var(--estado-vencido-bg); color: var(--estado-vencido-fg); }
-.badge--neutro      { background: var(--estado-neutro-bg); color: var(--estado-neutro-fg); }
+.badge::before {
+  content: ''; flex: 0 0 auto; width: 12px; height: 12px;
+  background: currentColor;
+  -webkit-mask: var(--badge-icono) center / contain no-repeat;
+          mask: var(--badge-icono) center / contain no-repeat;
+}
+.badge--al_dia {
+  background: var(--vigente-suave); color: var(--vigente-texto);
+  --badge-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E");
+}
+.badge--por_vencer {
+  background: var(--por-vencer-suave); color: var(--por-vencer-texto);
+  --badge-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='5.5'/%3E%3Cpath d='M8 5v3l2 1.5'/%3E%3C/svg%3E");
+}
+.badge--vencido {
+  background: var(--vencido-suave); color: var(--vencido-texto);
+  --badge-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4.5 4.5 7 7M11.5 4.5l-7 7'/%3E%3C/svg%3E");
+}
+.badge--neutro {
+  background: var(--neutro-suave); color: var(--acero);
+  --badge-icono: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4.5 8h7'/%3E%3C/svg%3E");
+}
+.badge--l { padding: 6px 12px 6px 9px; gap: 6px; font-size: var(--text-sm); }
+.badge--l::before { width: 16px; height: 16px; }
+
+/* Placa de patente — `ui/Placa` de la app: Geist Mono, borde tinta, `·`
+   entre pares. Uso:
+     <span class="placa"><span class="sr-only">GJKP47</span>
+       <span aria-hidden="true">GJ<i>·</i>KP<i>·</i>47</span></span>
+   Lo visible es dibujo; el lector de pantalla lee la patente limpia. */
+.placa {
+  display: inline-flex; align-items: center; flex-shrink: 0; white-space: nowrap;
+  border: 1.5px solid var(--tinta); border-radius: 6px; background: var(--superficie);
+  padding: 5px 8px; font-family: var(--font-mono); font-weight: var(--weight-semibold);
+  font-size: 13px; line-height: 1; letter-spacing: 0.08em; color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+  box-shadow: inset 0 0 0 2px var(--superficie), inset 0 0 0 3px var(--linea);
+}
+.placa i { font-style: normal; font-weight: 400; letter-spacing: 0; color: var(--acero); margin: 0 0.32em; }
+.placa--s { padding: 3px 6px; font-size: 12px; border-radius: 5px; }
+.placa--l { padding: 8px 12px; font-size: 20px; border-width: 2px; border-radius: var(--radius-sm); }
+
+/* Solo para lectores de pantalla. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
 
 /* VehicleCard */
 .vehicle-card {
@@ -178,9 +272,10 @@ a { color: inherit; }
   background: var(--superficie); border: 1px solid var(--linea);
   border-radius: var(--radius-lg); padding: var(--space-4);
   box-shadow: var(--shadow-sm); text-decoration: none; color: inherit;
-  transition: box-shadow var(--duration-base) var(--ease-standard);
+  transition: box-shadow var(--dur-base) var(--ease-salir);
 }
 .vehicle-card:hover { box-shadow: var(--shadow-md); }
+.vehicle-card .icon-chip { background: var(--azul-100); }
 .vehicle-card__body { min-width: 0; flex: 1; }
 .vehicle-card__title {
   margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -214,8 +309,8 @@ a { color: inherit; }
    =================================================================== */
 .nav {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px);
   border-bottom: 1px solid var(--linea);
 }
 /* Salto al contenido: invisible hasta que se llega con Tab. Sin él, quien
@@ -225,33 +320,48 @@ a { color: inherit; }
      scrolleada, y por encima del nav sticky (z-index 50). */
   position: fixed; left: 12px; top: -60px; z-index: 100;
   background: var(--azul); color: #fff; text-decoration: none;
-  font-size: 14px; font-weight: 600; padding: 10px 16px;
+  font-size: 14px; font-weight: 600; padding: 12px 16px;
   border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
-  transition: top var(--duration-base) var(--ease-standard);
 }
 .skip-link:focus { top: 12px; }
+/* Con movimiento reducido aparece de golpe, sin deslizarse. */
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link { transition: top var(--dur-base) var(--ease-salir); }
+}
 
 .nav__inner {
-  max-width: 1140px; margin: 0 auto; padding: 13px 24px;
+  max-width: var(--contenedor); margin: 0 auto; padding: 10px var(--gutter);
+  min-height: 64px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
-.brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+/* min-height: el logo es el enlace al inicio y en celular es el blanco que
+   más se toca; con solo el SVG (32px) quedaba corto de los 44px. */
+.brand {
+  display: flex; align-items: center; gap: 8px; text-decoration: none;
+  min-height: 44px; border-radius: var(--radius-sm);
+}
+.brand svg { flex: 0 0 auto; }
 .brand__name { font-weight: 700; letter-spacing: -0.03em; font-size: 20px; color: var(--tinta); }
 .brand__name .accent { color: var(--azul); }
-.nav__links { display: flex; align-items: center; gap: 30px; }
+.nav__links { display: flex; align-items: center; gap: 4px; }
 .nav__link {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 12px;
+  border-radius: var(--radius-sm);
   text-decoration: none; font-size: 14px; font-weight: 500; color: var(--acero);
-  transition: color var(--duration-base) var(--ease-standard);
+  white-space: nowrap;
+  transition: color var(--dur-base) var(--ease-salir),
+              background-color var(--dur-base) var(--ease-salir);
 }
-.nav__link:hover { color: var(--tinta); }
-.nav__link.is-active { font-weight: 600; color: var(--azul); }
-.nav__actions { display: flex; align-items: center; gap: 10px; }
+.nav__link:hover { color: var(--tinta); background: var(--neutro-suave); }
+.nav__link.is-active { font-weight: 600; color: var(--azul); background: var(--azul-50); }
+.nav__actions { display: flex; align-items: center; gap: 8px; }
 .nav__login {
+  display: inline-flex; align-items: center; min-height: 44px;
   text-decoration: none; font-size: 14px; font-weight: 600; color: var(--azul);
-  padding: 8px 12px; border-radius: var(--radius-sm);
-  transition: background-color var(--duration-base) var(--ease-standard);
+  padding: 0 14px; border-radius: var(--radius-sm); white-space: nowrap;
+  transition: background-color var(--dur-base) var(--ease-salir);
 }
-.nav__login:hover { background: var(--azul-soft); }
+.nav__login:hover { background: var(--azul-50); }
 
 /* Menú móvil — el botón y el panel solo existen bajo 860px */
 .nav__burger {
@@ -260,13 +370,19 @@ a { color: inherit; }
   background: transparent; border: 0; border-radius: var(--radius-sm);
   cursor: pointer; color: var(--tinta);
 }
-.nav__burger:hover { background: var(--lienzo); }
+.nav__burger:hover { background: var(--neutro-suave); }
 .nav__burger-box { position: relative; display: block; width: 20px; height: 14px; }
 .nav__burger-bar {
   position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px;
   background: currentColor;
-  transition: transform var(--duration-base) var(--ease-standard),
-              opacity var(--duration-base) var(--ease-standard);
+}
+/* La X se arma igual con movimiento reducido; lo que se saca es el giro
+   animado entre las dos formas. */
+@media (prefers-reduced-motion: no-preference) {
+  .nav__burger-bar {
+    transition: transform var(--dur-base) var(--ease-salir),
+                opacity var(--dur-base) var(--ease-salir);
+  }
 }
 .nav__burger-bar:nth-child(1) { top: 0; }
 .nav__burger-bar:nth-child(2) { top: 6px; }
@@ -277,17 +393,21 @@ a { color: inherit; }
 
 .nav__panel {
   display: none; border-top: 1px solid var(--linea);
-  background: var(--superficie); padding: 12px 24px 20px;
+  background: var(--superficie); padding: 8px var(--gutter) 20px;
+  box-shadow: var(--shadow-lg);
 }
 .nav__panel[hidden] { display: none; }
 .nav__panel-link {
-  display: block; padding: 13px 0; text-decoration: none;
+  display: flex; align-items: center; min-height: 48px; text-decoration: none;
   font-size: 16px; font-weight: 500; color: var(--tinta);
   border-bottom: 1px solid var(--linea);
 }
 .nav__panel-link.is-active { color: var(--azul); font-weight: 600; }
 .nav__panel-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
 .nav__panel-actions .btn { width: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .nav__panel.is-open { animation: aparecer var(--dur-base) var(--ease-salir) backwards; }
+}
 
 /* ===================================================================
    Secciones compartidas (encabezado, CTA, footer)
@@ -297,17 +417,17 @@ a { color: inherit; }
   background: var(--superficie);
   border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea);
 }
-.section__head { text-align: center; max-width: 620px; margin: 0 auto; }
+.section__head { text-align: center; max-width: 640px; margin: 0 auto; }
 .section__title {
-  margin: 12px 0 0; font-size: 34px; line-height: 1.15;
-  letter-spacing: -0.025em; font-weight: 700;
+  margin: 10px 0 0; font-size: 34px; line-height: 1.15;
+  letter-spacing: -0.025em; font-weight: 700; text-wrap: balance;
 }
-.section__lead { margin: 14px 0 0; font-size: 17px; color: var(--acero); line-height: 1.55; }
+.section__lead { margin: 14px 0 0; font-size: 17px; color: var(--acero); line-height: 1.55; text-wrap: pretty; }
 
 /* CTA band */
 .cta { padding: 88px 0; background: var(--azul); }
 .cta--lg { padding: 92px 0; }
-.cta__inner { max-width: 760px; margin: 0 auto; padding: 0 24px; text-align: center; }
+.cta__inner { max-width: 760px; margin: 0 auto; padding: 0 var(--gutter); text-align: center; }
 .cta__title {
   margin: 0; font-size: 34px; line-height: 1.12; letter-spacing: -0.025em;
   font-weight: 700; color: #fff; text-wrap: balance;
@@ -315,43 +435,49 @@ a { color: inherit; }
 .cta--lg .cta__title { font-size: 36px; }
 .cta__lead { margin: 16px 0 0; font-size: 17px; line-height: 1.55; color: #dbe4ff; }
 .cta__actions { display: flex; gap: 12px; justify-content: center; margin-top: 30px; }
-.cta__primary {
-  display: inline-flex; align-items: center; gap: 8px; background: #fff;
-  color: var(--azul); font-size: 16px; font-weight: 600; padding: 13px 22px;
-  border-radius: var(--radius-sm); text-decoration: none; box-shadow: var(--shadow-md);
-  transition: background-color var(--duration-base) var(--ease-standard);
+.cta__primary, .cta__secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 12px 22px; border-radius: var(--radius-sm);
+  font-size: 16px; font-weight: 600; text-decoration: none;
+  transition: background-color var(--dur-base) var(--ease-salir),
+              transform var(--dur-rapida) var(--ease-salir);
 }
-.cta__primary:hover { background: var(--lienzo); }
-.cta__secondary {
-  display: inline-flex; align-items: center; background: transparent; color: #fff;
-  font-size: 16px; font-weight: 600; padding: 13px 22px; border-radius: var(--radius-sm);
-  text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.4);
-  transition: background-color var(--duration-base) var(--ease-standard);
+.cta__primary { background: #fff; color: var(--azul); box-shadow: var(--shadow-md); }
+.cta__primary:hover { background: var(--azul-50); }
+.cta__secondary { background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.5); }
+.cta__secondary:hover { background: rgba(255, 255, 255, 0.12); }
+/* Sobre el azul el anillo azul no se ve: va en blanco. */
+.cta :focus-visible { outline-color: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .cta__primary:active, .cta__secondary:active { transform: scale(0.97); }
 }
-.cta__secondary:hover { background: rgba(255, 255, 255, 0.1); }
 
-/* Footer */
-.footer { background: var(--superficie); border-top: 1px solid var(--linea); padding: 56px 0 32px; }
-.footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 32px; }
-.footer__brand { display: flex; align-items: center; gap: 10px; }
+/* Footer — compacto: marca a la izquierda, dos columnas de enlaces y una
+   barra con el copyright. */
+.footer { background: var(--superficie); border-top: 1px solid var(--linea); padding: 44px 0 24px; }
+.footer__grid {
+  display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+}
+.footer__brand { display: flex; align-items: center; gap: 8px; }
 .footer__brand-name { font-weight: 700; letter-spacing: -0.03em; font-size: 18px; color: var(--tinta); }
 .footer__brand-name .accent { color: var(--azul); }
-.footer__tagline { margin: 14px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); max-width: 280px; }
+.footer__tagline { margin: 12px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); max-width: 300px; }
 /* Pertenencia a la matriz. Va bajo el tagline, en la columna de marca:
    es una declaracion de marca, no la linea legal de copyright. */
 /* Flex y no texto en linea: alineado por baseline el lockup queda 5px mas
    alto que el texto, porque la caja del enlace apoya su borde inferior en
    la linea base. Centrado quedan a la misma altura optica. */
 .footer__matriz {
-  margin: 16px 0 0; font-size: 13px; color: var(--acero);
+  margin: 14px 0 0; font-size: 13px; color: var(--acero);
   display: flex; align-items: center; flex-wrap: wrap; gap: 7px;
 }
+/* 44px de blanco táctil con -10px de margen: la línea del footer no crece. */
 .footer__matriz-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  text-decoration: none; color: var(--acero);
-  transition: color var(--duration-base) var(--ease-standard);
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: -10px 0;
+  text-decoration: none; color: var(--acero); border-radius: 4px;
+  opacity: 1; transition: opacity var(--dur-base) var(--ease-salir);
 }
-.footer__matriz-link { opacity: 1; transition: opacity var(--duration-base) var(--ease-standard); }
 .footer__matriz-link:hover { opacity: 0.7; }
 /* Lockup oficial de Impulse, sin recolorear: es la marca de otra empresa.
    La palabra viene en #121212, casi igual al --tinta de TapCar, asi que el
@@ -361,38 +487,73 @@ a { color: inherit; }
 .footer__matriz-logo { display: block; height: 24px; width: auto; }
 
 .footer__col-title {
-  margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+  margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--tinta);
 }
-.footer__links { display: flex; flex-direction: column; gap: 10px; }
+.footer__links { display: flex; flex-direction: column; }
+/* 44px de blanco táctil por enlace, con -4px de margen arriba y abajo: la
+   lista se ve con el mismo paso de 36px que antes, pero el área que recibe
+   el toque llega a los 44px (los blancos vecinos se solapan 8px, que es
+   espacio muerto entre dos textos). */
 .footer__link {
-  font-size: 14px; color: var(--acero); text-decoration: none;
-  transition: color var(--duration-base) var(--ease-standard);
+  display: inline-flex; align-items: center; min-height: 44px; margin: -4px 0; align-self: flex-start;
+  font-size: 14px; color: var(--acero); text-decoration: none; border-radius: 4px;
+  transition: color var(--dur-base) var(--ease-salir);
 }
 .footer__link:hover { color: var(--azul); }
 .footer__bar {
-  margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--linea);
+  margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--linea);
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .footer__meta { font-size: 13px; color: var(--acero); }
 
 /* ===================================================================
-   Landing — Hero
+   Aparición al hacer scroll — UN solo patrón para todo el sitio.
+   El HTML marca con `data-reveal` lo que aparece; el script común de
+   cada página le pone `.reveal` (y `--reveal-i`, su posición entre los
+   hermanos marcados) y después `.is-visible` al entrar en pantalla.
+   Sube 8px + fade, 320ms, ease-salir, escalonado 40ms.
+   El estado base es el FINAL: sin JavaScript, sin IntersectionObserver
+   o con movimiento reducido no se esconde nada, así que nunca queda un
+   bloque a medio armar. Solo transform y opacity.
    =================================================================== */
-.lp-hero { padding: 76px 0 92px; }
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(8px); }
+}
+/* Animación y no transición: así no choca con las transiciones de hover
+   de las tarjetas (una regla más específica le pisaba la `transition` y la
+   opacidad saltaba sin fundido). `backwards` y nunca `forwards`: el
+   retraso se pinta con el primer fotograma y al terminar no queda nada
+   aplicado (un transform pegado crea un contexto de apilamiento). */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal:not(.is-visible) { opacity: 0; }
+  .reveal.is-visible {
+    animation: aparecer var(--dur-lenta) var(--ease-salir) backwards;
+    animation-delay: calc(var(--reveal-i, 0) * 40ms);
+  }
+}
+
+/* ===================================================================
+   Inicio — Hero
+   Texto a la izquierda y la escena "Tap" a la derecha (debajo en
+   celular). Una sola acción primaria: "Ver planes" es un enlace.
+   =================================================================== */
+.lp-hero { padding: 56px 0 72px; }
 .lp-hero__grid {
-  max-width: 1140px; margin: 0 auto; padding: 0 24px;
-  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center;
+  max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  gap: 48px; align-items: center;
 }
 .lp-hero__badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--azul-soft); color: var(--azul); font-size: 12px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center;
+  background: var(--azul-50); color: var(--azul); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 7px 14px; border-radius: var(--radius-pill);
 }
 .lp-hero__title {
-  margin: 20px 0 0; font-size: 50px; line-height: 1.06; letter-spacing: -0.03em;
-  font-weight: 700; color: var(--tinta); text-wrap: balance;
+  margin: 20px 0 0; font-size: 58px; line-height: 1.04; letter-spacing: -0.035em;
+  font-weight: 700; color: var(--tinta);
 }
+.lp-hero__tap { color: var(--azul); }
 
 /* Palabra rotatoria del hero ("Tu flota/auto/moto a un Tap").
    El ancho lo anima el JS midiendo la palabra siguiente; el overflow
@@ -400,75 +561,447 @@ a { color: inherit; }
 .rotor {
   display: inline-block; overflow: hidden; white-space: nowrap;
   vertical-align: bottom;
-  transition: width 0.35s var(--ease-standard);
+  transition: width 0.35s var(--ease-salir);
 }
 .rotor__word {
   display: inline-block;
-  transition: transform 0.38s var(--ease-standard), opacity 0.38s var(--ease-standard);
+  transition: transform 0.38s var(--ease-salir), opacity 0.38s var(--ease-salir);
 }
 .rotor__word.is-out { transform: translateY(-105%); opacity: 0; }
 .rotor__word.is-prep { transition: none; transform: translateY(105%); opacity: 0; }
 
-/* Quiebre fijo del titular, solo en pantallas angostas.
-   Bajo ~420px "camioneta" no cabe junto a "a un Tap.": el h1 pasa de una
-   línea a dos y todo el hero (y lo que sigue) baja y sube en cada rotación.
-   Con el salto forzado el titular mide siempre dos líneas, dé igual la
-   palabra que esté puesta. */
-.lp-hero__nl { display: none; }
+/* Quiebre fijo del titular, en TODOS los anchos: "Tu vehículo / a un Tap."
+   Sin él, el h1 cabía en una línea con "auto" y pasaba a dos con
+   "camioneta" (y a 1024–1100px también con "vehículo"); como la grilla
+   centra en vertical, todo el hero bajaba y subía ~30px cada 2,6 s. Con el
+   salto forzado el titular mide siempre dos líneas, dé igual la palabra.
+   Si agregas palabras al rotor, ninguna debería ser tan larga que parta
+   también la primera línea ("Tu camioneta" es la más larga hoy). */
 @media (prefers-reduced-motion: reduce) {
   .rotor { transition: none; }
   .rotor__word { transition: none; }
 }
-.lp-hero__lead { margin: 22px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); max-width: 480px; }
-.lp-hero__actions { display: flex; gap: 12px; margin-top: 30px; }
-.lp-hero__trust { display: flex; align-items: center; gap: 20px; margin-top: 24px; font-size: 13px; color: var(--acero); }
-.lp-trust { display: inline-flex; align-items: center; gap: 6px; }
-
-/* Conteo de vehículos (prueba social del hero).
-   Colgado de una hairline que corta al ancho del lead: separa el dato de
-   los checks sin agregar una caja más a una columna que ya tiene cinco
-   bloques. El número es la única pieza grande, así que se lee solo. */
-.hero-conteo {
-  display: flex; align-items: baseline; gap: 9px;
-  max-width: 480px; margin-top: 26px; padding-top: 22px;
-  border-top: 1px solid var(--linea);
+.lp-hero__lead {
+  margin: 20px 0 0; font-size: 19px; line-height: 1.5; color: var(--acero);
+  max-width: 440px; text-wrap: pretty;
 }
-.hero-conteo__num {
-  font-size: 27px; font-weight: 700; line-height: 1;
-  letter-spacing: -0.025em; color: var(--azul);
+.lp-hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; margin-top: 32px; }
+.lp-hero__sec {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 0 4px;
+  font-size: 16px; border-radius: var(--radius-sm);
+}
+.lp-hero__micro {
+  display: flex; align-items: center; gap: 6px; margin: 14px 0 0;
+  font-size: 14px; color: var(--acero);
+}
+.lp-hero__micro svg { flex: 0 0 auto; color: var(--vigente-texto); }
+.lp-hero__escena { width: min(460px, 100%); justify-self: end; }
+/* Escritorio ancho: la escena crece hasta 540px para equilibrar el texto,
+   y el hero pierde aire arriba (con la escena más alta ya sobraba). */
+@media (min-width: 1200px) {
+  .lp-hero { padding: 40px 0 64px; }
+  .lp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 540px); gap: 64px; }
+  .lp-hero__title { font-size: 64px; }
+  .lp-hero__escena { width: min(540px, 100%); }
+}
+
+/* Prueba social: una franja angosta bajo el hero. El número es la única
+   pieza grande, así que se lee solo. */
+.prueba { background: var(--superficie); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+.prueba__inner {
+  max-width: var(--contenedor); margin: 0 auto; padding: 22px var(--gutter);
+  display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 12px;
+  text-align: center;
+}
+.prueba__num {
+  font-size: 34px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--azul);
   /* Cifras de ancho fijo: sin esto el texto de al lado se corre en cada
      paso de la animación. */
   font-variant-numeric: tabular-nums;
 }
-.hero-conteo__txt { font-size: 14px; line-height: 1.45; color: var(--acero); }
+.prueba__txt { font-size: 17px; font-weight: 500; color: var(--acero); }
 
-/* Ficha preview (hero card) */
-.ficha-preview { position: relative; }
-.ficha-preview__tag {
-  position: absolute; top: -14px; right: 14px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 7px;
-  background: var(--tinta); color: #fff; font-size: 12px; font-weight: 600;
-  padding: 7px 12px; border-radius: var(--radius-pill); box-shadow: var(--shadow-lg);
+/* Banda de clientes bajo el contador. Los logos vienen procesados a gris y
+   a la misma superficie visual (assets/cliente-*.webp): normalizarlos por
+   alto dejaba enormes a los casi cuadrados y diminutos a los muy anchos.
+   La cinta lleva el set dos veces y se desplaza -50%: cuando termina, la
+   segunda mitad está exactamente donde empezó la primera, así que el bucle
+   no salta. Con movimiento reducido no hay cinta: se ve un solo set quieto
+   y centrado (la copia se oculta). */
+.clientes { max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter) 26px; }
+.clientes__titulo {
+  margin: 0 0 14px; text-align: center; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--acero);
 }
-.ficha-card {
-  background: var(--superficie); border: 1px solid var(--linea);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden;
+.clientes__ventana { overflow: hidden; }
+.clientes__cinta {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px 56px;
 }
-.ficha-card__head {
-  padding: 16px 18px; display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--linea);
+.clientes__item { flex: none; display: flex; align-items: center; height: 52px; }
+/* El ancho de cada logo viene en --w (el mismo del atributo width): con
+   width/height en auto el navegador usaba el tamaño intrínseco, que es 2x. */
+.clientes__item img { display: block; width: var(--w); height: auto; opacity: .75; }
+.clientes__item:nth-child(n+5) { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .clientes__ventana {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .clientes__cinta {
+    flex-wrap: nowrap; justify-content: flex-start; gap: 0; width: max-content;
+    animation: clientes-cinta 40s linear infinite;
+  }
+  .clientes__item:nth-child(n+5) { display: flex; }
+  .clientes__item { padding-right: 64px; }
+  .clientes__ventana:hover .clientes__cinta { animation-play-state: paused; }
 }
-.ficha-card__head-label {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--acero);
+@keyframes clientes-cinta { to { transform: translateX(-50%); } }
+@media (max-width: 560px) {
+  .clientes__item img { width: calc(var(--w) * .8); }
+  .clientes__item { padding-right: 44px; }
 }
-.ficha-card__readonly { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--acero); }
-.ficha-card__body { background: var(--lienzo); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-.ficha-card__section {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--acero); margin: 4px 2px 0;
+
+/* <escena-tap> ════════════════════════════════════════════════════════
+   Escena "Tap" del hero. Autónoma: todo con prefijo `tap-`.
+
+   Escala: el lienzo se dibuja en un espacio de 400 × 430 unidades y
+   1em = 10 unidades. El tamaño de letra del lienzo sale del ancho del
+   contenedor (`100cqw / 40`), así que TODO (celular, llavero, textos,
+   bordes) se achica junto, sin JS y sin saltos de layout: el alto lo
+   reserva `aspect-ratio`. A 460 px de ancho 1 unidad = 1,15 px (el texto
+   más chico de la pantalla, 10u, queda en 11,5 px).
+
+   Movimiento: el estado BASE de cada pieza es el estado FINAL (ficha
+   abierta, tres filas, llavero junto al celular). Las animaciones viven
+   solo dentro de `prefers-reduced-motion: no-preference`, así que con
+   movimiento reducido o sin soporte de animación se ve la escena
+   terminada y quieta. Solo `transform` y `opacity`.
+
+   Ciclo de 6 s (1 s = 16,67 %):
+     0,2 → 1,0 s  el llavero entra y toca (rebote al 0,84 s)
+     1,0 → 1,5 s  ping + ondas NFC
+     1,3 → 1,8 s  se abre la ficha: encabezado, placa, modelo
+     1,75 s       "Documentación · 1 por vencer"
+     2,1 / 2,35 / 2,6 s  las tres filas; cada pill aparece 0,3 s después
+     ~3,2 → 4,9 s todo quieto (pausa de lectura)
+     4,9 → 5,4 s  se desvanece (llavero se retira); vuelve el reposo
+ ═════════════════════════════════════════════════════════════════════ */
+.tap-escena {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 400 / 430;
+  pointer-events: none;
+  user-select: none;
 }
-.ficha-card__docs { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tap-lienzo {
+  position: absolute;
+  inset: 0;
+  font-size: 11.5px;               /* respaldo sin container queries */
+  font-size: calc(100cqw / 40);    /* 1em = 10 unidades del lienzo */
+  font-family: var(--font-sans, 'Geist', system-ui, sans-serif);
+  color: var(--tinta, #16191f);
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Halo de fondo, quieto. */
+.tap-halo {
+  position: absolute;
+  left: 1.5em; top: 6em;
+  width: 34em; height: 34em;
+  border-radius: 50%;
+  background: var(--azul-50, #eef2fe);
+}
+
+/* ── Celular ─────────────────────────────────────────────────────── */
+.tap-celular {
+  position: absolute;
+  left: 15em; top: .8em;
+  width: 24em; height: 41.4em;
+  border: .6em solid var(--tinta, #16191f);
+  border-radius: 3.8em;
+  background: var(--tinta, #16191f);
+  box-shadow:
+    0 2.4em 4em -1.6em rgb(22 25 31 / .28),
+    0 .6em 1.4em -.6em rgb(22 25 31 / .18);
+}
+.tap-pantalla {
+  position: absolute;
+  inset: 0;
+  border-radius: 3.2em;
+  overflow: hidden;
+  background: var(--lienzo, #f6f7f9);
+}
+.tap-isla {
+  position: absolute;
+  left: 50%; top: .8em;
+  width: 6.6em; height: 1.9em;
+  margin-left: -3.3em;
+  border-radius: 1em;
+  background: var(--tinta, #16191f);
+  z-index: 3;
+}
+.tap-barra-estado {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 3.5em;
+  padding: 0 2em 0 2.3em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--tinta, #16191f);
+  z-index: 2;
+}
+.tap-barra-estado svg { width: 3.6em; height: 1.1em; display: block; }
+.tap-indicador {
+  position: absolute;
+  left: 50%; bottom: .7em;
+  width: 8em; height: .45em;
+  margin-left: -4em;
+  border-radius: 1em;
+  background: var(--tinta, #16191f);
+  opacity: .85;
+  z-index: 2;
+}
+
+/* Reposo: lo que muestra el celular antes del tap. Queda DEBAJO de la
+   ficha, que es opaca: en el estado final no se ve. */
+.tap-reposo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  color: var(--acero, #5b6573);
+}
+.tap-reposo svg { width: 4.4em; height: 4.4em; display: block; color: var(--azul, #2952e6); }
+.tap-reposo p { margin: 0; font-size: 1.2em; font-weight: 500; text-align: center; line-height: 1.35; }
+
+/* ── Ficha pública ───────────────────────────────────────────────── */
+.tap-ficha {
+  position: absolute;
+  inset: 0;
+  padding: 3.9em 1.2em 2em;
+  background: var(--lienzo, #f6f7f9);
+  display: flex;
+  flex-direction: column;
+}
+.tap-cabecera { display: flex; flex-direction: column; align-items: flex-start; gap: .5em; }
+.tap-lockup { display: inline-flex; align-items: center; gap: .55em; }
+.tap-lockup svg { width: 2.4em; height: 2.4em; display: block; }
+.tap-marca { font-size: 1.55em; font-weight: 700; letter-spacing: -.025em; line-height: 1; }
+.tap-marca b { font-weight: 700; color: var(--azul, #2952e6); }
+.tap-rotulo {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--acero, #5b6573);
+}
+.tap-vehiculo {
+  margin-top: 1.1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .55em;
+}
+/* La patente como mini placa chilena (`components/ui/Placa.tsx`). */
+.tap-placa {
+  display: inline-flex;
+  align-items: center;
+  gap: .32em;
+  padding: .38em .62em;
+  border: .11em solid var(--tinta, #16191f);
+  border-radius: .4em;
+  background: var(--superficie, #fff);
+  box-shadow: inset 0 0 0 .11em var(--superficie, #fff), inset 0 0 0 .16em var(--linea, #e3e6ea);
+  font-family: var(--font-mono, 'Geist Mono', ui-monospace, monospace);
+  font-size: 1.85em;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+  color: var(--tinta, #16191f);
+  white-space: nowrap;
+}
+.tap-placa i { font-style: normal; font-weight: 400; letter-spacing: 0; color: var(--acero, #5b6573); }
+.tap-modelo { margin: 0; font-size: 1.3em; font-weight: 500; color: var(--acero, #5b6573); }
+
+.tap-resumen {
+  margin-top: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6em;
+  padding: 0 .2em;
+}
+.tap-resumen .tap-rotulo { font-size: 1.05em; }
+
+.tap-docs { list-style: none; margin: .65em 0 0; padding: 0; display: flex; flex-direction: column; gap: .5em; }
+.tap-doc {
+  display: flex;
+  flex-direction: column;
+  gap: .4em;
+  padding: .8em .9em .8em 1em;
+  border: .1em solid var(--linea, #e3e6ea);
+  border-radius: 1.2em;
+  background: var(--superficie, #fff);
+  box-shadow: 0 .1em .2em rgb(22 25 31 / .05);
+}
+.tap-doc__nombre { margin: 0; font-size: 1.3em; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.tap-doc__pie { display: flex; align-items: center; justify-content: space-between; gap: .6em; }
+.tap-doc__fecha { font-size: 1.05em; color: var(--acero, #5b6573); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Pill de estado (`StatusBadge`): color + ícono + texto, nunca solo color. */
+.tap-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  height: 2em;
+  padding: 0 .7em 0 .5em;
+  border-radius: 99em;
+  font-size: 1em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tap-pill svg { width: 1.1em; height: 1.1em; display: block; flex-shrink: 0; }
+.tap-pill--vigente { background: var(--vigente-suave, #e7f6ec); color: var(--vigente-texto, #157a3a); }
+.tap-pill--por-vencer { background: var(--por-vencer-suave, #fdf1dc); color: var(--por-vencer-texto, #a8500a); }
+
+/* ── Llavero NFC (`components/brand/Llavero.tsx`) ────────────────── */
+.tap-llavero {
+  position: absolute;
+  left: 3em; top: 19.4em;
+  width: 7.4em; height: 10.2em;
+  transform: rotate(-8deg);
+  transform-origin: 50% 12%;
+  filter: drop-shadow(0 .8em 1em rgb(22 25 31 / .22));
+}
+.tap-llavero svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* Ondas NFC entre el llavero y el celular. */
+.tap-ondas {
+  position: absolute;
+  left: 10em; top: 21.6em;
+  width: 4.2em; height: 6.4em;
+  overflow: visible;
+  color: var(--azul, #2952e6);
+}
+.tap-ondas path { transform-box: fill-box; transform-origin: 0% 50%; }
+.tap-ondas path:nth-child(2) { opacity: .7; }
+.tap-ondas path:nth-child(3) { opacity: .45; }
+/* Ping del contacto: invisible en reposo (no es parte del estado final). */
+.tap-ping {
+  position: absolute;
+  left: 11.4em; top: 21.3em;
+  width: 7.2em; height: 7.2em;
+  border-radius: 50%;
+  border: .2em solid var(--azul, #2952e6);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tap-escena * { animation-duration: 6s; animation-iteration-count: infinite; animation-timing-function: var(--ease-salir, cubic-bezier(.2, .8, .2, 1)); animation-fill-mode: backwards; }
+  .tap-escena.tap-pausada * { animation-play-state: paused; }
+
+  .tap-llavero { animation-name: tap-llavero; }
+  .tap-ping { animation-name: tap-ping; }
+  .tap-ondas path { animation-name: tap-onda; }
+  .tap-ondas path:nth-child(2) { animation-name: tap-onda-2; animation-delay: .1s; }
+  .tap-ondas path:nth-child(3) { animation-name: tap-onda-3; animation-delay: .2s; }
+  .tap-reposo { animation-name: tap-reposo; }
+  .tap-ficha { animation-name: tap-ficha; }
+  /* Las piezas de la ficha comparten un keyframe (entra a los 1,3 s) y se
+     escalonan con `animation-delay`. Es seguro en bucle porque el 0 % y el
+     100 % del keyframe son el mismo estado oculto, y la ficha (su padre)
+     ya está en opacidad 0 cuando cada una vuelve a ocultarse. */
+  .tap-cabecera { animation-name: tap-sube; }
+  .tap-placa { animation-name: tap-placa; animation-delay: .15s; }
+  .tap-modelo { animation-name: tap-sube; animation-delay: .25s; }
+  .tap-resumen { animation-name: tap-sube; animation-delay: .45s; }
+  .tap-resumen .tap-pill { animation-name: tap-pop; animation-delay: .7s; }
+  .tap-doc:nth-child(1) { animation-name: tap-sube; animation-delay: .8s; }
+  .tap-doc:nth-child(2) { animation-name: tap-sube; animation-delay: 1.05s; }
+  .tap-doc:nth-child(3) { animation-name: tap-sube; animation-delay: 1.3s; }
+  .tap-doc:nth-child(1) .tap-pill { animation-name: tap-pop; animation-delay: 1.1s; }
+  .tap-doc:nth-child(2) .tap-pill { animation-name: tap-pop; animation-delay: 1.35s; }
+  .tap-doc:nth-child(3) .tap-pill { animation-name: tap-pop; animation-delay: 1.6s; }
+}
+
+/* El llavero entra inclinado desde la izquierda y TOCA el borde del
+   celular (0,78 s, con un rebote corto como en `tc-tocar`, que se lee como
+   contacto); de ahí se aparta a su lugar de reposo (1,56 s) dejando a la
+   vista las ondas que nacieron en el contacto. Al final se retira con
+   `ease-entrar` (lo que sale acelera). */
+@keyframes tap-llavero {
+  0%, 3.3% { opacity: 0; transform: translateX(-4em) rotate(-22deg); }
+  13% { opacity: 1; transform: translateX(5.9em) rotate(2deg); }
+  16.7% { opacity: 1; transform: translateX(5.3em) rotate(0deg); }
+  26% { opacity: 1; transform: translateX(0) rotate(-8deg); }
+  81.7% { opacity: 1; transform: translateX(0) rotate(-8deg); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  90%, 100% { opacity: 0; transform: translateX(-3em) rotate(-16deg); }
+}
+@keyframes tap-ping {
+  0%, 16% { opacity: 0; transform: scale(.4); }
+  17% { opacity: .55; transform: scale(.5); }
+  30%, 100% { opacity: 0; transform: scale(1.7); }
+}
+@keyframes tap-onda {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: 1; transform: scale(1); }
+  81.7% { opacity: 1; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-onda-2 {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: .7; transform: scale(1); }
+  81.7% { opacity: .7; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-onda-3 {
+  0%, 16.7% { opacity: 0; transform: scale(.5); }
+  23% { opacity: .45; transform: scale(1); }
+  81.7% { opacity: .45; transform: scale(1); animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  89%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes tap-reposo {
+  0%, 19% { opacity: 1; transform: none; }
+  23%, 92% { opacity: 0; transform: scale(.96); }
+  98%, 100% { opacity: 1; transform: none; }
+}
+@keyframes tap-ficha {
+  0%, 21.7% { opacity: 0; }
+  25% { opacity: 1; }
+  81.7% { opacity: 1; animation-timing-function: var(--ease-entrar, cubic-bezier(.4, 0, 1, 1)); }
+  90%, 100% { opacity: 0; }
+}
+@keyframes tap-sube {
+  0%, 21.7% { opacity: 0; transform: translateY(1em); }
+  28.4% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: translateY(1em); }
+}
+@keyframes tap-placa {
+  0%, 21.7% { opacity: 0; transform: translateY(.6em) scale(.92); }
+  29% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: translateY(.6em) scale(.92); }
+}
+/* La pill «marca» (como `tc-marcar`): aparece chica, se pasa y vuelve. */
+@keyframes tap-pop {
+  0%, 21.7% { opacity: 0; transform: scale(.5); }
+  25.5% { opacity: 1; transform: scale(1.1); }
+  28.5% { opacity: 1; transform: none; }
+  93% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: scale(.5); }
+}
+/* </escena-tap> */
 
 /* ===================================================================
    Landing — Cómo funciona (pasos)
@@ -476,53 +1009,75 @@ a { color: inherit; }
 .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
 .step { position: relative; }
 .step .card { position: relative; }
-.step__num { position: absolute; top: 24px; right: 26px; font-size: 13px; font-weight: 700; color: var(--linea); }
+/* El número va como el de ¿Cómo funciona? (.hw-step__num): mono y en acero.
+   En --linea quedaba a 1,2:1 sobre blanco, o sea, invisible para muchos. */
+.step__num {
+  position: absolute; top: 24px; right: 26px;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  color: var(--acero); font-variant-numeric: tabular-nums;
+}
 .step__title { margin: 18px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
 .step__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
 /* ===================================================================
-   Landing — Beneficios
+   Inicio — Así de simple, ¿Para quién es? y beneficios
    =================================================================== */
-.bn-head { max-width: 620px; }
-.bn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
-.bn-card__title { margin: 16px 0 0; font-size: 17px; font-weight: 600; }
-.bn-card__text { margin: 7px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
-.bn-badges { display: flex; gap: 6px; margin-top: 12px; }
-
-/* ===================================================================
-   Landing — Ficha showcase
-   =================================================================== */
-.fs-grid {
-  max-width: 1140px; margin: 0 auto; padding: 0 24px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+.pasos {
+  list-style: none; margin: 48px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;
 }
-.fs-title { margin: 12px 0 0; font-size: 34px; line-height: 1.15; letter-spacing: -0.025em; font-weight: 700; }
-.fs-lead { margin: 16px 0 0; font-size: 17px; line-height: 1.55; color: var(--acero); }
-.fs-list { margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
-.fs-list__item { display: flex; gap: 12px; align-items: flex-start; }
-.fs-list__check { flex: 0 0 auto; margin-top: 1px; }
-.fs-list__text { font-size: 15px; line-height: 1.5; color: var(--tinta); }
-.fs-list__text strong { font-weight: 600; }
-.fs-list__text .muted { color: var(--acero); }
-.fs-panel { background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-lg); padding: 18px; }
-.fs-panel__head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 14px; }
-.fs-panel__url { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--acero); }
-.fs-panel__readonly { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--acero); }
-.fs-panel__body { display: flex; flex-direction: column; gap: 10px; }
-.fs-panel__docs { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.paso { padding: 16px 16px 24px; }
+.paso__ilus {
+  display: block; width: 100%; height: auto; aspect-ratio: 240 / 140;
+  background: var(--azul-50); border-radius: var(--radius-md);
+}
+.paso__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; margin: 20px 0 0 4px; border-radius: var(--radius-pill);
+  background: var(--tinta); color: #fff; font-size: 13px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.paso__title { margin: 12px 4px 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.paso__text { margin: 6px 4px 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+
+.quien { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 44px; }
+.quien__card { display: flex; flex-direction: column; padding: 24px; }
+.quien__title { margin: 16px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.quien__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.quien__link {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 18px;
+  font-size: 15px;
+}
+/* El hover de los enlaces de texto con flecha vive junto, en "Enlaces de
+   texto", para que las seis páginas subrayen igual. */
+
+.beneficios {
+  /* La segunda columna es más ancha: lleva las tres pills en una fila. */
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 28px; margin-top: 48px;
+}
+.beneficio { display: block; color: inherit; text-decoration: none; border-radius: var(--radius-md); }
+.beneficio__title { margin: 14px 0 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.beneficio__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.beneficio__badges { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.beneficio__mas { display: block; margin-top: 4px; font-weight: 600; color: var(--azul); }
+.beneficio--link:hover .beneficio__mas { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ===================================================================
    Planes — Hero
    =================================================================== */
 .pl-hero { padding: 72px 0 8px; text-align: center; }
-.pl-hero__inner { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+.pl-hero__inner { max-width: 680px; margin: 0 auto; padding: 0 var(--gutter); }
 .pl-hero__title { margin: 12px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .pl-hero__lead { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--acero); }
+.pl-hero__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
 
 /* Planes — Selector de plan (uso particular / flotas).
-   Mismo lenguaje visual que el toggle de facturación de abajo: los dos son
-   controles del mismo precio y tienen que leerse como una familia. */
-.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+   Mismo lenguaje visual que el toggle de facturación de Flotas: los dos son
+   controles del mismo precio y tienen que leerse como una familia. Las
+   opciones miden 44px de alto: es el objetivo táctil mínimo. */
+/* scroll-margin: /planes/#flotas salta acá, y sin él el nav sticky tapa las pills. */
+.plan-pills-wrap { display: flex; justify-content: center; margin-bottom: 32px; padding: 0 var(--gutter); scroll-margin-top: 88px; }
 .plan-pills {
   display: inline-flex; align-items: center; gap: 4px; padding: 5px;
   background: var(--superficie); border: 1px solid var(--linea);
@@ -530,59 +1085,47 @@ a { color: inherit; }
 }
 .plan-pills__opt {
   display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
-  cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
-  transition: background-color var(--duration-base) var(--ease-standard),
-              color var(--duration-base) var(--ease-standard);
+  cursor: pointer; font-family: var(--font-sans); font-size: 15px; font-weight: 600;
+  color: var(--acero); min-height: 44px; padding: 0 22px; border-radius: var(--radius-pill);
+  transition: background-color var(--dur-base) var(--ease-salir),
+              color var(--dur-base) var(--ease-salir);
 }
 .plan-pills__opt:hover { color: var(--tinta); }
 .plan-pills__opt.is-active { background: var(--azul); color: #fff; }
 .plan-pills__hint {
   font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
-  border-radius: var(--radius-pill); background: var(--azul-soft); color: var(--azul);
+  border-radius: var(--radius-pill); background: var(--azul-50); color: var(--azul);
 }
 .plan-pills__opt.is-active .plan-pills__hint { background: rgba(255, 255, 255, 0.22); color: #fff; }
 
-/* Planes — Toggle de facturación (mensual / anual) */
-.billing-toggle-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 28px; }
-
-/* Anotación manuscrita que apunta al toggle anual */
-.billing-note {
-  position: absolute; top: 50%; left: calc(50% + 118px);
-  transform: translateY(-52%);
-  display: flex; align-items: flex-start; gap: 2px; pointer-events: none;
-}
-.billing-note__arrow { flex: 0 0 auto; width: 58px; height: 40px; color: var(--tinta); }
-.billing-note__text {
-  margin-top: 9px; max-width: 150px;
-  font-family: 'Caveat', 'Geist', cursive; font-size: 23px; font-weight: 700;
-  line-height: 1.05; color: var(--azul);
-}
+/* Planes — Toggle de facturación de Flotas (mensual / anual). Vive dentro
+   de su tarjeta: Uso particular es solo anual y no lo necesita. */
 .billing-toggle {
-  display: inline-flex; align-items: center; gap: 4px; padding: 5px;
+  display: inline-flex; align-self: flex-start; align-items: center; gap: 4px;
+  margin-top: 16px; padding: 4px;
   background: var(--superficie); border: 1px solid var(--linea);
   border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
 }
 .billing-toggle__opt {
   display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent;
   cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  color: var(--acero); padding: 9px 20px; border-radius: var(--radius-pill);
-  transition: background-color var(--duration-base) var(--ease-standard),
-              color var(--duration-base) var(--ease-standard);
+  color: var(--acero); min-height: 44px; padding: 0 18px; border-radius: var(--radius-pill);
+  transition: background-color var(--dur-base) var(--ease-salir),
+              color var(--dur-base) var(--ease-salir);
 }
 .billing-toggle__opt:hover { color: var(--tinta); }
 .billing-toggle__opt.is-active { background: var(--azul); color: #fff; }
 .billing-toggle__save {
   font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 2px 7px;
-  border-radius: var(--radius-pill); background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
+  border-radius: var(--radius-pill); background: var(--vigente-suave); color: var(--vigente-texto);
 }
 .billing-toggle__opt.is-active .billing-toggle__save { background: rgba(255, 255, 255, 0.22); color: #fff; }
 
 /* Planes — Calculadora */
 .pricing { padding: 40px 0 24px; }
 .pricing__grid {
-  max-width: 1140px; margin: 0 auto; padding: 0 24px;
-  display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: stretch;
+  max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--gutter);
+  display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 24px; align-items: start;
 }
 .calc {
   display: flex; flex-direction: column; background: var(--superficie);
@@ -590,8 +1133,7 @@ a { color: inherit; }
   box-shadow: var(--shadow-md); padding: 36px;
 }
 .calc__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--azul); }
-.calc__row { margin: 24px 0 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
-.calc__row-label { font-size: 16px; color: var(--acero); line-height: 1.4; }
+.calc__row-label { margin: 24px 0 0; font-size: 16px; color: var(--acero); line-height: 1.4; }
 
 /* Planes — Slider con burbuja pegada al pulgar.
    El relleno del riel y la posición de la burbuja los calcula el JS
@@ -599,6 +1141,7 @@ a { color: inherit; }
 .calc__slider-wrap { position: relative; margin-top: 46px; }
 .calc__bubble {
   position: absolute; top: -38px; transform: translateX(-50%); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
   background: var(--azul); color: #fff; font-size: 13px; font-weight: 700;
   padding: 6px 12px; border-radius: var(--radius-pill);
   box-shadow: var(--shadow-md); pointer-events: none;
@@ -607,9 +1150,13 @@ a { color: inherit; }
   content: ''; position: absolute; bottom: -4px; left: var(--arrow, 50%); margin-left: -4px;
   width: 8px; height: 8px; background: var(--azul); transform: rotate(45deg); border-radius: 1px;
 }
+/* 44px de alto para el dedo, con -11px de margen arriba y abajo: ocupa en
+   el flujo los mismos 22px de antes, así que la burbuja y la escala no se
+   mueven. El riel visible sigue siendo de 8px (lo dibuja el track, centrado
+   en la caja). */
 .calc__slider {
   -webkit-appearance: none; appearance: none; display: block;
-  width: 100%; height: 22px; margin: 0; background: transparent; cursor: pointer;
+  width: 100%; height: 44px; margin: -11px 0; background: transparent; cursor: pointer;
 }
 .calc__slider:focus { outline: none; }
 .calc__slider::-webkit-slider-runnable-track {
@@ -620,10 +1167,14 @@ a { color: inherit; }
   -webkit-appearance: none; width: 22px; height: 22px; margin-top: -7px; border-radius: 50%;
   background: var(--azul); border: 4px solid #fff;
   box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
-  transition: transform var(--duration-base) var(--ease-standard);
 }
-.calc__slider:hover::-webkit-slider-thumb { transform: scale(1.1); }
-.calc__slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--azul-soft), var(--shadow-md); }
+@media (prefers-reduced-motion: no-preference) {
+  .calc__slider::-webkit-slider-thumb { transition: transform var(--dur-base) var(--ease-salir); }
+  .calc__slider:hover::-webkit-slider-thumb { transform: scale(1.1); }
+}
+/* Foco: anillo azul por fuera del borde blanco del thumb (pasa 3:1 sobre
+   blanco). El halo azul-50 de antes casi no se veía. */
+.calc__slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__slider::-moz-range-track { height: 8px; border-radius: var(--radius-pill); background: #e8eaee; }
 .calc__slider::-moz-range-progress { height: 8px; border-radius: var(--radius-pill); background: var(--azul); }
 .calc__slider::-moz-range-thumb {
@@ -631,14 +1182,12 @@ a { color: inherit; }
   background: var(--azul); border: 4px solid #fff;
   box-shadow: 0 0 0 1px var(--linea), var(--shadow-md);
 }
-.calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(--azul-soft), var(--shadow-md); }
+.calc__slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--azul), var(--shadow-md); }
 .calc__scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--acero); margin-top: 10px; }
 .calc__divider { margin: 28px 0; height: 1px; background: var(--linea); }
-.calc__formula { font-size: 14px; color: var(--acero); }
 .calc__total-row { margin: 8px 0 4px; display: flex; align-items: baseline; gap: 7px; }
-.calc__total { font-size: 50px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.calc__total { font-size: 50px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
 .calc__total-period { font-size: 17px; color: var(--acero); }
-.calc__note { font-size: 13px; color: var(--acero); line-height: 1.5; }
 .calc__spacer { flex: 1; min-height: 24px; }
 .calc__actions { display: flex; gap: 12px; }
 
@@ -646,30 +1195,27 @@ a { color: inherit; }
 .calc__nudge {
   display: flex; align-items: flex-start; gap: 12px; margin: 20px 0 0;
   padding: 15px 17px; border-radius: var(--radius-md);
-  border: 1px dashed #c3cff2; background: rgba(234, 238, 252, 0.55);
+  border: 1px dashed #c3cff2; background: rgba(238, 242, 254, 0.6);
 }
 .calc__nudge[hidden] { display: none; }
 .calc__nudge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
 .calc__nudge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
 .calc__nudge__text strong { color: var(--tinta); font-weight: 600; }
-.calc__nudge__btn {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
-  padding: 0; border: 0; background: none; cursor: pointer;
-  font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--azul);
+/* Bloque y no flex: en celular el texto envuelve, y como flex cada trozo
+   (texto, monto, flecha) se volvía una columna aparte. Como bloque envuelve
+   como una frase. El relleno vertical le da los 44px de objetivo táctil
+   sin que se vea como un botón lleno. */
+.calc__nudge__btn, .calc__bridge__btn {
+  display: block; min-height: 44px; margin: 2px 0 -8px; padding: 10px 0;
+  border: 0; background: none; cursor: pointer; text-align: left; line-height: 1.5;
+  font-family: var(--font-sans); font-size: 14px; border-radius: var(--radius-sm);
 }
-.calc__nudge__btn:hover { text-decoration: underline; }
+/* (El hover va en "Enlaces de texto", con los demás.) */
+.calc__nudge__btn svg, .calc__bridge__btn svg { display: inline-block; vertical-align: -3px; margin-left: 4px; }
 
-/* Planes — Garantías bajo la calculadora */
-.calc__trust {
-  margin: 0 0 20px; padding: 18px 0 0; list-style: none;
-  border-top: 1px solid var(--linea);
-  display: flex; flex-wrap: wrap; gap: 10px 20px;
-}
-.calc__trust li { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--acero); }
-.calc__trust svg { flex: 0 0 auto; }
 
 .included {
-  display: flex; flex-direction: column; background: var(--azul-soft);
+  display: flex; flex-direction: column; background: var(--azul-50);
   border: 1px solid var(--linea); border-radius: var(--radius-lg); padding: 36px;
 }
 .included__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--azul); }
@@ -686,21 +1232,23 @@ a { color: inherit; }
   text-transform: uppercase; color: var(--acero);
 }
 .included__group .included__list { margin-top: 16px; }
+.included__nota { margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+.included__nota strong { color: var(--tinta); font-weight: 600; }
 
 /* Planes — Ahorro del plan anual */
 .calc__save {
   display: flex; align-items: flex-start; gap: 12px; margin: 16px 0 0;
   padding: 15px 17px; border-radius: var(--radius-md);
-  background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
+  background: var(--vigente-suave); color: var(--vigente-texto);
 }
-.calc__save[hidden], .calc__cafe[hidden] { display: none; }
+.calc__save[hidden] { display: none; }
 .calc__save__icon { flex: 0 0 auto; margin-top: 3px; }
-.calc__save__amount { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.calc__save__amount { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
 .calc__save__note { display: block; margin-top: 5px; font-size: 13px; font-weight: 500; line-height: 1.5; opacity: 0.82; }
 
 /* Planes — FAQ */
 .faq { background: var(--superficie); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); padding: 80px 0; margin-top: 48px; }
-.faq__inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+.faq__inner { max-width: 760px; margin: 0 auto; padding: 0 var(--gutter); }
 .faq__head { text-align: center; }
 .faq__title { margin: 12px 0 0; font-size: 32px; line-height: 1.15; letter-spacing: -0.025em; font-weight: 700; }
 .faq__list { margin-top: 40px; display: flex; flex-direction: column; }
@@ -708,29 +1256,82 @@ a { color: inherit; }
 .faq__item:last-child { border-bottom: 1px solid var(--linea); }
 .faq__q { margin: 0; font-size: 17px; font-weight: 600; }
 .faq__a { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+/* Socios: el FAQ viene justo después de una sección blanca con borde. Con su
+   margen de 48px quedaba entre las dos una franja gris del lienzo que no
+   separaba nada. Hoy es la única página con ese orden; Planes y ¿Cómo
+   funciona? tienen otra sección entre medio y no los toca. */
+.section--surface + .faq { margin-top: 0; border-top: 0; }
 
 /* ===================================================================
-   Landing — Un toque, toda la operación (bloque estrella)
+   Tarjetas de texto (¿Es legal?)
    =================================================================== */
-.op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
 .op-card__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
 .op-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
-/* Landing — Ficha: pestañas del menú (Tomar/Entregar · Documentos · Información) */
-.fs-tabs { display: flex; gap: 6px; padding: 0 4px 14px; flex-wrap: wrap; }
-.fs-tab {
-  font-size: 13px; font-weight: 600; color: var(--acero);
-  padding: 6px 12px; border-radius: var(--radius-pill); background: transparent;
-}
-.fs-tab.is-active { background: var(--azul); color: #fff; }
-
-/* Planes — Analogía de precio ("menos que un café") */
-.calc__cafe {
-  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
-  margin: 14px 0 0; padding: 8px 13px; border-radius: var(--radius-pill);
-  background: var(--azul-soft); color: var(--azul); font-size: 13px; font-weight: 600;
-}
 .calc__fineprint { margin: 12px 0 0; font-size: 12px; color: var(--acero); line-height: 1.5; }
+
+/* Planes — Uso particular: dos tarjetas (Gratis / TapCar+) lado a
+   lado, apiladas en celular, con las mismas piezas en el mismo orden para
+   que se comparen fila a fila. El slider del total va en una franja a lo
+   ancho debajo (.plan-calc): dentro de la tarjeta de pago la estiraba y la
+   Gratis quedaba con ~470 px de blanco al lado. */
+.planes-part { max-width: 1000px; margin: 0 auto; padding: 0 var(--gutter); }
+.plan-duo {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px; align-items: stretch;
+}
+.plan-card { display: flex; flex-direction: column; padding: 32px; }
+.plan-card--pro { border: 2px solid var(--azul); box-shadow: var(--shadow-lg); padding: 31px; }
+.plan-card__name { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.015em; }
+.plan-card__precio { margin: 16px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.plan-card__monto {
+  font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.plan-card__per { font-size: 16px; color: var(--acero); }
+.plan-card__sub { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--acero); }
+.plan-card__mas { margin: 22px 0 0; font-size: 14px; font-weight: 600; color: var(--tinta); }
+.plan-card__lista {
+  margin: 20px 0 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.plan-card__mas + .plan-card__lista { margin-top: 12px; }
+.plan-card__lista li { display: flex; gap: 10px; font-size: 15px; line-height: 1.45; color: var(--tinta); }
+.plan-card__check { flex: 0 0 auto; margin-top: 1px; color: var(--vigente-texto); }
+/* El botón va al pie (margin-top: auto): así los dos de la fila quedan a
+   la misma altura. El aire mínimo va en el padding y no en el margen de lo
+   de arriba, porque lo de arriba puede estar oculto (el puente a Flotas). */
+.plan-card__pie { margin-top: auto; padding-top: 28px; }
+.plan-card__pie .btn { width: 100%; }
+/* Franja "Calcula tu TapCar+": slider a la izquierda, total a la
+   derecha; en celular se apilan. El título va dentro de la columna del
+   slider para que la burbuja (que flota 38 px sobre el riel) tenga su aire
+   debajo del título y no encima de la tarjeta. */
+.plan-calc { margin-top: 24px; padding: 28px 32px; background: var(--azul-50); border-color: var(--azul-100); box-shadow: none; }
+.plan-calc__fila {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px 48px; align-items: end;
+}
+.plan-calc__title { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.plan-calc__control .calc__slider-wrap { margin-top: 52px; }
+.plan-calc__resultado { text-align: right; }
+.plan-calc__total { margin: 0; font-size: 16px; color: var(--acero); white-space: nowrap; }
+.plan-calc__total strong {
+  font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+}
+.plan-calc__fino { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+/* Secundario: el primario de la página es el de la tarjeta, y dos azules
+   llenos uno sobre otro competirían. */
+.plan-calc__cta { margin-top: 14px; }
+.plan-calc .calc__bridge { margin-top: 20px; background: var(--superficie); }
+.planes-nota {
+  margin: 24px 0 0; display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 15px; color: var(--acero); text-align: center;
+}
+.planes-nota svg { flex: 0 0 auto; color: var(--azul); }
+.planes-nota strong { color: var(--tinta); font-weight: 600; }
+.tabular { font-variant-numeric: tabular-nums; }
 
 /* Planes — Piezas de la calculadora de dos planes.
    .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
@@ -738,10 +1339,11 @@ a { color: inherit; }
    necesitarían, pero se declaran igual para que nadie los "arregle" después
    poniéndoles un display y los rompa en silencio. */
 .calc[hidden], .calc__control[hidden], .calc__precio[hidden],
-.calc__contacto[hidden], .calc__bridge[hidden], .included__group[hidden] { display: none; }
+.calc__contacto[hidden], .calc__bridge[hidden], .pricing__grid[hidden],
+.planes-part[hidden] { display: none; }
 
 /* Flotas apila dos sliders: vehículos y cuentas de conductor. */
-.calc__control + .calc__control { margin-top: 30px; }
+.calc__control + .calc__control { margin-top: 8px; }
 
 /* Flotas desglosa el precio en líneas con subtotal a la derecha. */
 .calc__lineas { display: flex; flex-direction: column; gap: 8px; }
@@ -751,33 +1353,26 @@ a { color: inherit; }
 }
 .calc__linea[hidden] { display: none; }
 .calc__linea__monto {
-  font-family: var(--font-mono); font-size: 13px; color: var(--tinta); white-space: nowrap;
+  font-size: 14px; font-weight: 600; color: var(--tinta); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Particular — puente hacia Flotas cuando el slider llega al tope. */
+/* Particular — puente hacia Flotas en la banda de 5 a 10 vehículos (y su
+   par en Flotas, la vuelta a Uso particular). */
 .calc__bridge {
   display: flex; align-items: flex-start; gap: 11px; margin: 16px 0 0;
-  padding: 14px 16px; border-radius: var(--radius-md); background: var(--azul-soft);
+  padding: 14px 16px; border-radius: var(--radius-md); background: var(--azul-50);
 }
 .calc__bridge__icon { flex: 0 0 auto; margin-top: 2px; color: var(--azul); }
 .calc__bridge__text { font-size: 14px; line-height: 1.5; color: var(--acero); }
 .calc__bridge__text strong { color: var(--tinta); font-weight: 600; }
-.calc__bridge__btn {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 5px; padding: 0;
-  border: 0; background: transparent; cursor: pointer; font-family: var(--font-sans);
-  font-size: 14px; font-weight: 600; color: var(--azul);
-}
-.calc__bridge__btn:hover { text-decoration: underline; }
 
 /* Flotas — tramo "Más de 100": reemplaza el precio por un llamado a contacto. */
 .calc__contacto {
-  margin: 8px 0 0; padding: 20px 22px; border-radius: var(--radius-md); background: var(--azul-soft);
+  margin: 8px 0 0; padding: 20px 22px; border-radius: var(--radius-md); background: var(--azul-50);
 }
 .calc__contacto__title { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
 .calc__contacto__text { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--acero); }
-.calc__contacto__mail {
-  display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--azul);
-}
 
 /* Planes — Formulario de la consulta de flota grande */
 .form { margin: 18px 0 0; display: flex; flex-direction: column; gap: 14px; }
@@ -791,10 +1386,10 @@ a { color: inherit; }
   width: 100%; font-family: var(--font-sans); font-size: 15px; color: var(--tinta);
   padding: 10px 12px; background: var(--superficie);
   border: 1px solid var(--linea); border-radius: var(--radius-sm);
-  transition: border-color var(--duration-base) var(--ease-standard),
-              box-shadow var(--duration-base) var(--ease-standard);
+  transition: border-color var(--dur-base) var(--ease-salir),
+              box-shadow var(--dur-base) var(--ease-salir);
 }
-.form__input:focus { outline: none; border-color: var(--azul); box-shadow: 0 0 0 3px var(--azul-soft); }
+.form__input:focus { outline: none; border-color: var(--azul); box-shadow: 0 0 0 3px var(--azul-50); }
 .form__input--corto { max-width: 150px; }
 .form__textarea { resize: vertical; min-height: 76px; }
 /* El select usa la misma caja que los inputs; la flecha nativa se reemplaza
@@ -806,7 +1401,7 @@ select.form__input {
 }
 .form__enviar { margin-top: 4px; }
 .form__enviar[disabled] { opacity: 0.6; cursor: default; }
-.form__estado { margin: 0; font-size: 13px; line-height: 1.5; color: var(--estado-vencido-fg); }
+.form__estado { margin: 0; font-size: 13px; line-height: 1.5; color: var(--vencido-texto); }
 .form__estado:empty { display: none; }
 .form__salida { margin: 14px 0 0; font-size: 13px; color: var(--acero); }
 .form__salida a { color: var(--azul); font-weight: 600; }
@@ -823,7 +1418,7 @@ select.form__input {
 .form__ok {
   display: flex; align-items: flex-start; gap: 12px; margin: 18px 0 0;
   padding: 16px 18px; border-radius: var(--radius-md);
-  background: var(--estado-vigente-bg); color: var(--estado-vigente-fg);
+  background: var(--vigente-suave); color: var(--vigente-texto);
 }
 .form__ok[hidden] { display: none; }
 .form__ok:focus { outline: none; }
@@ -831,11 +1426,11 @@ select.form__input {
 .form__ok__title { margin: 0; font-size: 16px; font-weight: 700; }
 .form__ok__text { margin: 4px 0 0; font-size: 14px; line-height: 1.5; }
 
-/* Los dos formularios viven sobre azul-soft: el de flotas en .calc__contacto
+/* Los dos formularios viven sobre azul-50: el de flotas en .calc__contacto
    (/planes/) y el de empresas del rubro en .contacto-box (/socios/). El anillo
    de foco y los bordes de arriba se escribieron para fondo blanco y ahí
-   desaparecen. Estos valores están medidos contra #eaeefc:
-   el anillo da 3,4:1 y el borde 3,6:1, sobre el 3:1 que pide WCAG 1.4.11. */
+   desaparecen. Estos valores están medidos contra azul-50 (#eef2fe):
+   el anillo da 3,4:1 y el borde 3,7:1, sobre el 3:1 que pide WCAG 1.4.11. */
 .calc__contacto .form__input,
 .contacto-box .form__input { border-color: #6d7c9b; }
 .calc__contacto .form__input:focus,
@@ -853,7 +1448,7 @@ select.form__input {
 }
 .contacto-box {
   max-width: 720px; margin: 0 auto; padding: 32px 36px;
-  background: var(--azul-soft); border-radius: var(--radius-lg);
+  background: var(--azul-50); border-radius: var(--radius-lg);
 }
 .contacto-box__title { margin: 0; font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; font-weight: 700; }
 .contacto-box__text { margin: 10px 0 0; font-size: 16px; line-height: 1.55; color: var(--acero); }
@@ -862,7 +1457,7 @@ select.form__input {
    Página Legal (¿Es legal?)
    =================================================================== */
 .legal-answer {
-  max-width: 760px; margin: 0 auto; background: var(--azul-soft);
+  max-width: 760px; margin: 0 auto; background: var(--azul-50);
   border: 1px solid var(--linea); border-radius: var(--radius-lg);
   padding: 32px 36px; text-align: center;
 }
@@ -885,7 +1480,11 @@ select.form__input {
 /* Tabla de documentos de la pagina de legalidad.
    El wrapper lleva overflow-x: auto porque las dos primeras columnas no
    envuelven (nombres propios de documentos) y en movil se saldrian. */
-.legal-tabla-wrap { max-width: 760px; margin: 36px auto 0; overflow-x: auto; }
+.legal-tabla-wrap {
+  max-width: 760px; margin: 36px auto 0; overflow-x: auto;
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+}
 .legal-tabla { width: 100%; border-collapse: collapse; font-size: 15px; }
 .legal-tabla th, .legal-tabla td {
   text-align: left; padding: 13px 14px; vertical-align: top;
@@ -898,8 +1497,9 @@ select.form__input {
 .legal-tabla td:first-child { font-weight: 600; color: var(--tinta); white-space: nowrap; }
 .legal-tabla td:nth-child(2) { white-space: nowrap; }
 .legal-tabla td:last-child { color: var(--acero); line-height: 1.5; }
-.legal-si { color: var(--vigente); font-weight: 600; }
-.legal-ojo { color: var(--estado-por-vencer-fg); font-weight: 600; }
+.legal-tabla tbody tr:last-child td { border-bottom: 0; }
+.legal-si { color: var(--vigente-texto); font-weight: 600; }
+.legal-ojo { color: var(--por-vencer-texto); font-weight: 600; }
 
 .legal-refs { max-width: 760px; margin: 40px auto 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .legal-ref {
@@ -909,10 +1509,9 @@ select.form__input {
 .legal-ref__title { margin: 0; font-size: 15px; font-weight: 600; color: var(--tinta); }
 .legal-ref__meta { margin: 4px 0 0; font-size: 13px; line-height: 1.55; color: var(--acero); }
 .legal-ref__link {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 10px;
-  font-size: 13px; font-weight: 600; color: var(--azul); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: -2px 0 -12px;
+  font-size: 13px;
 }
-.legal-ref__link:hover { text-decoration: underline; }
 .legal-disclaimer {
   max-width: 760px; margin: 28px auto 0; padding: 16px 20px;
   border: 1px dashed var(--linea); border-radius: var(--radius-md);
@@ -922,83 +1521,108 @@ select.form__input {
 /* ===================================================================
    Página Cómo funciona (paso a paso)
    =================================================================== */
-.hw-phase { max-width: 820px; margin: 0 auto; }
-.hw-phase + .hw-phase { margin-top: 60px; }
+.hw-phase { max-width: 960px; margin: 0 auto; }
+.hw-phase + .hw-phase { margin-top: 56px; }
 .hw-phase__head { display: flex; align-items: center; gap: 14px; }
 /* Es un h2 (encabezado de fase), no solo un chip: el margin por defecto
    del h2 lo descuadraría dentro del flex de .hw-phase__head. */
 .hw-phase__tag {
   margin: 0;
   display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
-  background: var(--azul-soft); color: var(--azul); font-size: 12px; font-weight: 700;
+  background: var(--azul-50); color: var(--azul); font-size: 12px; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 13px; border-radius: var(--radius-pill);
 }
 .hw-phase__rule { flex: 1; height: 1px; background: var(--linea); }
 .hw-phase__note { margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 
-.hw-steps { margin: 26px 0 0; padding: 0; list-style: none; }
-.hw-step { display: flex; gap: 20px; }
-.hw-step__rail { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; }
+/* Los cuatro pasos de cada fase, en tarjetas de 2 × 2 (una columna en
+   celular). Cada paso: ícono, número y etiqueta de plan arriba; título y un
+   párrafo corto. tools/schema.py lee .hw-step, .hw-step__title,
+   .hw-step__text y la .plan-tag de cada uno para el HowTo. */
+/* Las tarjetas de una misma fila miden lo mismo (stretch). Se probo
+   alinearlas arriba para que cada una midiera lo que dice, pero la grilla se
+   veia dispareja: cuatro cajas de alto distinto leen como un error, y el
+   blanco al pie de la tarjeta corta molesta menos. */
+.hw-steps {
+  margin: 24px 0 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;
+  align-items: stretch;
+}
+.hw-step { display: flex; flex-direction: column; padding: 24px; }
+.hw-step__top { display: flex; align-items: center; gap: 12px; min-height: 44px; }
 .hw-step__num {
-  flex: 0 0 auto; width: 38px; height: 38px; border-radius: var(--radius-pill);
-  background: var(--azul); color: #fff; box-shadow: var(--shadow-sm);
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; letter-spacing: -0.01em;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  color: var(--acero); font-variant-numeric: tabular-nums;
 }
-.hw-step__line { flex: 1; width: 2px; background: var(--linea); margin: 8px 0; border-radius: 1px; }
-.hw-step:last-child .hw-step__line { display: none; }
-.hw-step__body {
-  flex: 1; min-width: 0; margin-bottom: 18px; padding: 22px 24px;
-  background: var(--superficie); border: 1px solid var(--linea);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+.hw-step__top .plan-tag, .hw-step__top .llavero { margin-left: auto; }
+.hw-step__title { margin: 16px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+.hw-step__text { margin: 6px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); text-wrap: pretty; }
+.hw-step__badges { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.hw-step__fino { margin: 10px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+
+/* Flotas: toda la operación — seis ítems sin tarjeta, como los beneficios
+   del inicio: ícono, título y una línea. */
+.op-grid {
+  margin: 44px 0 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 28px;
 }
-.hw-step:last-child .hw-step__body { margin-bottom: 0; }
-.hw-step__title { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
-.hw-step__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
-.hw-step__chips { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.hw-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-pill);
-  padding: 5px 11px; font-size: 12px; font-weight: 600; color: var(--acero);
-}
-.hw-chip svg { flex: 0 0 auto; }
+.op-item__title { margin: 14px 0 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.op-item__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--acero); }
+/* Acá .quien__link sí es un <a> suelto (en el inicio es un span dentro de
+   una tarjeta-enlace): lleva sus 44px de alto, y el margen baja lo mismo que
+   crece la caja (44 − 22 de línea) para que el texto quede donde estaba. */
+.op-mas { margin: 25px 0 0; text-align: center; }
+.op-mas .quien__link { padding-top: 0; min-height: 44px; }
+
+.section--aside { padding: 56px 0 0; }
 .hw-aside {
-  max-width: 820px; margin: 56px auto 0; display: flex; gap: 18px; align-items: flex-start;
-  background: var(--azul-soft); border: 1px solid var(--linea);
+  max-width: 960px; margin: 0 auto; display: flex; gap: 18px; align-items: flex-start;
+  background: var(--azul-50); border: 1px solid var(--linea);
   border-radius: var(--radius-lg); padding: 24px 26px;
 }
+/* El chip va en blanco: el azul-50 de siempre desaparece sobre el fondo del aviso. */
+.hw-aside .icon-chip { background: var(--superficie); }
 .hw-aside__title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
 .hw-aside__text { margin: 7px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
+/* 44px de alto con márgenes negativos: el texto queda donde estaba y la caja
+   del aviso no crece, pero el blanco táctil llega a los 44px. */
 .hw-aside__link {
-  display: inline-flex; align-items: center; gap: 5px; margin-top: 12px;
-  font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: 1px 0 -12px;
+  font-size: 15px;
 }
-.hw-aside__link:hover { text-decoration: underline; }
 
 /* ===================================================================
-   Landing — ¿Para quién es? (personal / flota)
+   Enlaces de texto (con flecha o sin ella)
+   Mismo peso, color y subrayado al pasar en las seis páginas. El tamaño
+   sí cambia con el contexto (16px en el hero, 13px en una referencia). Si
+   agregas uno nuevo, súmalo acá en vez de repetir las tres propiedades.
    =================================================================== */
-.aud { padding: 24px 0 76px; }
-.aud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+.lp-hero__sec, .quien__link, .hw-aside__link, .legal-ref__link,
+.calc__nudge__btn, .calc__bridge__btn {
+  font-weight: 600; color: var(--azul); text-decoration: none;
+}
+.lp-hero__sec:hover, a.quien__link:hover, .quien__card:hover .quien__link,
+.hw-aside__link:hover, .legal-ref__link:hover,
+.calc__nudge__btn:hover, .calc__bridge__btn:hover {
+  text-decoration: underline; text-underline-offset: 4px;
+}
+
+/* ===================================================================
+   Tarjetas de audiencia (Socios) y etiqueta de plan
+   =================================================================== */
 .aud-card { display: flex; flex-direction: column; }
 .aud-card__title { margin: 16px 0 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
 .aud-card__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .aud-card__list { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .aud-card__item { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--tinta); }
 .aud-card__check { flex: 0 0 auto; margin-top: 2px; }
-.aud-card__foot { margin-top: auto; padding-top: 20px; }
-.aud-card__link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 14px; font-weight: 600; color: var(--azul); text-decoration: none;
-}
-.aud-card__link:hover { text-decoration: underline; }
 
 /* Etiqueta de plan: "Uso particular", "Flotas", "Solo en Flotas". Azul sobre
-   azul-soft da 5,3:1, sobre el 4,5:1 que pide texto de 11px. */
+   azul-50 da 5,4:1, sobre el 4,5:1 que pide texto de 11px. */
 .plan-tag {
   display: inline-flex; align-items: center; flex: 0 0 auto;
   padding: 4px 10px; border-radius: var(--radius-pill);
-  background: var(--azul-soft); color: var(--azul);
+  background: var(--azul-50); color: var(--azul);
   font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
   text-transform: uppercase; line-height: 1.3; white-space: nowrap;
 }
@@ -1018,16 +1642,10 @@ select.form__input {
 .rubro__title { margin: 8px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
 .rubro__text { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--acero); }
 .rubro__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-.rubro__tipos { display: flex; flex-wrap: wrap; gap: 8px; }
-/* Planes — la franja del rubro explica cada perfil en una línea. */
-.rubro-banda { max-width: 1140px; margin: 24px auto 0; padding: 0 24px; }
+/* Planes — la franja del rubro: una línea y el enlace a Socios. */
+.rubro-banda { max-width: 1000px; margin: 40px auto 0; padding: 0 var(--gutter); }
+@media (min-width: 861px) { .rubro-banda .rubro__lado { align-items: flex-end; } }
 .rubro-banda .rubro { margin-top: 0; }
-.rubro__lista {
-  margin: 0; padding: 0; list-style: none;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.rubro__lista li { font-size: 14px; line-height: 1.5; color: var(--acero); }
-.rubro__lista strong { color: var(--tinta); font-weight: 600; }
 
 /* ===================================================================
    Documento legal (Términos y Condiciones)
@@ -1064,7 +1682,7 @@ select.form__input {
 .doc__sec a { color: var(--azul); }
 .doc__aviso {
   margin-top: 44px; padding: 20px 22px;
-  background: var(--azul-soft); border-radius: var(--radius-lg);
+  background: var(--azul-50); border-radius: var(--radius-lg);
   font-size: 15px; line-height: 1.6; color: var(--tinta);
 }
 
@@ -1073,121 +1691,139 @@ select.form__input {
    =================================================================== */
 .llavero { display: block; filter: drop-shadow(0 10px 18px rgba(22, 25, 31, 0.16)); }
 
-/* Home — paso 02: foto centrada bajo el texto de la card */
-.step__llavero { height: 108px; width: auto; margin: 18px auto 0; }
-
-/* Cómo funciona — paso 04: texto a la izquierda, foto a la derecha */
-.hw-step__cols { display: flex; align-items: center; gap: 20px; }
-.hw-step__cols > div { min-width: 0; flex: 1; }
-.llavero--paso { width: 92px; height: auto; flex: 0 0 auto; }
+/* Cómo funciona — paso 04: la foto del llavero en la esquina, donde los
+   pasos de Flotas llevan su etiqueta. Se monta sobre el borde de arriba
+   para no estirar la fila. */
+/* Va enmarcada como una miniatura de 44px, a la altura del ícono y en el
+   lugar donde los pasos de Flotas llevan su etiqueta. Antes se montaba sobre
+   el borde de la tarjeta con márgenes negativos y parecía un recorte mal
+   hecho; suelta y chica, sin marco, se leía como una mancha azul. */
+.llavero--paso {
+  width: 44px; height: 44px; flex: 0 0 auto; box-sizing: border-box;
+  padding: 3px; object-fit: contain; filter: none;
+  background: var(--lienzo); border: 1px solid var(--linea); border-radius: var(--radius-md);
+}
 
 /* Planes — esquina del panel "Todo incluido" */
 .included { position: relative; }
 .llavero--included { position: absolute; top: 26px; right: 30px; width: 76px; height: auto; transform: rotate(8deg); }
 .included--con-llavero .included__lead { padding-right: 92px; }
 
-/* Enlace "ver el paso a paso" bajo los pasos de la home */
-.steps-more { margin-top: 28px; text-align: center; }
-.steps-more__link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 15px; font-weight: 600; color: var(--azul); text-decoration: none;
-}
-.steps-more__link:hover { text-decoration: underline; }
-
 /* ===================================================================
-   Animaciones (home)
+   Animaciones (inicio)
+   Todas bajo `prefers-reduced-motion: no-preference` y con el estado
+   base como estado final: con movimiento reducido se ve todo armado y
+   quieto. Solo transform y opacity.
+
+   Mini escenas de "Así de simple": se animan UNA vez, cuando el patrón
+   de aparición le pone `.is-visible` al paso. Cada paso espera su turno
+   (`--paso-t`), 700ms después del anterior, para que nunca haya más de
+   dos piezas moviéndose a la vez. El turno lo reparte el script del
+   inicio en ORDEN DE ENTRADA (en una columna, en celular, los pasos
+   pueden entrar de a uno o de a varios según el alto de la pantalla y la
+   velocidad del scroll); los `nth-child` de abajo son el respaldo para
+   cuando ese script no corre, y calzan con el caso de escritorio.
    =================================================================== */
-@keyframes rise {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: none; }
+.paso__ilus .i-cae, .paso__ilus .i-pop, .paso__ilus .i-onda,
+.paso__ilus .i-sube, .paso__ilus .i-ping { transform-box: fill-box; transform-origin: 50% 50%; }
+.paso__ilus .i-onda { transform-origin: 0% 50%; }
+@keyframes i-cae { from { opacity: 0; transform: translateY(-30px); } }
+@keyframes i-pop {
+  0% { opacity: 0; transform: scale(0.4); }
+  70% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: none; }
 }
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-9px); }
-}
-@keyframes ping-nfc {
-  0%   { transform: scale(1);    opacity: 0.55; }
-  70%  { transform: scale(1.55); opacity: 0; }
-  100% { transform: scale(1.55); opacity: 0; }
-}
-@keyframes wave-nfc {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 1; }
-}
-
-/* Hero: entrada en cascada */
-.lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
-.hero-conteo {
-  animation: rise 0.7s var(--ease-standard) backwards;
-}
-.lp-hero__title   { animation-delay: 0.08s; }
-.lp-hero__lead    { animation-delay: 0.16s; }
-.lp-hero__actions { animation-delay: 0.24s; }
-.lp-hero__trust   { animation-delay: 0.32s; }
-.hero-conteo      { animation-delay: 0.40s; }
-
-/* Ficha del hero: entra, luego flota; el tag emite ondas NFC.
-   Solo transform/opacity (GPU) — nada de box-shadow animado. */
-.ficha-preview {
-  animation: rise 0.8s var(--ease-standard) 0.2s backwards,
-             float 7s ease-in-out 1.4s infinite;
-  will-change: transform;
-}
-.ficha-preview__tag::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 2px solid var(--azul);
-  animation: ping-nfc 2.6s var(--ease-standard) 1.6s infinite;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-.ficha-preview__tag svg path { animation: wave-nfc 2.6s ease-in-out 1.6s infinite; }
-.ficha-preview__tag svg path:last-child { animation-delay: 1.9s; }
-
-/* Reveal on scroll (se activa con .is-visible desde JS) */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s var(--ease-standard), transform 0.6s var(--ease-standard);
-}
-.reveal.is-visible { opacity: 1; transform: none; }
-
-/* Hover lift en cards de la home */
-.steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover, .aud-grid .card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-.steps-grid .card, .op-grid .card, .bn-grid .card, .aud-grid .card {
-  transition: box-shadow var(--duration-base) var(--ease-standard),
-              transform var(--duration-base) var(--ease-standard);
+@keyframes i-onda { from { opacity: 0; transform: scale(0.6); } }
+@keyframes i-sube { from { opacity: 0; transform: translateY(10px); } }
+/* El anillo del toque: su estado base es invisible (opacity 0 en el SVG),
+   así que con movimiento reducido simplemente no está. */
+@keyframes i-ping {
+  0% { opacity: 0.7; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(1.5); }
 }
 
-/* Accesibilidad: sin movimiento si el usuario lo pide */
-@media (prefers-reduced-motion: reduce) {
-  .lp-hero__badge, .lp-hero__title, .lp-hero__lead, .lp-hero__actions, .lp-hero__trust,
-  .hero-conteo,
-  .ficha-preview, .ficha-preview__tag::before, .ficha-preview__tag svg path { animation: none; }
-  .ficha-preview__tag::before { content: none; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .steps-grid .card:hover, .op-grid .card:hover, .bn-grid .card:hover { transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .paso { --paso-t: 150ms; }
+  .pasos > .paso:nth-child(2) { --paso-t: 850ms; }
+  .pasos > .paso:nth-child(3) { --paso-t: 1550ms; }
+  .paso.is-visible .i-cae  { animation: i-cae 560ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-pop  { animation: i-pop 420ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-onda { animation: i-onda 360ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-sube { animation: i-sube 360ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-ping { animation: i-ping 900ms var(--ease-salir) backwards; }
+  .paso.is-visible .i-cae, .paso.is-visible .i-pop, .paso.is-visible .i-onda,
+  .paso.is-visible .i-sube, .paso.is-visible .i-ping {
+    animation-delay: calc(var(--paso-t) + var(--d, 0ms));
+  }
+
+  /* Hover lift en tarjetas */
+  .steps-grid .card, .quien__card {
+    transition: box-shadow var(--dur-base) var(--ease-salir),
+                border-color var(--dur-base) var(--ease-salir),
+                transform var(--dur-base) var(--ease-salir);
+  }
+  .steps-grid .card:hover, .quien__card:hover { transform: translateY(-2px); }
 }
+.steps-grid .card:hover { box-shadow: var(--shadow-md); }
 
 /* ===================================================================
    Responsive
    =================================================================== */
+/* Entre el celular y el escritorio ancho el nav apenas cabe con sus cinco
+   enlaces y los dos botones: se aprietan los rellenos antes de pasar al
+   panel desplegable (bajo 860px). */
+@media (max-width: 1060px) and (min-width: 861px) {
+  .nav__inner { gap: 12px; }
+  .nav__links { gap: 0; }
+  .nav__link { padding: 0 9px; }
+  .nav__login { padding: 0 10px; }
+}
 @media (max-width: 980px) {
   /* minmax(0,1fr) y no 1fr: si no, las fichas con texto que no envuelve
      (patentes, documentos) estiran la columna y aparece scroll lateral. */
-  .op-grid { grid-template-columns: minmax(0, 1fr); }
-  .aud-grid { grid-template-columns: minmax(0, 1fr); }
   .socios-grid { grid-template-columns: minmax(0, 1fr); }
-  .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  .lp-hero__title { font-size: 40px; }
-  .fs-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  /* Hero en tablet: SIGUE en dos columnas, con la escena más chica. En una
+     columna el texto quedaba pegado a la izquierda y la escena centrada
+     abajo, desalineados, con un hueco a la derecha del texto. */
+  .lp-hero { padding: 48px 0 60px; }
+  .lp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 32px; }
+  .lp-hero__title { font-size: 48px; }
+  .lp-hero__lead { font-size: 17px; }
+  .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .steps-grid { grid-template-columns: minmax(0, 1fr); }
-  .bn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  /* Pasos y audiencias: una columna. A tres columnas en tablet los títulos
+     se partían en dos líneas y las ilustraciones quedaban diminutas. */
+  .pasos, .quien { grid-template-columns: minmax(0, 1fr); max-width: 640px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 900px) and (min-width: 561px) {
+  /* Con el ancho de tablet cada paso es una fila: ilustración a la
+     izquierda, número, título y texto a la derecha. */
+  .paso {
+    display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto auto 1fr; column-gap: 24px; padding: 16px 24px 16px 16px;
+  }
+  .paso__ilus { grid-column: 1; grid-row: 1 / -1; }
+  .paso__num { grid-column: 2; grid-row: 2; justify-self: start; margin: 0; }
+  .paso__title { grid-column: 2; grid-row: 3; margin-left: 0; }
+  .paso__text { grid-column: 2; grid-row: 4; margin-left: 0; }
+  /* Audiencias: el ícono a la izquierda y el enlace a la derecha, en una
+     fila; apiladas, cada tarjeta era un bloque alto casi vacío. */
+  .quien__card {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr) auto;
+    column-gap: 18px; align-items: center; padding: 20px 24px;
+  }
+  .quien__card > .icon-chip { grid-row: 1 / span 2; }
+  .quien__title { grid-column: 2; margin: 0; }
+  .quien__text { grid-column: 2; }
+  .quien__link { grid-column: 3; grid-row: 1 / span 2; margin: 0; padding: 0; }
+}
+@media (max-width: 760px) {
+  /* Hero en una columna: el bloque de texto y la escena comparten el mismo
+     ancho y el mismo eje, así que quedan alineados aunque sobre pantalla. */
+  .lp-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 36px; max-width: calc(480px + 2 * var(--gutter)); }
+  .lp-hero__escena { width: min(420px, 100%); justify-self: center; }
 }
 @media (max-width: 860px) {
   .pricing__grid { grid-template-columns: minmax(0, 1fr); }
@@ -1199,57 +1835,59 @@ select.form__input {
   .nav__inner { gap: 10px; }
   .nav__links { display: none; }
   .nav__actions { margin-left: auto; }
-  /* "Crear cuenta" vive en el panel y en el hero; en la barra sobra. */
+  /* "Crear cuenta gratis" vive en el panel y en el hero; en la barra sobra. */
   .nav__actions .btn { display: none; }
   .nav__login {
-    /* 12px de padding lo dejan en 44px de alto: mismo objetivo táctil
-       que la hamburguesa y misma altura visual. */
-    padding: 12px 16px; border: 1px solid var(--linea);
-    border-radius: var(--radius-pill);
+    /* 44px de alto (min-height de la base): mismo objetivo táctil que la
+       hamburguesa y misma altura visual. */
+    padding: 0 16px; border: 1px solid var(--linea-fuerte);
   }
   .nav__burger { display: inline-flex; }
   .nav__panel.is-open { display: block; }
-  /* La anotación no cabe al lado del toggle: pasa a ir debajo, con la
-     flecha reflejada para que siga apuntando al botón anual. */
-  .billing-toggle-wrap { flex-direction: column; align-items: center; gap: 6px; }
-  .billing-note {
-    position: static; transform: none; align-items: center; gap: 8px;
-    flex-direction: row-reverse;
-  }
-  /* Girada 180°, la flecha queda a la derecha del texto y apunta hacia
-     arriba, al badge del botón anual. */
-  .billing-note__arrow { width: 44px; height: 30px; transform: rotate(180deg); }
-  .billing-note__text { margin-top: 0; max-width: none; font-size: 21px; }
-  .footer__grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  /* Las dos tarjetas de Uso particular se apilan. */
+  .plan-duo { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin: 0 auto; }
+  /* Flotas: toda la operación, a dos columnas. */
+  .op-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* La franja del total sigue el ancho de las tarjetas apiladas. */
+  .plan-calc { max-width: 520px; margin-left: auto; margin-right: auto; }
+  .plan-calc__fila { grid-template-columns: minmax(0, 1fr); }
+  .plan-calc__resultado { text-align: left; }
+  .footer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
   .footer__brand-col { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
+  /* Gutter de celular: 16px a cada lado, como la app. */
+  :root { --gutter: 16px; }
   /* Hero */
-  .lp-hero { padding: 40px 0 48px; }
-  .lp-hero__title { font-size: 32px; }
-  .lp-hero__nl { display: inline; }
-  .lp-hero__lead { margin-top: 16px; font-size: 17px; }
-  .lp-hero__actions { flex-direction: column; margin-top: 24px; }
+  .lp-hero { padding: 32px 0 44px; }
+  .lp-hero__badge { font-size: 12px; padding: 6px 12px; }
+  .lp-hero__title { margin-top: 16px; font-size: 38px; }
+  .lp-hero__lead { margin-top: 14px; font-size: 17px; }
+  .lp-hero__actions { flex-direction: column; align-items: stretch; gap: 4px; margin-top: 24px; }
   .lp-hero__actions .btn { width: 100%; }
-  .lp-hero__trust { flex-direction: column; align-items: flex-start; gap: 10px; }
-  /* El número sube a su propia línea: al lado del texto no cabe sin
-     partirlo en dos renglones desalineados. */
-  .hero-conteo { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 22px; padding-top: 20px; }
-  .hero-conteo__num { font-size: 30px; }
+  /* Alineado a la izquierda como el resto del bloque, sin sangría. */
+  .lp-hero__sec { justify-content: flex-start; padding: 0; }
+  .lp-hero__micro { margin-top: 8px; }
+  .lp-hero__grid { gap: 32px; }
+  .prueba__inner { padding: 18px var(--gutter); }
+  .prueba__num { font-size: 30px; }
+  .prueba__txt { font-size: 16px; }
   /* Índice del documento legal: a dos columnas los títulos se parten */
   .doc__toc-list { grid-template-columns: minmax(0, 1fr); }
   .doc__sec-title { font-size: 19px; }
 
   /* Secciones: mismo aire para todas, no solo para .section */
   .section { padding: 52px 0; }
-  .section__title, .fs-title { font-size: 27px; }
-  .section__lead, .fs-lead { margin-top: 12px; font-size: 16px; }
+  .section__title { font-size: 27px; }
+  .section__lead { margin-top: 12px; font-size: 16px; }
   .steps-grid { margin-top: 30px; }
-  .op-grid, .bn-grid { grid-template-columns: minmax(0, 1fr); margin-top: 28px; }
-  .aud { padding: 8px 0 48px; }
-  .aud-grid { margin-top: 28px; }
-  .steps-more { margin-top: 22px; }
-  .fs-list { margin-top: 20px; }
+  .pasos, .quien { margin-top: 28px; gap: 16px; }
+  .quien__card { padding: 20px; }
+  /* Beneficios en lista: ícono a la izquierda, texto a la derecha. */
+  .beneficios { grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 28px; }
+  .beneficio { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; }
+  .beneficio > .icon-chip { grid-row: 1 / span 2; }
+  .beneficio__title { margin-top: 0; align-self: center; }
   .card--p28 { padding: 22px; }
 
   /* CTA y FAQ tenían el padding de escritorio */
@@ -1272,34 +1910,55 @@ select.form__input {
   .calc__save__amount { font-size: 20px; }
   .calc__actions { flex-direction: column; }
   .calc__actions .btn { width: 100%; }
-  .billing-note__text { font-size: 19px; }
   /* Bajo 560px las pills ocupan el ancho y el hint "desde 5" estorba. */
   .plan-pills { width: 100%; }
-  .plan-pills__opt { flex: 1; justify-content: center; padding: 9px 12px; }
+  .plan-pills__opt { flex: 1; justify-content: center; padding: 0 12px; }
+  .plan-card { padding: 24px; }
+  .plan-card--pro { padding: 23px; }
+  .plan-card__monto { font-size: 42px; }
+  .plan-calc { padding: 22px 20px; }
+  .plan-calc__total strong { font-size: 28px; }
+  .planes-nota { align-items: flex-start; text-align: left; font-size: 14px; }
+  .planes-nota svg { margin-top: 1px; }
+  .billing-toggle { align-self: stretch; }
+  .billing-toggle__opt { flex: 1; justify-content: center; padding: 0 10px; }
   .plan-pills__hint { display: none; }
-  .calc__control + .calc__control { margin-top: 26px; }
   .calc__linea { font-size: 13px; }
 
   /* Bajo 560px las dos columnas no caben: los campos se apilan. */
   .form__fila { grid-template-columns: 1fr; }
   .form__input--corto { max-width: none; }
 
-  /* Llavero NFC: apilado bajo el texto — al lado deja la columna muy angosta */
-  .step__llavero { height: 90px; }
-  .hw-step__cols { flex-direction: column; align-items: stretch; gap: 14px; }
-  .llavero--paso { width: 84px; align-self: center; }
+  /* Llavero NFC de "Todo incluido": más chico, para no comerse el texto */
   .llavero--included { width: 58px; top: 20px; right: 20px; }
   .included--con-llavero .included__lead { padding-right: 66px; }
 
   /* Cómo funciona */
-  .hw-step { gap: 14px; }
-  .hw-step__num { width: 32px; height: 32px; font-size: 13px; }
-  .hw-step__body { padding: 18px 20px; }
+  .hw-steps { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 20px; }
+  .hw-step { padding: 20px; }
   .hw-step__title { font-size: 17px; }
   .hw-phase + .hw-phase { margin-top: 40px; }
-  .hw-aside { flex-direction: column; gap: 14px; padding: 22px; margin-top: 36px; }
+  .section--aside { padding-top: 40px; }
+  .hw-aside { flex-direction: column; gap: 14px; padding: 22px; }
+  .op-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 28px; }
+  .op-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; }
+  .op-item > .icon-chip { grid-row: 1 / span 2; }
+  .op-item__title { margin-top: 0; align-self: center; }
 
   /* Legal */
+  /* La tabla pasa a una ficha por documento: a tres columnas la tercera
+     quedaba en un hilo de 60px con scroll lateral dentro de la caja. El
+     encabezado se esconde solo a la vista (lo siguen leyendo los lectores
+     de pantalla); nombre y "Sí" van en una línea y la nota debajo. */
+  .legal-tabla thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .legal-tabla tr {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px;
+    padding: 14px 16px; border-bottom: 1px solid var(--linea);
+  }
+  .legal-tabla tbody tr:last-child { border-bottom: 0; }
+  .legal-tabla td { display: block; padding: 0; border: 0; }
+  .legal-tabla td:first-child { white-space: normal; }
+  .legal-tabla td:last-child { grid-column: 1 / -1; font-size: 14px; }
   .legal-answer { padding: 24px 22px; }
   .legal-answer__title { font-size: 22px; }
   .legal-answer__text { font-size: 15px; }
@@ -1313,9 +1972,9 @@ select.form__input {
   .contacto-box__title { font-size: 22px; }
 
   /* Footer */
-  .footer { padding: 44px 0 28px; }
-  .footer__grid { grid-template-columns: 1fr 1fr; gap: 24px; }
-  .footer__bar { margin-top: 28px; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .footer { padding: 36px 0 24px; }
+  .footer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 16px; }
+  .footer__bar { margin-top: 20px; flex-direction: column; align-items: flex-start; gap: 4px; }
 }
   </style>
   <script type="application/ld+json" data-schema>
@@ -1363,8 +2022,8 @@ select.form__input {
       "@type": "WebPage",
       "@id": "https://tapcar.cl/planes/#pagina",
       "url": "https://tapcar.cl/planes/",
-      "name": "Menos que un café al mes por cada vehículo.",
-      "description": "$2.500 por vehículo al mes o $22.000 al año con 27% de descuento, hasta 10 vehículos. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA. Sin permanencia.",
+      "name": "Empieza gratis. Paga solo si quieres más.",
+      "description": "Uso particular gratis con 1 vehículo, o $5.000 al año por vehículo con IVA incluido. Flotas desde 5 vehículos, a UF 0,5 por vehículo al año más IVA.",
       "inLanguage": "es-CL",
       "isPartOf": {
         "@id": "https://tapcar.cl/#sitio"
@@ -1408,13 +2067,15 @@ select.form__input {
       "inLanguage": "es-CL",
       "description": "Plataforma chilena para tener la documentación y las mantenciones de tus vehículos al día y mostrarlas en una fiscalización con un toque a un chip NFC. Guarda el Permiso de Circulación, la Revisión Técnica, el SOAP, el Certificado de Homologación y el Padrón con su fecha de vencimiento y avisa por correo antes de que venzan. En el plan Flotas, además registra con un PIN quién usa cada vehículo y en qué estado lo entrega.",
       "featureList": [
-        "Carga inteligente: una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos",
         "Documentos del vehículo con fecha de vencimiento y estado: Vigente, Por vencer o Vencido",
-        "Ficha pública de solo lectura que se abre con un chip NFC y se puede guardar sin conexión durante 7 días",
+        "Ficha pública de solo lectura que se abre con un chip NFC",
         "Recordatorios por correo antes de cada vencimiento",
-        "Mantenciones con pauta, estado y avisos por correo",
         "Transferencia de un vehículo a otra cuenta con sus documentos y mantenciones",
-        "Datos del vehículo: combustible, neumáticos, transmisión y aceite",
+        "TapCar+: Carga inteligente, una IA arma los vehículos a partir de hasta 40 PDF o fotos de sus documentos",
+        "TapCar+: ficha pública guardada sin conexión durante 7 días",
+        "TapCar+: mantenciones con estado y avisos por correo",
+        "TapCar+: datos del vehículo, como combustible, neumáticos, transmisión y aceite",
+        "TapCar+: otros documentos, además de los de fiscalización",
         "Plan Flotas: registro de uso por conductor con PIN de 4 dígitos, sin cuentas",
         "Plan Flotas: fotos de entrega con lectura automática de kilometraje, combustible y limpieza",
         "Plan Flotas: bitácora, alertas y reportes descargables en Excel y PDF"
@@ -1425,44 +2086,41 @@ select.form__input {
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "CLP",
-        "lowPrice": "2500",
-        "highPrice": "22000",
+        "lowPrice": "0",
+        "highPrice": "5000",
         "offerCount": 4,
         "offers": [
           {
             "@type": "Offer",
-            "name": "Uso particular — plan mensual",
-            "description": "$2.500 por vehículo al mes, hasta 10 vehículos, sin permanencia.",
-            "price": "2500",
+            "name": "Uso particular — gratis",
+            "description": "Gratis con 1 vehículo: documentos de fiscalización, avisos por correo y ficha pública con un toque.",
+            "price": "0",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
             "url": "https://tapcar.cl/planes/",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "price": "2500",
-              "priceCurrency": "CLP",
-              "valueAddedTaxIncluded": true,
-              "unitText": "vehículo",
-              "billingIncrement": 1,
-              "billingDuration": 1,
-              "referenceQuantity": {
-                "@type": "QuantitativeValue",
-                "value": 1,
-                "unitCode": "MON"
-              }
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "maxValue": 1,
+              "unitText": "vehículo"
             }
           },
           {
             "@type": "Offer",
-            "name": "Uso particular — plan anual",
-            "description": "$22.000 por vehículo al año, un 27% menos que pagando mes a mes.",
-            "price": "22000",
+            "name": "Uso particular — TapCar+",
+            "description": "$5.000 al año por cada vehículo, incluido el primero, hasta 10 vehículos. IVA incluido.",
+            "price": "5000",
             "priceCurrency": "CLP",
             "availability": "https://schema.org/InStock",
             "url": "https://tapcar.cl/planes/",
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "minValue": 1,
+              "maxValue": 10,
+              "unitText": "vehículo"
+            },
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
-              "price": "22000",
+              "price": "5000",
               "priceCurrency": "CLP",
               "valueAddedTaxIncluded": true,
               "unitText": "vehículo",
@@ -1538,23 +2196,15 @@ select.form__input {
           "name": "¿Cuánto cuesta?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Uso particular cubre de 1 a 10 vehículos: $2.500 por vehículo al mes — menos que un café — o $22.000 al año, un 27% menos. Flotas parte en 5 vehículos y cuesta UF 0,5 por vehículo al año más IVA. Entre 5 y 10 los dos están disponibles y eliges tú."
+            "text": "Uso particular es gratis con 1 vehículo. TapCar+ cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Cuál de los dos planes me toca?",
+          "name": "¿Qué plan me toca?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Depende de cuántos vehículos tengas y de qué necesitas. Con menos de 5 vehículos solo existe Uso particular. Desde 11 el plan es Flotas. Entre 5 y 10 eliges tú. Uso particular trae documentos, ficha NFC, recordatorios, mantenciones, datos del vehículo, transferencia de vehículos y el chip. Flotas suma conductores con PIN, Tomar/Entregar con fotos, bitácora, alertas, reportes, equipo de hasta 5 personas y cuentas de conductor, y cuesta algo más al mismo número de vehículos. Si no tienes conductores, Uso particular te sirve igual. Sobre 100 vehículos armamos la propuesta contigo: el plan no tiene tope, lo que llega hasta 100 es contratarlo solo desde la web."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Qué es un conductor fijo y qué se cobra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Son dos cosas distintas. La asignación —que el vehículo tenga un conductor titular, que aparezca prellenado al abrir la ficha y que puedas saltarte el PIN— va incluida. La cuenta es que ese conductor entre con su propio usuario y mantenga solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento, sin ver la flota ni a sus compañeros. Eso cuesta UF 0,12 al mes y no ocupa lugar en el tope de 5 personas del equipo. Se cobra la cuenta, no la asignación."
+            "text": "Con menos de 5 vehículos, Uso particular. Desde 11, Flotas. Entre 5 y 10 eliges tú: Flotas suma conductores con PIN, fotos de entrega, reportes y equipo."
           }
         },
         {
@@ -1562,7 +2212,7 @@ select.form__input {
           "name": "¿Los precios incluyen IVA?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Los precios en pesos del plan particular sí: $2.500 y $22.000 son lo que pagas. Los valores en UF del plan Flotas van más IVA, como es habitual entre empresas."
+            "text": "Los de Uso particular sí. Los valores en UF de Flotas van más IVA."
           }
         },
         {
@@ -1570,7 +2220,7 @@ select.form__input {
           "name": "¿El chip NFC está incluido?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, y da lo mismo cuántos vehículos tengas: va un chip por cada uno, sin costo. Lo único que se paga es el despacho — $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100, con IVA incluido. Se cobra en cada envío, así que si más adelante sumas vehículos y te mandamos sus chips, ese despacho se cobra aparte. Sobre 100 vehículos el envío entra en la cotización."
+            "text": "Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: $3.000 por 1 a 10 chips en Uso particular. En los demás planes va por tramos: $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100."
           }
         },
         {
@@ -1578,23 +2228,15 @@ select.form__input {
           "name": "¿Cómo se paga?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Con tarjeta, a través de Flow. El cobro es automático: al crear la cuenta se cobra el primer período, y los siguientes se cobran solos. La factura electrónica del SII llega en una próxima etapa."
+            "text": "Con tarjeta, vía Flow. TapCar+ se cobra al año y se renueva solo; Flotas, mensual o anual."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Necesito instalar una app?",
+          "name": "¿Y si sumo vehículos?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Ni tú, ni tus conductores, ni quien fiscaliza: todo se abre con un toque al chip NFC o desde el panel web. La única excepción es grabar el chip desde un iPhone, que se hace con la app NFC Tools."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Y si sumo más vehículos?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Los sumas tú desde el panel cuando quieras, y se cobra la diferencia prorrateada. También puedes bajar vehículos, pasar de mensual a anual, usar un código promocional y revisar tu historial de pagos. Uso particular llega hasta 10 vehículos: si pasas de ahí, necesitas el plan Flotas. Te enviamos los chips de los vehículos nuevos."
+            "text": "Los sumas desde el panel y pagas la diferencia prorrateada. Desde 11 vehículos, el plan es Flotas."
           }
         },
         {
@@ -1602,7 +2244,7 @@ select.form__input {
           "name": "¿Puedo cancelar?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, cuando quieras, sin contratos de permanencia ni penalizaciones. La baja se agenda para el cierre de tu ciclo: hasta ahí sigues usando TapCar, y si te arrepientes la puedes deshacer."
+            "text": "Sí, sin permanencia ni multas. La baja corre al cierre de tu período."
           }
         }
       ]
@@ -1619,7 +2261,7 @@ select.form__input {
   <header class="nav">
     <div class="nav__inner">
       <a href="/" class="brand">
-        <svg width="34" height="34" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 72 72" fill="none" aria-hidden="true">
           <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
           <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
           <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#fff"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#fff"/>
@@ -1627,16 +2269,16 @@ select.form__input {
         </svg>
         <span class="brand__name">Tap<span class="accent">Car</span></span>
       </a>
-      <nav class="nav__links">
+      <nav class="nav__links" aria-label="Principal">
         <a href="/" class="nav__link">Inicio</a>
         <a href="/como-funciona/" class="nav__link">¿Cómo funciona?</a>
-        <a href="/legal/" class="nav__link">¿Es legal?</a>
-        <a href="/planes/" class="nav__link is-active">Planes</a>
+        <a href="/planes/" class="nav__link is-active" aria-current="page">Planes</a>
         <a href="/socios/" class="nav__link">Socios</a>
+        <a href="/legal/" class="nav__link">¿Es legal?</a>
       </nav>
       <div class="nav__actions">
         <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta</a>
+        <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta gratis</a>
       </div>
       <button type="button" class="nav__burger" data-burger aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
         <span class="nav__burger-box"><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span></span>
@@ -1645,11 +2287,11 @@ select.form__input {
     <div class="nav__panel" id="menu-movil" data-menu>
       <a href="/" class="nav__panel-link" data-nav="/">Inicio</a>
       <a href="/como-funciona/" class="nav__panel-link" data-nav="/como-funciona/">¿Cómo funciona?</a>
-      <a href="/legal/" class="nav__panel-link" data-nav="/legal/">¿Es legal?</a>
-      <a href="/planes/" class="nav__panel-link" data-nav="/planes/">Planes</a>
+      <a href="/planes/" class="nav__panel-link is-active" data-nav="/planes/" aria-current="page">Planes</a>
       <a href="/socios/" class="nav__panel-link" data-nav="/socios/">Socios</a>
+      <a href="/legal/" class="nav__panel-link" data-nav="/legal/">¿Es legal?</a>
       <div class="nav__panel-actions">
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
+        <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
       </div>
     </div>
   </header>
@@ -1660,82 +2302,89 @@ select.form__input {
   <section class="pl-hero">
     <div class="pl-hero__inner">
       <span class="eyebrow">Planes</span>
-      <h1 class="pl-hero__title">Menos que un café al mes por cada vehículo.</h1>
-      <p class="pl-hero__lead">$2.500 por vehículo al mes para uso particular, y tarifa por flota desde 5 vehículos. Documentos, ficha NFC, recordatorios y mantenciones en los dos planes; conductores con PIN, reportes y equipo en Flotas. Sin permanencia — cambia o cancela cuando quieras.</p>
+      <h1 class="pl-hero__title">Empieza gratis. Paga solo si quieres más.</h1>
+      <p class="pl-hero__lead">Uso particular es gratis con 1 vehículo. Flotas parte en 5.</p>
     </div>
   </section>
 
-  <!-- ============ CALCULADORA ============ -->
+  <!-- ============ PLANES ============ -->
   <section class="pricing">
-    <div class="plan-pills-wrap">
+    <!-- id="flotas": /planes/#flotas aterriza en las pills, con Flotas ya
+         elegida por el JS. En la calculadora misma dejaba las pills tapadas
+         por el nav y no se veía qué plan estaba abierto. -->
+    <div class="plan-pills-wrap" id="flotas">
       <div class="plan-pills" role="group" aria-label="Tipo de plan">
         <button type="button" class="plan-pills__opt is-active" data-plan="particular" aria-pressed="true">Uso particular</button>
         <button type="button" class="plan-pills__opt" data-plan="flota" aria-pressed="false">Flotas <span class="plan-pills__hint">desde 5</span></button>
       </div>
     </div>
-    <div class="billing-toggle-wrap">
-      <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
-        <button type="button" class="billing-toggle__opt is-active" data-period="mensual" aria-pressed="true">Mensual</button>
-        <button type="button" class="billing-toggle__opt" data-period="anual" aria-pressed="false">Anual <span class="billing-toggle__save">−27%</span></button>
+
+    <!-- USO PARTICULAR: dos tarjetas. Solo anual, sin selector de periodo. -->
+    <div class="planes-part" data-calc="particular">
+      <div class="plan-duo">
+
+        <article class="card plan-card">
+          <div class="tag-row">
+            <h2 class="plan-card__name">Gratis</h2>
+          </div>
+          <p class="plan-card__precio"><span class="plan-card__monto">$0</span><span class="plan-card__per">con 1 vehículo</span></p>
+          <p class="plan-card__sub">Tu primer vehículo, sin costo.</p>
+          <p class="plan-card__mas">Incluye:</p>
+          <ul class="plan-card__lista">
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Documentos de fiscalización: Permiso de Circulación, Revisión Técnica, SOAP, Padrón y Homologación</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de cada vencimiento</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha pública con un toque al chip</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>La IA lee la fecha de vencimiento por ti</li>
+          </ul>
+          <div class="plan-card__pie">
+            <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta gratis</a>
+          </div>
+        </article>
+
+        <article class="card plan-card plan-card--pro">
+          <div class="tag-row">
+            <h2 class="plan-card__name">TapCar+</h2>
+            <span class="plan-tag">Anual</span>
+          </div>
+          <p class="plan-card__precio"><span class="plan-card__monto">$5.000</span><span class="plan-card__per">al año por vehículo</span></p>
+          <p class="plan-card__sub">Cada vehículo, incluido el primero. IVA incluido.</p>
+          <p class="plan-card__mas">Todo lo del plan gratis, más:</p>
+          <ul class="plan-card__lista">
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mantenciones con avisos</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Datos del vehículo y otros documentos</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Carga inteligente: muchos PDF o fotos de una vez</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ficha sin conexión, guardada en tu teléfono</li>
+            <li><svg class="plan-card__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cargas de combustible desde la ficha</li>
+          </ul>
+
+          <div class="plan-card__pie">
+            <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Empezar con TapCar+</a>
+          </div>
+        </article>
+
       </div>
-      <span class="billing-note">
-        <svg class="billing-note__arrow" viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M61 11C51 2 26 1 10 33"/>
-          <path d="M10 33 13 19"/>
-          <path d="M10 33 25 30"/>
-        </svg>
-        <span class="billing-note__text">Aprovecha la promoción anual</span>
-      </span>
-    </div>
-    <div class="pricing__grid">
 
-      <!-- CALCULADORA — USO PARTICULAR -->
-      <div class="calc" data-calc="particular">
-        <span class="calc__eyebrow">Calcula tu plan</span>
-
-        <div class="calc__control">
-          <div class="calc__row">
-            <span class="calc__row-label">Vehículos a registrar</span>
+      <!-- La calculadora va a lo ancho bajo las tarjetas y no dentro de la de
+           pago: adentro la estiraba ~470 px y la tarjeta Gratis quedaba con
+           ese blanco. Sigue dentro de [data-calc="particular"], que es donde
+           la busca el JS. -->
+      <section class="card plan-calc" aria-labelledby="calc-part-titulo">
+        <div class="plan-calc__fila">
+          <div class="plan-calc__control">
+            <h2 class="plan-calc__title" id="calc-part-titulo">Calcula tu TapCar+</h2>
+            <div class="calc__slider-wrap">
+              <span class="calc__bubble" data-bubble>2 vehículos</span>
+              <input type="range" min="1" max="10" value="2" step="1" class="calc__slider" data-slider
+                     aria-label="Cantidad de vehículos" aria-valuetext="2 vehículos">
+            </div>
+            <div class="calc__scale"><span>1</span><span>10</span></div>
           </div>
-          <div class="calc__slider-wrap">
-            <span class="calc__bubble" data-bubble>3 vehículos</span>
-            <input type="range" min="1" max="10" value="3" step="1" class="calc__slider" data-slider
-                   aria-label="Cantidad de vehículos a registrar">
+          <div class="plan-calc__resultado">
+            <p class="plan-calc__total" aria-live="polite">Total: <strong data-total>$10.000</strong> al año</p>
+            <p class="plan-calc__fino"><span data-formula>2 vehículos × $5.000</span>. IVA incluido.</p>
+            <a href="https://app.tapcar.cl" class="btn btn--secondary btn--md plan-calc__cta">Empezar con TapCar+</a>
           </div>
-          <div class="calc__scale"><span>1</span><span>10</span></div>
         </div>
-
-        <div class="calc__divider"></div>
-
-        <span class="calc__formula"><span data-count>3 vehículos</span> × $<span data-rate>2.500</span></span>
-        <div class="calc__total-row">
-          <span class="calc__total" data-total>$7.500</span>
-          <span class="calc__total-period">/mes</span>
-        </div>
-        <span class="calc__cafe" data-cafe-wrap>
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2M14 2v2M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1Z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2"/></svg>
-          <span data-cafe>$2.500 por vehículo — menos que un café al mes.</span>
-        </span>
-        <div class="calc__save" data-save hidden>
-          <svg class="calc__save__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
-          <span>
-            <span class="calc__save__amount" data-save-amount>Ahorras $24.000 al año</span>
-            <span class="calc__save__note" data-save-note>$1.833 por vehículo al mes — 27% menos que pagando mes a mes.</span>
-          </span>
-        </div>
-        <p class="calc__fineprint" data-fineprint>Un chip NFC por vehículo, incluido. El envío de los 3 chips cuesta $5.000 con IVA incluido, y se cobra en cada despacho. Sin costos ocultos.</p>
-
-        <div class="calc__nudge" data-nudge>
-          <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
-          <span>
-            <span class="calc__nudge__text">Con el plan anual este mismo plan te queda en <strong data-nudge-total>$5.500</strong> al mes.</span>
-            <button type="button" class="calc__nudge__btn" data-nudge-btn>
-              Cambiar a anual y ahorrar <span data-nudge-amount>$24.000</span> al año
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </span>
-        </div>
-
         <div class="calc__bridge" data-bridge hidden>
           <svg class="calc__bridge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1-4h12l1 4h2"/><path d="M6 13 7.5 8h9L18 13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
           <span>
@@ -1746,43 +2395,41 @@ select.form__input {
             </button>
           </span>
         </div>
+      </section>
 
-        <div class="calc__spacer"></div>
-        <ul class="calc__trust">
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin costos ocultos</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cambias de plan cuando quieras</li>
-        </ul>
-        <div class="calc__actions">
-          <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta</a>
-          <a href="mailto:contacto@tapcar.cl" class="btn btn--secondary btn--lg">contacto@tapcar.cl</a>
-        </div>
-      </div>
+      <p class="planes-nota">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.27 16.5 9.42"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        <span>Chips gratis. Despacho <strong class="tabular" data-envio-part>$3.000</strong> por envío (1 a 10 chips).</span>
+      </p>
+    </div>
 
-      <!-- CALCULADORA — FLOTAS -->
-      <div class="calc" data-calc="flota" hidden>
+    <!-- FLOTAS: calculadora en UF con toggle mensual/anual. -->
+    <div class="pricing__grid" data-calc="flota" hidden>
+
+      <div class="calc">
         <span class="calc__eyebrow">Calcula tu flota</span>
 
+        <div class="billing-toggle" role="group" aria-label="Periodo de facturación">
+          <button type="button" class="billing-toggle__opt is-active" data-period="mensual" aria-pressed="true">Mensual</button>
+          <button type="button" class="billing-toggle__opt" data-period="anual" aria-pressed="false">Anual <span class="billing-toggle__save">−27%</span></button>
+        </div>
+
         <div class="calc__control">
-          <div class="calc__row">
-            <span class="calc__row-label">Vehículos de la flota</span>
-          </div>
+          <p class="calc__row-label">Vehículos de la flota</p>
           <div class="calc__slider-wrap">
             <span class="calc__bubble" data-bubble="veh">25 vehículos</span>
             <input type="range" min="5" max="101" value="25" step="1" class="calc__slider" data-slider="veh"
-                   aria-label="Cantidad de vehículos de la flota">
+                   aria-label="Cantidad de vehículos de la flota" aria-valuetext="25 vehículos">
           </div>
           <div class="calc__scale"><span>5</span><span>100+</span></div>
         </div>
 
         <div class="calc__control" data-control-cuentas>
-          <div class="calc__row">
-            <span class="calc__row-label">Cuentas de conductor</span>
-          </div>
+          <p class="calc__row-label">Cuentas de conductor</p>
           <div class="calc__slider-wrap">
             <span class="calc__bubble" data-bubble="cuentas">10 cuentas</span>
             <input type="range" min="0" max="25" value="10" step="1" class="calc__slider" data-slider="cuentas"
-                   aria-label="Cantidad de cuentas de conductor">
+                   aria-label="Cantidad de cuentas de conductor" aria-valuetext="10 cuentas de conductor">
           </div>
           <div class="calc__scale"><span>0</span><span data-scale-max>25</span></div>
         </div>
@@ -1838,7 +2485,7 @@ select.form__input {
 
         <div class="calc__contacto" data-contacto hidden>
           <p class="calc__contacto__title">Más de 100 vehículos</p>
-          <p class="calc__contacto__text">El plan Flotas no tiene tope: lo que llega hasta 100 es contratarlo solo desde la web. Cuéntanos de tu operación y te armamos la propuesta.</p>
+          <p class="calc__contacto__text">Flotas no tiene tope. Cuéntanos de tu operación y te armamos la propuesta.</p>
 
           <form class="form" data-form-flota>
             <div class="form__fila">
@@ -1891,56 +2538,27 @@ select.form__input {
         </div>
 
         <div class="calc__spacer"></div>
-        <ul class="calc__trust">
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>La asignación de conductor va incluida</li>
-          <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--vigente)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sumas y quitas vehículos cuando quieras</li>
-        </ul>
         <div class="calc__actions">
           <a href="mailto:contacto@tapcar.cl" class="btn btn--primary btn--lg">Hablemos de tu flota</a>
           <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta</a>
         </div>
       </div>
 
-      <!-- INCLUIDO -->
+      <!-- INCLUIDO EN FLOTAS -->
       <div class="included included--con-llavero">
         <img src="/assets/chip-llavero.webp" class="llavero llavero--included" alt="Llavero con el chip NFC de TapCar" loading="lazy" width="345" height="400">
         <span class="included__eyebrow">Todo incluido</span>
-        <p class="included__lead" data-included-lead>Una sola suscripción por vehículo, con todo lo que necesitas para tus autos. Sin extras ni letra chica.</p>
-
+        <p class="included__lead">Todo lo de TapCar+, más:</p>
+        <ul class="included__list">
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Conductores con PIN que toman y entregan con un Tap</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fotos de entrega: la IA anota kilometraje, combustible y limpieza</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bitácora, alertas de daños y control de consumo</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Reportes en Excel y PDF</li>
+          <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Equipo de hasta 5 personas</li>
+        </ul>
         <div class="included__group">
-          <p class="included__group-title">En los dos planes</p>
-          <ul class="included__list">
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Un chip NFC por vehículo, incluido — el chip no se cobra, solo el despacho, desde $2.000</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tus documentos listos para mostrar en fiscalización — solo lectura, y sin conexión por 7 días</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Carga inteligente: la IA arma tus vehículos a partir de los PDF o fotos de sus documentos</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Aviso por correo antes de que venza cada documento</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mantenciones con pauta por meses, estado y avisos por correo</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Datos del vehículo a mano: combustible, neumáticos, transmisión y más</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Transfiere un vehículo a otra cuenta si lo vendes o lo cedes</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin permanencia — cancela cuando quieras</li>
-          </ul>
-        </div>
-
-        <div class="included__group" data-grupo="flota" hidden>
-          <p class="included__group-title">Solo en Flotas</p>
-          <ul class="included__list">
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Conductores con PIN que toman y entregan el vehículo con un Tap</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Al entregar, las fotos que tú defines, y la IA anota kilometraje, bencina y limpieza</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bitácora, alertas de daños y de usos sin entrega, y control de consumo y de usos largos</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Reportes en Excel y PDF, y la evolución de km, usos u horas</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pauta de mantención también por kilómetros</li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Invita a tu equipo (hasta 5 personas) como Administrador, Editor o Visor</li>
-          </ul>
-        </div>
-
-        <div class="included__group" data-grupo="flota" hidden>
           <p class="included__group-title">Conductor fijo</p>
-          <ul class="included__list">
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La asignación va incluida.</strong> El vehículo tiene un conductor titular: al abrir la ficha desde el chip aparece él prellenado en vez de la lista completa y, si lo configuras así, sin pedir PIN. "Soy otro conductor" sigue estando — es un atajo, no un candado.</span></li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>La cuenta cuesta UF 0,12 al mes, o UF 1,05 al año.</strong> Ese conductor entra con su propio usuario y ve solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento. No ve la flota ni a sus compañeros, y no ocupa lugar en el tope de 5 personas del equipo.</span></li>
-            <li class="included__item"><svg class="included__check" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Se cobra la cuenta, no la asignación</li>
-          </ul>
+          <p class="included__nota">La asignación va incluida. La <strong>cuenta de conductor</strong> cuesta UF 0,12 al mes o UF 1,05 al año: entra con su usuario y ve solo su vehículo.</p>
         </div>
       </div>
 
@@ -1952,16 +2570,11 @@ select.form__input {
     <div class="card card--p28 rubro">
       <div>
         <span class="rubro__eyebrow">Empresas del rubro</span>
-        <h2 class="rubro__title">¿Eres automotora, aseguradora o gestoría?</h2>
-        <p class="rubro__text">Lo tuyo no se calcula en esta página. Son convenios y envíos que se piden al crear la cuenta, que aprobamos nosotros y cuyas condiciones se acuerdan caso a caso.</p>
+        <h2 class="rubro__title">¿Automotora, aseguradora o gestoría?</h2>
+        <p class="rubro__text">Trabajas con convenios y envíos que acordamos contigo.</p>
       </div>
       <div class="rubro__lado">
-        <ul class="rubro__lista">
-          <li><strong>Automotoras</strong> — le regalas TapCar a quien te compra un auto con un código de un solo uso, y pagas por cada código activado.</li>
-          <li><strong>Aseguradoras</strong> — el mismo convenio, para tus asegurados.</li>
-          <li><strong>Gestorías</strong> — mandas el documento que tramitaste directo a la cuenta TapCar de tu cliente.</li>
-        </ul>
-        <a href="/socios/" class="aud-card__link">Ver cómo funcionan
+        <a href="/socios/" class="btn btn--secondary btn--md">Ver cómo funcionan
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
@@ -1971,46 +2584,38 @@ select.form__input {
   <!-- ============ FAQ ============ -->
   <section class="faq">
     <div class="faq__inner">
-      <div class="faq__head">
+      <div data-reveal class="faq__head">
         <span class="eyebrow">Preguntas frecuentes</span>
         <h2 class="faq__title">Sobre los planes</h2>
       </div>
       <div class="faq__list">
         <div class="faq__item">
           <h3 class="faq__q">¿Cuánto cuesta?</h3>
-          <p class="faq__a">Uso particular cubre de 1 a 10 vehículos: $2.500 por vehículo al mes — menos que un café — o $22.000 al año, un 27% menos. Flotas parte en 5 vehículos y cuesta UF 0,5 por vehículo al año más IVA. Entre 5 y 10 los dos están disponibles y eliges tú.</p>
+          <p class="faq__a">Uso particular es gratis con 1 vehículo. TapCar+ cuesta $5.000 al año por cada vehículo, incluido el primero, hasta 10. Flotas parte en 5 vehículos, a UF 0,5 por vehículo al año más IVA.</p>
         </div>
         <div class="faq__item">
-          <h3 class="faq__q">¿Cuál de los dos planes me toca?</h3>
-          <p class="faq__a">Depende de cuántos vehículos tengas y de qué necesitas. Con menos de 5 vehículos solo existe Uso particular. Desde 11 el plan es Flotas. Entre 5 y 10 eliges tú. Uso particular trae documentos, ficha NFC, recordatorios, mantenciones, datos del vehículo, transferencia de vehículos y el chip. Flotas suma conductores con PIN, Tomar/Entregar con fotos, bitácora, alertas, reportes, equipo de hasta 5 personas y cuentas de conductor, y cuesta algo más al mismo número de vehículos. Si no tienes conductores, Uso particular te sirve igual. Sobre 100 vehículos armamos la propuesta contigo: el plan no tiene tope, lo que llega hasta 100 es contratarlo solo desde la web.</p>
-        </div>
-        <div class="faq__item">
-          <h3 class="faq__q">¿Qué es un conductor fijo y qué se cobra?</h3>
-          <p class="faq__a">Son dos cosas distintas. La asignación —que el vehículo tenga un conductor titular, que aparezca prellenado al abrir la ficha y que puedas saltarte el PIN— va incluida. La cuenta es que ese conductor entre con su propio usuario y mantenga solo su vehículo: sube documentos y mantenciones y recibe los avisos de vencimiento, sin ver la flota ni a sus compañeros. Eso cuesta UF 0,12 al mes y no ocupa lugar en el tope de 5 personas del equipo. Se cobra la cuenta, no la asignación.</p>
+          <h3 class="faq__q">¿Qué plan me toca?</h3>
+          <p class="faq__a">Con menos de 5 vehículos, Uso particular. Desde 11, Flotas. Entre 5 y 10 eliges tú: Flotas suma conductores con PIN, fotos de entrega, reportes y equipo.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Los precios incluyen IVA?</h3>
-          <p class="faq__a">Los precios en pesos del plan particular sí: $2.500 y $22.000 son lo que pagas. Los valores en UF del plan Flotas van más IVA, como es habitual entre empresas.</p>
+          <p class="faq__a">Los de Uso particular sí. Los valores en UF de Flotas van más IVA.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿El chip NFC está incluido?</h3>
-          <p class="faq__a">Sí, y da lo mismo cuántos vehículos tengas: va un chip por cada uno, sin costo. Lo único que se paga es el despacho — $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100, con IVA incluido. Se cobra en cada envío, así que si más adelante sumas vehículos y te mandamos sus chips, ese despacho se cobra aparte. Sobre 100 vehículos el envío entra en la cotización.</p>
+          <p class="faq__a">Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: $3.000 por 1 a 10 chips en Uso particular. En los demás planes va por tramos: $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo se paga?</h3>
-          <p class="faq__a">Con tarjeta, a través de Flow. El cobro es automático: al crear la cuenta se cobra el primer período, y los siguientes se cobran solos. La factura electrónica del SII llega en una próxima etapa.</p>
+          <p class="faq__a">Con tarjeta, vía Flow. TapCar+ se cobra al año y se renueva solo; Flotas, mensual o anual.</p>
         </div>
         <div class="faq__item">
-          <h3 class="faq__q">¿Necesito instalar una app?</h3>
-          <p class="faq__a">No. Ni tú, ni tus conductores, ni quien fiscaliza: todo se abre con un toque al chip NFC o desde el panel web. La única excepción es grabar el chip desde un iPhone, que se hace con la app NFC Tools.</p>
-        </div>
-        <div class="faq__item">
-          <h3 class="faq__q">¿Y si sumo más vehículos?</h3>
-          <p class="faq__a">Los sumas tú desde el panel cuando quieras, y se cobra la diferencia prorrateada. También puedes bajar vehículos, pasar de mensual a anual, usar un código promocional y revisar tu historial de pagos. Uso particular llega hasta 10 vehículos: si pasas de ahí, necesitas el plan Flotas. Te enviamos los chips de los vehículos nuevos.</p>
+          <h3 class="faq__q">¿Y si sumo vehículos?</h3>
+          <p class="faq__a">Los sumas desde el panel y pagas la diferencia prorrateada. Desde 11 vehículos, el plan es Flotas.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Puedo cancelar?</h3>
-          <p class="faq__a">Sí, cuando quieras, sin contratos de permanencia ni penalizaciones. La baja se agenda para el cierre de tu ciclo: hasta ahí sigues usando TapCar, y si te arrepientes la puedes deshacer.</p>
+          <p class="faq__a">Sí, sin permanencia ni multas. La baja corre al cierre de tu período.</p>
         </div>
       </div>
     </div>
@@ -2018,14 +2623,13 @@ select.form__input {
 
   <!-- ============ CTA ============ -->
   <section class="cta">
-    <div class="cta__inner">
-      <h2 class="cta__title">Todos tus vehículos controlados por lo que cuesta un café.</h2>
-      <p class="cta__lead">$2.500 por vehículo al mes, o tarifa de flota desde 5 vehículos. Registra tus vehículos y empieza a operar con un Tap.</p>
+    <div data-reveal class="cta__inner">
+      <h2 class="cta__title">Empieza gratis con 1 auto.</h2>
+      <p class="cta__lead">Suma vehículos cuando quieras.</p>
       <div class="cta__actions">
-        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
+        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta gratis
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="mailto:contacto@tapcar.cl" class="cta__secondary">contacto@tapcar.cl</a>
       </div>
     </div>
   </section>
@@ -2038,40 +2642,35 @@ select.form__input {
       <div class="footer__grid">
         <div class="footer__brand-col">
           <div class="footer__brand">
-            <svg width="30" height="30" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 72 72" fill="none" aria-hidden="true">
               <g stroke="#2952e6" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M44 22 A 14 14 0 0 1 58 36"/><path d="M44 14 A 22 22 0 0 1 66 36"/></g>
               <path d="M8 50 C8 43 11 41 15 41 L22 33 C24 31 26 30 29 30 L40 30 C43 30 45 31 47 34 L51 41 C56 41 58 44 58 50 L58 52 C58 53.1 57.1 54 56 54 L10 54 C8.9 54 8 53.1 8 52 Z" fill="#2952e6"/>
               <path d="M25 40 L28 33 L33 33 L33 40 Z" fill="#fff"/><path d="M36 33 L40 33 C42 33 43.5 34 45 36 L48 40 L36 40 Z" fill="#fff"/>
-              <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/>
+              <circle cx="23" cy="54" r="6.5" fill="#16191f"/><circle cx="23" cy="54" r="2.5" fill="#fff"/><circle cx="48" cy="54" r="6.5" fill="#16191f"/><circle cx="48" cy="54" r="2.5" fill="#fff"/>
             </svg>
             <span class="footer__brand-name">Tap<span class="accent">Car</span></span>
           </div>
           <p class="footer__tagline">Tus vehículos a un Tap: documentos, uso y control, todo desde el mismo gesto.</p>
           <p class="footer__matriz">Una empresa de <a class="footer__matriz-link" href="https://www.impulseai.cl/" target="_blank" rel="noopener"><img class="footer__matriz-logo" src="/assets/impulse-ai.webp" alt="Impulse AI" width="116" height="24"></a></p>
         </div>
-        <div>
+        <nav aria-label="Producto">
           <p class="footer__col-title">Producto</p>
           <div class="footer__links">
             <a href="/" class="footer__link">Inicio</a>
             <a href="/como-funciona/" class="footer__link">¿Cómo funciona?</a>
-            <a href="/legal/" class="footer__link">¿Es legal?</a>
             <a href="/planes/" class="footer__link">Planes</a>
+            <a href="/legal/" class="footer__link">¿Es legal?</a>
           </div>
-        </div>
-        <div>
+        </nav>
+        <nav aria-label="Empresa">
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
-            <a href="/socios/" class="footer__link">Para empresas del rubro</a>
+            <a href="/socios/" class="footer__link">Socios</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
             <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
-          </div>
-        </div>
-        <div>
-          <p class="footer__col-title">Legal</p>
-          <div class="footer__links">
             <a href="/terminos/" class="footer__link">Términos y privacidad</a>
           </div>
-        </div>
+        </nav>
       </div>
       <div class="footer__bar">
         <span class="footer__meta">© 2026 TapCar · tapcar.cl</span>
@@ -2083,23 +2682,21 @@ select.form__input {
   <script>
     // ── Calculadora de precio ──────────────────────────────────────
     (function () {
-      // Las cifras ancla son la mensual y la anual, y todo el dinero sale de
-      // ahí. El equivalente mensual del plan anual se muestra pero nunca se usa
-      // para calcular: 12 × $1.833 da $21.996, no los $22.000 reales.
-      //
-      // Particular va en pesos con IVA incluido; Flotas en UF más IVA. Los
-      // precios mensuales de Flotas son la tarifa lista y los anuales son el
+      // Uso particular va en pesos con IVA incluido y es SOLO anual: el total
+      // es vehículos × precio anual, sin mensual ni descuento. Flotas va en UF
+      // más IVA; sus precios mensuales son la tarifa lista y los anuales, el
       // precio ya con el descuento aplicado.
       // <precios>  Generado por tools/precios.py desde precios.json.
       // No editar a mano: el proximo --generar lo pisa.
       var PLANES = {
-        particular: { veh: { mes: 2500, anio: 22000 }, min: 1, max: 10 },
+        particular: { gratis: 1, veh: { anio: 5000 }, min: 1, max: 10 },
         flota: {
           veh: { mes: 0.057, anio: 0.5 },
           cuenta: { mes: 0.12, anio: 1.05 },
           min: 5, max: 100
         }
       };
+      var ENVIO_PARTICULAR = 3000;
       function envio(chips) {
         if (chips <= 2) return 2000;
         if (chips <= 50) return 5000;
@@ -2107,9 +2704,10 @@ select.form__input {
       }
       // </precios>
 
-      // El descuento se calcula, no se escribe a mano. Las tres tarifas dan 27.
+      // El descuento se calcula, no se escribe a mano. Solo Flotas lo tiene:
+      // sus dos tarifas dan 27.
       function descuento(t) { return Math.round((1 - t.anio / (t.mes * 12)) * 100); }
-      var DESCUENTO = descuento(PLANES.particular.veh);
+      var DESCUENTO = descuento(PLANES.flota.veh);
       // Los rangos se solapan a proposito entre 5 y 10 vehiculos: ahi los dos
       // planes estan disponibles y elige el cliente, asi que cada tarjeta avisa
       // de la otra. Bajo 5 solo hay Particular; desde 11, solo Flotas.
@@ -2134,16 +2732,11 @@ select.form__input {
       function ctas(n) { return n === 1 ? '1 cuenta de conductor' : n + ' cuentas de conductor'; }
 
       var plan = 'particular';
+      // El periodo solo existe en Flotas: Uso particular es anual.
       var period = 'mensual';
 
       var cardP = document.querySelector('[data-calc="particular"]');
       var cardF = document.querySelector('[data-calc="flota"]');
-      var gruposFlota = document.querySelectorAll('[data-grupo="flota"]');
-      var leadIncluido = document.querySelector('[data-included-lead]');
-      var LEAD = {
-        particular: 'Una sola suscripción por vehículo, con todo lo que necesitas para tus autos. Sin extras ni letra chica.',
-        flota: 'Tarifa por vehículo con toda la plataforma incluida. Aparte solo van las cuentas de conductor, si las quieres, y el envío de los chips.'
-      };
       function P(sel) { return cardP.querySelector(sel); }
       function F(sel) { return cardF.querySelector(sel); }
 
@@ -2160,45 +2753,36 @@ select.form__input {
         var x = thumb / 2 + p * (track - thumb);
         var half = bubble.offsetWidth / 2;
         var left = Math.min(Math.max(x, half), track - half);
+        // En los extremos (1 o 10) la burbuja se topa con el borde y la
+        // flecha quedaba en la esquina redondeada, medio afuera de la pastilla.
+        // Se deja la flecha a 16px del borde como minimo, aunque la burbuja
+        // sobresalga unos pixeles del riel.
+        var margen = 16;
+        left = Math.min(Math.max(left, x - half + margen), x + half - margen);
         bubble.style.left = left + 'px';
         bubble.style.setProperty('--arrow', (x - left + half) + 'px');
       }
 
       function renderParticular() {
-        var cfg = PLANES.particular, t = cfg.veh;
+        var cfg = PLANES.particular;
         var s = P('[data-slider]');
         var n = parseInt(s.value, 10) || cfg.min;
-        var anual = period === 'anual';
-        var tarifa = anual ? Math.round(t.anio / 12) : t.mes;
-        var porMes = anual ? Math.round(n * t.anio / 12) : n * t.mes;
-        var ahorro = n * (t.mes * 12 - t.anio);
 
         P('[data-bubble]').textContent = veh(n);
+        // Sin aria-valuetext un lector de pantalla dice "2" a secas: el
+        // número sin la unidad no dice qué se está contando.
+        s.setAttribute('aria-valuetext', veh(n));
         placeBubble(s, P('[data-bubble]'));
-        P('[data-count]').textContent = veh(n);
-        P('[data-rate]').textContent = tarifa.toLocaleString('es-CL');
-        P('[data-total]').textContent = clp(porMes);
+        P('[data-total]').textContent = clp(n * cfg.veh.anio);
+        P('[data-formula]').textContent = veh(n) + ' × ' + clp(cfg.veh.anio);
+        P('[data-envio-part]').textContent = clp(ENVIO_PARTICULAR);
 
-        P('[data-cafe-wrap]').hidden = anual;
-        P('[data-save]').hidden = !anual;
-        P('[data-nudge]').hidden = anual;
         // El puente aparece en cuanto Flotas es elegible, no solo en el tope.
         P('[data-bridge]').hidden = n < BANDA.min;
         if (n >= BANDA.min) {
           P('[data-bridge-text]').textContent = n < BANDA.max
-            ? 'Con ' + veh(n) + ' también puedes tomar Flotas: cuesta un poco más al mes y suma conductores con PIN, Tomar/Entregar, reportes y equipo.'
-            : 'Este es el tope de Uso particular. Desde ' + (BANDA.max + 1) + ' vehículos el plan es Flotas, que además suma conductores con PIN, Tomar/Entregar, reportes y equipo.';
-        }
-
-        if (anual) {
-          P('[data-save-amount]').textContent = 'Ahorras ' + clp(ahorro) + ' al año';
-          P('[data-save-note]').textContent = clp(tarifa) + ' por vehículo al mes — ' + DESCUENTO + '% menos que pagando mes a mes.';
-          P('[data-fineprint]').textContent = 'Se cobra una vez al año (' + clp(n * t.anio) + '). ' + chip(n);
-        } else {
-          P('[data-cafe]').textContent = clp(tarifa) + ' por vehículo — menos que un café al mes.';
-          P('[data-fineprint]').textContent = chip(n) + ' Sin costos ocultos.';
-          P('[data-nudge-total]').textContent = clp(Math.round(n * t.anio / 12));
-          P('[data-nudge-amount]').textContent = clp(ahorro);
+            ? 'Con ' + veh(n) + ' también puedes tomar Flotas: cuesta más y suma conductores con PIN, reportes y equipo.'
+            : 'Es el tope de Uso particular. Desde ' + (BANDA.max + 1) + ' vehículos el plan es Flotas.';
         }
       }
 
@@ -2214,6 +2798,7 @@ select.form__input {
         var anual = period === 'anual';
 
         F('[data-bubble="veh"]').textContent = sobre ? 'Más de 100 vehículos' : veh(n);
+        sv.setAttribute('aria-valuetext', sobre ? 'Más de 100 vehículos' : veh(n));
         placeBubble(sv, F('[data-bubble="veh"]'));
 
         F('[data-contacto]').hidden = !sobre;
@@ -2237,6 +2822,7 @@ select.form__input {
         if (parseInt(sc.value, 10) > n) sc.value = n;
         var c = parseInt(sc.value, 10) || 0;
         F('[data-bubble="cuentas"]').textContent = c === 1 ? '1 cuenta' : c + ' cuentas';
+        sc.setAttribute('aria-valuetext', ctas(c));
         placeBubble(sc, F('[data-bubble="cuentas"]'));
         F('[data-scale-max]').textContent = n;
 
@@ -2255,8 +2841,8 @@ select.form__input {
         lc.querySelector('[data-linea-monto]').textContent = uf(c * tc);
 
         F('[data-total]').textContent = uf(total);
-        // A diferencia de Particular, el número grande de Flotas sigue el
-        // periodo de facturación: es un contrato en UF, no un cargo mensual.
+        // El número grande de Flotas sigue el periodo de facturación: es un
+        // contrato en UF, no un cargo mensual.
         F('[data-total-period]').textContent = anual ? '/año' : '/mes';
 
         F('[data-save]').hidden = !anual;
@@ -2274,12 +2860,10 @@ select.form__input {
       }
 
       function render() {
-        // Mostrar la tarjeta antes de medir: placeBubble usa el ancho del riel,
+        // Mostrar el panel antes de medir: placeBubble usa el ancho del riel,
         // y un elemento con hidden mide 0.
         cardP.hidden = plan !== 'particular';
         cardF.hidden = plan !== 'flota';
-        [].forEach.call(gruposFlota, function (g) { g.hidden = plan !== 'flota'; });
-        leadIncluido.textContent = LEAD[plan];
         if (plan === 'particular') renderParticular(); else renderFlota();
       }
 
@@ -2296,7 +2880,6 @@ select.form__input {
           });
         });
       }
-      // Plan y periodo son independientes: cambiar de pill conserva el periodo.
       grupo('.plan-pills__opt', 'data-plan', function (v) { plan = v; });
       grupo('.billing-toggle__opt', 'data-period', function (v) { period = v; });
 
@@ -2322,8 +2905,22 @@ select.form__input {
         });
       });
 
+      // /planes/#flotas abre directo la pestaña Flotas: ¿Cómo funciona? enlaza
+      // ahí, y aterrizar en Uso particular obligaba a buscar el botón. Se
+      // pasa por el click de la pill para que aria-pressed y la clase sigan
+      // saliendo de un solo lugar (grupo). Otros hashes no tocan el plan.
+      function desdeHash() {
+        var h = location.hash.replace('#', '');
+        var destino = h === 'flotas' ? 'flota' : h === 'particular' ? 'particular' : null;
+        if (destino && destino !== plan) {
+          document.querySelector('.plan-pills__opt[data-plan="' + destino + '"]').click();
+        }
+      }
+      window.addEventListener('hashchange', desdeHash);
+
       window.addEventListener('resize', render);
       render();
+      desdeHash();
     })();
   </script>
 
@@ -2429,6 +3026,30 @@ select.form__input {
       window.addEventListener('resize', function () {
         if (window.innerWidth > 860) cerrar();
       });
+    })();
+
+    // ── Aparición al hacer scroll (el mismo patrón en todo el sitio) ─
+    // El HTML marca con data-reveal lo que aparece. Esto le pone .reveal
+    // y su posición entre hermanos marcados (--reveal-i, tope 5) para el
+    // escalonado de 40ms, y .is-visible al entrar en pantalla. Sin JS, sin
+    // IntersectionObserver o con movimiento reducido no se toca nada: el
+    // estado base del CSS ya es el final.
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var els = document.querySelectorAll('[data-reveal]');
+      [].forEach.call(els, function (el) {
+        var d = 0, n = el.previousElementSibling;
+        while (n) { if (n.hasAttribute('data-reveal')) d++; n = n.previousElementSibling; }
+        el.style.setProperty('--reveal-i', Math.min(d, 5));
+        el.classList.add('reveal');
+      });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      [].forEach.call(els, function (el) { io.observe(el); });
     })();
   </script>
 
