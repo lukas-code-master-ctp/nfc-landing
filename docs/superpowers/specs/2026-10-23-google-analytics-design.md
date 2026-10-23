@@ -48,7 +48,13 @@ entrega Vercel Web Analytics.
    en los informes.
    Los eventos también se mandan a Vercel (`window.va('event', …)`), que ya
    tiene la cola armada, para comparar los dos.
-6. **Banner:** franja fija abajo, sobria, con el texto
+6. **Banner** (ajustado el 2026-10-23 tras publicarse, a pedido de Lukas: la franja
+   de lado a lado le pareció muy grande): tarjeta chica fija en la esquina inferior
+   izquierda (360 px máx.; en celular a lo ancho con 12 px de margen), texto
+   "Usamos cookies de Google Analytics para saber qué partes del sitio sirven."
+   + "Más información", y "Rechazar" (blanco) y "Aceptar" (azul), del mismo
+   tamaño y en la misma fila. Versión original, reemplazada:
+   **Banner:** franja fija abajo, sobria, con el texto
    "Usamos cookies de Google Analytics para saber qué partes del sitio sirven.
    Puedes aceptarlas o rechazarlas." + enlace "Más información" a
    `/terminos/#cookies`, y dos botones del mismo tamaño y peso visual:

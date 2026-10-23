@@ -189,7 +189,7 @@ Modo de consentimiento de Google v2, **modo avanzado**:
 - **Aceptar** concede **solo** `analytics_storage`. Los tres permisos de publicidad quedan **siempre** denegados, también al aceptar: no hacemos publicidad y los Términos lo prometen.
 - **Rechazar** deja todo denegado y borra las cookies `_ga` y `_ga_<ID>` que hubieran quedado de una aceptación anterior.
 - La decisión se guarda en `localStorage`, clave `tapcar-consentimiento` (`{ v: 1, analitica: true|false, fecha }`). Sin decisión válida —o si `localStorage` falla— el banner vuelve a aparecer y gtag sigue denegado: nunca se concede por un dato que no se pudo leer.
-- El banner lo crea el script (no está en el HTML), con "Rechazar" y "Aceptar" del mismo tamaño y peso. El botón **"Preferencias de cookies"** del pie (`[data-preferencias-cookies]`) lo vuelve a abrir.
+- El banner lo crea el script (no está en el HTML): una tarjeta chica en la esquina inferior izquierda (en celular, a lo ancho con margen), con "Rechazar" (blanco) y "Aceptar" (azul) del mismo tamaño y en la misma fila. El botón **"Preferencias de cookies"** del pie (`[data-preferencias-cookies]`) lo vuelve a abrir.
 
 #### Eventos
 

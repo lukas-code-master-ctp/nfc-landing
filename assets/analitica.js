@@ -260,7 +260,10 @@
     function boton(etiqueta, analitica) {
       var btn = doc.createElement('button');
       btn.type = 'button';
-      btn.className = 'btn btn--secondary btn--md cookies__btn';
+      // Aceptar en azul y Rechazar en blanco con borde, como pidió Lukas
+      // (2026-10-23). Los dos con el mismo tamaño y en la misma fila:
+      // rechazar sigue a un clic, igual de visible que aceptar.
+      btn.className = 'btn ' + (analitica ? 'btn--primary' : 'btn--secondary') + ' btn--md cookies__btn';
       btn.setAttribute('data-cookies', analitica ? 'aceptar' : 'rechazar');
       btn.appendChild(doc.createTextNode(etiqueta));
       btn.addEventListener('click', function () { decidir(analitica); });
@@ -275,12 +278,12 @@
       b.hidden = true;
 
       var inner = doc.createElement('div');
-      inner.className = 'cookies__inner container';
+      inner.className = 'cookies__inner';
 
       var texto = doc.createElement('p');
       texto.className = 'cookies__texto';
       texto.appendChild(doc.createTextNode(
-        'Usamos cookies de Google Analytics para saber qué partes del sitio sirven. Puedes aceptarlas o rechazarlas. '
+        'Usamos cookies de Google Analytics para saber qué partes del sitio sirven. '
       ));
       var mas = doc.createElement('a');
       mas.className = 'cookies__mas';
@@ -288,15 +291,25 @@
       mas.appendChild(doc.createTextNode('Más información'));
       texto.appendChild(mas);
 
-      // Los dos botones con la MISMA clase: mismo tamaño, mismo color,
-      // mismo peso. Rechazar no puede costar más que aceptar (patrón
-      // oscuro).
+      // Los dos botones del mismo tamaño y en la misma fila: rechazar no
+      // puede costar más clics que aceptar.
       var acciones = doc.createElement('div');
       acciones.className = 'cookies__acciones';
       acciones.appendChild(boton('Rechazar', false));
       acciones.appendChild(boton('Aceptar', true));
 
-      inner.appendChild(texto);
+      // La galleta (dibujo en CSS, ver .cookies__icono) va al lado del
+      // texto para que el aviso se sienta amable y no un trámite. Es
+      // decorativa: aria-hidden, el lector de pantalla solo lee el texto.
+      var cabeza = doc.createElement('div');
+      cabeza.className = 'cookies__cabeza';
+      var icono = doc.createElement('span');
+      icono.className = 'cookies__icono';
+      icono.setAttribute('aria-hidden', 'true');
+      cabeza.appendChild(icono);
+      cabeza.appendChild(texto);
+
+      inner.appendChild(cabeza);
       inner.appendChild(acciones);
       b.appendChild(inner);
 
