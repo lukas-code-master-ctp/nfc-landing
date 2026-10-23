@@ -366,6 +366,17 @@ prueba('iniciar dos veces no manda un segundo default ni deja un segundo banner'
   assert.strictEqual(w.document.head.childNodes.length, 1, 'un solo script de gtag');
 });
 
+prueba('Aceptar va en azul y Rechazar en blanco, del mismo tamaño y en la misma fila', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var si = botonDe(w, 'aceptar').className.split(' ');
+  var no = botonDe(w, 'rechazar').className.split(' ');
+  assert.ok(si.indexOf('btn--primary') >= 0, 'Aceptar azul');
+  assert.ok(no.indexOf('btn--secondary') >= 0 && no.indexOf('btn--primary') < 0, 'Rechazar blanco');
+  assert.ok(si.indexOf('btn--md') >= 0 && no.indexOf('btn--md') >= 0, 'mismo tamaño');
+  assert.strictEqual(botonDe(w, 'aceptar').parentNode, botonDe(w, 'rechazar').parentNode, 'misma fila');
+});
+
 prueba('sin decisión: banner visible justo después de "Saltar al contenido"', function () {
   var w = ventana();
   a.iniciar(w);
