@@ -227,13 +227,13 @@ prueba('no toca cookies de nombre parecido ni devuelve nada sin _ga', function (
 
 // ── iniciar(win) con un DOM falso ───────────────────────────────────
 // Lo justo para que corra el código del navegador: elementos con hijos,
-// clases, atributos y clics; un document.cookie que se comporta como un
+// clases, atributos, texto (`textContent`) y clics; un document.cookie que se comporta como un
 // frasco (Max-Age=0 borra), y un ResizeObserver que registra qué observa.
 function elemento(tag) {
   var el = {
     tagName: String(tag).toUpperCase(), childNodes: [], parentNode: null,
     className: '', hidden: false, offsetHeight: 80, atributos: {}, oyentes: {},
-    enfocado: false
+    enfocado: false, textContent: ''
   };
   var props = {};
   el.style = {
@@ -265,10 +265,18 @@ function elemento(tag) {
     }
   });
   el.addEventListener = function (tipo, fn) { (el.oyentes[tipo] = el.oyentes[tipo] || []).push(fn); };
-  el.click = function () {
-    var ev = { target: el, preventDefault: function () {} };
-    for (var n = el; n; n = n.parentNode) (n.oyentes.click || []).forEach(function (fn) { fn(ev); });
+  // Despacha un evento de mouse que sube hasta document. Devuelve el
+  // evento para poder mirar si alguien llamó a preventDefault.
+  el.disparar = function (tipo, button) {
+    var ev = { type: tipo, target: el, button: button || 0, defaultPrevented: false,
+      preventDefault: function () { ev.defaultPrevented = true; } };
+    for (var n = el; n; n = n.parentNode) (n.oyentes[tipo] || []).forEach(function (fn) { fn(ev); });
+    return ev;
   };
+  el.click = function () { return el.disparar('click', 0); };
+  // Lo que hace un navegador actual con el botón del medio (button 1) o el
+  // derecho (2): solo `auxclick`, nunca `click`.
+  el.auxclick = function (button) { return el.disparar('auxclick', button); };
   el.focus = function () { el.enfocado = true; if (el.dueno) el.dueno.activeElement = el; };
   el.blur = function () { el.enfocado = false; };
   el.todos = function (pred) {
@@ -281,10 +289,13 @@ function elemento(tag) {
     var c = sel.slice(1);
     return el.todos(function (h) { return h.classList && h.classList.contains(c); })[0] || null;
   };
+  // Soporta `[atributo]` y `etiqueta[atributo]`.
   el.closest = function (sel) {
-    var m = /^\[([\w-]+)\]$/.exec(sel);
+    var m = /^([a-z]*)\[([\w-]+)\]$/.exec(sel);
     if (!m) throw new Error('selector no soportado: ' + sel);
-    for (var n = el; n && n.hasAttribute; n = n.parentNode) if (n.hasAttribute(m[1])) return n;
+    for (var n = el; n && n.hasAttribute; n = n.parentNode) {
+      if ((!m[1] || n.tagName === m[1].toUpperCase()) && n.hasAttribute(m[2])) return n;
+    }
     return null;
   };
   el.contains = function (otro) { for (var n = otro; n; n = n.parentNode) if (n === el) return true; return false; };
@@ -439,6 +450,229 @@ prueba('un localStorage que lanza no rompe iniciar: el banner aparece igual', fu
   assert.strictEqual(banners(w)[0].hidden, false);
   botonDe(w, 'aceptar').click();
   assert.strictEqual(banners(w)[0].hidden, true);
+});
+
+// ── eventoDeEnlace ──────────────────────────────────────────────────
+var APP = 'https://app.tapcar.cl';
+
+prueba('un enlace a la app que no es Ingresar es clic_crear_cuenta, con ubicación y texto', function () {
+  assert.deepStrictEqual(a.eventoDeEnlace(APP, 'btn btn--primary btn--lg', 'hero', 'Crear cuenta gratis'), {
+    nombre: 'clic_crear_cuenta', params: { ubicacion: 'hero', texto: 'Crear cuenta gratis' }
+  });
+});
+
+prueba('.nav__login es clic_ingresar, solo con ubicación (sin texto), también junto a otras clases', function () {
+  assert.deepStrictEqual(a.eventoDeEnlace(APP, 'nav__login', 'nav', 'Ingresar'), {
+    nombre: 'clic_ingresar', params: { ubicacion: 'nav' }
+  });
+  assert.strictEqual(a.eventoDeEnlace(APP, 'x  nav__login\ty', 'nav', 'Ingresar').nombre, 'clic_ingresar');
+});
+
+prueba('data-evento="ingresar" también es clic_ingresar, sin texto', function () {
+  assert.deepStrictEqual(a.eventoDeEnlace(APP, 'btn', 'menu', 'Entrar', 'ingresar'),
+    { nombre: 'clic_ingresar', params: { ubicacion: 'menu' } });
+});
+
+prueba('ningún evento de enlace manda más de 2 propiedades (tope de Vercel Pro)', function () {
+  [[APP, 'btn', 'hero', 'Crear cuenta gratis'], [APP, 'nav__login', 'nav', 'Ingresar'],
+   ['mailto:x@y.cl', '', 'footer-contacto', 'Contacto']].forEach(function (c) {
+    assert.ok(Object.keys(a.eventoDeEnlace.apply(null, c).params).length <= 2, c.join(' '));
+  });
+});
+
+prueba('una clase parecida a nav__login no cuenta como Ingresar', function () {
+  assert.strictEqual(a.eventoDeEnlace(APP, 'nav__login-x mi-nav__login', 'nav', 'x').nombre, 'clic_crear_cuenta');
+});
+
+prueba('la app con ruta, query, hash o mayúsculas sigue siendo la app', function () {
+  [APP + '/', APP + '/registro', APP + '?ref=web', APP + '#x', 'HTTPS://APP.TAPCAR.CL', '  ' + APP + '  '].forEach(function (h) {
+    assert.strictEqual((a.eventoDeEnlace(h, '', 'x', 'y') || {}).nombre, 'clic_crear_cuenta', h);
+  });
+});
+
+prueba('otros dominios y rutas internas no se miden', function () {
+  ['https://app.tapcar.cl.otro.com', 'https://app.tapcar.club', 'http://app.tapcar.cl', 'https://tapcar.cl',
+   '/planes/', '#contacto', '', null, undefined, 42].forEach(function (h) {
+    assert.strictEqual(a.eventoDeEnlace(h, 'nav__login', 'nav', 'x'), null, String(h));
+  });
+});
+
+prueba('mailto es clic_correo con ubicación y sin texto', function () {
+  assert.deepStrictEqual(a.eventoDeEnlace('mailto:contacto@tapcar.cl', 'footer__link', 'footer-contacto', 'Contacto'), {
+    nombre: 'clic_correo', params: { ubicacion: 'footer-contacto' }
+  });
+  assert.strictEqual(a.eventoDeEnlace('MAILTO:x@y.cl', '', 'a', '').nombre, 'clic_correo');
+});
+
+prueba('sin data-ubicacion (o vacío) se manda sin-ubicacion', function () {
+  [null, undefined, '', '   '].forEach(function (u) {
+    assert.strictEqual(a.eventoDeEnlace(APP, '', u, 'x').params.ubicacion, 'sin-ubicacion', String(u));
+    assert.strictEqual(a.eventoDeEnlace('mailto:x@y.cl', '', u, '').params.ubicacion, 'sin-ubicacion', String(u));
+  });
+});
+
+prueba('el texto se colapsa y se recorta a 60 caracteres', function () {
+  assert.strictEqual(a.eventoDeEnlace(APP, '', 'cta-final', '\n  Crear cuenta gratis\n          \n        ').params.texto,
+    'Crear cuenta gratis');
+  var largo = new Array(100).join('ab ');
+  var t = a.eventoDeEnlace(APP, '', 'x', largo).params.texto;
+  assert.strictEqual(t.length, 60);
+  assert.strictEqual(t, largo.slice(0, 60));
+  assert.strictEqual(a.eventoDeEnlace(APP, '', 'x', null).params.texto, '');
+});
+
+// ── tapcarEvento ────────────────────────────────────────────────────
+function eventos(win) {
+  return win.dataLayer.map(function (x) { return Array.prototype.slice.call(x); })
+    .filter(function (x) { return x[0] === 'event'; });
+}
+
+prueba('tapcarEvento manda a gtag y a va con el mismo nombre y datos', function () {
+  var w = ventana();
+  var vas = [];
+  w.va = function () { vas.push(Array.prototype.slice.call(arguments)); };
+  a.iniciar(w);
+  w.tapcarEvento('enviar_formulario', { formulario: 'socios' });
+  assert.deepStrictEqual(eventos(w), [['event', 'enviar_formulario', { formulario: 'socios' }]]);
+  assert.deepStrictEqual(vas, [['event', { name: 'enviar_formulario', data: { formulario: 'socios' } }]]);
+});
+
+prueba('tapcarEvento sin va (Vercel no cargó) manda igual a gtag y no lanza', function () {
+  var w = ventana();
+  a.iniciar(w);
+  assert.strictEqual(w.va, undefined);
+  w.tapcarEvento('usar_calculadora', { calculadora: 'flotas' });
+  assert.deepStrictEqual(eventos(w), [['event', 'usar_calculadora', { calculadora: 'flotas' }]]);
+});
+
+prueba('si gtag lanza, tapcarEvento no lanza y va recibe el evento igual', function () {
+  var w = ventana();
+  var vas = [];
+  w.va = function () { vas.push(arguments[1]); };
+  a.iniciar(w);
+  w.gtag = function () { throw new Error('gtag roto'); };
+  assert.doesNotThrow(function () { w.tapcarEvento('clic_correo', { ubicacion: 'footer-soporte' }); });
+  assert.deepStrictEqual(vas, [{ name: 'clic_correo', data: { ubicacion: 'footer-soporte' } }]);
+});
+
+prueba('si va lanza, tapcarEvento no lanza y gtag recibe el evento', function () {
+  var w = ventana();
+  w.va = function () { throw new Error('va roto'); };
+  a.iniciar(w);
+  assert.doesNotThrow(function () { w.tapcarEvento('clic_correo', { ubicacion: 'x' }); });
+  assert.strictEqual(eventos(w).length, 1);
+});
+
+prueba('tapcarEvento sin gtag ni va, o con nombre inválido, no lanza ni manda nada', function () {
+  var w = ventana();
+  a.iniciar(w);
+  w.tapcarEvento('', { a: 1 });
+  w.tapcarEvento(null);
+  assert.strictEqual(eventos(w).length, 0);
+  w.gtag = undefined;
+  assert.doesNotThrow(function () { w.tapcarEvento('clic_correo', { ubicacion: 'x' }); });
+});
+
+prueba('tapcarEvento sin params manda un objeto vacío', function () {
+  var w = ventana();
+  a.iniciar(w);
+  w.tapcarEvento('clic_correo');
+  assert.deepStrictEqual(eventos(w), [['event', 'clic_correo', {}]]);
+});
+
+// ── Delegación de clics ─────────────────────────────────────────────
+function enlace(win, href, attrs, texto, clase) {
+  var el = win.document.createElement('a');
+  el.setAttribute('href', href);
+  for (var k in (attrs || {})) el.setAttribute(k, attrs[k]);
+  el.className = clase || '';
+  el.textContent = texto || '';
+  win.document.body.appendChild(el);
+  return el;
+}
+
+prueba('un clic en "Crear cuenta gratis" manda el evento y no frena la navegación', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var el = enlace(w, APP, { 'data-ubicacion': 'hero' }, ' Crear cuenta gratis\n ', 'btn btn--primary');
+  var ev = el.click();
+  assert.strictEqual(ev.defaultPrevented, false);
+  assert.deepStrictEqual(eventos(w), [['event', 'clic_crear_cuenta', { ubicacion: 'hero', texto: 'Crear cuenta gratis' }]]);
+});
+
+prueba('un clic en el SVG de dentro del enlace sube hasta el enlace', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var el = enlace(w, APP, { 'data-ubicacion': 'cta-final' }, 'Crear cuenta gratis', 'cta__primary');
+  var svg = w.document.createElement('svg');
+  el.appendChild(svg);
+  svg.click();
+  assert.strictEqual(eventos(w)[0][2].ubicacion, 'cta-final');
+});
+
+prueba('Ingresar y mailto se miden; un enlace interno no', function () {
+  var w = ventana();
+  a.iniciar(w);
+  enlace(w, APP, { 'data-ubicacion': 'nav' }, 'Ingresar', 'nav__login').click();
+  enlace(w, 'mailto:contacto@tapcar.cl', { 'data-ubicacion': 'footer-contacto' }, 'Contacto').click();
+  var ev = enlace(w, '/planes/', {}, 'Planes').click();
+  assert.strictEqual(ev.defaultPrevented, false);
+  assert.deepStrictEqual(eventos(w).map(function (x) { return x[1]; }), ['clic_ingresar', 'clic_correo']);
+});
+
+prueba('si medir falla, el clic sigue sin preventDefault y no lanza', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var el = enlace(w, APP, { 'data-ubicacion': 'hero' }, 'x');
+  el.getAttribute = function () { throw new Error('DOM raro'); };
+  var ev;
+  assert.doesNotThrow(function () { ev = el.click(); });
+  assert.strictEqual(ev.defaultPrevented, false);
+});
+
+prueba('un <use href> dentro del CTA no se come el clic: se mide el <a>', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var el = enlace(w, APP, { 'data-ubicacion': 'cta-final' }, 'Crear cuenta gratis', 'cta__primary');
+  var svg = w.document.createElement('svg');
+  var use = w.document.createElement('use');
+  use.setAttribute('href', '#flecha');
+  svg.appendChild(use);
+  el.appendChild(svg);
+  use.click();
+  assert.deepStrictEqual(eventos(w), [['event', 'clic_crear_cuenta', { ubicacion: 'cta-final', texto: 'Crear cuenta gratis' }]]);
+});
+
+prueba('el botón del medio (auxclick, button 1) se mide una vez y no frena nada', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var el = enlace(w, APP, { 'data-ubicacion': 'hero' }, 'Crear cuenta gratis');
+  var ev = el.auxclick(1);
+  assert.strictEqual(ev.defaultPrevented, false);
+  assert.deepStrictEqual(eventos(w).map(function (x) { return x[1] + ':' + x[2].ubicacion; }), ['clic_crear_cuenta:hero']);
+});
+
+prueba('el botón derecho (auxclick, button 2) no se mide', function () {
+  var w = ventana();
+  a.iniciar(w);
+  enlace(w, 'mailto:x@y.cl', { 'data-ubicacion': 'footer-contacto' }, 'Contacto').auxclick(2);
+  assert.strictEqual(eventos(w).length, 0);
+});
+
+prueba('un navegador que dispara click Y auxclick con el botón del medio no cuenta dos veces', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var el = enlace(w, APP, { 'data-ubicacion': 'hero' }, 'x');
+  el.disparar('click', 1);
+  el.auxclick(1);
+  assert.strictEqual(eventos(w).length, 1);
+});
+
+prueba('el botón del pie no se cuenta como enlace', function () {
+  var w = ventana();
+  a.iniciar(w);
+  w.pie.click();
+  assert.strictEqual(eventos(w).length, 0);
 });
 
 console.log('');

@@ -15,6 +15,9 @@
         saldría sin cookie y GA la contaría como una visita nueva.
      3. Carga gtag.js (async) y, si no hay decisión guardada, muestra el
         banner. Cualquier `[data-preferencias-cookies]` lo vuelve a abrir.
+     4. Expone `window.tapcarEvento(nombre, params)` (lo usan los
+        formularios y la calculadora de Planes) y mide por delegación los
+        clics en enlaces a app.tapcar.cl y en `mailto:`.
 
    Los tres permisos de publicidad (`ad_storage`, `ad_user_data`,
    `ad_personalization`) van SIEMPRE denegados, también al aceptar: no
@@ -160,6 +163,40 @@
     return asignaciones;
   }
 
+  // El evento que corresponde a un clic en un enlace, o null si ese enlace
+  // no se mide. Recibe el atributo `href` tal como está escrito, el
+  // className, el `data-ubicacion`, el texto del enlace y, opcional, el
+  // `data-evento`.
+  //  - app.tapcar.cl: `clic_ingresar` si es el "Ingresar" del nav
+  //    (`.nav__login`) o lleva data-evento="ingresar"; si no,
+  //    `clic_crear_cuenta`. Hoy todo enlace a la app que no es Ingresar
+  //    termina en el registro, así que se cuenta como intención de crear
+  //    cuenta. Solo `clic_crear_cuenta` lleva `texto` (hay varios textos
+  //    distintos que comparar); Ingresar siempre dice lo mismo y manda solo
+  //    `ubicacion`, como pide el spec: cada propiedad de más cuenta contra
+  //    el tope de Vercel (ver tapcarEvento).
+  //  - mailto: `clic_correo`, solo con `ubicacion`.
+  // El dominio se compara entero (seguido de fin, `/`, `?`, `#` o `:`) y no
+  // como prefijo de texto: `https://app.tapcar.cl.otro.com` no es la app.
+  // Sin `data-ubicacion` se manda `sin-ubicacion` y no se omite el
+  // parámetro: así un enlace nuevo al que le faltó el atributo se nota en
+  // los informes en vez de perderse en "(not set)".
+  function eventoDeEnlace(href, clases, ubicacion, texto, evento) {
+    var h = typeof href === 'string' ? href.replace(/^\s+|\s+$/g, '') : '';
+    var u = typeof ubicacion === 'string' ? ubicacion.replace(/^\s+|\s+$/g, '') : '';
+    var params = { ubicacion: u || 'sin-ubicacion' };
+    if (/^mailto:/i.test(h)) return { nombre: 'clic_correo', params: params };
+    if (!/^https:\/\/app\.tapcar\.cl(?=$|[\/?#:])/i.test(h)) return null;
+    var esIngresar = (' ' + String(clases || '') + ' ').replace(/\s+/g, ' ').indexOf(' nav__login ') !== -1 ||
+      evento === 'ingresar';
+    if (esIngresar) return { nombre: 'clic_ingresar', params: params };
+    // Texto visible con los espacios colapsados (el HTML trae saltos de
+    // línea y la sangría del SVG) y recortado: GA corta los parámetros a
+    // 100 caracteres y un texto largo solo ensucia el informe.
+    params.texto = String(texto == null ? '' : texto).replace(/\s+/g, ' ').replace(/^ | $/g, '').slice(0, 60);
+    return { nombre: 'clic_crear_cuenta', params: params };
+  }
+
   // ── Navegador ────────────────────────────────────────────────────
   // Todo lo que toca window/document. Recibe la ventana por parámetro
   // para que tools/test_analitica.js la pueda correr con un DOM falso.
@@ -180,6 +217,26 @@
     // `arguments` y no un arreglo: gtag.js solo reconoce los comandos que
     // llegan como objeto arguments.
     win.gtag = win.gtag || function () { win.dataLayer.push(arguments); };
+
+    // Un evento va a GA y a Vercel Web Analytics, para poder comparar los
+    // dos. Ojo con Vercel: los eventos personalizados solo existen en los
+    // planes Pro y Enterprise; en Hobby `va('event')` no registra nada (no
+    // falla, simplemente no aparece en el panel). Y en Pro cada evento
+    // admite como máximo 2 propiedades, por eso ningún evento manda más de
+    // dos y los que no necesitan `texto` no lo mandan.
+    // Se busca `gtag` y `va` al momento de mandar (no al cargar):
+    // `va` lo define la cola de Vercel de cada página y podría no existir.
+    // Cada envío va en su propio try: si uno lanza, el otro sale igual, y
+    // quien llama (un formulario que acaba de mostrar "Consulta enviada")
+    // nunca recibe una excepción. Medir no puede romper la página.
+    // Con el consentimiento denegado gtag manda el evento sin cookie ni
+    // identificador (modo avanzado): no hace falta preguntar aquí.
+    win.tapcarEvento = function (nombre, params) {
+      if (typeof nombre !== 'string' || !nombre) return;
+      var datos = params && typeof params === 'object' ? params : {};
+      try { if (typeof win.gtag === 'function') win.gtag('event', nombre, datos); } catch (e) { /* sin GA */ }
+      try { if (typeof win.va === 'function') win.va('event', { name: nombre, data: datos }); } catch (e) { /* sin Vercel */ }
+    };
 
     var guardado = leerConsentimiento(almacen);
     var iniciales = comandosIniciales(guardado, new Date());
@@ -312,12 +369,57 @@
 
     win.addEventListener('resize', ajustarEspacio);
 
-    // Delegación en document: un solo listener para el botón del pie de
-    // las seis páginas, y sirve aunque alguno se agregue después.
+    // Mide un clic en un enlace. NO llama a preventDefault ni frena la
+    // navegación: el evento se encola y GA4 lo manda con sendBeacon, que
+    // sobrevive al cambio de página. Si gtag.js todavía no cargó, ese clic
+    // se pierde, y es preferible a retrasar al visitante. Todo va en un try
+    // porque un error aquí no puede impedir que el enlace funcione.
+    function medirEnlace(enlace) {
+      try {
+        if (!enlace || !enlace.getAttribute) return;
+        var ev = eventoDeEnlace(
+          enlace.getAttribute('href'),
+          enlace.className,
+          enlace.getAttribute('data-ubicacion'),
+          enlace.textContent,
+          enlace.getAttribute('data-evento')
+        );
+        if (ev) win.tapcarEvento(ev.nombre, ev.params);
+      } catch (e) { /* medir nunca rompe un enlace */ }
+    }
+
+    // El enlace del clic. closest sube desde el SVG de la flecha que va
+    // dentro de los CTA hasta el <a>. Se pide `a[href]` y no `[href]`: un
+    // `<use href="#icono">` dentro del enlace también tiene href, y
+    // closest se quedaría con él en vez de llegar al enlace.
+    function enlaceDe(t) {
+      return t && t.closest ? t.closest('a[href]') : null;
+    }
+
+    // Botón del medio (abrir en otra pestaña): el navegador NO dispara
+    // `click` para ese botón, solo `auxclick`, así que sin esto ese clic se
+    // perdería. Solo button === 1: el derecho (2) abre el menú contextual y
+    // no es una intención de ir. Para no contar dos veces, el listener de
+    // `click` de abajo ignora todo botón que no sea el principal.
+    doc.addEventListener('auxclick', function (ev) {
+      if (ev.button !== 1) return;
+      medirEnlace(enlaceDe(ev.target));
+    });
+
+    // Delegación en document: un solo listener para el botón del pie y
+    // para los enlaces medidos de las seis páginas, y sirve aunque alguno
+    // se agregue después.
     doc.addEventListener('click', function (ev) {
       var t = ev.target;
-      var abridor = t && t.closest ? t.closest('[data-preferencias-cookies]') : null;
-      if (!abridor) return;
+      if (!t || !t.closest) return;
+      var abridor = t.closest('[data-preferencias-cookies]');
+      if (!abridor) {
+        // Navegadores viejos disparaban `click` también con el botón del
+        // medio; ese ya lo midió `auxclick`.
+        if (ev.button) return;
+        medirEnlace(enlaceDe(t));
+        return;
+      }
       ev.preventDefault();
       quienAbrio = abridor;
       mostrarBanner();
@@ -341,6 +443,7 @@
       estadoConsentimiento: estadoConsentimiento,
       comandosIniciales: comandosIniciales,
       cookiesABorrar: cookiesABorrar,
+      eventoDeEnlace: eventoDeEnlace,
       iniciar: iniciar
     };
   }

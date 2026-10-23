@@ -2178,8 +2178,8 @@ select.form__input {
         <a href="/legal/" class="nav__link">¿Es legal?</a>
       </nav>
       <div class="nav__actions">
-        <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta gratis</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav" class="nav__login">Ingresar</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav" class="btn btn--primary btn--md">Crear cuenta gratis</a>
       </div>
       <button type="button" class="nav__burger" data-burger aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
         <span class="nav__burger-box"><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span></span>
@@ -2192,7 +2192,7 @@ select.form__input {
       <a href="/socios/" class="nav__panel-link is-active" data-nav="/socios/" aria-current="page">Socios</a>
       <a href="/legal/" class="nav__panel-link" data-nav="/legal/">¿Es legal?</a>
       <div class="nav__panel-actions">
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav-movil" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
       </div>
     </div>
   </header>
@@ -2207,7 +2207,7 @@ select.form__input {
       <p class="pl-hero__lead">Estos perfiles se piden al crear la cuenta y los aprobamos nosotros. Las condiciones se acuerdan caso a caso.</p>
       <div class="pl-hero__actions">
         <a href="#contacto" class="btn btn--primary btn--lg">Conversemos</a>
-        <a href="https://app.tapcar.cl" class="btn btn--secondary btn--lg">Crear cuenta</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="hero" class="btn btn--secondary btn--lg">Crear cuenta</a>
       </div>
     </div>
   </section>
@@ -2395,7 +2395,7 @@ select.form__input {
           </span>
         </div>
 
-        <p class="form__salida">O escríbenos directo a <a href="mailto:contacto@tapcar.cl">contacto@tapcar.cl</a></p>
+        <p class="form__salida">O escríbenos directo a <a href="mailto:contacto@tapcar.cl" data-ubicacion="formulario-socios">contacto@tapcar.cl</a></p>
       </div>
     </div>
   </section>
@@ -2431,8 +2431,8 @@ select.form__input {
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
             <a href="/socios/" class="footer__link">Socios</a>
-            <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
-            <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
+            <a href="mailto:contacto@tapcar.cl" data-ubicacion="footer-contacto" class="footer__link">Contacto</a>
+            <a href="mailto:contacto@tapcar.cl" data-ubicacion="footer-soporte" class="footer__link">Soporte</a>
             <a href="/terminos/" class="footer__link">Términos y privacidad</a>
             <button type="button" class="footer__link footer__link--btn" data-preferencias-cookies>Preferencias de cookies</button>
           </div>
@@ -2502,6 +2502,10 @@ select.form__input {
             ok.hidden = false;
             // Mover el foco hace que un lector de pantalla anuncie el resultado.
             ok.focus();
+            // Se mide recién aquí, con la respuesta OK y el aviso ya en
+            // pantalla: un envío que falló no es una conversión. La guardia
+            // cubre el caso en que analitica.js no cargó (bloqueado o caído).
+            window.tapcarEvento && window.tapcarEvento('enviar_formulario', { formulario: 'socios' });
             return;
           }
           fallar((r.cuerpo && r.cuerpo.error) || SALIDA);
