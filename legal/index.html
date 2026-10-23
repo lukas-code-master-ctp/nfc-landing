@@ -506,6 +506,62 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .footer__meta { font-size: 13px; color: var(--acero); }
+/* "Preferencias de cookies" es un <button> (abre el banner, no navega),
+   pero en el pie tiene que verse igual que los enlaces de al lado: se le
+   quita todo lo que el navegador le pone a un botón. */
+.footer__link--btn {
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: inherit; line-height: inherit; text-align: left;
+}
+
+/* ===================================================================
+   Aviso de cookies — lo crea assets/analitica.js
+   Franja fija abajo, sobria. Rechazar y Aceptar llevan la MISMA clase
+   (.btn--secondary): mismo tamaño, mismo color, mismo peso, para que
+   rechazar no cueste más que aceptar.
+   =================================================================== */
+.cookies {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  background: var(--superficie); border-top: 1px solid var(--linea-fuerte);
+  box-shadow: var(--shadow-lg);
+}
+.cookies[hidden] { display: none; }
+.cookies__inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px 24px;
+  padding-top: 14px; padding-bottom: 14px;
+}
+.cookies__texto { margin: 0; font-size: var(--text-sm); line-height: 1.5; color: var(--tinta); }
+.cookies__mas { color: var(--azul); font-weight: var(--weight-medium); }
+.cookies__mas:hover { color: var(--azul-press); }
+.cookies__acciones { display: flex; gap: 8px; flex-shrink: 0; }
+.cookies__btn { min-width: 112px; }
+/* Mientras el banner está visible (clase en <html>), la página reserva
+   abajo su alto real, que el script mide en --cookies-alto sobre <html>:
+   - padding-bottom del body: al llegar al fondo, el último CTA y el pie
+     no quedan tapados;
+   - scroll-padding-bottom del html: al avanzar con Tab, el navegador
+     desplaza el elemento con foco para que no quede debajo de la franja
+     fija (WCAG 2.4.11). Sin esto, en /planes/ a 375px diez elementos
+     recibían el foco totalmente tapados.
+   El 120px es solo el respaldo antes de medir. */
+html.con-cookies { scroll-padding-bottom: var(--cookies-alto, 120px); }
+html.con-cookies body { padding-bottom: var(--cookies-alto, 120px); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Solo la entrada, y solo con movimiento: con movimiento reducido el
+     banner aparece quieto en su lugar (el estado base es el final). */
+  .cookies:not([hidden]) { animation: cookies-entra var(--dur-lenta) var(--ease-salir); }
+  @keyframes cookies-entra {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+}
+@media (max-width: 640px) {
+  /* En celular: texto arriba y los dos botones en fila a lo ancho, cada
+     uno la mitad. */
+  .cookies__inner { flex-direction: column; align-items: stretch; padding-top: 12px; padding-bottom: 12px; }
+  .cookies__acciones { width: 100%; }
+  .cookies__btn { flex: 1 1 0; min-width: 0; }
+}
 
 /* ===================================================================
    Aparición al hacer scroll — UN solo patrón para todo el sitio.
@@ -2154,8 +2210,8 @@ select.form__input {
         <a href="/legal/" class="nav__link is-active" aria-current="page">¿Es legal?</a>
       </nav>
       <div class="nav__actions">
-        <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta gratis</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav" class="nav__login">Ingresar</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav" class="btn btn--primary btn--md">Crear cuenta gratis</a>
       </div>
       <button type="button" class="nav__burger" data-burger aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
         <span class="nav__burger-box"><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span></span>
@@ -2168,7 +2224,7 @@ select.form__input {
       <a href="/socios/" class="nav__panel-link" data-nav="/socios/">Socios</a>
       <a href="/legal/" class="nav__panel-link is-active" data-nav="/legal/" aria-current="page">¿Es legal?</a>
       <div class="nav__panel-actions">
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav-movil" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
       </div>
     </div>
   </header>
@@ -2493,7 +2549,7 @@ select.form__input {
       <h2 class="cta__title">Ten tus documentos siempre a un Tap.</h2>
       <p class="cta__lead">Registra tus vehículos y muestra la documentación al día, legible y de solo lectura, cuando la necesites.</p>
       <div class="cta__actions">
-        <a href="https://app.tapcar.cl" class="cta__primary">Crear cuenta
+        <a href="https://app.tapcar.cl" data-ubicacion="cta-final" class="cta__primary">Crear cuenta
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="/planes/" class="cta__secondary">Ver planes</a>
@@ -2532,9 +2588,10 @@ select.form__input {
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
             <a href="/socios/" class="footer__link">Socios</a>
-            <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
-            <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
+            <a href="mailto:contacto@tapcar.cl" data-ubicacion="footer-contacto" class="footer__link">Contacto</a>
+            <a href="mailto:contacto@tapcar.cl" data-ubicacion="footer-soporte" class="footer__link">Soporte</a>
             <a href="/terminos/" class="footer__link">Términos y privacidad</a>
+            <button type="button" class="footer__link footer__link--btn" data-preferencias-cookies>Preferencias de cookies</button>
           </div>
         </nav>
       </div>
@@ -2614,5 +2671,6 @@ select.form__input {
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script src="/assets/analitica.js"></script>
 </body>
 </html>

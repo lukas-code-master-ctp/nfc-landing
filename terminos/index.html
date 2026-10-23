@@ -506,6 +506,62 @@ a.card:hover { border-color: var(--linea-fuerte); box-shadow: var(--shadow-md); 
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .footer__meta { font-size: 13px; color: var(--acero); }
+/* "Preferencias de cookies" es un <button> (abre el banner, no navega),
+   pero en el pie tiene que verse igual que los enlaces de al lado: se le
+   quita todo lo que el navegador le pone a un botón. */
+.footer__link--btn {
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: inherit; line-height: inherit; text-align: left;
+}
+
+/* ===================================================================
+   Aviso de cookies — lo crea assets/analitica.js
+   Franja fija abajo, sobria. Rechazar y Aceptar llevan la MISMA clase
+   (.btn--secondary): mismo tamaño, mismo color, mismo peso, para que
+   rechazar no cueste más que aceptar.
+   =================================================================== */
+.cookies {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  background: var(--superficie); border-top: 1px solid var(--linea-fuerte);
+  box-shadow: var(--shadow-lg);
+}
+.cookies[hidden] { display: none; }
+.cookies__inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px 24px;
+  padding-top: 14px; padding-bottom: 14px;
+}
+.cookies__texto { margin: 0; font-size: var(--text-sm); line-height: 1.5; color: var(--tinta); }
+.cookies__mas { color: var(--azul); font-weight: var(--weight-medium); }
+.cookies__mas:hover { color: var(--azul-press); }
+.cookies__acciones { display: flex; gap: 8px; flex-shrink: 0; }
+.cookies__btn { min-width: 112px; }
+/* Mientras el banner está visible (clase en <html>), la página reserva
+   abajo su alto real, que el script mide en --cookies-alto sobre <html>:
+   - padding-bottom del body: al llegar al fondo, el último CTA y el pie
+     no quedan tapados;
+   - scroll-padding-bottom del html: al avanzar con Tab, el navegador
+     desplaza el elemento con foco para que no quede debajo de la franja
+     fija (WCAG 2.4.11). Sin esto, en /planes/ a 375px diez elementos
+     recibían el foco totalmente tapados.
+   El 120px es solo el respaldo antes de medir. */
+html.con-cookies { scroll-padding-bottom: var(--cookies-alto, 120px); }
+html.con-cookies body { padding-bottom: var(--cookies-alto, 120px); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Solo la entrada, y solo con movimiento: con movimiento reducido el
+     banner aparece quieto en su lugar (el estado base es el final). */
+  .cookies:not([hidden]) { animation: cookies-entra var(--dur-lenta) var(--ease-salir); }
+  @keyframes cookies-entra {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+}
+@media (max-width: 640px) {
+  /* En celular: texto arriba y los dos botones en fila a lo ancho, cada
+     uno la mitad. */
+  .cookies__inner { flex-direction: column; align-items: stretch; padding-top: 12px; padding-bottom: 12px; }
+  .cookies__acciones { width: 100%; }
+  .cookies__btn { flex: 1 1 0; min-width: 0; }
+}
 
 /* ===================================================================
    Aparición al hacer scroll — UN solo patrón para todo el sitio.
@@ -2084,8 +2140,8 @@ select.form__input {
         <a href="/legal/" class="nav__link">¿Es legal?</a>
       </nav>
       <div class="nav__actions">
-        <a href="https://app.tapcar.cl" class="nav__login">Ingresar</a>
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--md">Crear cuenta gratis</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav" class="nav__login">Ingresar</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav" class="btn btn--primary btn--md">Crear cuenta gratis</a>
       </div>
       <button type="button" class="nav__burger" data-burger aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
         <span class="nav__burger-box"><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span><span class="nav__burger-bar"></span></span>
@@ -2098,7 +2154,7 @@ select.form__input {
       <a href="/socios/" class="nav__panel-link" data-nav="/socios/">Socios</a>
       <a href="/legal/" class="nav__panel-link" data-nav="/legal/">¿Es legal?</a>
       <div class="nav__panel-actions">
-        <a href="https://app.tapcar.cl" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
+        <a href="https://app.tapcar.cl" data-ubicacion="nav-movil" class="btn btn--primary btn--lg">Crear cuenta gratis</a>
       </div>
     </div>
   </header>
@@ -2110,7 +2166,7 @@ select.form__input {
     <div class="pl-hero__inner">
       <span class="eyebrow">Legal</span>
       <h1 class="pl-hero__title">Términos de uso y privacidad</h1>
-      <p class="pl-hero__lead">Las reglas de este sitio y cómo tratamos los datos que dejas acá, en lenguaje simple. Si algo no te queda claro, escríbenos a <a href="mailto:contacto@tapcar.cl" style="color:var(--azul);">contacto@tapcar.cl</a>.</p>
+      <p class="pl-hero__lead">Las reglas de este sitio y cómo tratamos los datos que dejas acá, en lenguaje simple. Si algo no te queda claro, escríbenos a <a href="mailto:contacto@tapcar.cl" data-ubicacion="hero" style="color:var(--azul);">contacto@tapcar.cl</a>.</p>
     </div>
   </section>
 
@@ -2120,8 +2176,8 @@ select.form__input {
       <div class="doc">
 
         <div class="doc__meta">
-          <span>Última actualización: 24 de septiembre de 2026</span>
-          <span>Vigente desde: 24 de septiembre de 2026</span>
+          <span>Última actualización: 23 de octubre de 2026</span>
+          <span>Vigente desde: 23 de octubre de 2026</span>
         </div>
 
         <nav class="doc__toc" aria-label="Índice del documento">
@@ -2176,22 +2232,27 @@ select.form__input {
           <p>Tratamos datos personales conforme a la Ley N° 19.628 sobre protección de la vida privada y a la normativa chilena que la complemente o reemplace. En este sitio son pocos:</p>
           <ul>
             <li><strong>Lo que escribes en un formulario:</strong> nombre, empresa, correo, teléfono si lo das, la cantidad de vehículos o el tipo de empresa, y tu mensaje. Lo usamos solo para responderte. Nos llega por correo a contacto@tapcar.cl, a través de un proveedor de envío de correo.</li>
-            <li><strong>Medición de visitas:</strong> contamos visitas y páginas vistas con Vercel Web Analytics, que entrega cifras agregadas, no usa cookies y no nos dice quién eres.</li>
+            <li><strong>Medición con Google Analytics 4:</strong> usamos Google Analytics 4, un servicio de Google LLC, para saber qué partes del sitio sirven. Mide las visitas, las páginas que ves, de dónde llegas (por ejemplo, desde un buscador o un enlace), tu dispositivo y navegador, tu ubicación aproximada (país y ciudad, que Google deduce de tu dirección IP), cuánto bajas en una página, los enlaces que te llevan a otros sitios y los clics en algunos botones clave, como «Crear cuenta gratis» o el envío de un formulario. No le mandamos tu nombre, tu correo ni lo que escribes en los formularios. Google trata estos datos fuera de Chile. Solo instala cookies si las aceptas; qué cambia según lo que elijas está en <a href="#cookies">Cookies</a>.</li>
+            <li><strong>Medición con Vercel Web Analytics:</strong> además contamos visitas y páginas vistas con Vercel Web Analytics, que entrega cifras agregadas, no usa cookies y no nos dice quién eres.</li>
             <li><strong>Registros técnicos:</strong> el servicio que aloja el sitio registra datos de cada visita, como la dirección IP y el navegador, para seguridad y para detectar fallas.</li>
             <li><strong>Tipografías:</strong> las fuentes del sitio se cargan desde Google Fonts, así que tu navegador se conecta a servidores de Google al abrir cada página.</li>
           </ul>
-          <p>Algunos de estos proveedores almacenan información fuera de Chile. Guardamos las consultas que nos envías mientras nos sirvan para responderte y darles seguimiento, salvo que nos pidas borrarlas.</p>
+          <p>Algunos de estos proveedores, entre ellos Google, almacenan y procesan información fuera de Chile. Guardamos las consultas que nos envías mientras nos sirvan para responderte y darles seguimiento, salvo que nos pidas borrarlas.</p>
           <p><strong>No vendemos tus datos</strong> ni los usamos para publicidad de terceros.</p>
         </div>
 
         <div data-reveal class="doc__sec" id="cookies">
           <h2 class="doc__sec-title">7. Cookies</h2>
-          <p>Este sitio no instala cookies: ni propias, ni de publicidad, ni de seguimiento entre sitios. La app, en app.tapcar.cl, usa las suyas para mantener tu sesión; eso lo explican sus propios términos.</p>
+          <p>Este sitio solo instala cookies de <strong>Google Analytics</strong>, y solo si las aceptas en el aviso que aparece al entrar. Son dos: «_ga» y otra que empieza con «_ga_» y termina en el código de nuestra cuenta de Google Analytics. Sirven para reconocer que dos visitas vienen del mismo navegador y duran hasta 2 años.</p>
+          <p><strong>Si no decides o si rechazas, no se instala ninguna cookie.</strong> Aun así, Google recibe de cada visita señales sin cookies y sin un identificador que permita reconocer tu navegador —por ejemplo, que se vio una página o que se tocó un botón—, y las usa para estimar cuántas visitas hubo. La medición de Vercel Web Analytics sigue funcionando igual, también sin cookies.</p>
+          <p>No usamos cookies de publicidad: aunque aceptes, los permisos de publicidad de Google quedan siempre desactivados.</p>
+          <p>Tu decisión se guarda en tu navegador para no volver a preguntarte en cada página. Puedes cambiarla cuando quieras con <strong>«Preferencias de cookies»</strong>, al pie de cada página. Si aceptaste y después rechazas, se borran de tu navegador las cookies de Google Analytics.</p>
+          <p>La app, en app.tapcar.cl, usa sus propias cookies para mantener tu sesión; eso lo explican sus propios términos.</p>
         </div>
 
         <div data-reveal class="doc__sec" id="derechos">
           <h2 class="doc__sec-title">8. Tus derechos</h2>
-          <p>Puedes pedirnos en cualquier momento <strong>acceder</strong> a los datos que nos dejaste en este sitio, <strong>rectificarlos</strong>, <strong>eliminarlos</strong> o <strong>bloquear</strong> su tratamiento, en los casos que la ley permite. Escríbenos a <a href="mailto:contacto@tapcar.cl">contacto@tapcar.cl</a> y responderemos en el plazo que fije la normativa vigente.</p>
+          <p>Puedes pedirnos en cualquier momento <strong>acceder</strong> a los datos que nos dejaste en este sitio, <strong>rectificarlos</strong>, <strong>eliminarlos</strong> o <strong>bloquear</strong> su tratamiento, en los casos que la ley permite. Escríbenos a <a href="mailto:contacto@tapcar.cl" data-ubicacion="terminos-derechos">contacto@tapcar.cl</a> y responderemos en el plazo que fije la normativa vigente.</p>
           <p>Los datos de tu cuenta de TapCar se rigen por la política de privacidad que aceptaste en app.tapcar.cl.</p>
         </div>
 
@@ -2208,7 +2269,7 @@ select.form__input {
 
         <div data-reveal class="doc__sec" id="contacto">
           <h2 class="doc__sec-title">11. Contacto y ley aplicable</h2>
-          <p>Para cualquier consulta sobre estos términos o sobre tus datos, escríbenos a <a href="mailto:contacto@tapcar.cl">contacto@tapcar.cl</a>.</p>
+          <p>Para cualquier consulta sobre estos términos o sobre tus datos, escríbenos a <a href="mailto:contacto@tapcar.cl" data-ubicacion="terminos-contacto">contacto@tapcar.cl</a>.</p>
           <p>Estos términos se rigen por las leyes de la República de Chile. Cualquier controversia se someterá a los tribunales ordinarios de justicia de Chile, sin perjuicio de los derechos que la Ley N° 19.496 sobre protección de los derechos de los consumidores te reconozca.</p>
         </div>
 
@@ -2226,7 +2287,7 @@ select.form__input {
       <h2 class="cta__title">¿Te quedó alguna duda?</h2>
       <p class="cta__lead">Escríbenos y te respondemos. Preferimos explicarlo antes que dejarte con la duda.</p>
       <div class="cta__actions">
-        <a href="mailto:contacto@tapcar.cl" class="cta__primary">contacto@tapcar.cl
+        <a href="mailto:contacto@tapcar.cl" data-ubicacion="cta-final" class="cta__primary">contacto@tapcar.cl
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="/" class="cta__secondary">Volver al inicio</a>
@@ -2265,9 +2326,10 @@ select.form__input {
           <p class="footer__col-title">Empresa</p>
           <div class="footer__links">
             <a href="/socios/" class="footer__link">Socios</a>
-            <a href="mailto:contacto@tapcar.cl" class="footer__link">Contacto</a>
-            <a href="mailto:contacto@tapcar.cl" class="footer__link">Soporte</a>
+            <a href="mailto:contacto@tapcar.cl" data-ubicacion="footer-contacto" class="footer__link">Contacto</a>
+            <a href="mailto:contacto@tapcar.cl" data-ubicacion="footer-soporte" class="footer__link">Soporte</a>
             <a href="/terminos/" class="footer__link">Términos y privacidad</a>
+            <button type="button" class="footer__link footer__link--btn" data-preferencias-cookies>Preferencias de cookies</button>
           </div>
         </nav>
       </div>
@@ -2347,5 +2409,6 @@ select.form__input {
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script src="/assets/analitica.js"></script>
 </body>
 </html>

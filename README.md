@@ -14,7 +14,7 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 | ¿Cómo funciona? | [`como-funciona/index.html`](como-funciona/index.html) | Paso a paso en dos fases (puesta en marcha 01–04, día a día 05–08), con los pasos de Flotas marcados; bloque compacto "Con conductores, el mismo Tap controla la operación" (6 ítems de Flotas); enlace a ¿Es legal?; FAQ de 9 preguntas; CTA |
 | Planes | [`planes/index.html`](planes/index.html) | Pills de plan (Uso particular / Flotas). Uso particular: dos tarjetas (Gratis, $0 con 1 vehículo; TapCar+, $5.000 al año por vehículo), franja "Calcula tu TapCar+" con slider 1–10, el total anual y un botón secundario "Empezar con TapCar+", nota de chips. `/planes/#flotas` abre directo la pestaña Flotas (¿Cómo funciona? enlaza ahí). Flotas: toggle mensual/anual con el ahorro, sliders de vehículos y cuentas de conductor, formulario sobre 100 vehículos. Franja de empresas del rubro, FAQ de 7 preguntas, CTA |
 | Empresas del rubro | [`socios/index.html`](socios/index.html) | Los tres perfiles en tarjetas cortas (automotoras y aseguradoras con Convenio, gestorías con Envíos), tres pasos para empezar (el tercero, las condiciones, se conversa), FAQ de 4 preguntas y formulario de contacto. Enlazada desde el nav ("Socios"), la tarjeta de empresas del rubro del inicio, la franja de Planes y el footer |
-| Términos de uso y privacidad | [`terminos/index.html`](terminos/index.html) | Términos del **sitio** y cómo trata los datos que se dejan en él. El servicio tiene sus propios términos, que la app pide aceptar al crear la cuenta según el tipo de cuenta. Enlazada solo desde el footer, no desde el nav |
+| Términos de uso y privacidad | [`terminos/index.html`](terminos/index.html) | Términos del **sitio** y cómo trata los datos que se dejan en él; las secciones 6 (datos) y 7 (cookies, ancla `#cookies`, a la que enlaza el banner) describen Google Analytics y el consentimiento. El servicio tiene sus propios términos, que la app pide aceptar al crear la cuenta según el tipo de cuenta. Enlazada solo desde el footer, no desde el nav |
 | ¿Es legal? | [`legal/index.html`](legal/index.html) | Tabla documento por documento, las cuatro bases normativas, los tres requisitos de validez, qué pasa en un control, referencias oficiales y FAQ de 8 preguntas. **Es la página pensada para captar búsqueda**: "¿es legal mostrar los documentos del auto en digital?" es una consulta real y poco respondida |
 
 ## Estructura
@@ -28,7 +28,8 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── legal/index.html
 ├── terminos/index.html
 ├── styles.css              # Design system compartido (fuente editable)
-├── assets/                 # Imágenes publicadas
+├── assets/                 # Imágenes publicadas y el script de analítica
+│   ├── analitica.js        # Google Analytics 4: consentimiento, banner de cookies y eventos
 │   ├── chip-llavero.webp   # Foto del llavero NFC
 │   ├── impulse-ai.webp     # Lockup de la matriz, para el footer (3x)
 │   └── og-tapcar.png       # Tarjeta 1200×630 al compartir el link
@@ -41,6 +42,8 @@ Sitio estático en HTML/CSS/JS, implementado a partir de un diseño de [Claude D
 ├── tools/precios.py        # Revisa las cifras del sitio contra precios.json; --generar escribe la calculadora
 ├── tools/schema.py         # Regenera el JSON-LD desde el contenido visible
 ├── tools/test_contacto.js  # Pruebas de la función de contacto, sin red
+├── tools/test_analitica.js # Pruebas de assets/analitica.js, con un DOM falso
+├── tools/test_html.js      # Pruebas del HTML de las seis páginas para la analítica
 └── _design_src/            # Archivos originales del diseño y fotos sin procesar
 ```
 
@@ -171,7 +174,57 @@ Es idempotente: borra el bloque anterior y escribe uno nuevo. **Hay que volver a
 
 ### Analítica
 
-El sitio está alojado en **Vercel**. Las 6 páginas llevan al final del `<body>` la variante **`html`** de la [documentación de Web Analytics](https://vercel.com/docs/analytics/quickstart): la cola `window.va` y el `<script defer>`.
+Dos mediciones en paralelo, en las seis páginas:
+
+- **Google Analytics 4**: ID `G-VQ42VL3F5T`, propiedad "TapCar" de la cuenta lukas@impulseai.cl. Lo carga [`assets/analitica.js`](assets/analitica.js), un solo archivo compartido (`<script src="/assets/analitica.js">`, sin `defer`, al final del `<body>`).
+- **Vercel Web Analytics**: sin cookies, cuenta al 100 % de las visitas —también a quien rechaza— y sirve de control para comparar contra GA4.
+
+**El ID se cambia en un solo lugar**: la constante `ID` al principio de `assets/analitica.js`.
+
+#### Consentimiento
+
+Modo de consentimiento de Google v2, **modo avanzado**:
+
+- Por defecto **todo denegado** (`analytics_storage`, `ad_storage`, `ad_user_data`, `ad_personalization`). En ese estado gtag no escribe cookies y manda señales sin identificador, que GA usa para modelar.
+- **Aceptar** concede **solo** `analytics_storage`. Los tres permisos de publicidad quedan **siempre** denegados, también al aceptar: no hacemos publicidad y los Términos lo prometen.
+- **Rechazar** deja todo denegado y borra las cookies `_ga` y `_ga_<ID>` que hubieran quedado de una aceptación anterior.
+- La decisión se guarda en `localStorage`, clave `tapcar-consentimiento` (`{ v: 1, analitica: true|false, fecha }`). Sin decisión válida —o si `localStorage` falla— el banner vuelve a aparecer y gtag sigue denegado: nunca se concede por un dato que no se pudo leer.
+- El banner lo crea el script (no está en el HTML), con "Rechazar" y "Aceptar" del mismo tamaño y peso. El botón **"Preferencias de cookies"** del pie (`[data-preferencias-cookies]`) lo vuelve a abrir.
+
+#### Eventos
+
+Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`). Los formularios y la calculadora los mandan con `window.tapcarEvento(nombre, params)`, que nunca lanza; los clics en enlaces (también con el botón del medio, vía `auxclick`) se miden por delegación en `document`, sin frenar la navegación.
+
+Ojo con Vercel: los eventos personalizados solo existen en los planes **Pro y Enterprise**; en Hobby `va('event')` no registra nada. En Pro cada evento admite **2 propiedades** como máximo, por eso ningún evento manda más de dos.
+
+| Evento | Cuándo | Parámetros |
+|---|---|---|
+| `clic_crear_cuenta` | Clic en un enlace a `https://app.tapcar.cl` que no es "Ingresar" | `ubicacion`, `texto` (texto visible del enlace, hasta 60 caracteres) |
+| `clic_ingresar` | Clic en "Ingresar" (`.nav__login` o `data-evento="ingresar"`) | `ubicacion` |
+| `clic_correo` | Clic en un `mailto:` | `ubicacion` |
+| `enviar_formulario` | Respuesta OK de `/api/contacto` | `formulario`: `flota` o `socios` |
+| `usar_calculadora` | Primera vez por página que se mueve un slider de Planes | `calculadora`: `particular` o `flotas` |
+
+`ubicacion` sale del atributo `data-ubicacion` del enlace. Valores en uso: `nav`, `nav-movil`, `hero`, `cta-final`, `tarjeta-gratis`, `tarjeta-pago`, `calculadora-particular`, `calculadora-flotas`, `formulario-flota`, `formulario-socios`, `footer-contacto`, `footer-soporte`, `terminos-derechos`, `terminos-contacto`.
+
+**Todo enlace nuevo a `app.tapcar.cl` o `mailto:` debe llevar `data-ubicacion`.** Si falta, el evento sale con `sin-ubicacion`: se nota en los informes, pero ya no se sabe de dónde vino el clic.
+
+#### Pruebas
+
+```bash
+node tools/test_analitica.js
+node tools/test_html.js
+```
+
+Sin dependencias: prueba las funciones puras (leer y guardar la decisión, el estado de consentimiento, el orden de los comandos de gtag, qué cookies borrar, qué evento corresponde a cada enlace) y `iniciar(win)` contra un DOM falso. `test_html.js`, también sin dependencias, revisa las seis páginas: `data-ubicacion` en todo enlace a la app o `mailto:`, que carguen `analitica.js` y tengan "Preferencias de cookies", que `enviar_formulario` vaya dentro de la rama de éxito de `/api/contacto` y que `usar_calculadora` conserve su marca de "una vez por página".
+
+#### Tag y Términos van siempre juntos
+
+Las secciones 6 y 7 de [`terminos/index.html`](terminos/index.html) describen exactamente lo que hace `assets/analitica.js`: qué cookies, cuándo, qué se mide, que la publicidad va siempre denegada. **Cualquier cambio en el tag (otra herramienta, otro permiso, otro evento con datos nuevos) se publica en el mismo cambio que el texto de los Términos, nunca antes ni después**, y si cambia lo que se pregunta se sube `VERSION` en el script para que todos vuelvan a decidir.
+
+#### Vercel Web Analytics
+
+Las 6 páginas llevan al final del `<body>` la variante **`html`** de la [documentación de Web Analytics](https://vercel.com/docs/analytics/quickstart): la cola `window.va` y el `<script defer>`.
 
 **No se instala el paquete npm `@vercel/analytics`.** La guía de Vercel tiene un selector de framework; el `import { Analytics } from '@vercel/analytics/next'` que se ve por defecto corresponde al selector `nextjs`. En el selector `html` el paso de instalación aparece vacío: no hay npm. Acá no habría dónde importarlo — el sitio es HTML estático sin bundler — e instalarlo dejaría `package.json` y `node_modules` para un paquete que el navegador nunca cargaría.
 
