@@ -14,7 +14,7 @@
     "Tras editarlo:  python tools/precios.py --generar && python tools/schema.py",
     "Para comprobar que el sitio calza:  python tools/precios.py"
   ],
-  "actualizado": "2026-10-20",
+  "actualizado": "2026-11-04",
 
   "planes": {
     "_comentario": [
@@ -54,14 +54,32 @@
   },
 
   "envio_chips": {
-    "_comentario": "El chip no se cobra; solo el despacho, y se cobra en cada envio, no una sola vez. Los tramos son por cantidad de chips despachados y no calzan con los del plan: son otro eje. Uso particular tiene su propio despacho (particular, de 1 a 10 chips); los tramos son para los demas tipos de cuenta.",
+    "_comentario": "El chip no se cobra; solo el despacho, y se cobra en cada envio, no una sola vez. Se despacha siempre desde Santiago, por Blue Express, a domicilio. El precio depende de la region de destino y de la talla del paquete, que sale de la cantidad de chips (XS hasta 50, S hasta 100): es otro eje que el del plan. Es el mismo precio para Uso particular y para los demas tipos de cuenta; Uso particular solo tiene su tope (particular.hasta). Los precios ya incluyen la comision de la pasarela. Sobre el maximo se cotiza.",
     "moneda": "CLP",
     "iva_incluido": true,
-    "particular": { "hasta": 10, "precio": 3000 },
-    "tramos": [
-      { "hasta": 2, "precio": 2000 },
-      { "hasta": 50, "precio": 5000 },
-      { "hasta": 100, "precio": 10000 }
+    "origen": "Santiago",
+    "tallas": [
+      { "talla": "XS", "hasta": 50 },
+      { "talla": "S", "hasta": 100 }
+    ],
+    "particular": { "hasta": 10 },
+    "regiones": [
+      { "id": "15", "nombre": "Arica y Parinacota", "xs": 7500, "s": 8600 },
+      { "id": "01", "nombre": "Tarapacá", "xs": 6800, "s": 7700 },
+      { "id": "02", "nombre": "Antofagasta", "xs": 6600, "s": 7300 },
+      { "id": "03", "nombre": "Atacama", "xs": 5100, "s": 6200 },
+      { "id": "04", "nombre": "Coquimbo", "xs": 4800, "s": 5500 },
+      { "id": "05", "nombre": "Valparaíso", "xs": 4100, "s": 4700 },
+      { "id": "13", "nombre": "Metropolitana de Santiago", "xs": 3300, "s": 3800 },
+      { "id": "06", "nombre": "O'Higgins", "xs": 4200, "s": 5000 },
+      { "id": "07", "nombre": "Maule", "xs": 4400, "s": 5400 },
+      { "id": "16", "nombre": "Ñuble", "xs": 4800, "s": 5600 },
+      { "id": "08", "nombre": "Biobío", "xs": 4900, "s": 6000 },
+      { "id": "09", "nombre": "Araucanía", "xs": 5200, "s": 6200 },
+      { "id": "14", "nombre": "Los Ríos", "xs": 5500, "s": 6400 },
+      { "id": "10", "nombre": "Los Lagos", "xs": 5500, "s": 6400 },
+      { "id": "11", "nombre": "Aysén", "xs": 8300, "s": 9900 },
+      { "id": "12", "nombre": "Magallanes", "xs": 8300, "s": 9900 }
     ],
     "sobre_el_maximo": "cotizacion"
   },

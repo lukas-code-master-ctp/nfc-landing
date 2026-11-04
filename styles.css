@@ -1363,6 +1363,37 @@ html.con-cookies body { padding-bottom: calc(var(--cookies-alto, 120px) + 16px);
 .planes-nota strong { color: var(--tinta); font-weight: 600; }
 .tabular { font-variant-numeric: tabular-nums; }
 
+/* Planes — Despacho de chips por región. Vale para los dos planes, así que va
+   fuera de las pestañas. Cerrado por defecto: 16 filas empujarían el FAQ muy
+   abajo, y lo que casi todos necesitan ya lo dice el "desde". La tabla se
+   ajusta al ancho (las regiones parten en dos líneas) en vez de deslizarse:
+   en celular, un scroll horizontal dentro de la tarjeta esconde justo la
+   columna de 51 a 100 chips. */
+.envio-banda { max-width: 1000px; margin: 24px auto 0; padding: 0 var(--gutter); }
+.envio { padding: 0; overflow: hidden; }
+.envio__resumen {
+  display: flex; align-items: center; gap: 12px; min-height: 44px;
+  padding: 16px 20px; cursor: pointer; list-style: none;
+}
+.envio__resumen::-webkit-details-marker { display: none; }
+.envio__resumen:focus-visible { outline: 2px solid var(--azul); outline-offset: -2px; border-radius: var(--radius-lg); }
+.envio__resumen > svg { flex: 0 0 auto; color: var(--azul); }
+.envio__resumen-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.envio__titulo { font-size: 15px; font-weight: 600; color: var(--tinta); }
+.envio__sub { font-size: 13px; color: var(--acero); }
+.envio__chev { transition: transform 0.2s ease; }
+.envio[open] .envio__chev { transform: rotate(180deg); }
+.envio__cuerpo { padding: 0 20px 20px; }
+.envio__tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.envio__tabla th, .envio__tabla td { padding: 9px 0; border-top: 1px solid var(--linea); text-align: left; vertical-align: top; }
+.envio__tabla thead th { border-top: 0; font-size: 12px; font-weight: 600; color: var(--acero); }
+/* Las columnas de precio: la celda de región es un <th>, así que la del
+   primer precio sigue a un th y no a un td; por eso :not(:first-child). */
+.envio__tabla tr > :not(:first-child) { padding-left: 16px; text-align: right; white-space: nowrap; }
+.envio__tabla tbody th { font-weight: 500; color: var(--tinta); }
+.envio__tabla td { font-variant-numeric: tabular-nums; color: var(--tinta); }
+.envio__nota { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+
 /* Planes — Piezas de la calculadora de dos planes.
    .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
    por eso hay que apagarlo a mano. Los divs que siguen son block y no lo
@@ -1950,6 +1981,10 @@ select.form__input {
   .plan-calc__total strong { font-size: 28px; }
   .planes-nota { align-items: flex-start; text-align: left; font-size: 14px; }
   .planes-nota svg { margin-top: 1px; }
+  .envio__resumen { padding: 14px 16px; }
+  .envio__cuerpo { padding: 0 16px 16px; }
+  .envio__tabla { font-size: 13px; }
+  .envio__tabla tr > :not(:first-child) { padding-left: 12px; }
   .billing-toggle { align-self: stretch; }
   .billing-toggle__opt { flex: 1; justify-content: center; padding: 0 10px; }
   .plan-pills__hint { display: none; }

@@ -1395,6 +1395,37 @@ html.con-cookies body { padding-bottom: calc(var(--cookies-alto, 120px) + 16px);
 .planes-nota strong { color: var(--tinta); font-weight: 600; }
 .tabular { font-variant-numeric: tabular-nums; }
 
+/* Planes — Despacho de chips por región. Vale para los dos planes, así que va
+   fuera de las pestañas. Cerrado por defecto: 16 filas empujarían el FAQ muy
+   abajo, y lo que casi todos necesitan ya lo dice el "desde". La tabla se
+   ajusta al ancho (las regiones parten en dos líneas) en vez de deslizarse:
+   en celular, un scroll horizontal dentro de la tarjeta esconde justo la
+   columna de 51 a 100 chips. */
+.envio-banda { max-width: 1000px; margin: 24px auto 0; padding: 0 var(--gutter); }
+.envio { padding: 0; overflow: hidden; }
+.envio__resumen {
+  display: flex; align-items: center; gap: 12px; min-height: 44px;
+  padding: 16px 20px; cursor: pointer; list-style: none;
+}
+.envio__resumen::-webkit-details-marker { display: none; }
+.envio__resumen:focus-visible { outline: 2px solid var(--azul); outline-offset: -2px; border-radius: var(--radius-lg); }
+.envio__resumen > svg { flex: 0 0 auto; color: var(--azul); }
+.envio__resumen-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.envio__titulo { font-size: 15px; font-weight: 600; color: var(--tinta); }
+.envio__sub { font-size: 13px; color: var(--acero); }
+.envio__chev { transition: transform 0.2s ease; }
+.envio[open] .envio__chev { transform: rotate(180deg); }
+.envio__cuerpo { padding: 0 20px 20px; }
+.envio__tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.envio__tabla th, .envio__tabla td { padding: 9px 0; border-top: 1px solid var(--linea); text-align: left; vertical-align: top; }
+.envio__tabla thead th { border-top: 0; font-size: 12px; font-weight: 600; color: var(--acero); }
+/* Las columnas de precio: la celda de región es un <th>, así que la del
+   primer precio sigue a un th y no a un td; por eso :not(:first-child). */
+.envio__tabla tr > :not(:first-child) { padding-left: 16px; text-align: right; white-space: nowrap; }
+.envio__tabla tbody th { font-weight: 500; color: var(--tinta); }
+.envio__tabla td { font-variant-numeric: tabular-nums; color: var(--tinta); }
+.envio__nota { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: var(--acero); }
+
 /* Planes — Piezas de la calculadora de dos planes.
    .calc es display:flex, que le gana al [hidden] de la hoja del navegador;
    por eso hay que apagarlo a mano. Los divs que siguen son block y no lo
@@ -1982,6 +2013,10 @@ select.form__input {
   .plan-calc__total strong { font-size: 28px; }
   .planes-nota { align-items: flex-start; text-align: left; font-size: 14px; }
   .planes-nota svg { margin-top: 1px; }
+  .envio__resumen { padding: 14px 16px; }
+  .envio__cuerpo { padding: 0 16px 16px; }
+  .envio__tabla { font-size: 13px; }
+  .envio__tabla tr > :not(:first-child) { padding-left: 12px; }
   .billing-toggle { align-self: stretch; }
   .billing-toggle__opt { flex: 1; justify-content: center; padding: 0 10px; }
   .plan-pills__hint { display: none; }
@@ -2282,7 +2317,7 @@ select.form__input {
           "name": "¿El chip NFC está incluido?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: $3.000 por 1 a 10 chips en Uso particular. En los demás planes va por tramos: $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100."
+            "text": "Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: sale desde Santiago por Blue Express a tu domicilio y cuesta desde $3.300 de 1 a 50 chips y desde $3.800 de 51 a 100, según tu región, con IVA incluido. Sobre 100 chips se cotiza."
           }
         },
         {
@@ -2461,7 +2496,7 @@ select.form__input {
 
       <p class="planes-nota">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.27 16.5 9.42"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-        <span>Chips gratis. Despacho <strong class="tabular" data-envio-part>$3.000</strong> por envío (1 a 10 chips).</span>
+        <span>Chips gratis. Despacho desde <strong class="tabular" data-envio-desde>$3.300</strong> por envío, según tu región.</span>
       </p>
     </div>
 
@@ -2520,7 +2555,7 @@ select.form__input {
               <span class="calc__save__note" data-save-note>27% menos que pagando mes a mes. Equivale a UF 1,917 al mes.</span>
             </span>
           </div>
-          <p class="calc__fineprint" data-fineprint>Valores en UF, no incluyen IVA. Un chip NFC por vehículo, incluido. El envío de los 25 chips cuesta $5.000 con IVA incluido, y se cobra en cada despacho. Sin costos ocultos.</p>
+          <p class="calc__fineprint" data-fineprint>Valores en UF, no incluyen IVA. Un chip NFC por vehículo, incluido. El envío de los 25 chips cuesta desde $3.300 con IVA incluido, según tu región, y se cobra en cada despacho. Sin costos ocultos.</p>
 
           <div class="calc__nudge" data-nudge>
             <svg class="calc__nudge__icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.3 12.3 20.6a1.6 1.6 0 0 1-2.3 0l-7.2-7.2a1.6 1.6 0 0 1-.5-1.1V4.2c0-.9.7-1.6 1.6-1.6h8.1c.4 0 .8.2 1.1.5l7.5 7.5a1.6 1.6 0 0 1 0 2.2Z"/><path d="M7 7h.01"/></svg>
@@ -2625,6 +2660,51 @@ select.form__input {
       </div>
 
     </div>
+
+    <!-- DESPACHO DE CHIPS: el mismo precio en los dos planes, por eso va fuera
+         de las pestañas. Las filas las escribe tools/precios.py --generar
+         desde precios.json: no se editan a mano. -->
+    <div class="envio-banda">
+      <details class="card envio">
+        <summary class="envio__resumen">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+          <span class="envio__resumen-txt">
+            <span class="envio__titulo">Ver precios de despacho por región</span>
+            <span class="envio__sub">Desde Santiago por Blue Express, a domicilio. IVA incluido.</span>
+          </span>
+          <svg class="envio__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="envio__cuerpo">
+          <table class="envio__tabla">
+            <caption class="sr-only">Precio del despacho de chips por región de destino, con IVA incluido</caption>
+            <thead>
+              <tr><th scope="col">Región</th><th scope="col">1 a 50 chips</th><th scope="col">51 a 100 chips</th></tr>
+            </thead>
+            <tbody>
+              <!-- <envio-regiones> -->
+              <tr><th scope="row">Arica y Parinacota</th><td>$7.500</td><td>$8.600</td></tr>
+              <tr><th scope="row">Tarapacá</th><td>$6.800</td><td>$7.700</td></tr>
+              <tr><th scope="row">Antofagasta</th><td>$6.600</td><td>$7.300</td></tr>
+              <tr><th scope="row">Atacama</th><td>$5.100</td><td>$6.200</td></tr>
+              <tr><th scope="row">Coquimbo</th><td>$4.800</td><td>$5.500</td></tr>
+              <tr><th scope="row">Valparaíso</th><td>$4.100</td><td>$4.700</td></tr>
+              <tr><th scope="row">Metropolitana de Santiago</th><td>$3.300</td><td>$3.800</td></tr>
+              <tr><th scope="row">O'Higgins</th><td>$4.200</td><td>$5.000</td></tr>
+              <tr><th scope="row">Maule</th><td>$4.400</td><td>$5.400</td></tr>
+              <tr><th scope="row">Ñuble</th><td>$4.800</td><td>$5.600</td></tr>
+              <tr><th scope="row">Biobío</th><td>$4.900</td><td>$6.000</td></tr>
+              <tr><th scope="row">Araucanía</th><td>$5.200</td><td>$6.200</td></tr>
+              <tr><th scope="row">Los Ríos</th><td>$5.500</td><td>$6.400</td></tr>
+              <tr><th scope="row">Los Lagos</th><td>$5.500</td><td>$6.400</td></tr>
+              <tr><th scope="row">Aysén</th><td>$8.300</td><td>$9.900</td></tr>
+              <tr><th scope="row">Magallanes</th><td>$8.300</td><td>$9.900</td></tr>
+              <!-- </envio-regiones> -->
+            </tbody>
+          </table>
+          <p class="envio__nota">Se cobra en cada envío. Sobre 100 chips se cotiza con el equipo. En Uso particular cada envío lleva hasta 10 chips.</p>
+        </div>
+      </details>
+    </div>
   </section>
 
   <!-- ============ EMPRESAS DEL RUBRO ============ -->
@@ -2665,7 +2745,7 @@ select.form__input {
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿El chip NFC está incluido?</h3>
-          <p class="faq__a">Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: $3.000 por 1 a 10 chips en Uso particular. En los demás planes va por tramos: $2.000 hasta 2 chips, $5.000 de 3 a 50 y $10.000 de 51 a 100.</p>
+          <p class="faq__a">Sí, uno por vehículo y sin costo. Solo pagas el despacho, en cada envío: sale desde Santiago por Blue Express a tu domicilio y cuesta desde $3.300 de 1 a 50 chips y desde $3.800 de 51 a 100, según tu región, con IVA incluido. Sobre 100 chips se cotiza.</p>
         </div>
         <div class="faq__item">
           <h3 class="faq__q">¿Cómo se paga?</h3>
@@ -2759,11 +2839,11 @@ select.form__input {
           min: 5, max: 100
         }
       };
-      var ENVIO_PARTICULAR = 3000;
-      function envio(chips) {
-        if (chips <= 2) return 2000;
-        if (chips <= 50) return 5000;
-        return 10000;
+      var ENVIO_DESDE = 3300;
+      function envioDesde(chips) {
+        if (chips <= 50) return 3300;
+        if (chips <= 100) return 3800;
+        return null;
       }
       // </precios>
 
@@ -2778,10 +2858,18 @@ select.form__input {
       var IVA = 'Valores en UF, no incluyen IVA.';
       // En Flotas esta frase convive con precios en UF mas IVA, asi que el
       // "IVA incluido" del envio tiene que ir dicho, no supuesto.
+      // La calculadora no sabe a qué región va el despacho, así que dice el
+      // "desde" de la talla que toca (el precio de la Región Metropolitana);
+      // el de cada región está en la tabla bajo las calculadoras.
       function chip(n) {
-        return 'Un chip NFC por vehículo, incluido. El envío de ' +
-          (n === 1 ? 'tu chip' : 'los ' + n + ' chips') + ' cuesta ' +
-          clp(envio(n)) + ' con IVA incluido, y se cobra en cada despacho.';
+        var desde = envioDesde(n);
+        var que = n === 1 ? 'tu chip' : 'los ' + n + ' chips';
+        if (desde === null) {
+          return 'Un chip NFC por vehículo, incluido. El envío de ' + que +
+            ' se cotiza con el equipo.';
+        }
+        return 'Un chip NFC por vehículo, incluido. El envío de ' + que +
+          ' cuesta desde ' + clp(desde) + ' con IVA incluido, según tu región, y se cobra en cada despacho.';
       }
 
       function clp(n) { return '$' + Math.round(n).toLocaleString('es-CL'); }
@@ -2838,7 +2926,7 @@ select.form__input {
         placeBubble(s, P('[data-bubble]'));
         P('[data-total]').textContent = clp(n * cfg.veh.anio);
         P('[data-formula]').textContent = veh(n) + ' × ' + clp(cfg.veh.anio);
-        P('[data-envio-part]').textContent = clp(ENVIO_PARTICULAR);
+        P('[data-envio-desde]').textContent = clp(ENVIO_DESDE);
 
         // El puente aparece en cuanto Flotas es elegible, no solo en el tope.
         P('[data-bridge]').hidden = n < BANDA.min;

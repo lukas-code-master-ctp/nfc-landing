@@ -4,12 +4,15 @@
 Hace dos cosas distintas a proposito:
 
   --generar   Escribe las constantes de la calculadora en planes/index.html,
-              entre los marcadores // <precios> y // </precios>. Eso es dato
-              estructurado y se puede generar sin riesgo.
+              entre los marcadores // <precios> y // </precios>, y las filas
+              de la tabla de despacho por region, entre <!-- <envio-regiones> -->
+              y <!-- </envio-regiones> -->. Eso es dato estructurado y se puede
+              generar sin riesgo.
 
   (sin args)  Revisa. Busca en el sitio toda cifra con forma de precio y avisa
               si aparece alguna que precios.json no explica, o si falta alguna
-              que deberia estar. Sale con codigo 1 si encuentra algo.
+              que deberia estar, o si un bloque generado quedo viejo. Sale con
+              codigo 1 si encuentra algo.
 
 Por que NO genera la prosa: las frases del FAQ y de los terminos llevan las
 cifras metidas en oraciones. Un generador que las escriba produce copy peor y
@@ -46,10 +49,10 @@ REVISAR = [
 # inicial, no una promesa. Revisarlo obligaria a reimplementar la aritmetica de
 # la calculadora en Python, o sea a tener dos fuentes para la misma cuenta.
 #
-# Lo que el JS escribe pero NO depende del slider no va aca: `data-envio-part`
-# (el despacho de Uso particular) es una constante, la misma con 1 o con 10
-# chips, y el HTML la dice como promesa. Si estuviera en esta lista, un $3.000
-# viejo en esa linea pasaria sin aviso.
+# Lo que el JS escribe pero NO depende del slider no va aca: `data-envio-desde`
+# (el "desde" del despacho en Uso particular) es una constante, la misma con 1
+# o con 10 chips, y el HTML la dice como promesa. Si estuviera en esta lista,
+# un $3.000 viejo en esa linea pasaria sin aviso.
 ESCRITOS_POR_JS = re.compile(
     r'data-(total|fineprint|formula|save-amount|save-note'
     r'|nudge-total|nudge-amount|linea-label|linea-monto|bubble|scale-max)')
@@ -62,8 +65,10 @@ PATRON = re.compile(r'\$\s?\d[\d.]*\d|\$\s?\d|UF\s\d+(?:,\d+)?|\d{1,3}%')
 # que este donde se promete: $5.000 es tambien el tramo de 3 a 50 chips y
 # $10.000 el total de 2 vehiculos, asi que con la tarjeta de TapCar+
 # diciendo $10.000 (o sin precio) el archivo seguia "teniendo" las dos cifras
-# y la revision pasaba. Lo mismo con el $3.000 del despacho: $2.000 es un
-# tramo valido. Cada ancla es (archivo, que es, regex con UN grupo que captura
+# y la revision pasaba. Lo mismo con el "desde" del despacho: $3.800 (el
+# desde de 51 a 100 chips) y cualquier precio de region son cifras validas en
+# el archivo, pero en la nota de Uso particular solo cabe el desde de 1 a 50.
+# Cada ancla es (archivo, que es, regex con UN grupo que captura
 # el texto del nodo, funcion que da la cifra esperada desde precios.json).
 # La regex tiene que encontrar el nodo EXACTAMENTE una vez: cero es que alguien
 # cambio la clase o el atributo (y el ancla dejo de mirar), dos es ambiguo.
@@ -74,13 +79,17 @@ ANCLAS = [
     ('planes/index.html', 'monto de la tarjeta TapCar+',
      r'<article class="card plan-card plan-card--pro">.*?<span class="plan-card__monto">([^<]*)</span>',
      lambda p: clp(p['planes']['particular']['vehiculo']['anio'])),
-    ('planes/index.html', 'despacho de Uso particular [data-envio-part]',
-     r'<[^>]*\bdata-envio-part\b[^>]*>([^<]*)<',
-     lambda p: clp(p['envio_chips']['particular']['precio'])),
+    ('planes/index.html', 'despacho de Uso particular [data-envio-desde]',
+     r'<[^>]*\bdata-envio-desde\b[^>]*>([^<]*)<',
+     lambda p: clp(envio_desde(p, 0))),
 ]
 
 MARCA_INI = '      // <precios>'
 MARCA_FIN = '      // </precios>'
+# Las filas de la tabla de despacho por region (planes/index.html). Van entre
+# marcadores de comentario HTML, con la sangria del <tbody>.
+TABLA_INI = '              <!-- <envio-regiones> -->'
+TABLA_FIN = '              <!-- </envio-regiones> -->'
 
 
 def cargar():
@@ -98,6 +107,15 @@ def uf(n):
     return 'UF ' + s.replace('.', ',')
 
 
+def envio_desde(p, i):
+    """El "desde" del despacho para la talla i (0 = XS, 1 = S): el precio de la
+    region mas barata. Se calcula de la tabla, no se escribe aparte, para que
+    el "desde" que promete el sitio no pueda quedar por debajo de lo que de
+    verdad se cobra en alguna region (ni por encima de la mas barata)."""
+    clave = p['envio_chips']['tallas'][i]['talla'].lower()
+    return min(r[clave] for r in p['envio_chips']['regiones'])
+
+
 def descuento(t):
     # Solo Flotas tiene descuento: Uso particular es solo anual desde el
     # 2026-10-20, asi que no hay precio mensual contra el cual compararlo.
@@ -110,8 +128,12 @@ def esperados(p):
     Uso particular: el $0 del plan gratis, el precio anual por vehiculo y los
     totales de 1 al maximo de vehiculos -- "2 autos son $10.000" es una cifra
     que el FAQ o un ejemplo pueden decir, y sale de multiplicar, no de una
-    tabla aparte --, mas su despacho propio. Ya no hay mensual, descuento,
-    ahorro ni la nota del redondeo: el plan es solo anual y nada se divide.
+    tabla aparte. Ya no hay mensual, descuento, ahorro ni la nota del
+    redondeo: el plan es solo anual y nada se divide.
+
+    Despacho: cualquier precio de la tabla por region, en cualquiera de sus
+    tallas ("a Magallanes cuesta $8.300" es legitimo). Los "desde" son el
+    minimo de cada talla, asi que ya estan entre ellos.
 
     Flotas: sus tarifas en UF, mensual y anual, y el porcentaje de descuento
     del anual, que se calcula y no se escribe a mano.
@@ -125,9 +147,9 @@ def esperados(p):
     anio = part['vehiculo']['anio']
     for n in range(part['vehiculos']['min'], part['vehiculos']['max'] + 1):
         pesos.add(n * anio)                     # incluye el 1 x $5.000
-    pesos.add(envio['particular']['precio'])
-    for tramo in envio['tramos']:
-        pesos.add(tramo['precio'])
+    for region in envio['regiones']:
+        for talla in envio['tallas']:
+            pesos.add(region[talla['talla'].lower()])
 
     for t in (flota['vehiculo'], flota['cuenta_conductor']):
         ufs.add(t['mes'])
@@ -163,6 +185,12 @@ def texto_visible(ruta, crudo):
     crudo = re.sub(r'<script type="application/ld\+json".*?</script>',
                    blanquear, crudo, flags=re.S)
     crudo = re.sub(re.escape(MARCA_INI) + r'.*?' + re.escape(MARCA_FIN),
+                   blanquear, crudo, flags=re.S)
+    # Las filas de la tabla tampoco cuentan: las escribe --generar desde
+    # precios.json (revisar_generados() comprueba que esten al dia), y si
+    # contaran, la tabla sola "diria" siempre los dos desde y la canonica no
+    # avisaria cuando alguien borra el desde de la prosa.
+    crudo = re.sub(re.escape(TABLA_INI) + r'.*?' + re.escape(TABLA_FIN),
                    blanquear, crudo, flags=re.S)
     m = re.search(r'<head\b.*?</head>', crudo, flags=re.S)
     if not m:
@@ -243,44 +271,64 @@ def revisar(p):
     for ruta, cifras in sorted(canonicas_por_archivo(p).items()):
         for cifra in sorted(cifras - vistas.get(ruta, set())):
             faltan.append('%s  %s' % (ruta, cifra))
-    return problemas + revisar_anclas(p), faltan
+    return problemas + revisar_anclas(p) + revisar_generados(p), faltan
+
+
+def revisar_generados(p):
+    """Los bloques generados de planes/index.html calzan con precios.json.
+
+    Sin esto, editar precios.json y olvidar el --generar dejaba la tabla por
+    region con los precios viejos y la revision en OK, porque las filas no se
+    leen como prosa (ver texto_visible)."""
+    with io.open(os.path.join(RAIZ, 'planes/index.html'), encoding='utf-8') as f:
+        html = f.read()
+    problemas = []
+    for ini, fin, esperado in BLOQUES(p):
+        m = re.search(re.escape(ini) + r'.*?' + re.escape(fin), html, flags=re.S)
+        if not m:
+            problemas.append('  planes/index.html: no encontre los marcadores %s ... %s'
+                             % (ini.strip(), fin.strip()))
+        elif m.group(0) != esperado:
+            problemas.append('  planes/index.html: el bloque %s no calza con '
+                             'precios.json (corre --generar)' % ini.strip())
+    return problemas
 
 
 def canonicas_por_archivo(p):
     """Que cifras tiene que decir cada archivo, leidas como promesa.
 
     Planes es la pagina de precios: tiene que mostrar el $0 del plan gratis, el
-    precio anual por vehiculo, el despacho de Uso particular y los tramos de
-    despacho (FAQ del chip), las dos tarifas anuales de Flotas en UF y el
-    descuento del anual (el toggle). Todo eso sin mover un slider.
-    ¿Como funciona? dice el despacho de Uso particular en el paso del chip.
+    precio anual por vehiculo, los dos "desde" del despacho (de 1 a 50 chips y
+    de 51 a 100; la nota de Uso particular y el FAQ del chip), las dos tarifas
+    anuales de Flotas en UF y el descuento del anual (el toggle). Todo eso sin
+    mover un slider ni abrir la tabla por region, que no cuenta (es generada).
+    ¿Como funciona? dice los dos "desde" del despacho en el paso del chip.
     """
     part = p['planes']['particular']
     flota = p['planes']['flota']
-    envio = p['envio_chips']
-    planes = set([clp(0), clp(part['vehiculo']['anio']),
-                  clp(envio['particular']['precio'])])
-    for tramo in envio['tramos']:
-        planes.add(clp(tramo['precio']))
+    desde = set(clp(envio_desde(p, i))
+                for i in range(len(p['envio_chips']['tallas'])))
+    planes = set([clp(0), clp(part['vehiculo']['anio'])]) | desde
     for t in (flota['vehiculo'], flota['cuenta_conductor']):
         planes.add(uf(t['anio']))
         planes.add('%d%%' % descuento(t))
-    # El paso del chip de ¿Como funciona? promete el despacho de Uso particular.
+    # El paso del chip de ¿Como funciona? promete los "desde" del despacho.
     return {'planes/index.html': planes,
-            'como-funciona/index.html': set([clp(envio['particular']['precio'])])}
+            'como-funciona/index.html': desde}
 
 
 def bloque_js(p):
     """Las constantes de la calculadora, y nada mas que constantes.
 
     Uso particular no tiene `mes`: es solo anual. `gratis` es cuantos
-    vehiculos cubre el plan gratis. ENVIO_PARTICULAR es un monto fijo (de 1 a
-    10 chips cuesta lo mismo), asi que va como constante y no como funcion;
-    envio() sigue siendo la de los tramos, que es la que usa Flotas.
+    vehiculos cubre el plan gratis. La calculadora no sabe la region de
+    destino, asi que del despacho solo lleva los "desde": ENVIO_DESDE (el de
+    1 a 50 chips, la nota de Uso particular) y envioDesde(chips), el de la
+    talla que toca, o null sobre la ultima talla (se cotiza), que usa Flotas.
     """
     part = p['planes']['particular']
     flota = p['planes']['flota']
-    tramos = p['envio_chips']['tramos']
+    tallas = p['envio_chips']['tallas']
 
     lineas = [
         MARCA_INI + '  Generado por tools/precios.py desde precios.json.',
@@ -298,16 +346,41 @@ def bloque_js(p):
                                         flota['vehiculos']['max']),
         '        }',
         '      };',
-        '      var ENVIO_PARTICULAR = %d;' % p['envio_chips']['particular']['precio'],
-        '      function envio(chips) {',
+        '      var ENVIO_DESDE = %d;' % envio_desde(p, 0),
+        '      function envioDesde(chips) {',
     ]
-    for tramo in tramos[:-1]:
+    for i, talla in enumerate(tallas):
         lineas.append('        if (chips <= %d) return %d;'
-                      % (tramo['hasta'], tramo['precio']))
-    lineas.append('        return %d;' % tramos[-1]['precio'])
+                      % (talla['hasta'], envio_desde(p, i)))
+    lineas.append('        return null;')
     lineas.append('      }')
     lineas.append(MARCA_FIN)
     return '\n'.join(lineas)
+
+
+def html_txt(s):
+    return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+def bloque_tabla(p):
+    """Las filas de la tabla de despacho por region, en el orden de
+    precios.json (de norte a sur). Una columna por talla."""
+    envio = p['envio_chips']
+    lineas = [TABLA_INI]
+    for r in envio['regiones']:
+        celdas = ''.join('<td>%s</td>' % clp(r[t['talla'].lower()])
+                         for t in envio['tallas'])
+        lineas.append('              <tr><th scope="row">%s</th>%s</tr>'
+                      % (html_txt(r['nombre']), celdas))
+    lineas.append(TABLA_FIN)
+    return '\n'.join(lineas)
+
+
+def BLOQUES(p):
+    """(marca de inicio, marca de fin, contenido esperado) de cada bloque
+    generado de planes/index.html."""
+    return [(MARCA_INI, MARCA_FIN, bloque_js(p)),
+            (TABLA_INI, TABLA_FIN, bloque_tabla(p))]
 
 
 def generar(p):
@@ -315,18 +388,20 @@ def generar(p):
     with io.open(fs, encoding='utf-8', newline='') as f:
         html = f.read()
     salto = '\r\n' if '\r\n' in html else '\n'
-    patron = re.compile(re.escape(MARCA_INI) + r'.*?' + re.escape(MARCA_FIN), re.S)
-    if not patron.search(html):
-        print('ERROR: no encontre los marcadores // <precios> ... // </precios> '
-              'en planes/index.html')
-        return 1
-    nuevo = patron.sub(lambda _: bloque_js(p).replace('\n', salto), html, count=1)
+    nuevo = html
+    for ini, fin, bloque in BLOQUES(p):
+        patron = re.compile(re.escape(ini) + r'.*?' + re.escape(fin), re.S)
+        if not patron.search(nuevo):
+            print('ERROR: no encontre los marcadores %s ... %s en planes/index.html'
+                  % (ini.strip(), fin.strip()))
+            return 1
+        nuevo = patron.sub(lambda _: bloque.replace('\n', salto), nuevo, count=1)
     if nuevo == html:
         print('planes/index.html ya estaba al dia')
         return 0
     with io.open(fs, 'w', encoding='utf-8', newline='') as f:
         f.write(nuevo)
-    print('planes/index.html: constantes de la calculadora regeneradas')
+    print('planes/index.html: constantes de la calculadora y tabla de despacho regeneradas')
     return 0
 
 

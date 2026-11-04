@@ -53,7 +53,7 @@ Perfiles que no se contratan solos: se piden al crear la cuenta (eligiendo "Otra
 - **Flotas (desde 5 vehículos):** vehículo **UF 0,057 al mes** o **UF 0,5 al año**; cuenta de conductor fijo **UF 0,12 al mes** o **UF 1,05 al año**. Las dos tarifas dan 27% de descuento en el plan anual. Valores más IVA. Entre 5 y 10 vehículos el cliente elige: Flotas cuesta más y a cambio habilita conductores con PIN, Tomar/Entregar, bitácora, alertas, reportes, equipo y cuentas de conductor. Desde 11 es obligatorio Flotas. El plan Flotas no tiene tope de vehículos; lo que llega hasta 100 es contratarlo solo desde la web, y sobre eso se cotiza caso a caso.
 - **Forma de pago:** tarjeta, a través de Flow, con cobro automático. El plan gratis no se paga. Sumar vehículos se paga con la diferencia prorrateada.
 - Sin permanencia ni contratos mínimos; la baja corre al cierre del período pagado.
-- **Chips NFC gratis**, uno por vehículo. Solo se paga el despacho, en cada envío y no una sola vez: en Uso particular, **$3.000 por envío de 1 a 10 chips**; en los demás planes, **$2.000 hasta 2 chips, $5.000 de 3 a 50, $10.000 de 51 a 100**. Todo con IVA incluido. Sobre 100 chips se cotiza.
+- **Chips NFC gratis**, uno por vehículo. Solo se paga el despacho, en cada envío y no una sola vez. Sale desde Santiago por Blue Express, a domicilio, y el precio depende de la región de destino: de 1 a 50 chips, **desde $3.300** (Región Metropolitana) hasta $8.300 (Aysén y Magallanes); de 51 a 100 chips, **desde $3.800** hasta $9.900. Es el mismo precio en todos los planes (en Uso particular, hasta 10 chips por envío). Todo con IVA incluido. Sobre 100 chips se cotiza. La tabla por región está en https://tapcar.cl/planes/.
 
 ## Lo que el sitio no promete
 
